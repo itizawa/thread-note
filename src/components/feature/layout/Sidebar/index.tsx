@@ -1,13 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  Archive,
-  Bell,
-  Compass,
-  Home,
-  Link2,
-  Settings,
-  User2,
-} from "lucide-react";
+import { Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,36 +10,36 @@ export const DashBoardSidebar = () => {
       label: "Home",
       icon: Home,
     },
-    {
-      href: "/resources",
-      label: "Resources",
-      icon: Link2,
-    },
-    {
-      href: "/explore",
-      label: "Explore",
-      icon: Compass,
-    },
-    {
-      href: "/profile",
-      label: "Profile",
-      icon: User2,
-    },
-    {
-      href: "/inbox",
-      label: "Inbox",
-      icon: Bell,
-    },
-    {
-      href: "/archived",
-      label: "Archived",
-      icon: Archive,
-    },
-    {
-      href: "/settings",
-      label: "Settings",
-      icon: Settings,
-    },
+    // {
+    //   href: "/resources",
+    //   label: "Resources",
+    //   icon: Link2,
+    // },
+    // {
+    //   href: "/explore",
+    //   label: "Explore",
+    //   icon: Compass,
+    // },
+    // {
+    //   href: "/profile",
+    //   label: "Profile",
+    //   icon: User2,
+    // },
+    // {
+    //   href: "/inbox",
+    //   label: "Inbox",
+    //   icon: Bell,
+    // },
+    // {
+    //   href: "/archived",
+    //   label: "Archived",
+    //   icon: Archive,
+    // },
+    // {
+    //   href: "/settings",
+    //   label: "Settings",
+    //   icon: Settings,
+    // },
   ];
 
   return (

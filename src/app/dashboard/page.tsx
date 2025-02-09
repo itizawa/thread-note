@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,7 +25,7 @@ export default function Page() {
   return (
     <div className="flex-1 flex h-screen">
       {/* メインコンテンツ */}
-      <main className="flex-1 overflow-auto border-x">
+      <main className="flex-1 overflow-auto border-r">
         <div className="space-y-4 p-4">
           {/* メモ入力フォーム */}
           <div className="space-y-4 rounded-lg border p-4">
@@ -116,10 +115,6 @@ export default function Page() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
             <Input type="search" placeholder="メモを検索" className="pl-10" />
-          </div>
-
-          <div className="rounded-lg border p-4">
-            <Calendar mode="single" className="w-full" />
           </div>
 
           <div className="space-y-2">
