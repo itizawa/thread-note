@@ -1,0 +1,37 @@
+services:
+  # web:
+  #   container_name: web
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/web/Dockerfile
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - app_network
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: .
+  #     dockerfile: ./packages/api/Dockerfile
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - app_network
+  db:
+    image: postgres:16
+    container_name: postgres_thread_note
+    volumes:
+      - db-store:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: local-password
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    external: true
+volumes:
+  db-store:

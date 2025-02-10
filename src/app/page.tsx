@@ -1,7 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { getData } from "./actions/test";
 
-export default function Home() {
+export default async function Home() {
+  console.log("Hello, world!", await getData());
   return (
     <div className="min-h-screen">
       <main>

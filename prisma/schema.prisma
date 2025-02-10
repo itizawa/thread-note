@@ -1,0 +1,36 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins","driverAdapters"]
+}
+
+generator zod {
+  provider                         = "zod-prisma-types"
+  output                           = "../src/types/src/domains"
+  useMultipleFiles                 = true // default is false
+  writeBarrelFiles                 = true // default is true
+  createInputTypes                 = false // default is true
+  createModelTypes                 = true // default is true
+  addInputTypeValidation           = true // default is true
+  addIncludeType                   = true // default is true
+  addSelectType                    = true // default is true
+  validateWhereUniqueInput         = true // default is true
+  createOptionalDefaultValuesTypes = false // default is false
+  createRelationValuesTypes        = false // default is false
+  createPartialTypes               = false // default is false
+  useDefaultValidators             = true // default is true
+  coerceDate                       = true // default is true
+  writeNullishInModelTypes         = false // default is false
+}
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
