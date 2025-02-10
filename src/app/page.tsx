@@ -4,6 +4,8 @@ import { getData } from "./actions/test";
 
 export default async function Home() {
   const users = await getData();
+  console.log(users);
+
   return (
     <div className="min-h-screen">
       <main>
