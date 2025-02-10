@@ -5,9 +5,13 @@ import { z } from 'zod';
 /////////////////////////////////////////
 
 export const UserSchema = z.object({
-  id: z.number().int(),
-  email: z.string(),
+  id: z.string().cuid(),
   name: z.string().nullable(),
+  email: z.string(),
+  emailVerified: z.coerce.date().nullable(),
+  image: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 })
 
 export type User = z.infer<typeof UserSchema>

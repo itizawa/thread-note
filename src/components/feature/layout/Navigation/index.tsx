@@ -1,3 +1,4 @@
+import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -24,7 +25,7 @@ export const Navigation = () => {
         <form
           action={async () => {
             "use server";
-            // TODO: Implement login
+            await signIn("google");
           }}
         >
           <Button type="submit" variant="outline" size="sm">
