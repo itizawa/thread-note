@@ -1,10 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { getData } from "./actions/test";
+import { getCurrentUser, getData } from "./actions/test";
 
 export default async function Home() {
   const users = await getData();
-  console.log(users);
+  const currentUser = await getCurrentUser();
+
+  console.log(users, currentUser);
 
   return (
     <div className="min-h-screen">
@@ -28,6 +30,7 @@ export default async function Home() {
             <p>{user.name}</p>
           </div>
         ))}
+        {currentUser && <div>ログイン中ユーザー：{currentUser.user?.name}</div>}
 
         <section className="mx-auto container py-6 px-2">
           <div className="mx-auto max-w-2xl space-y-8">
