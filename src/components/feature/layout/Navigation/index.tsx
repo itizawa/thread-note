@@ -1,9 +1,11 @@
-import { signIn } from "@/auth";
+import { getCurrentUser } from "@/app/actions/test";
+import { signIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 
-export const Navigation = () => {
+export const Navigation = async () => {
+  const currentUser = await getCurrentUser();
   return (
     <header className="sticky z-1200 top-0 border-b bg-white shadow-md">
       <div className="container flex h-14 items-center justify-between px-4">
@@ -20,18 +22,31 @@ export const Navigation = () => {
           <Button variant="ghost" size="icon">
             <Search className="h-5 w-5" />
             <span className="sr-only">検索</span>
-          </Button>
-        </div> */}
-        <form
-          action={async () => {
-            "use server";
-            await signIn("google");
-          }}
-        >
-          <Button type="submit" variant="outline" size="sm">
-            ログイン
-          </Button>
-        </form>
+            </Button>
+            </div> */}
+        {currentUser ? (
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <Button type="submit" variant="outline" size="sm">
+              ログアウト
+            </Button>
+          </form>
+        ) : (
+          <form
+            action={async () => {
+              "use server";
+              await signIn("google");
+            }}
+          >
+            <Button type="submit" variant="outline" size="sm">
+              ログイン
+            </Button>
+          </form>
+        )}
       </div>
     </header>
   );

@@ -1,12 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { getCurrentUser, getData } from "./actions/test";
+import { getCurrentUser } from "./actions/test";
 
 export default async function Home() {
-  const users = await getData();
   const currentUser = await getCurrentUser();
 
-  console.log(users, currentUser);
+  console.log(currentUser);
 
   return (
     <div className="min-h-screen">
@@ -16,21 +15,18 @@ export default async function Home() {
             <h1 className="mx-auto max-w-2xl text-2xl font-medium">
               Thread Note は<br />
               アイデアや情報をスレッド形式で手軽にメモすることができるサービスです。
+              {currentUser && (
+                <div>ログイン中ユーザー：{currentUser.user?.name}</div>
+              )}
             </h1>
             {/* <p className="text-lg">まずは使い心地を確かめてみてください。</p>
             <div className="space-y-4">
               <Button variant="secondary" size="lg" className="min-w-[200px]">
                 Playground
               </Button>
-            </div> */}
+              </div> */}
           </div>
         </section>
-        {users.map((user) => (
-          <div key={user.id}>
-            <p>{user.name}</p>
-          </div>
-        ))}
-        {currentUser && <div>ログイン中ユーザー：{currentUser.user?.name}</div>}
 
         <section className="mx-auto container py-6 px-2">
           <div className="mx-auto max-w-2xl space-y-8">
