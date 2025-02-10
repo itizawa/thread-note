@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 import { getData } from "./actions/test";
 
 export default async function Home() {
-  console.log("Hello, world!", await getData());
+  const users = await getData();
   return (
     <div className="min-h-screen">
       <main>
@@ -21,6 +21,11 @@ export default async function Home() {
             </div> */}
           </div>
         </section>
+        {users.map((user) => (
+          <div key={user.id}>
+            <p>{user.name}</p>
+          </div>
+        ))}
 
         <section className="mx-auto container py-6 px-2">
           <div className="mx-auto max-w-2xl space-y-8">
