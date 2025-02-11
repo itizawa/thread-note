@@ -1,9 +1,11 @@
+import { UserIcon } from "@/components/model/user/UserIcon";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/trpc/server";
 import { Home } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
-export const DashBoardSidebar = () => {
+export const DashBoardSidebar = async () => {
+  const { currentUser } = await trpc.currentUser();
   const routes = [
     {
       href: "/dashboard",
@@ -46,15 +48,8 @@ export const DashBoardSidebar = () => {
     <div className="flex h-full w-60 flex-col border-r bg-white">
       <div className="p-4">
         <div className="flex items-center space-x-2 rounded-lg p-2">
-          <div className="relative h-8 w-8 overflow-hidden rounded-full">
-            <Image
-              src="/placeholder.svg"
-              alt="Avatar"
-              className="aspect-square"
-              fill
-            />
-          </div>
-          <span className="text-sm font-medium">yourselfhos...</span>
+          <UserIcon user={currentUser} />
+          <span>{currentUser?.name}</span>
         </div>
       </div>
       <nav className="space-y-1 p-2">

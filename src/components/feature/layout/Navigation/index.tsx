@@ -1,19 +1,13 @@
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { NavigationUserIcon } from "./parts/NavigationUserIcon";
 
 export const Navigation = () => {
   return (
-    <header className="sticky top-0 border-b bg-white shadow-md">
-      <div className="container flex h-14 items-center justify-between px-4">
+    <header className="sticky z-50 top-0 bg-white shadow-md">
+      <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <div className="flex items-center space-x-3">
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">メニューを開く</span>
-          </Button>
           <Link href={"/"}>
             <h1 className="text-lg font-medium">Thread Note</h1>
           </Link>
