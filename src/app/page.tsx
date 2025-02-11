@@ -1,9 +1,6 @@
-import { CurrentUserInfo } from "@/components/feature/test/CurrentUserInfo";
 import { Input } from "@/components/ui/input";
 import { HydrateClient, trpc } from "@/trpc/server";
 import { Search } from "lucide-react";
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 
 export default async function Home() {
   void trpc.currentUser.prefetch();
@@ -17,11 +14,6 @@ export default async function Home() {
               <h1 className="mx-auto max-w-2xl text-2xl font-medium">
                 Thread Note は<br />
                 アイデアや情報をスレッド形式で手軽にメモすることができるサービスです。
-                <ErrorBoundary fallback={<div>Something went wrong</div>}>
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <CurrentUserInfo />
-                  </Suspense>
-                </ErrorBoundary>
               </h1>
               {/* <p className="text-lg">まずは使い心地を確かめてみてください。</p>
             <div className="space-y-4">
