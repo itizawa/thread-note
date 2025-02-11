@@ -38,6 +38,8 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+  threads Thread[]
+  posts Post[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -96,4 +98,39 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+
+model Thread {
+  id         String  @id @default(uuid())
+
+  userId               String @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title String?
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  posts Post[]
+
+  @@map("threads")
+}
+
+
+model Post {
+  id        String @id @default(uuid())
+  /// @zod.string({ required_error: '入力してください' })
+  body      String
+
+  userId               String @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  threadId String @map("thread_id")
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
 }
