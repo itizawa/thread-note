@@ -3,8 +3,6 @@ import { HydrateClient } from "@/trpc/server";
 import { Search } from "lucide-react";
 
 export default async function Home() {
-  // void trpc.currentUser.prefetch();
-
   return (
     <HydrateClient>
       <div className="min-h-screen">

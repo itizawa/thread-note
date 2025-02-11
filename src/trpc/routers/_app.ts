@@ -4,9 +4,14 @@ import { baseProcedure, createTRPCRouter } from "../init";
 
 export const appRouter = createTRPCRouter({
   currentUser: baseProcedure.query(async (opts) => {
+    if (!opts.ctx.currentUser) {
+      return {
+        currentUser: null,
+      };
+    }
     const currentUser = await prisma.user.findUnique({
       where: {
-        id: opts.ctx.currentUser?.id,
+        id: opts.ctx.currentUser.id,
       },
     });
     return {
