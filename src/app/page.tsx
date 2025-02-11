@@ -1,9 +1,9 @@
 import { Input } from "@/components/ui/input";
-import { HydrateClient, trpc } from "@/trpc/server";
+import { HydrateClient } from "@/trpc/server";
 import { Search } from "lucide-react";
 
 export default async function Home() {
-  void trpc.currentUser.prefetch();
+  // void trpc.currentUser.prefetch();
 
   return (
     <HydrateClient>
