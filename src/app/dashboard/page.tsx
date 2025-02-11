@@ -1,3 +1,4 @@
+import { PostForm } from "@/components/model/post/PostForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
@@ -6,7 +7,11 @@ export default function Page() {
   return (
     <div className="flex h-full">
       {/* メインコンテンツ */}
-      <main className="flex-1 overflow-auto border-r">{/* TODO */}</main>
+      <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-2 pb-4">
+        <div className="flex flex-col space-y-4 w-max-[500px]">
+          <PostForm />
+        </div>
+      </main>
 
       {/* 右サイドバー */}
       <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
