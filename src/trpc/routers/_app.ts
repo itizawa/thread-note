@@ -1,8 +1,7 @@
 import { prisma } from "@/prisma";
-import { z } from "zod";
-import { baseProcedure, createTRPCRouter } from "../init";
+import { baseProcedure, router } from "../init";
 
-export const appRouter = createTRPCRouter({
+export const appRouter = router({
   currentUser: baseProcedure.query(async (opts) => {
     if (!opts.ctx.currentUser) {
       return {
@@ -18,17 +17,6 @@ export const appRouter = createTRPCRouter({
       currentUser,
     };
   }),
-  hello: baseProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      })
-    )
-    .query((opts) => {
-      return {
-        greeting: `hello ${opts.input.text}`,
-      };
-    }),
 });
 
 export type AppRouter = typeof appRouter;
