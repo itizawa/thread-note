@@ -14,6 +14,10 @@ export default function Page() {
       <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
         <div className="space-y-4">
           <div className="space-y-2">
+            <h3 className="font-medium">タイトル</h3>
+            <p className="font-medium">メモの投稿後自動で生成されます</p>
+          </div>
+          <div className="space-y-2">
             <h3 className="font-medium">タグ</h3>
             <div className="flex flex-wrap gap-2">
               <Button variant="secondary" size="sm">
