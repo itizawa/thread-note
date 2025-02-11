@@ -14,15 +14,18 @@ import remarkGfm from "remark-gfm";
 export function PostForm() {
   const router = useRouter();
   const [content, setContent] = React.useState("");
+  const [isPending, startTransition] = React.useTransition();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
     setContent(newContent);
   };
 
-  const handleSubmit = async () => {
-    const { thread } = await createThreadWithFirstPost(content);
-    router.push(urls.dashboardThreadDetails(thread.id));
+  const handleSubmit = () => {
+    startTransition(async () => {
+      const { thread } = await createThreadWithFirstPost(content);
+      router.push(urls.dashboardThreadDetails(thread.id));
+    });
   };
 
   return (
@@ -66,7 +69,9 @@ export function PostForm() {
           </Button>
         </div>
         <div className="flex items-center space-x-2">
-          <Button onClick={handleSubmit}>投稿</Button>
+          <Button onClick={handleSubmit} disabled={isPending}>
+            投稿
+          </Button>
         </div>
       </div>
     </div>
