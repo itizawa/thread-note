@@ -1,7 +1,13 @@
 "use client";
+
 import { trpc } from "@/trpc/client";
 
 export function CurrentUserInfo() {
-  const [data] = trpc.hello.useSuspenseQuery({ text: "world" });
-  return <div>{data.greeting}</div>;
+  const [{ user }] = trpc.currentUser.useSuspenseQuery();
+
+  if (!user) {
+    return <div>ユーザー情報が見つかりません。</div>;
+  }
+
+  return <div>ログイン中のユーザー：{user?.name}</div>;
 }

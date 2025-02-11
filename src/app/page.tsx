@@ -4,13 +4,9 @@ import { HydrateClient, trpc } from "@/trpc/server";
 import { Search } from "lucide-react";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { getCurrentUser } from "./actions/test";
 
 export default async function Home() {
-  void trpc.hello.prefetch({ text: "hoge" });
-  const currentUser = await getCurrentUser();
-
-  console.log(currentUser);
+  void trpc.currentUser.prefetch();
 
   return (
     <HydrateClient>
