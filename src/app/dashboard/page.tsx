@@ -1,15 +1,18 @@
-import { PostForm } from "@/components/model/post/PostForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { urls } from "@/consts/urls";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
   return (
     <div className="flex h-full">
       {/* メインコンテンツ */}
-      <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-2 pb-4">
-        <div className="flex flex-col space-y-4 w-max-[500px]">
-          <PostForm />
+      <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
+        <div className="flex flex-col space-y-4 max-w-[500px] mx-auto">
+          <Link href={urls.dashboardThreadNew}>
+            <Button>新規Threadを作成する</Button>
+          </Link>
         </div>
       </main>
 

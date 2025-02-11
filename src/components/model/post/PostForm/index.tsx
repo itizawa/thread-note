@@ -3,28 +3,29 @@
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { urls } from "@/consts/urls";
 import { Hash, Link2, ListTodo, Paperclip } from "lucide-react";
-import { useRouter } from "next/navigation";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 
-export function PostForm() {
-  const router = useRouter();
-  const [content, setContent] = React.useState("");
+type Props = {
+  onSubmit: (body: string) => Promise<void>;
+};
+
+export function PostForm(props: Props) {
+  const [body, setBody] = React.useState("");
   const [isPending, startTransition] = React.useTransition();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
-    setContent(newContent);
+    setBody(newContent);
   };
 
   const handleSubmit = () => {
     startTransition(async () => {
-      const { thread } = await createThreadWithFirstPost(content);
-      router.push(urls.dashboardThreadDetails(thread.id));
+      props.onSubmit(body);
+      await createThreadWithFirstPost(body);
     });
   };
 
@@ -38,7 +39,7 @@ export function PostForm() {
         <TabsContent value="edit" className="h-[300px] my-0">
           <textarea
             placeholder="テキストを入力..."
-            value={content}
+            value={body}
             onChange={handleContentChange}
             className="min-h-[300px] resize-none w-full border-0 bg-transparent text-base outline-none"
           />
@@ -48,7 +49,7 @@ export function PostForm() {
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
           >
-            {content}
+            {body}
           </ReactMarkdown>
         </TabsContent>
       </Tabs>
