@@ -1,88 +1,97 @@
+import { CurrentUserInfo } from "@/components/feature/test/CurrentUserInfo";
 import { Input } from "@/components/ui/input";
+import { HydrateClient, trpc } from "@/trpc/server";
 import { Search } from "lucide-react";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { getCurrentUser } from "./actions/test";
 
 export default async function Home() {
+  void trpc.hello.prefetch({ text: "hoge" });
   const currentUser = await getCurrentUser();
 
   console.log(currentUser);
 
   return (
-    <div className="min-h-screen">
-      <main>
-        <section className="bg-orange-400 px-4 py-16 text-white">
-          <div className="mx-auto container text-center">
-            <h1 className="mx-auto max-w-2xl text-2xl font-medium">
-              Thread Note は<br />
-              アイデアや情報をスレッド形式で手軽にメモすることができるサービスです。
-              {currentUser && (
-                <div>ログイン中ユーザー：{currentUser.user?.name}</div>
-              )}
-            </h1>
-            {/* <p className="text-lg">まずは使い心地を確かめてみてください。</p>
+    <HydrateClient>
+      <div className="min-h-screen">
+        <main>
+          <section className="bg-orange-400 px-4 py-16 text-white">
+            <div className="mx-auto container text-center">
+              <h1 className="mx-auto max-w-2xl text-2xl font-medium">
+                Thread Note は<br />
+                アイデアや情報をスレッド形式で手軽にメモすることができるサービスです。
+                <ErrorBoundary fallback={<div>Something went wrong</div>}>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <CurrentUserInfo />
+                  </Suspense>
+                </ErrorBoundary>
+              </h1>
+              {/* <p className="text-lg">まずは使い心地を確かめてみてください。</p>
             <div className="space-y-4">
               <Button variant="secondary" size="lg" className="min-w-[200px]">
                 Playground
               </Button>
               </div> */}
-          </div>
-        </section>
-
-        <section className="mx-auto container py-6 px-2">
-          <div className="mx-auto max-w-2xl space-y-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-              <Input
-                type="search"
-                placeholder="スレッドを検索"
-                className="pl-10"
-              />
             </div>
+          </section>
 
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">最近のスレッド</h2>
-              <div className="space-y-4">
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
-                />
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
-                />
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
-                />
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
-                />
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
-                />
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
-                />
-                <ThreadCard
-                  title="「Expoの使い方」のメモ"
-                  author="@hoge"
-                  date="2025/01/11に作成"
+          <section className="mx-auto container py-6 px-2">
+            <div className="mx-auto max-w-2xl space-y-8">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                <Input
+                  type="search"
+                  placeholder="スレッドを検索"
+                  className="pl-10"
                 />
               </div>
+
+              <div className="space-y-4">
+                <h2 className="text-lg font-medium">最近のスレッド</h2>
+                <div className="space-y-4">
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                  <ThreadCard
+                    title="「Expoの使い方」のメモ"
+                    author="@hoge"
+                    date="2025/01/11に作成"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
-    </div>
+          </section>
+        </main>
+      </div>
+    </HydrateClient>
   );
 }
 
