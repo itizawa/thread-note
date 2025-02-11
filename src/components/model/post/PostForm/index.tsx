@@ -1,19 +1,28 @@
 "use client";
 
+import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { urls } from "@/consts/urls";
 import { Hash, Link2, ListTodo, Paperclip } from "lucide-react";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 
 export function PostForm() {
+  const router = useRouter();
   const [content, setContent] = React.useState("");
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
     setContent(newContent);
+  };
+
+  const handleSubmit = async () => {
+    const { thread } = await createThreadWithFirstPost(content);
+    router.push(urls.dashboardThreadDetails(thread.id));
   };
 
   return (
@@ -57,7 +66,7 @@ export function PostForm() {
           </Button>
         </div>
         <div className="flex items-center space-x-2">
-          <Button>投稿</Button>
+          <Button onClick={handleSubmit}>投稿</Button>
         </div>
       </div>
     </div>

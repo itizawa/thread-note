@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma";
 import { baseProcedure, router } from "../init";
+import { threadRouter } from "./threadRouter";
 
 export const appRouter = router({
   currentUser: baseProcedure.query(async (opts) => {
@@ -17,6 +18,7 @@ export const appRouter = router({
       currentUser,
     };
   }),
+  thread: threadRouter,
 });
 
 export type AppRouter = typeof appRouter;
