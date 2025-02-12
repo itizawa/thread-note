@@ -9,3 +9,12 @@ export const createThreadWithFirstPost = async (body: string) => {
 
   redirect(urls.dashboardThreadDetails(thread.id));
 };
+
+export const createPostInThread = async (args: {
+  body: string;
+  threadId: string;
+}) => {
+  const { createdPost } = await trpc.thread.createPostInThread(args);
+
+  return createdPost;
+};

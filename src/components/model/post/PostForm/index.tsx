@@ -1,6 +1,5 @@
 "use client";
 
-import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Hash, Link2, ListTodo, Paperclip } from "lucide-react";
@@ -23,10 +22,7 @@ export function PostForm(props: Props) {
   };
 
   const handleSubmit = () => {
-    startTransition(async () => {
-      props.onSubmit(body);
-      await createThreadWithFirstPost(body);
-    });
+    startTransition(async () => props.onSubmit(body));
   };
 
   return (
