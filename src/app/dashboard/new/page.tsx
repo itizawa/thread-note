@@ -6,7 +6,7 @@ export default function Page() {
     <div className="flex h-full">
       {/* メインコンテンツ */}
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col space-y-4 max-w-[500px] mx-auto">
+        <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
           <CreateNewThreadForm />
         </div>
       </main>

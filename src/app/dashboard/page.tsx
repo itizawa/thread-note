@@ -1,18 +1,28 @@
+import { ThreadList } from "@/components/feature/dashboard/ThreadList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
+import { trpc } from "@/trpc/server";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+  const { currentUser } = await trpc.currentUser();
+
+  if (!currentUser) {
+    return notFound();
+  }
+
   return (
     <div className="flex h-full">
       {/* メインコンテンツ */}
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col space-y-4 max-w-[500px] mx-auto">
+        <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
           <Link href={urls.dashboardThreadNew}>
             <Button>新規Threadを作成する</Button>
           </Link>
+          <ThreadList currentUser={currentUser} />
         </div>
       </main>
 
