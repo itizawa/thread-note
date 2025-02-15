@@ -12,7 +12,7 @@ export default async function Page({ params }: Props) {
     <div className="flex h-full">
       {/* メインコンテンツ */}
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex max-w-[500px] mx-auto">
+        <div className="flex max-w-[700px] mx-auto">
           <Suspense fallback={<Skeleton className="w-full h-20" />}>
             <PostTimeLine threadId={threadId} />
           </Suspense>
