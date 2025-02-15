@@ -44,9 +44,10 @@ jobs:
       - name: Create .env
         shell: bash
         run: |
-          echo DATABASE_URL="${{ secrets.DATABASE_URL_FOR_MIGRATION }}" > .env
-          echo DATABASE_URL="${{ secrets.DIRECT_URL }}" > .env
-      - name: Generate Scema
+          printf "DATABASE_URL=\"%s\"\nDIRECT_URL=\"%s\"\n" \
+            "${{ secrets.DATABASE_URL_FOR_MIGRATION }}" \
+            "${{ secrets.DIRECT_URL }}" > .env
+      - name: Generate Schema
         run: yarn schema:gen
       - name: Migrate
         uses: nick-fields/retry@v3
