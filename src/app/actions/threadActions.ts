@@ -18,3 +18,7 @@ export const createPostInThread = async (args: {
 
   return createdPost;
 };
+
+export const updateThreadInfo = async (args: { id: string; title: string }) => {
+  await trpc.thread.updateThreadInfo(args);
+};

@@ -1,5 +1,4 @@
 import { CreateNewThreadForm } from "@/components/feature/newThread/CreateNewThreadForm";
-import { Button } from "@/components/ui/button";
 
 export default function Page() {
   return (
@@ -17,7 +16,7 @@ export default function Page() {
             <h3 className="font-medium">タイトル</h3>
             <p className="font-medium">スレッドの投稿後自動で生成されます</p>
           </div>
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <h3 className="font-medium">タグ</h3>
             <div className="flex flex-wrap gap-2">
               <Button variant="secondary" size="sm">
@@ -30,7 +29,7 @@ export default function Page() {
                 #todo
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </aside>
     </div>

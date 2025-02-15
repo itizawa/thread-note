@@ -24,6 +24,9 @@ export class ListThreadsUseCase {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return threads;
