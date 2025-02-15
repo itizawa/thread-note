@@ -1,8 +1,10 @@
 import { UserIcon } from "@/components/model/user/UserIcon";
+import { urls } from "@/consts/urls";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/server";
-import { Home } from "lucide-react";
+import { Home, Pen } from "lucide-react";
 import Link from "next/link";
+import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
 
 export const DashBoardSidebar = async () => {
   const { currentUser } = await trpc.currentUser();
@@ -12,11 +14,11 @@ export const DashBoardSidebar = async () => {
       label: "Home",
       icon: Home,
     },
-    // {
-    //   href: "/resources",
-    //   label: "Resources",
-    //   icon: Link2,
-    // },
+    {
+      href: urls.dashboardThreadNew,
+      label: "New",
+      icon: Pen,
+    },
     // {
     //   href: "/explore",
     //   label: "Explore",
@@ -52,20 +54,24 @@ export const DashBoardSidebar = async () => {
           <span>{currentUser?.name}</span>
         </div>
       </div>
-      <nav className="space-y-1 p-2">
-        {routes.map((route) => (
-          <Link
-            key={route.href}
-            href={route.href}
-            className={cn(
-              "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100"
-              // pathname === route.href ? "bg-gray-100 font-medium" : ""
-            )}
-          >
-            <route.icon className="h-5 w-5" />
-            <span>{route.label}</span>
-          </Link>
-        ))}
+      <nav className="space-y-4 p-2">
+        <div className="space-y-1">
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className={cn(
+                "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100"
+                // pathname === route.href ? "bg-gray-100 font-medium" : ""
+              )}
+            >
+              <route.icon className="h-5 w-5" />
+              <span>{route.label}</span>
+            </Link>
+          ))}
+        </div>
+        <hr />
+        {currentUser && <SidebarThreadList currentUser={currentUser} />}
       </nav>
     </div>
   );
