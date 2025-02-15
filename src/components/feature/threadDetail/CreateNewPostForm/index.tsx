@@ -2,17 +2,19 @@
 
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
+import { trpc } from "@/trpc/client";
 
 type Props = {
   threadId: string;
 };
 export function CreateNewPostForm({ threadId }: Props) {
+  const utils = trpc.useUtils();
   const handleSubmit = async (body: string) => {
     await createPostInThread({
       body,
       threadId,
     });
-    // TODO 再取得する
+    utils.thread.getThreadWithPosts.invalidate({ id: threadId });
   };
 
   return <PostForm onSubmit={handleSubmit} />;

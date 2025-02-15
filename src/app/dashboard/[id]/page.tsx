@@ -1,31 +1,21 @@
-import { CreateNewPostForm } from "@/components/feature/threadDetail/CreateNewPostForm";
+import { PostTimeLine } from "@/components/feature/threadDetail/PostTimeLine";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/server";
-import { notFound } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
 
 export default async function Page({ params }: Props) {
-  const { id } = await params;
-
-  const { threadWithPosts } = await trpc.thread.getThreadWithPosts({
-    id,
-  });
-
-  if (!threadWithPosts) {
-    return notFound();
-  }
+  const { id: threadId } = await params;
 
   return (
     <div className="flex h-full">
       {/* メインコンテンツ */}
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col space-y-4 max-w-[500px] mx-auto">
-          {threadWithPosts.posts.map((v) => {
-            return <p key={v.id}>{v.body}</p>;
-          })}
-
-          <CreateNewPostForm threadId={threadWithPosts.id} />
+        <div className="flex max-w-[500px] mx-auto">
+          <Suspense fallback={<Skeleton className="w-full h-20" />}>
+            <PostTimeLine threadId={threadId} />
+          </Suspense>
         </div>
       </main>
 

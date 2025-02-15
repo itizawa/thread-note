@@ -12,7 +12,7 @@ const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 export const threadRouter = router({
   getThreadWithPosts: baseProcedure
     .input(ThreadSchema.pick({ id: true }))
-    .mutation(async ({ input }) => {
+    .query(async ({ input }) => {
       return await getThreadWithPostsUseCase.execute({
         id: input.id,
       });

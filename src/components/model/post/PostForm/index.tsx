@@ -22,7 +22,10 @@ export function PostForm(props: Props) {
   };
 
   const handleSubmit = () => {
-    startTransition(async () => props.onSubmit(body));
+    startTransition(async () => {
+      props.onSubmit(body);
+      setBody("");
+    });
   };
 
   return (
