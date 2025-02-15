@@ -1,0 +1,57 @@
+name: migrate
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache
+        uses: actions/cache@v4
+        id: cache-files
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Dependencies
+        if: ${{ steps.cache-files.outputs.cache-hit != 'true' }}
+        run: yarn
+
+  migrate-for-production:
+    environment: production
+    if: github.ref_name == 'main'
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Restore cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/yarn.lock') }}
+      - name: Create .env
+        shell: bash
+        run: |
+          echo DATABASE_URL="${{ secrets.DATABASE_URL_FOR_MIGRATION }}" > packages/api/.env
+          echo DATABASE_URL="${{ secrets.DIRECT_URL }}" > packages/api/.env
+      - name: Generate Scema
+        run: yarn schema:gen
+      - name: Migrate
+        uses: nick-fields/retry@v3
+        with:
+          command: yarn migrate:dev
+          max_attempts: 5
+          timeout_minutes: 10
+          retry_on: error
