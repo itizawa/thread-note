@@ -48,7 +48,7 @@ export const DashBoardSidebar = async () => {
     <div className="flex h-full w-60 flex-col border-r bg-white">
       <div className="p-4">
         <div className="flex items-center space-x-2 rounded-lg p-2">
-          <UserIcon user={currentUser} />
+          <UserIcon userImage={currentUser?.image} size="md" />
           <span>{currentUser?.name}</span>
         </div>
       </div>

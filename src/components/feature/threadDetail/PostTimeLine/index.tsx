@@ -2,6 +2,7 @@
 
 import { trpc } from "@/trpc/client";
 import { CreateNewPostForm } from "../CreateNewPostForm";
+import { PostPaper } from "../PostPaper";
 
 export function PostTimeLine({ threadId }: { threadId: string }) {
   const [{ threadWithPosts }] = trpc.thread.getThreadWithPosts.useSuspenseQuery(
@@ -18,7 +19,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
   return (
     <div className="w-full flex-col space-y-4">
       {threadWithPosts.posts.map((v) => {
-        return <p key={v.id}>{v.body}</p>;
+        return <PostPaper key={v.id} post={v} />;
       })}
 
       <CreateNewPostForm threadId={threadId} />

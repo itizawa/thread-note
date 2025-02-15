@@ -1,4 +1,4 @@
-import { PostSchema, ThreadSchema } from "@/types/src/domains";
+import { PostSchema, ThreadSchema, UserSchema } from "@/types/src/domains";
 import { z } from "zod";
 import { baseProcedure, protectedProcedure, router } from "../init";
 import { CreateThreadWithFIrstPostUseCase } from "../usecases/newThread/CreateThreadWithFIrstPostUseCase";
@@ -12,6 +12,25 @@ const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 export const threadRouter = router({
   getThreadWithPosts: baseProcedure
     .input(ThreadSchema.pick({ id: true }))
+    .output(
+      z.object({
+        threadWithPosts: ThreadSchema.merge(
+          z.object({
+            posts: z.array(
+              PostSchema.merge(
+                z.object({
+                  user: UserSchema.pick({
+                    name: true,
+                    image: true,
+                    id: true,
+                  }),
+                })
+              )
+            ),
+          })
+        ).nullable(),
+      })
+    )
     .query(async ({ input }) => {
       return await getThreadWithPostsUseCase.execute({
         id: input.id,

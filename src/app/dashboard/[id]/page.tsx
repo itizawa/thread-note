@@ -23,7 +23,7 @@ export default async function Page({ params }: Props) {
         <div className="space-y-4">
           <div className="space-y-2">
             <h3 className="font-medium">タイトル</h3>
-            <p className="font-medium">メモの投稿後自動で生成されます</p>
+            <p className="font-medium">スレッドの投稿後自動で生成されます</p>
           </div>
           <div className="space-y-2">
             <h3 className="font-medium">タグ</h3>

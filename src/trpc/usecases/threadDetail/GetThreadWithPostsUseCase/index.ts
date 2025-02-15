@@ -12,6 +12,15 @@ export class GetThreadWithPostsUseCase {
           orderBy: {
             createdAt: "asc",
           },
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+          },
         },
       },
     });
