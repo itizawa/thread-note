@@ -19,7 +19,7 @@ export function SidebarThreadList({ currentUser }: { currentUser: User }) {
   return (
     <div>
       <div className="p-2">
-        <h2 className="text-sm">スレッド一覧</h2>
+        <h2 className="text-sm font-bold">スレッド一覧</h2>
       </div>
       {isLoadingThreads ? (
         <>
@@ -50,7 +50,7 @@ function PostListItem({ thread }: { thread: Thread }) {
   return (
     <Link href={urls.dashboardThreadDetails(thread.id)}>
       <div className="flex items-center justify-between gap-4 p-2 hover:bg-gray-100 cursor-pointer">
-        <span className="font-bold text-sm truncate max-w-xs">
+        <span className="text-sm truncate max-w-xs">
           {thread.title || "タイトルなし"}
         </span>
       </div>

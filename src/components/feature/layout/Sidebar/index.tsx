@@ -10,7 +10,7 @@ export const DashBoardSidebar = async () => {
   const { currentUser } = await trpc.currentUser();
   const routes = [
     {
-      href: "/dashboard",
+      href: urls.dashboard,
       label: "Home",
       icon: Home,
     },
