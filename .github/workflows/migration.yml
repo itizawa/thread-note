@@ -44,8 +44,8 @@ jobs:
       - name: Create .env
         shell: bash
         run: |
-          echo DATABASE_URL="${{ secrets.DATABASE_URL_FOR_MIGRATION }}" > packages/api/.env
-          echo DATABASE_URL="${{ secrets.DIRECT_URL }}" > packages/api/.env
+          echo DATABASE_URL="${{ secrets.DATABASE_URL_FOR_MIGRATION }}" > .env
+          echo DATABASE_URL="${{ secrets.DIRECT_URL }}" > .env
       - name: Generate Scema
         run: yarn schema:gen
       - name: Migrate
