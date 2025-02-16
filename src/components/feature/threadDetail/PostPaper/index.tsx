@@ -1,5 +1,6 @@
 "use client";
 
+import { updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { MoreHorizontal, Pencil, Trash } from "lucide-react";
+import { MoreHorizontal, Pencil } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -23,16 +24,16 @@ type Post = NonNullable<
 
 interface Props {
   post: Post;
-  onDelete?: () => void;
 }
 
-export function PostPaper({ post, onDelete }: Props) {
+export function PostPaper({ post }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const { user, body } = post;
 
   const utils = trpc.useUtils();
   const handleSubmit = async (body: string) => {
-    console.log(body, 14);
+    await updatePostBody({ id: post.id, body });
+    setIsEditing(false);
     utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
   };
 
@@ -60,13 +61,14 @@ export function PostPaper({ post, onDelete }: Props) {
               <Pencil className="mr-2 h-4 w-4" />
               編集
             </DropdownMenuItem>
-            <DropdownMenuItem
+            {/* TODO: Postのアーカイブの実装 */}
+            {/* <DropdownMenuItem
               onClick={onDelete}
               className="text-destructive focus:text-destructive"
             >
               <Trash className="mr-2 h-4 w-4" />
               削除
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
