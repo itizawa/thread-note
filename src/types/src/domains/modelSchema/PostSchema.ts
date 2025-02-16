@@ -11,6 +11,7 @@ export const PostSchema = z.object({
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   threadId: z.string(),
+  isArchived: z.boolean(),
 })
 
 export type Post = z.infer<typeof PostSchema>
