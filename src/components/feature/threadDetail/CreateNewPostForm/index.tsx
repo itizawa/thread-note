@@ -17,5 +17,12 @@ export function CreateNewPostForm({ threadId }: Props) {
     utils.thread.getThreadWithPosts.invalidate({ id: threadId });
   };
 
-  return <PostForm onSubmit={handleSubmit} />;
+  return (
+    <PostForm
+      bottomButtons={{
+        submitText: "投稿",
+        onSubmit: handleSubmit,
+      }}
+    />
+  );
 }

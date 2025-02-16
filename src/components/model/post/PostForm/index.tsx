@@ -8,12 +8,16 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 
 type Props = {
-  onSubmit: (body: string) => Promise<void>;
   initialValue?: string;
+  bottomButtons: {
+    onCancel?: () => void;
+    submitText: string;
+    onSubmit: (body: string) => Promise<void>;
+  };
 };
 
-export function PostForm(props: Props) {
-  const [body, setBody] = React.useState(props.initialValue || "");
+export function PostForm({ bottomButtons, initialValue }: Props) {
+  const [body, setBody] = React.useState(initialValue || "");
   const [isPending, startTransition] = React.useTransition();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,7 +27,7 @@ export function PostForm(props: Props) {
 
   const handleSubmit = () => {
     startTransition(async () => {
-      props.onSubmit(body);
+      bottomButtons.onSubmit(body);
       setBody("");
     });
   };
@@ -70,8 +74,13 @@ export function PostForm(props: Props) {
           </Button> */}
         </div>
         <div className="flex items-center space-x-2">
+          {bottomButtons.onCancel && (
+            <Button variant="ghost" onClick={bottomButtons.onCancel}>
+              キャンセル
+            </Button>
+          )}
           <Button onClick={handleSubmit} disabled={isPending}>
-            投稿
+            {bottomButtons.submitText}
           </Button>
         </div>
       </div>

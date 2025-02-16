@@ -8,5 +8,12 @@ export function CreateNewThreadForm() {
     await createThreadWithFirstPost(body);
   };
 
-  return <PostForm onSubmit={handleSubmit} />;
+  return (
+    <PostForm
+      bottomButtons={{
+        submitText: "投稿",
+        onSubmit: handleSubmit,
+      }}
+    />
+  );
 }
