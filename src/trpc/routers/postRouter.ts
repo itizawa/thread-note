@@ -17,4 +17,18 @@ export const postRouter = router({
         },
       });
     }),
+
+  changeToArchive: protectedProcedure
+    .input(z.object({ id: PostSchema.shape.id }))
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.post.update({
+        where: {
+          id: input.id,
+          userId: ctx.currentUser?.id,
+        },
+        data: {
+          isArchived: true,
+        },
+      });
+    }),
 });
