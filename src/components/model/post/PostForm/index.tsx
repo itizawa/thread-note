@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
@@ -33,21 +34,21 @@ export function PostForm({ bottomButtons, initialValue }: Props) {
   };
 
   return (
-    <div>
+    <div className="space-y-4">
       <Tabs defaultValue="edit" className="space-y-4">
         <TabsList>
           <TabsTrigger value="edit">編集</TabsTrigger>
           <TabsTrigger value="preview">プレビュー</TabsTrigger>
         </TabsList>
-        <TabsContent value="edit" className="h-[300px] my-0">
-          <textarea
+        <TabsContent value="edit" className="my-0">
+          <Textarea
             placeholder="テキストを入力..."
+            className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
             value={body}
             onChange={handleContentChange}
-            className="min-h-[300px] resize-none w-full border-0 bg-transparent text-base outline-none"
           />
         </TabsContent>
-        <TabsContent value="preview" className="min-h-[300px] my-0">
+        <TabsContent value="preview" className="my-0 min-h-[200px]">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}

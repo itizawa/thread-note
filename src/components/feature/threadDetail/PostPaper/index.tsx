@@ -1,5 +1,6 @@
 "use client";
 
+import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,10 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import { MoreHorizontal, Pencil, Trash } from "lucide-react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 type Post = NonNullable<
@@ -20,12 +23,18 @@ type Post = NonNullable<
 
 interface Props {
   post: Post;
-  onEdit?: () => void;
   onDelete?: () => void;
 }
 
-export function PostPaper({ post, onEdit, onDelete }: Props) {
+export function PostPaper({ post, onDelete }: Props) {
+  const [isEditing, setIsEditing] = useState(false);
   const { user, body } = post;
+
+  const utils = trpc.useUtils();
+  const handleSubmit = async (body: string) => {
+    console.log(body, 14);
+    utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+  };
 
   return (
     <div className="rounded-lg border p-4 bg-white space-y-4">
@@ -47,7 +56,7 @@ export function PostPaper({ post, onEdit, onDelete }: Props) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={onEdit}>
+            <DropdownMenuItem onClick={() => setIsEditing(true)}>
               <Pencil className="mr-2 h-4 w-4" />
               編集
             </DropdownMenuItem>
@@ -61,9 +70,20 @@ export function PostPaper({ post, onEdit, onDelete }: Props) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="prose prose-gray max-w-none dark:prose-invert">
-        <ReactMarkdown>{body}</ReactMarkdown>
-      </div>
+      {isEditing ? (
+        <PostForm
+          initialValue={post.body}
+          bottomButtons={{
+            submitText: "更新",
+            onCancel: () => setIsEditing(false),
+            onSubmit: handleSubmit,
+          }}
+        />
+      ) : (
+        <div className="prose prose-gray max-w-none dark:prose-invert">
+          <ReactMarkdown>{body}</ReactMarkdown>
+        </div>
+      )}
     </div>
   );
 }
