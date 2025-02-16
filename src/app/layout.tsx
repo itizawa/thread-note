@@ -27,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <link rel="icon" href={process.env.FAVICON_PATH} sizes="any" />
       <TRPCProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
