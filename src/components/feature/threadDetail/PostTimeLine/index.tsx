@@ -8,6 +8,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
   const [{ threadWithPosts }] = trpc.thread.getThreadWithPosts.useSuspenseQuery(
     {
       id: threadId,
+      includeIsArchived: false,
     }
   );
 
