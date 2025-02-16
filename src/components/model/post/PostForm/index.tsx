@@ -33,7 +33,7 @@ export function PostForm({ bottomButtons, initialValue }: Props) {
   };
 
   return (
-    <div className="rounded-lg border p-4 bg-white">
+    <div>
       <Tabs defaultValue="edit" className="space-y-4">
         <TabsList>
           <TabsTrigger value="edit">編集</TabsTrigger>

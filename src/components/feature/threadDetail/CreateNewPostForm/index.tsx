@@ -18,11 +18,13 @@ export function CreateNewPostForm({ threadId }: Props) {
   };
 
   return (
-    <PostForm
-      bottomButtons={{
-        submitText: "投稿",
-        onSubmit: handleSubmit,
-      }}
-    />
+    <div className="rounded-lg border p-4 bg-white">
+      <PostForm
+        bottomButtons={{
+          submitText: "投稿",
+          onSubmit: handleSubmit,
+        }}
+      />
+    </div>
   );
 }
