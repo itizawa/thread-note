@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Hash, Link2, ListTodo, Paperclip } from "lucide-react";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
@@ -10,10 +9,11 @@ import remarkGfm from "remark-gfm";
 
 type Props = {
   onSubmit: (body: string) => Promise<void>;
+  initialValue?: string;
 };
 
 export function PostForm(props: Props) {
-  const [body, setBody] = React.useState("");
+  const [body, setBody] = React.useState(props.initialValue || "");
   const [isPending, startTransition] = React.useTransition();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -55,7 +55,8 @@ export function PostForm(props: Props) {
 
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="icon">
+          {/* TODO: MDの各種機能を有効にする */}
+          {/* <Button variant="ghost" size="icon">
             <Hash className="h-5 w-5" />
           </Button>
           <Button variant="ghost" size="icon">
@@ -66,7 +67,7 @@ export function PostForm(props: Props) {
           </Button>
           <Button variant="ghost" size="icon">
             <Paperclip className="h-5 w-5" />
-          </Button>
+          </Button> */}
         </div>
         <div className="flex items-center space-x-2">
           <Button onClick={handleSubmit} disabled={isPending}>
