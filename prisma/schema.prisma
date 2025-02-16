@@ -132,5 +132,7 @@ model Post {
   threadId String @map("thread_id")
   thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
 
+  isArchived Boolean @default(false)
+
   @@map("posts")
 }
