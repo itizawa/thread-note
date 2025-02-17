@@ -1,8 +1,6 @@
 import { ThreadList } from "@/components/feature/dashboard/ThreadList";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
-import { Search } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCurrentUser } from "../actions/user";
@@ -27,7 +25,7 @@ export default async function Page() {
       </main>
 
       {/* 右サイドバー */}
-      <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
+      {/* <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
         <div className="space-y-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
@@ -67,7 +65,7 @@ export default async function Page() {
             </div>
           </div>
         </div>
-      </aside>
+      </aside> */}
     </div>
   );
 }

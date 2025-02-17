@@ -63,10 +63,10 @@ function PostListItem({ thread }: { thread: Thread }) {
     <Link href={urls.dashboardThreadDetails(thread.id)}>
       <div className="flex items-center gap-4 p-4 hover:bg-gray-100 cursor-pointer">
         <UserIcon userImage={thread.user.image} size="md" />
-        <div className="flex flex-1 flex-col gap-1">
-          <div className="flex items-center justify-between gap-2">
-            <div>
-              <span className="font-bold">
+        <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
+          <div className="flex items-center justify-between gap-2 overflow-x-hidden">
+            <div className="overflow-x-hidden relative">
+              <span className="block w-full font-bold truncate">
                 {thread.title || "タイトルなし"}
               </span>
               <span className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
