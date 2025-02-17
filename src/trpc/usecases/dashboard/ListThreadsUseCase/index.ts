@@ -13,7 +13,11 @@ export class ListThreadsUseCase {
         createdAt: true,
         _count: {
           select: {
-            posts: true,
+            posts: {
+              where: {
+                isArchived: false,
+              },
+            },
           },
         },
         user: {
