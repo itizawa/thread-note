@@ -9,7 +9,7 @@ export const Navigation = () => {
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <div className="flex items-center space-x-3">
           <Link href={"/"}>
-            <h1 className="text-lg font-medium">Thread Note</h1>
+            <h1 className="text-lg font-medium">Thread Note (β)</h1>
           </Link>
         </div>
         {/* <div className="flex items-center space-x-2">
