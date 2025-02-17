@@ -3,20 +3,13 @@
 import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { Archive, MoreHorizontal, Pencil } from "lucide-react";
 import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
+import { ManagePostDropDown } from "./ManagePostDropDown";
 
 type Post = NonNullable<
   inferRouterOutputs<AppRouter>["thread"]["getThreadWithPosts"]["threadWithPosts"]
@@ -58,27 +51,13 @@ export function PostPaper({ post }: Props) {
             </div>
           </div>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={isPending}>
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">メニューを開く</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setIsEditing(true)}>
-              <Pencil className="mr-2 h-4 w-4" />
-              編集
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleClickArchiveButton}
-              className="text-destructive focus:text-destructive"
-            >
-              <Archive className="mr-2 h-4 w-4" />
-              アーカイブ
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {!isEditing && (
+          <ManagePostDropDown
+            isPending={isPending}
+            onClickEditButton={() => setIsEditing(true)}
+            onClickArchiveButton={handleClickArchiveButton}
+          />
+        )}
       </div>
       {isEditing ? (
         <PostForm
