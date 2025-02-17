@@ -1,7 +1,4 @@
 import { ThreadList } from "@/components/feature/dashboard/ThreadList";
-import { Button } from "@/components/ui/button";
-import { urls } from "@/consts/urls";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCurrentUser } from "../actions/user";
 
@@ -16,10 +13,7 @@ export default async function Page() {
     <div className="h-full relative">
       {/* メインコンテンツ */}
       <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col space-y-4 w-full max-w-[700px] mx-auto">
-          <Link href={urls.dashboardThreadNew}>
-            <Button>新規Threadを作成する</Button>
-          </Link>
+        <div className="w-full max-w-[700px] mx-auto">
           {currentUser.id && <ThreadList currentUserId={currentUser.id} />}
         </div>
       </main>

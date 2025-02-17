@@ -11,7 +11,7 @@ export function CreateNewThreadForm({ userId }: { userId?: string }) {
   const router = useRouter();
   const handleSubmit = async (body: string) => {
     const { thread } = await createThreadWithFirstPost(body);
-    if (userId) utils.thread.listThreadsByUserId.invalidate({ id: userId });
+    if (userId) utils.thread.listThreadsByUserId.invalidate({ userId: userId });
     router.push(urls.dashboardThreadDetails(thread.id));
   };
 

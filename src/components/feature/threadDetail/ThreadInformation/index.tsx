@@ -27,7 +27,9 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         id: threadId,
         title,
       });
-      utils.thread.listThreadsByUserId.invalidate({ id: threadInfo?.userId });
+      utils.thread.listThreadsByUserId.invalidate({
+        userId: threadInfo?.userId,
+      });
       setIsEditing(false);
       refetch();
     });

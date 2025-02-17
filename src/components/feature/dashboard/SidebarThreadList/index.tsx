@@ -17,7 +17,7 @@ export function SidebarThreadList({
 }) {
   const { data: threads, isLoading: isLoadingThreads } =
     trpc.thread.listThreadsByUserId.useQuery({
-      id: currentUserId,
+      userId: currentUserId,
     });
 
   return (

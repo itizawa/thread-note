@@ -16,10 +16,14 @@ const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 
 export const threadRouter = router({
   listThreadsByUserId: baseProcedure
-    .input(UserSchema.pick({ id: true }))
+    .input(
+      z.object({
+        userId: UserSchema.shape.id,
+      })
+    )
     .query(async ({ input }) => {
       return await listThreadsUseCase.execute({
-        userId: input.id,
+        userId: input.userId,
       });
     }),
 
