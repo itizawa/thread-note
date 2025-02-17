@@ -16,10 +16,10 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex h-[calc(100vh-56px)] bg-gray-100">
-      <div className="lg:block hidden">
+      <div className="lg:block hidden w-60">
         <DashBoardSidebar />
       </div>
-      <div className="flex-1 h-full">{children}</div>
+      <div className="flex-1 h-full overflow-y-auto">{children}</div>
     </div>
   );
 }

@@ -13,10 +13,10 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex h-full">
+    <div className="h-full relative">
       {/* メインコンテンツ */}
-      <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
+      <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
+        <div className="flex flex-col space-y-4 w-full max-w-[700px] mx-auto">
           <Link href={urls.dashboardThreadNew}>
             <Button>新規Threadを作成する</Button>
           </Link>
