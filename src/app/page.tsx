@@ -1,6 +1,4 @@
-import { Input } from "@/components/ui/input";
 import { HydrateClient } from "@/trpc/server";
-import { Search } from "lucide-react";
 
 export default async function Home() {
   return (
@@ -21,84 +19,8 @@ export default async function Home() {
               </div> */}
             </div>
           </section>
-
-          <section className="mx-auto container py-6 px-2">
-            <div className="mx-auto max-w-2xl space-y-8">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-                <Input
-                  type="search"
-                  placeholder="スレッドを検索"
-                  className="pl-10"
-                />
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="text-lg font-medium">最近のスレッド</h2>
-                <div className="space-y-4">
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                  <ThreadCard
-                    title="「Expoの使い方」のメモ"
-                    author="@hoge"
-                    date="2025/01/11に作成"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
         </main>
       </div>
     </HydrateClient>
-  );
-}
-
-function ThreadCard({
-  title,
-  author,
-  date,
-}: {
-  title: string;
-  author: string;
-  date: string;
-}) {
-  return (
-    <div className="rounded-lg border p-4 transition-colors hover:bg-gray-50">
-      <div className="space-y-2">
-        <h3 className="font-medium">{title}</h3>
-        <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <span>{author}</span>
-          <span>{date}</span>
-        </div>
-      </div>
-    </div>
   );
 }
