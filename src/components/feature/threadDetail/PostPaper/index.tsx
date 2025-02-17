@@ -1,6 +1,6 @@
 "use client";
 
-import { updatePostBody } from "@/app/actions/postActions";
+import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
@@ -14,8 +14,8 @@ import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { MoreHorizontal, Pencil } from "lucide-react";
-import { useState } from "react";
+import { Archive, MoreHorizontal, Pencil } from "lucide-react";
+import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 
 type Post = NonNullable<
@@ -27,14 +27,23 @@ interface Props {
 }
 
 export function PostPaper({ post }: Props) {
+  const [isPending, startTransition] = useTransition();
   const [isEditing, setIsEditing] = useState(false);
   const { user, body } = post;
 
   const utils = trpc.useUtils();
+
   const handleSubmit = async (body: string) => {
     await updatePostBody({ id: post.id, body });
     setIsEditing(false);
     utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+  };
+
+  const handleClickArchiveButton = async () => {
+    startTransition(async () => {
+      await changeToArchive({ id: post.id });
+      utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+    });
   };
 
   return (
@@ -51,7 +60,7 @@ export function PostPaper({ post }: Props) {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" disabled={isPending}>
               <MoreHorizontal className="h-4 w-4" />
               <span className="sr-only">メニューを開く</span>
             </Button>
@@ -61,14 +70,13 @@ export function PostPaper({ post }: Props) {
               <Pencil className="mr-2 h-4 w-4" />
               編集
             </DropdownMenuItem>
-            {/* TODO: Postのアーカイブの実装 */}
-            {/* <DropdownMenuItem
-              onClick={onDelete}
+            <DropdownMenuItem
+              onClick={handleClickArchiveButton}
               className="text-destructive focus:text-destructive"
             >
-              <Trash className="mr-2 h-4 w-4" />
-              削除
-            </DropdownMenuItem> */}
+              <Archive className="mr-2 h-4 w-4" />
+              アーカイブ
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

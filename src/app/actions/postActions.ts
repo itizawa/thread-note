@@ -9,3 +9,9 @@ export const updatePostBody = async (
 ) => {
   await trpc.post.updatePostBody(args);
 };
+
+export const changeToArchive = async (
+  args: inferRouterInputs<AppRouter>["post"]["changeToArchive"]
+) => {
+  await trpc.post.changeToArchive(args);
+};
