@@ -1,13 +1,13 @@
+import { getCurrentUser } from "@/app/actions/user";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { urls } from "@/consts/urls";
 import { cn } from "@/lib/utils";
-import { trpc } from "@/trpc/server";
 import { Home, Pen } from "lucide-react";
 import Link from "next/link";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
 
 export const DashBoardSidebar = async () => {
-  const { currentUser } = await trpc.currentUser();
+  const currentUser = await getCurrentUser();
   const routes = [
     {
       href: urls.dashboard,
@@ -71,7 +71,9 @@ export const DashBoardSidebar = async () => {
           ))}
         </div>
         <hr />
-        {currentUser && <SidebarThreadList currentUser={currentUser} />}
+        {currentUser?.id && (
+          <SidebarThreadList currentUserId={currentUser.id} />
+        )}
       </nav>
     </div>
   );

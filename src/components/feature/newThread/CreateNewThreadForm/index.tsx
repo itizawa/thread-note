@@ -2,10 +2,17 @@
 
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
+import { urls } from "@/consts/urls";
+import { trpc } from "@/trpc/client";
+import { useRouter } from "next/navigation";
 
-export function CreateNewThreadForm() {
+export function CreateNewThreadForm({ userId }: { userId?: string }) {
+  const utils = trpc.useUtils();
+  const router = useRouter();
   const handleSubmit = async (body: string) => {
-    await createThreadWithFirstPost(body);
+    const { thread } = await createThreadWithFirstPost(body);
+    if (userId) utils.thread.listThreadsByUserId.invalidate({ id: userId });
+    router.push(urls.dashboardThreadDetails(thread.id));
   };
 
   return (

@@ -1,3 +1,4 @@
+import { getCurrentUser } from "@/app/actions/user";
 import { signIn, signOut } from "@/auth";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
@@ -8,12 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { trpc } from "@/trpc/server";
 
 import Link from "next/link";
 
 export async function NavigationUserIcon() {
-  const { currentUser } = await trpc.currentUser();
+  const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return (

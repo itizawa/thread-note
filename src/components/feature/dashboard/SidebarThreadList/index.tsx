@@ -10,10 +10,14 @@ import Link from "next/link";
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"][number];
 
-export function SidebarThreadList({ currentUser }: { currentUser: User }) {
+export function SidebarThreadList({
+  currentUserId,
+}: {
+  currentUserId: User["id"];
+}) {
   const { data: threads, isLoading: isLoadingThreads } =
     trpc.thread.listThreadsByUserId.useQuery({
-      id: currentUser.id,
+      id: currentUserId,
     });
 
   return (

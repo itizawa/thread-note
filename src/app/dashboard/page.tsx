@@ -2,13 +2,13 @@ import { ThreadList } from "@/components/feature/dashboard/ThreadList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
-import { trpc } from "@/trpc/server";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getCurrentUser } from "../actions/user";
 
 export default async function Page() {
-  const { currentUser } = await trpc.currentUser();
+  const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return notFound();
@@ -22,7 +22,7 @@ export default async function Page() {
           <Link href={urls.dashboardThreadNew}>
             <Button>新規Threadを作成する</Button>
           </Link>
-          <ThreadList currentUser={currentUser} />
+          {currentUser.id && <ThreadList currentUserId={currentUser.id} />}
         </div>
       </main>
 

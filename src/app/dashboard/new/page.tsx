@@ -1,22 +1,24 @@
+import { getCurrentUser } from "@/app/actions/user";
 import { CreateNewThreadForm } from "@/components/feature/newThread/CreateNewThreadForm";
 
-export default function Page() {
+export default async function Page() {
+  const user = await getCurrentUser();
+
   return (
     <div className="flex h-full">
-      {/* メインコンテンツ */}
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
         <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
-          <CreateNewThreadForm />
+          <CreateNewThreadForm userId={user?.id} />
         </div>
       </main>
 
-      <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
+      {/* <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
         <div className="space-y-4">
           <div className="space-y-2">
             <h3 className="font-medium">タイトル</h3>
             <p className="font-medium">スレッドの投稿後自動で生成されます</p>
           </div>
-          {/* <div className="space-y-2">
+          <div className="space-y-2">
             <h3 className="font-medium">タグ</h3>
             <div className="flex flex-wrap gap-2">
               <Button variant="secondary" size="sm">
@@ -29,9 +31,9 @@ export default function Page() {
                 #todo
               </Button>
             </div>
-          </div> */}
+          </div>
         </div>
-      </aside>
+      </aside> */}
     </div>
   );
 }

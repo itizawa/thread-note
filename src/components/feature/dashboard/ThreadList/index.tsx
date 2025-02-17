@@ -4,7 +4,6 @@ import { UserIcon } from "@/components/model/user/UserIcon";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
-import { User } from "@prisma/client";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import { MessageCircle } from "lucide-react";
@@ -13,10 +12,10 @@ import Link from "next/link";
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"][number];
 
-export function ThreadList({ currentUser }: { currentUser: User }) {
+export function ThreadList({ currentUserId }: { currentUserId: string }) {
   const { data: threads, isLoading: isLoadingThreads } =
     trpc.thread.listThreadsByUserId.useQuery({
-      id: currentUser.id,
+      id: currentUserId,
     });
 
   return (
