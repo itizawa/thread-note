@@ -1,6 +1,14 @@
 import { prisma } from "@/prisma";
 import type { Thread } from "@prisma/client";
 
+const selectUserDateObject = {
+  select: {
+    id: true,
+    name: true,
+    image: true,
+  },
+};
+
 export class GetThreadWithPostsUseCase {
   async execute({
     id,
@@ -17,18 +25,18 @@ export class GetThreadWithPostsUseCase {
         posts: {
           where: {
             isArchived: inCludeIsArchived ? undefined : false,
+            parentId: null,
           },
           orderBy: {
             createdAt: "asc",
           },
           include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                image: true,
+            children: {
+              include: {
+                user: selectUserDateObject,
               },
             },
+            user: selectUserDateObject,
           },
         },
       },

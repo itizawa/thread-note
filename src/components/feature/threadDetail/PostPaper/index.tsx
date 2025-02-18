@@ -74,6 +74,9 @@ export function PostPaper({ post }: Props) {
           <ReactMarkdown>{body}</ReactMarkdown>
         </div>
       )}
+      {post.children.map((v) => {
+        return <p key={v.id}>{v.body}</p>;
+      })}
       <ReplyForm threadId={post.threadId} parentPostId={post.id} />
     </div>
   );
