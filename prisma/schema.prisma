@@ -132,6 +132,11 @@ model Post {
   threadId String @map("thread_id")
   thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
 
+  parentId  String? @map("parent_id")
+  parent Post? @relation("PostOneToManyRelation",fields: [parentId], references: [id], onDelete: Cascade)
+
+  children Post[] @relation("PostOneToManyRelation")
+
   isArchived Boolean @default(false)
 
   @@map("posts")
