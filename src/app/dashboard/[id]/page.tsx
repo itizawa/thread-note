@@ -9,15 +9,17 @@ export default async function Page({ params }: Props) {
   const { id: threadId } = await params;
 
   return (
-    <div className="flex h-full">
-      <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col max-w-[700px] mx-auto">
+    <div className="h-full relative">
+      <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
+        <div className="w-full max-w-[700px] mx-auto">
           <div className="py-4">
             <ThreadInformation threadId={threadId} />
           </div>
-          <Suspense fallback={<Skeleton className="w-full h-20" />}>
-            <PostTimeLine threadId={threadId} />
-          </Suspense>
+          <div className="py-4 overflow-y-auto">
+            <Suspense fallback={<Skeleton className="w-full h-20" />}>
+              <PostTimeLine threadId={threadId} />
+            </Suspense>
+          </div>
         </div>
       </main>
 

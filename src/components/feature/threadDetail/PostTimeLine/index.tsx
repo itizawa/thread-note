@@ -18,7 +18,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
   }
 
   return (
-    <div className="w-full flex-col space-y-4">
+    <div className="w-full flex-col space-y-4 overflow-y-auto">
       {threadWithPosts.posts.map((v) => {
         return <PostPaper key={v.id} post={v} />;
       })}
