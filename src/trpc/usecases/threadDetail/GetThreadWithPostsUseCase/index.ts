@@ -32,6 +32,9 @@ export class GetThreadWithPostsUseCase {
           },
           include: {
             children: {
+              where: {
+                isArchived: inCludeIsArchived ? undefined : false,
+              },
               include: {
                 user: selectUserDateObject,
               },
