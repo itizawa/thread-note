@@ -27,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <link rel="manifest" href="/manifest.json" />
       <link rel="icon" href={process.env.FAVICON_PATH} sizes="any" />
       <TRPCProvider>
         <body
