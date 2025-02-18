@@ -67,20 +67,22 @@ export function PostPaper({ post }: Props) {
           />
         )}
       </div>
-      {isEditing ? (
-        <PostForm
-          initialValue={post.body}
-          bottomButtons={{
-            submitText: "更新",
-            onCancel: () => setIsEditing(false),
-            onSubmit: handleSubmit,
-          }}
-        />
-      ) : (
-        <div className="prose prose-gray max-w-none dark:prose-invert">
-          <ReactMarkdown>{body}</ReactMarkdown>
-        </div>
-      )}
+      <div className="pb-4">
+        {isEditing ? (
+          <PostForm
+            initialValue={post.body}
+            bottomButtons={{
+              submitText: "更新",
+              onCancel: () => setIsEditing(false),
+              onSubmit: handleSubmit,
+            }}
+          />
+        ) : (
+          <div className="prose prose-gray max-w-none dark:prose-invert">
+            <ReactMarkdown>{body}</ReactMarkdown>
+          </div>
+        )}
+      </div>
       <div className="space-y-0">
         {isParentPost &&
           post.children.map((v) => {
