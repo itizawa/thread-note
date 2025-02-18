@@ -11,6 +11,7 @@ export const PostSchema = z.object({
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   threadId: z.string(),
+  parentId: z.string().nullable(),
   isArchived: z.boolean(),
 })
 

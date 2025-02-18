@@ -3,19 +3,22 @@ import type { Post, Thread, User } from "@prisma/client";
 
 export class CreatePostInDetailUseCase {
   async execute({
-    threadId,
-    body,
     currentUser,
+    body,
+    threadId,
+    parentId,
   }: {
+    currentUser: User;
     threadId: Thread["id"];
     body: Post["body"];
-    currentUser: User;
+    parentId?: Post["id"];
   }) {
     const createdPost = await prisma.post.create({
       data: {
         body,
         threadId,
         userId: currentUser.id,
+        parentId: parentId,
       },
     });
 

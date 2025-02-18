@@ -6,6 +6,7 @@ import * as React from "react";
 
 type Props = {
   initialValue?: string;
+  placeholder?: string;
   bottomButtons: {
     onCancel?: () => void;
     submitText: string;
@@ -13,7 +14,11 @@ type Props = {
   };
 };
 
-export function PostForm({ bottomButtons, initialValue }: Props) {
+export function PostForm({
+  bottomButtons,
+  placeholder = "テキストを入力...",
+  initialValue,
+}: Props) {
   const [body, setBody] = React.useState(initialValue || "");
   const [isPending, startTransition] = React.useTransition();
 
@@ -32,7 +37,7 @@ export function PostForm({ bottomButtons, initialValue }: Props) {
   return (
     <div className="space-y-4">
       <Textarea
-        placeholder="テキストを入力..."
+        placeholder={placeholder}
         className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
         value={body}
         onChange={handleContentChange}

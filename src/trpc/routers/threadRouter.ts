@@ -77,13 +77,15 @@ export const threadRouter = router({
       z.object({
         body: PostSchema.shape.body,
         threadId: ThreadSchema.shape.id,
+        parentId: PostSchema.shape.id.optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       return await createPostInDetailUseCase.execute({
-        body: input.body,
         currentUser: ctx.currentUser,
+        body: input.body,
         threadId: input.threadId,
+        parentId: input.parentId,
       });
     }),
 });

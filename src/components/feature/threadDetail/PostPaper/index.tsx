@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 import { ManagePostDropDown } from "./ManagePostDropDown";
+import { ReplyForm } from "./ReplyForm";
 
 type Post = NonNullable<
   inferRouterOutputs<AppRouter>["thread"]["getThreadWithPosts"]["threadWithPosts"]
@@ -73,6 +74,7 @@ export function PostPaper({ post }: Props) {
           <ReactMarkdown>{body}</ReactMarkdown>
         </div>
       )}
+      <ReplyForm threadId={post.threadId} parentPostId={post.id} />
     </div>
   );
 }
