@@ -999,32 +999,32 @@
     postcss "^8.4.41"
     tailwindcss "4.0.5"
 
-"@tanstack/query-core@5.66.0":
-  version "5.66.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.66.0.tgz#163f670b3b4e3b3cdbff6698ad44b2edfcaed185"
-  integrity sha512-J+JeBtthiKxrpzUu7rfIPDzhscXF2p5zE/hVdrqkACBP8Yu0M96mwJ5m/8cPPYQE9aRNvXztXHlNwIh4FEeMZw==
+"@tanstack/query-core@5.66.4":
+  version "5.66.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.66.4.tgz#44b87bff289466adbfa0de8daa5756cbd2d61c61"
+  integrity sha512-skM/gzNX4shPkqmdTCSoHtJAPMTtmIJNS0hE+xwTTUVYwezArCT34NMermABmBVUg5Ls5aiUXEDXfqwR1oVkcA==
 
 "@tanstack/react-query@^5.66.0":
-  version "5.66.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.66.0.tgz#9f7aa1b3e844ea6a0ad2ee61fccaed76e614b865"
-  integrity sha512-z3sYixFQJe8hndFnXgWu7C79ctL+pI0KAelYyW+khaNJ1m22lWrhJU2QrsTcRKMuVPtoZvfBYrTStIdKo+x0Xw==
+  version "5.66.6"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.66.6.tgz#fa79101069aa2367c0112b0fd7bb1f409f6fc421"
+  integrity sha512-Xepc53h+D5sqoO/MZiSH2ROVLTDfRwR+3E4C2oS71/lo9u2mwbneZIEyIGXEHvmfyQpqtbf9voghD+QwLDLzcA==
   dependencies:
-    "@tanstack/query-core" "5.66.0"
+    "@tanstack/query-core" "5.66.4"
 
 "@trpc/client@^11.0.0-rc.755":
-  version "11.0.0-rc.768"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.768.tgz#86b0c66e41a5b93882dbfcfb98544a890e53f436"
-  integrity sha512-eZNNjQQhP6nsr1tniI/84P1SKyh6BjvKNMq0vXKnKFV57El27XTfn6wfmdLNcyL3f24ZmDxm/sMxXlzM+zaG/g==
+  version "11.0.0-rc.781"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.781.tgz#e246897264d49741c771a50fe08a6671ea5c853d"
+  integrity sha512-zAXsTPzk4RnvxSg6oOs4NSjorHufxIZ9rU6jGCHW4JrrIQP34RwruufUViC+xwrNLz17wIjKNvraQDT+cjowmw==
 
 "@trpc/react-query@^11.0.0-rc.755":
-  version "11.0.0-rc.768"
-  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.0.0-rc.768.tgz#fdc7b33bf3ebc49f4760c93c8019d54f3ea4ee56"
-  integrity sha512-9ATcL+jq1dQMDA+Egf0BHx8bf0/2t2Ng+3x338N+y9BvYvxa20vXtlZzv9IogXjaC8dUdKsGCu5MqGy9XaPnmA==
+  version "11.0.0-rc.781"
+  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.0.0-rc.781.tgz#b4181406b548da25331630d1631a1256a6df5d0e"
+  integrity sha512-BLd7JfFCJ1fNigpNek0fMARm4fbk7BbheMY8/jNggnE9CkcEqnsOzq+wP6ji8kX8c4NVbxdF5L4PQmEA+3uaNA==
 
 "@trpc/server@^11.0.0-rc.755":
-  version "11.0.0-rc.768"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.768.tgz#e401fed7ce08656b5bba27ff7683d8e5a0c6f6e8"
-  integrity sha512-+2du6a3uZEcQBj1OdT6EfWxa6dw/vqBG37aNR7YReTJ/UOMnheOmI/bskHkbK+x/kAcHPj8YN+/xc01QJDxwXQ==
+  version "11.0.0-rc.781"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.781.tgz#8bae916531c5be4898f4be3a9449aef26a494f2a"
+  integrity sha512-KmZDE2Qa+zfKTIbvsNNZESUK0Zoeo0k8/ZPPMzTh0+Tm7L6yeFNk+i4npC1i8Nxr8pxaJUIG5Jab7Rv00hsoHQ==
 
 "@types/cookie@0.6.0":
   version "0.6.0"
@@ -1115,14 +1115,14 @@
     pg-types "^4.0.1"
 
 "@types/react-dom@^19":
-  version "19.0.3"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.0.3.tgz#0804dfd279a165d5a0ad8b53a5b9e65f338050a4"
-  integrity sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==
+  version "19.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.0.4.tgz#bedba97f9346bd4c0fe5d39e689713804ec9ac89"
+  integrity sha512-4fSQ8vWFkg+TGhePfUzVmat3eC14TXYSsiiDSLI0dVLsrm9gZFABjPy/Qu6TKgl1tq1Bu1yDsuQgY3A3DOjCcg==
 
 "@types/react@^19":
-  version "19.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.8.tgz#7098e6159f2a61e4f4cef2c1223c044a9bec590e"
-  integrity sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==
+  version "19.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.10.tgz#d0c66dafd862474190fe95ce11a68de69ed2b0eb"
+  integrity sha512-JuRQ9KXLEjaUNjTWpzuR231Z2WpIwczOkBEIvbHNCzQefFIT0L8IqE6NV6ULLyC1SI/i234JnDoMkfg+RjQj2g==
   dependencies:
     csstype "^3.0.2"
 
