@@ -17,10 +17,11 @@ type Post = NonNullable<
 >["posts"][number];
 
 interface Props {
-  post: Post;
+  post: Post | Post["children"][number];
 }
 
 export function PostPaper({ post }: Props) {
+  const isParentPost = "children" in post;
   const [isPending, startTransition] = useTransition();
   const [isEditing, setIsEditing] = useState(false);
   const { user, body } = post;
@@ -41,7 +42,13 @@ export function PostPaper({ post }: Props) {
   };
 
   return (
-    <div className="rounded-lg border p-4 bg-white space-y-4">
+    <div
+      className={
+        isParentPost
+          ? "rounded-lg border p-4 bg-white space-y-4"
+          : "rounded-lg p-2 pr-0 space-y-4"
+      }
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <UserIcon userImage={user?.image} size="md" />
@@ -74,10 +81,24 @@ export function PostPaper({ post }: Props) {
           <ReactMarkdown>{body}</ReactMarkdown>
         </div>
       )}
-      {post.children.map((v) => {
-        return <p key={v.id}>{v.body}</p>;
-      })}
-      <ReplyForm threadId={post.threadId} parentPostId={post.id} />
+      <div className="space-y-0">
+        {isParentPost &&
+          post.children.map((v) => {
+            return (
+              <div key={v.id} className="flex relative pb-4">
+                <div className="pl-2 left-0 h-full absolute">
+                  <div className="w-[2px] h-full bg-gray-200" />
+                </div>
+                <div className="flex-1 pl-6">
+                  <PostPaper post={v} />
+                </div>
+              </div>
+            );
+          })}
+        {isParentPost && (
+          <ReplyForm threadId={post.threadId} parentPostId={post.id} />
+        )}
+      </div>
     </div>
   );
 }

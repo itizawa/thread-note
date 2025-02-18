@@ -35,6 +35,9 @@ export class GetThreadWithPostsUseCase {
               include: {
                 user: selectUserDateObject,
               },
+              orderBy: {
+                createdAt: "asc",
+              },
             },
             user: selectUserDateObject,
           },
