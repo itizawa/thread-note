@@ -2,13 +2,12 @@
 
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { MessageCircle, Search } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -16,7 +15,7 @@ type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"][number];
 
 export function ThreadList({ currentUserId }: { currentUserId: string }) {
-  const [keyWord, setKeyWord] = useState<string>();
+  const [keyWord] = useState<string>();
   const { data: threads, isLoading: isLoadingThreads } =
     trpc.thread.listThreadsByUserId.useQuery({
       userId: currentUserId,
@@ -27,7 +26,7 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
   return (
     <div className="flex flex-col space-y-4">
       <div className="flex justify-between">
-        <div className="relative bg-white">
+        {/* <div className="relative bg-white">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
           <Input
             type="search"
@@ -35,7 +34,7 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
             className="pl-10"
             onChange={(e) => setKeyWord(e.target.value)}
           />
-        </div>
+        </div> */}
         <Link href={urls.dashboardThreadNew}>
           <Button>新規Threadを作成する</Button>
         </Link>
