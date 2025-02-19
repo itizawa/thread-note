@@ -2,7 +2,7 @@
   "name": "Thread Note - スレッド形式のノートサービス",
   "short_name": "ThreadNote",
   "description": "Thread Note はスレッド形式で手軽にノートを残すことができるサービスです。",
-  "start_url": "/",
+  "start_url": "/dashboard",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#eee",
+  "theme_color": "#ff8904",
   "background_color": "#eee",
   "display": "standalone"
 }
