@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import * as React from "react";
 
 type Props = {
@@ -21,6 +22,7 @@ export function PostForm({
 }: Props) {
   const [body, setBody] = React.useState(initialValue || "");
   const [isPending, startTransition] = React.useTransition();
+  const isDisabled = isPending || body.length === 0;
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
@@ -34,6 +36,21 @@ export function PostForm({
     });
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (isDisabled) return;
+
+    if (isMacOs()) {
+      if (e.key === "Enter" && e.metaKey) {
+        handleSubmit();
+      }
+    }
+    if (isWindowsOs()) {
+      if (e.key === "Enter" && e.ctrlKey) {
+        handleSubmit();
+      }
+    }
+  };
+
   return (
     <div className="space-y-4">
       <Textarea
@@ -41,6 +58,7 @@ export function PostForm({
         className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
         value={body}
         onChange={handleContentChange}
+        onKeyDown={handleKeyPress}
       />
 
       <div className="flex items-center justify-between">
@@ -65,7 +83,7 @@ export function PostForm({
               キャンセル
             </Button>
           )}
-          <Button onClick={handleSubmit} disabled={isPending}>
+          <Button onClick={handleSubmit} disabled={isDisabled}>
             {bottomButtons.submitText}
           </Button>
         </div>
