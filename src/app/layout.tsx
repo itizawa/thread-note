@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "Thread Note - スレッド形式のノートサービス",
   description:
     "Thread Note はスレッド形式で手軽にノートを残すことができるサービスです。",
-  themeColor: "#ff8904",
+  themeColor: "#ffb86a",
 };
 
 export default function RootLayout({
