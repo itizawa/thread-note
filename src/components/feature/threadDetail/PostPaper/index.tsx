@@ -3,13 +3,13 @@
 import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
+import { MarkdownViewer } from "@/components/ui/markdownViewer";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import React, { useState, useTransition } from "react";
-import ReactMarkdown from "react-markdown";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
 
@@ -117,8 +117,8 @@ export function PostPaper({ post }: Props) {
             }}
           />
         ) : (
-          <div className="prose prose-gray max-w-none dark:prose-invert">
-            <ReactMarkdown>{body}</ReactMarkdown>
+          <div className="space-y-4">
+            <MarkdownViewer body={post.body} />
           </div>
         )}
       </div>
