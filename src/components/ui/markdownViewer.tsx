@@ -58,6 +58,16 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
         td: ({ children }) => (
           <td className="border border-gray-300 px-4 py-2">{children}</td>
         ),
+        a: ({ children, href }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-500 underline"
+          >
+            {children}
+          </a>
+        ),
       }}
     >
       {body}
