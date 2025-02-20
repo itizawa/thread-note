@@ -117,7 +117,7 @@ export function PostPaper({ post }: Props) {
             }}
           />
         ) : (
-          <div className="space-y-4">
+          <div className="prose space-y-4">
             <MarkdownViewer body={post.body} />
           </div>
         )}

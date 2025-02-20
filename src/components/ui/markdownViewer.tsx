@@ -1,10 +1,11 @@
 import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
 export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
+      remarkPlugins={[remarkGfm, remarkBreaks]}
       components={{
         h1: ({ children }) => (
           <h1 className="text-3xl font-bold border-b pb-2">{children}</h1>
