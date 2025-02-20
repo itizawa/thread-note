@@ -83,7 +83,11 @@ export function PostForm({
               キャンセル
             </Button>
           )}
-          <Button onClick={handleSubmit} disabled={isDisabled}>
+          <Button
+            onClick={handleSubmit}
+            disabled={isDisabled}
+            loading={isPending}
+          >
             {bottomButtons.submitText}
           </Button>
         </div>
