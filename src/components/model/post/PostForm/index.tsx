@@ -31,6 +31,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
         value={textarea.value}
         onChange={textarea.onChange}
         onKeyDown={textarea.onKeyPress}
+        forceFocus
       />
 
       <div className="flex items-center justify-between">

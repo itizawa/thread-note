@@ -76,6 +76,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
             className="bg-white"
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={handleKeyPress}
+            forceFocus
           />
           <Button
             size="sm"
