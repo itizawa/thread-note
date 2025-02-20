@@ -4,6 +4,7 @@ import { updateThreadInfo } from "@/app/actions/threadActions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { Pencil } from "lucide-react";
 import { useState, useTransition } from "react";
@@ -37,6 +38,21 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
     });
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (disabled) return;
+
+    if (isMacOs()) {
+      if (e.key === "Enter" && e.metaKey) {
+        handleUpdate();
+      }
+    }
+    if (isWindowsOs()) {
+      if (e.key === "Enter" && e.ctrlKey) {
+        handleUpdate();
+      }
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-2">
@@ -59,6 +75,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
             placeholder="タイトルを入力してください"
             className="bg-white"
             onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
           <Button
             size="sm"
