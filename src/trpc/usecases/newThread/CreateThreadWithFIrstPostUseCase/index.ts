@@ -4,18 +4,23 @@ import type { Post, Thread, User } from "@prisma/client";
 export class CreateThreadWithFIrstPostUseCase {
   async execute({
     postBody,
+    title,
     currentUser,
   }: {
-    postBody: Post["body"];
+    postBody?: Post["body"];
+    title?: Thread["title"];
     currentUser: User;
   }): Promise<{ thread: Thread }> {
     const thread = await prisma.thread.create({
       data: {
+        title,
         posts: {
-          create: {
-            body: postBody,
-            userId: currentUser.id,
-          },
+          create: postBody
+            ? {
+                body: postBody,
+                userId: currentUser.id,
+              }
+            : [],
         },
         userId: currentUser.id,
       },

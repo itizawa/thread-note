@@ -4,8 +4,10 @@ import { AppRouter } from "@/trpc/routers/_app";
 import { trpc } from "@/trpc/server";
 import { inferRouterInputs } from "@trpc/server";
 
-export const createThreadWithFirstPost = async (body: string) => {
-  return await trpc.thread.createThreadWithFirstPost({ body });
+export const createThreadWithFirstPost = async (
+  args: inferRouterInputs<AppRouter>["thread"]["createThreadWithFirstPost"]
+) => {
+  return await trpc.thread.createThreadWithFirstPost(args);
 };
 
 export const createPostInThread = async (

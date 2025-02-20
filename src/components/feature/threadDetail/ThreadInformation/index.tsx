@@ -21,6 +21,8 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
 
+  const disabled = !title || isPending;
+
   const handleUpdate = async () => {
     startTransition(async () => {
       await updateThreadInfo({
@@ -71,7 +73,8 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
             size="sm"
             className="h-9"
             onClick={handleUpdate}
-            disabled={isPending}
+            disabled={disabled}
+            loading={isPending}
           >
             更新
           </Button>

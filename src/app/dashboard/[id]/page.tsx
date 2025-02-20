@@ -11,11 +11,9 @@ export default async function Page({ params }: Props) {
   return (
     <div className="h-full relative">
       <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="w-full max-w-[700px] mx-auto">
-          <div className="py-4">
-            <ThreadInformation threadId={threadId} />
-          </div>
-          <div className="py-4 overflow-y-auto">
+        <div className="w-full max-w-[700px] mx-auto space-y-4">
+          <ThreadInformation threadId={threadId} />
+          <div className="overflow-y-auto">
             <Suspense fallback={<Skeleton className="w-full h-20" />}>
               <PostTimeLine threadId={threadId} />
             </Suspense>

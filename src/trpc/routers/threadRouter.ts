@@ -64,10 +64,16 @@ export const threadRouter = router({
     }),
 
   createThreadWithFirstPost: protectedProcedure
-    .input(PostSchema.pick({ body: true }))
+    .input(
+      z.object({
+        body: PostSchema.shape.body.optional(),
+        title: ThreadSchema.shape.title,
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       return await createThreadWithFIrstPostUseCase.execute({
         postBody: input.body,
+        title: input.title,
         currentUser: ctx.currentUser,
       });
     }),
