@@ -2,63 +2,35 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import * as React from "react";
 
 type Props = {
-  initialValue?: string;
-  placeholder?: string;
+  textarea: {
+    placeholder?: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  };
+  formState: {
+    isDisabled: boolean;
+    isPending: boolean;
+  };
   bottomButtons: {
     onCancel?: () => void;
     submitText: string;
-    onSubmit: (body: string) => Promise<void>;
+    onSubmit: () => void;
   };
 };
 
-export function PostForm({
-  bottomButtons,
-  placeholder = "テキストを入力...",
-  initialValue,
-}: Props) {
-  const [body, setBody] = React.useState(initialValue || "");
-  const [isPending, startTransition] = React.useTransition();
-  const isDisabled = isPending || body.length === 0;
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newContent = e.target.value;
-    setBody(newContent);
-  };
-
-  const handleSubmit = () => {
-    startTransition(async () => {
-      bottomButtons.onSubmit(body);
-      setBody("");
-    });
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (isDisabled) return;
-
-    if (isMacOs()) {
-      if (e.key === "Enter" && e.metaKey) {
-        handleSubmit();
-      }
-    }
-    if (isWindowsOs()) {
-      if (e.key === "Enter" && e.ctrlKey) {
-        handleSubmit();
-      }
-    }
-  };
-
+export function PostForm({ bottomButtons, textarea, formState }: Props) {
   return (
     <div className="space-y-4">
       <Textarea
-        placeholder={placeholder}
+        placeholder={textarea.placeholder || "テキストを入力..."}
         className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
-        value={body}
-        onChange={handleContentChange}
-        onKeyDown={handleKeyPress}
+        value={textarea.value}
+        onChange={textarea.onChange}
+        onKeyDown={textarea.onKeyPress}
       />
 
       <div className="flex items-center justify-between">
@@ -84,9 +56,9 @@ export function PostForm({
             </Button>
           )}
           <Button
-            onClick={handleSubmit}
-            disabled={isDisabled}
-            loading={isPending}
+            onClick={bottomButtons.onSubmit}
+            disabled={formState.isDisabled}
+            loading={formState.isPending}
           >
             {bottomButtons.submitText}
           </Button>

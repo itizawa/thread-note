@@ -3,11 +3,12 @@
 import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
+import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
@@ -24,14 +25,41 @@ export function PostPaper({ post }: Props) {
   const isParentPost = "children" in post;
   const [isPending, startTransition] = useTransition();
   const [isEditing, setIsEditing] = useState(false);
-  const { user, body } = post;
+  const { user } = post;
 
+  const [body, setBody] = React.useState(post.body);
+
+  const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
 
-  const handleSubmit = async (body: string) => {
-    await updatePostBody({ id: post.id, body });
-    setIsEditing(false);
-    utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+  const handleSubmit = async () => {
+    startTransition(async () => {
+      await updatePostBody({ id: post.id, body });
+      setIsEditing(false);
+      utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+    });
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value;
+    setBody(newContent);
+  };
+
+  const handleKeyPress = (
+    e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    if (isDisabled) return;
+
+    if (isMacOs()) {
+      if (e.key === "Enter" && e.metaKey) {
+        handleSubmit();
+      }
+    }
+    if (isWindowsOs()) {
+      if (e.key === "Enter" && e.ctrlKey) {
+        handleSubmit();
+      }
+    }
   };
 
   const handleClickArchiveButton = async () => {
@@ -70,10 +98,21 @@ export function PostPaper({ post }: Props) {
       <div className="pb-4">
         {isEditing ? (
           <PostForm
-            initialValue={post.body}
+            textarea={{
+              value: body,
+              onChange: handleContentChange,
+              onKeyPress: handleKeyPress,
+            }}
+            formState={{
+              isDisabled,
+              isPending,
+            }}
             bottomButtons={{
               submitText: "更新",
-              onCancel: () => setIsEditing(false),
+              onCancel: () => {
+                setBody(post.body); // 初期化
+                setIsEditing(false);
+              },
               onSubmit: handleSubmit,
             }}
           />
