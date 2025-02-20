@@ -69,6 +69,14 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             {children}
           </a>
         ),
+        img: ({ src, alt }) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={alt}
+            className="max-w-full h-auto rounded-lg shadow-md mx-auto"
+          />
+        ),
       }}
     >
       {body}
