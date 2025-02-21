@@ -130,7 +130,7 @@ export function PostPaper({ post }: Props) {
                 <div className="pl-2 left-0 h-full absolute">
                   <div className="w-[2px] h-full bg-gray-200" />
                 </div>
-                <div className="flex-1 pl-6">
+                <div className="w-full pl-6">
                   <PostPaper post={v} />
                 </div>
               </div>
