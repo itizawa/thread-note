@@ -10,6 +10,7 @@ type Props = {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+    forceFocus?: boolean;
   };
   formState: {
     isDisabled: boolean;
@@ -31,7 +32,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
         value={textarea.value}
         onChange={textarea.onChange}
         onKeyDown={textarea.onKeyPress}
-        forceFocus
+        forceFocus={textarea.forceFocus}
       />
 
       <div className="flex items-center justify-between">

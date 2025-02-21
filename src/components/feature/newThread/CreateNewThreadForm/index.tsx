@@ -61,6 +61,7 @@ export function CreateNewThreadForm({ userId }: { userId?: string }) {
         className="bg-white"
         onChange={(e) => setTitle(e.target.value)}
         onKeyDown={handleKeyPress}
+        forceFocus
       />
       <div className="rounded-lg border p-4 bg-white">
         <PostForm

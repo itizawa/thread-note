@@ -102,6 +102,7 @@ export function PostPaper({ post }: Props) {
               value: body,
               onChange: handleContentChange,
               onKeyPress: handleKeyPress,
+              forceFocus: true,
             }}
             formState={{
               isDisabled,

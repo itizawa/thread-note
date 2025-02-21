@@ -60,6 +60,7 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
           onChange: handleContentChange,
           onKeyPress: handleKeyPress,
           placeholder: "返信を入力...",
+          forceFocus: true,
         }}
         formState={{
           isDisabled,
