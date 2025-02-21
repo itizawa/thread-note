@@ -9,9 +9,12 @@ const Textarea = React.forwardRef<
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
   React.useEffect(() => {
-    if (forceFocus) {
-      inputRef.current?.focus();
-    }
+    if (!forceFocus) return;
+    if (!inputRef.current) return;
+
+    const len = inputRef.current.value.length || null;
+    inputRef.current.focus();
+    inputRef.current.setSelectionRange(len, len);
   }, [forceFocus]);
 
   return (
