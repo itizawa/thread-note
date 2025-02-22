@@ -1,9 +1,18 @@
 "use client";
 
 import { updateThreadInfo } from "@/app/actions/threadActions";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { urls } from "@/consts/urls";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { Pencil } from "lucide-react";
@@ -68,6 +77,20 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
   return (
     <div className="space-y-4">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>
+              {threadInfo.title || "タイトルなし"}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       {isEditing ? (
         <div className="flex space-x-2">
           <Input
