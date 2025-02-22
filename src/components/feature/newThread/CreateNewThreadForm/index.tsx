@@ -4,11 +4,11 @@ import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
+import { enqueueServerAction } from "@/lib/enqueueServerAction";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { toast } from "sonner";
 
 export function CreateNewThreadForm({ userId }: { userId?: string }) {
   const utils = trpc.useUtils();
@@ -23,14 +23,21 @@ export function CreateNewThreadForm({ userId }: { userId?: string }) {
 
   const handleSubmit = async () => {
     startTransition(async () => {
-      const { thread } = await createThreadWithFirstPost({
-        title,
-        body,
+      const res = await enqueueServerAction({
+        action: () =>
+          createThreadWithFirstPost({
+            title,
+            body,
+          }),
+        errorText: "スレッドの作成に失敗しました",
+        successText: "スレッドを作成しました",
       });
+      if (!res.isOk) return;
+
+      const { thread } = res.data;
       if (userId) {
-        utils.thread.listThreadsByUserId.invalidate({ userId: userId });
+        utils.thread.listThreadsByUserId.invalidate({ userId });
       }
-      toast.success("スレッドを作成しました");
       router.push(urls.dashboardThreadDetails(thread.id));
     });
   };

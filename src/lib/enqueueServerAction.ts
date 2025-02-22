@@ -14,12 +14,16 @@ type Response<T> =
 export async function enqueueServerAction<T>({
   action,
   errorText,
+  successText,
 }: {
   action: () => Promise<T>;
   errorText?: string;
+  successText?: string;
 }): Promise<Response<T>> {
   try {
     const result = await action();
+
+    if (successText) toast.success(successText);
 
     return { data: result, isOk: true };
 
