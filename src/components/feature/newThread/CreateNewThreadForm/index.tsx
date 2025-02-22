@@ -8,6 +8,7 @@ import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 export function CreateNewThreadForm({ userId }: { userId?: string }) {
   const utils = trpc.useUtils();
@@ -26,8 +27,10 @@ export function CreateNewThreadForm({ userId }: { userId?: string }) {
         title,
         body,
       });
-      if (userId)
+      if (userId) {
         utils.thread.listThreadsByUserId.invalidate({ userId: userId });
+      }
+      toast.success("スレッドを作成しました");
       router.push(urls.dashboardThreadDetails(thread.id));
     });
   };

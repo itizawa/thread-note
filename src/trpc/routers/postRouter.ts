@@ -7,6 +7,7 @@ export const postRouter = router({
   updatePostBody: protectedProcedure
     .input(z.object({ id: PostSchema.shape.id, body: PostSchema.shape.body }))
     .mutation(async ({ ctx, input }) => {
+      throw new Error("Not implemented");
       return await prisma.post.update({
         where: {
           id: input.id,

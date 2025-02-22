@@ -10,6 +10,7 @@ import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import React, { useState, useTransition } from "react";
+import { toast } from "sonner";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
 
@@ -66,6 +67,7 @@ export function PostPaper({ post }: Props) {
     startTransition(async () => {
       await changeToArchive({ id: post.id });
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+      toast.success("アーカイブしました");
     });
   };
 
