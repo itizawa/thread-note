@@ -1,5 +1,5 @@
 import { TRPCProvider } from "@/trpc/client";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Thread Note - スレッド形式のノートサービス",
   description:
     "Thread Note はスレッド形式で手軽にノートを残すことができるサービスです。",
+};
+
+export const viewport: Viewport = {
   themeColor: "#ffb86a",
 };
 
