@@ -64,7 +64,20 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
   if (isLoading) {
     return (
-      <div className="space-y-2">
+      <div className="space-y-4">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>
+                <Skeleton className="w-20 h-4" />
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <Skeleton className="w-full h-9" />
       </div>
     );
