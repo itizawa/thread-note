@@ -1,8 +1,10 @@
+import { Navigation } from "@/components/feature/layout/Navigation";
 import { HydrateClient } from "@/trpc/server";
 
 export default async function Home() {
   return (
     <HydrateClient>
+      <Navigation />
       <main>
         <section className="bg-orange-400 px-4 py-16 text-white">
           <div className="mx-auto container text-center">

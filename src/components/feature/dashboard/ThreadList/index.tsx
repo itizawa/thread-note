@@ -9,19 +9,15 @@ import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"][number];
 
 export function ThreadList({ currentUserId }: { currentUserId: string }) {
-  const [keyWord] = useState<string>();
   const { data: threads, isLoading: isLoadingThreads } =
     trpc.thread.listThreadsByUserId.useQuery({
       userId: currentUserId,
     });
-
-  console.log(keyWord);
 
   return (
     <div className="flex flex-col space-y-4">
