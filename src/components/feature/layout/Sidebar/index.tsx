@@ -54,7 +54,7 @@ export const DashBoardSidebar = async () => {
           <span>{currentUser?.name}</span>
         </div>
       </div>
-      <nav className="space-y-4 p-2 overflow-y-auto flex flex-col">
+      <nav className="space-y-4 p-2 overflow-y-auto flex flex-col flex-1">
         <div className="space-y-1">
           {routes.map((route) => (
             <Link

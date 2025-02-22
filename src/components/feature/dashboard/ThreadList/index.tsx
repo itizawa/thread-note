@@ -2,6 +2,15 @@
 
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
@@ -9,15 +18,31 @@ import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { undefined } from "zod";
 
 type Thread =
-  inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"][number];
+  inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"]["threads"][number];
 
 export function ThreadList({ currentUserId }: { currentUserId: string }) {
-  const { data: threads, isLoading: isLoadingThreads } =
+  const router = useRouter();
+  const searchParam = useSearchParams();
+  const currentPage = Number(searchParam.get("page")) || 1;
+
+  const { data, isLoading: isLoadingThreads } =
     trpc.thread.listThreadsByUserId.useQuery({
       userId: currentUserId,
+      limit: 30,
+      page: currentPage,
     });
+  const threads = data?.threads || [];
+  const isFirstPage = currentPage === 1;
+  const isLastPage = (data?.totalCount || 0) <= 30 * currentPage;
+  const isLastPrevPage = (data?.totalCount || 0) <= 30 * (currentPage + 1);
+
+  const handlePageChange = (page: number) => {
+    router.push(urls.dashboardWithQuery(page));
+  };
 
   return (
     <div className="flex flex-col space-y-4">
@@ -35,11 +60,9 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
           <Button>新規Threadを作成する</Button>
         </Link>
       </div>
-      <div className="rounded-lg border bg-white">
+      <div className="rounded-lg border bg-white flex-1">
         <div className="border-b px-4 py-3">
-          <h2 className="font-medium">{`スレッド一覧 ${
-            threads ? `（${threads.length}）` : ""
-          }`}</h2>
+          <h2 className="font-medium">スレッド一覧</h2>
         </div>
         {isLoadingThreads ? (
           <>
@@ -55,6 +78,67 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
           </div>
         )}
       </div>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() =>
+                isFirstPage ? undefined : handlePageChange(currentPage - 1)
+              }
+              className={
+                isFirstPage
+                  ? "text-gray-400 hover:text-gray-400 cursor-not-allowed"
+                  : "text-gray-400"
+              }
+            />
+          </PaginationItem>
+          {!isFirstPage && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(currentPage - 1)}
+                className="text-gray-400"
+              >
+                {currentPage - 1}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          <PaginationItem>
+            <PaginationLink
+              onClick={() => handlePageChange(currentPage)}
+              className="font-bold"
+            >
+              {currentPage}
+            </PaginationLink>
+          </PaginationItem>
+          {!isLastPage && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(currentPage + 1)}
+                className="text-gray-400"
+              >
+                {currentPage + 1}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          {!isLastPage && !isLastPrevPage && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+          <PaginationItem>
+            <PaginationNext
+              onClick={() =>
+                isLastPage ? undefined : handlePageChange(currentPage + 1)
+              }
+              className={
+                isLastPage
+                  ? "text-gray-400 hover:text-gray-400 cursor-not-allowed"
+                  : "text-gray-400"
+              }
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }

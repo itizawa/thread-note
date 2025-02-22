@@ -11,7 +11,7 @@ import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-export function CreateNewThreadForm({ userId }: { userId?: string }) {
+export function CreateNewThreadForm() {
   const utils = trpc.useUtils();
   const router = useRouter();
 
@@ -35,9 +35,7 @@ export function CreateNewThreadForm({ userId }: { userId?: string }) {
       success: {
         text: "スレッドを作成しました",
         onSuccess: ({ thread }) => {
-          if (userId) {
-            utils.thread.listThreadsByUserId.invalidate({ userId });
-          }
+          utils.thread.listThreadsByUserId.refetch();
           router.push(urls.dashboardThreadDetails(thread.id));
         },
       },
