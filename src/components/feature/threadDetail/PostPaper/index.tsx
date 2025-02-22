@@ -4,6 +4,7 @@ import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { MarkdownViewer } from "@/components/ui/markdownViewer";
+import { enqueueServerAction } from "@/lib/enqueueServerAction";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
@@ -35,7 +36,10 @@ export function PostPaper({ post }: Props) {
 
   const handleSubmit = async () => {
     startTransition(async () => {
-      await updatePostBody({ id: post.id, body });
+      await enqueueServerAction({
+        action: () => updatePostBody({ id: post.id, body }),
+        errorText: "更新に失敗しました",
+      });
       setIsEditing(false);
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
     });
