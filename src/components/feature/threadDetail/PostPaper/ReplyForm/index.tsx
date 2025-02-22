@@ -4,6 +4,7 @@ import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { Button } from "@/components/ui/button";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
+import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { MessageCircle } from "lucide-react";
 import React, { useState } from "react";
@@ -17,16 +18,25 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [body, setBody] = React.useState("");
 
-  const [isPending, startTransition] = React.useTransition();
+  const { isPending, enqueueServerAction } = useServerAction();
   const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
 
-  const handleSubmit = async () => {
-    startTransition(async () => {
-      await createPostInThread({ threadId, body, parentId: parentPostId });
-      setIsEditing(false);
-      utils.thread.getThreadWithPosts.invalidate({ id: threadId });
-      setBody("");
+  const handleSubmit = () => {
+    enqueueServerAction({
+      action: () => {
+        return createPostInThread({ threadId, body, parentId: parentPostId });
+      },
+      error: {
+        text: "更新に失敗しました",
+      },
+      success: {
+        onSuccess: () => {
+          setIsEditing(false);
+          utils.thread.getThreadWithPosts.invalidate({ id: threadId });
+          setBody("");
+        },
+      },
     });
   };
 

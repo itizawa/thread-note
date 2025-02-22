@@ -3,27 +3,32 @@
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
+import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
-import React, { useTransition } from "react";
+import React from "react";
 
 type Props = {
   threadId: string;
 };
 export function CreateNewPostForm({ threadId }: Props) {
   const utils = trpc.useUtils();
-  const [isPending, startTransition] = useTransition();
+  const { isPending, enqueueServerAction } = useServerAction();
   const [body, setBody] = React.useState("");
 
   const isDisabled = isPending || body.length === 0;
 
-  const handleSubmit = async () => {
-    startTransition(async () => {
-      await createPostInThread({
-        body,
-        threadId,
-      });
-      setBody("");
-      utils.thread.getThreadWithPosts.invalidate({ id: threadId });
+  const handleSubmit = () => {
+    enqueueServerAction({
+      action: () => createPostInThread({ threadId, body }),
+      error: {
+        text: "更新に失敗しました",
+      },
+      success: {
+        onSuccess: () => {
+          utils.thread.getThreadWithPosts.invalidate({ id: threadId });
+          setBody("");
+        },
+      },
     });
   };
 

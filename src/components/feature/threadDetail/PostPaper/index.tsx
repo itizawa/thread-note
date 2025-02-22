@@ -4,13 +4,13 @@ import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { MarkdownViewer } from "@/components/ui/markdownViewer";
-import { enqueueServerAction } from "@/lib/enqueueServerAction";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
+import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import React, { useState, useTransition } from "react";
+import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
@@ -25,7 +25,7 @@ interface Props {
 
 export function PostPaper({ post }: Props) {
   const isParentPost = "children" in post;
-  const [isPending, startTransition] = useTransition();
+  const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);
   const { user } = post;
 
@@ -34,14 +34,18 @@ export function PostPaper({ post }: Props) {
   const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
 
-  const handleSubmit = async () => {
-    startTransition(async () => {
-      await enqueueServerAction({
-        action: () => updatePostBody({ id: post.id, body }),
-        errorText: "更新に失敗しました",
-      });
-      setIsEditing(false);
-      utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+  const handleSubmit = () => {
+    enqueueServerAction({
+      action: () => updatePostBody({ id: post.id, body }),
+      error: {
+        text: "更新に失敗しました",
+      },
+      success: {
+        onSuccess: () => {
+          setIsEditing(false);
+          utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+        },
+      },
     });
   };
 

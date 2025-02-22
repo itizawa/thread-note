@@ -4,8 +4,9 @@ import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
-import { enqueueServerAction } from "@/lib/enqueueServerAction";
+
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
+import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -17,28 +18,29 @@ export function CreateNewThreadForm({ userId }: { userId?: string }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = React.useState("");
 
-  const [isPending, startTransition] = React.useTransition();
+  const { isPending, enqueueServerAction } = useServerAction();
   const bothEmpty = title.length === 0 && body.length === 0;
   const isDisabled = isPending || bothEmpty;
 
-  const handleSubmit = async () => {
-    startTransition(async () => {
-      const res = await enqueueServerAction({
-        action: () =>
-          createThreadWithFirstPost({
-            title,
-            body,
-          }),
-        errorText: "スレッドの作成に失敗しました",
-        successText: "スレッドを作成しました",
-      });
-      if (!res.isOk) return;
-
-      const { thread } = res.data;
-      if (userId) {
-        utils.thread.listThreadsByUserId.invalidate({ userId });
-      }
-      router.push(urls.dashboardThreadDetails(thread.id));
+  const handleSubmit = () => {
+    enqueueServerAction({
+      action: () =>
+        createThreadWithFirstPost({
+          title,
+          body,
+        }),
+      error: {
+        text: "スレッドの作成に失敗しました",
+      },
+      success: {
+        text: "スレッドを作成しました",
+        onSuccess: ({ thread }) => {
+          if (userId) {
+            utils.thread.listThreadsByUserId.invalidate({ userId });
+          }
+          router.push(urls.dashboardThreadDetails(thread.id));
+        },
+      },
     });
   };
 
