@@ -20,14 +20,12 @@ export const threadRouter = router({
       z.object({
         userId: UserSchema.shape.id,
         cursor: z.string().optional(),
-        page: z.number().optional(),
         limit: z.number().min(1).max(100).optional(),
       })
     )
     .query(async ({ input }) => {
       return await listThreadsUseCase.execute({
         userId: input.userId,
-        page: input.page,
         cursor: input.cursor,
         limit: input.limit || 10,
       });

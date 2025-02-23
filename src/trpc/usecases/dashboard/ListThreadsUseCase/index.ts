@@ -4,12 +4,10 @@ import type { User } from "@prisma/client";
 export class ListThreadsUseCase {
   async execute({
     userId,
-    page,
     cursor,
     limit = 10,
   }: {
     userId: User["id"];
-    page?: number;
     cursor?: string;
     limit?: number;
   }) {
@@ -17,9 +15,7 @@ export class ListThreadsUseCase {
       userId,
     };
 
-    const totalCount = await prisma.thread.count({
-      where,
-    });
+    const totalCount = await prisma.thread.count({ where });
     const threads = await prisma.thread.findMany({
       where,
       select: {
@@ -48,7 +44,6 @@ export class ListThreadsUseCase {
       },
       take: limit + 1, // 次のページがあるか確認するために 1 つ多く取得
       ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}), // カーソルがある場合はスキップ
-      ...(page ? { take: limit, skip: limit * (page - 1) } : undefined), // ページ指定がある場合はページング
     });
 
     const hasNextPage = threads.length > limit;

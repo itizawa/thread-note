@@ -12,8 +12,8 @@ export default async function Page() {
   return (
     <div className="h-full relative">
       {/* メインコンテンツ */}
-      <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="w-full max-w-[700px] mx-auto">
+      <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4 h-full">
+        <div className="w-full max-w-[700px] mx-auto h-full">
           {currentUser.id && <ThreadList currentUserId={currentUser.id} />}
         </div>
       </main>

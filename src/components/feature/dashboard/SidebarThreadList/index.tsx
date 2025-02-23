@@ -18,7 +18,7 @@ export function SidebarThreadList({
 }) {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
     trpc.thread.listThreadsByUserId.useInfiniteQuery(
-      { userId: currentUserId, limit: 30 },
+      { userId: currentUserId, limit: 20 },
       { getNextPageParam: (lastPage) => lastPage.nextCursor }
     );
   const threads = data?.pages.flatMap((v) => v.threads) || [];
