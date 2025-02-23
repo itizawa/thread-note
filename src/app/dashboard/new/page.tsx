@@ -1,4 +1,3 @@
-import { getCurrentUser } from "@/app/actions/user";
 import { CreateNewThreadForm } from "@/components/feature/newThread/CreateNewThreadForm";
 import {
   Breadcrumb,
@@ -11,8 +10,6 @@ import {
 import { urls } from "@/consts/urls";
 
 export default async function Page() {
-  const user = await getCurrentUser();
-
   return (
     <div className="flex h-full">
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
@@ -28,7 +25,7 @@ export default async function Page() {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <CreateNewThreadForm userId={user?.id} />
+          <CreateNewThreadForm />
         </div>
       </main>
 
