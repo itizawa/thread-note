@@ -29,20 +29,20 @@ export const PostController = ({
       <div className="flex items-center space-x-2">
         <Button
           variant="outline"
-          id="post_controller_header_button"
           className="shadow-none"
           size="icon"
-          onClick={() =>
-            onClickIcon({ insertText: "# ", removeIfExist: false })
-          }
+          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+          onClick={() => {
+            onClickIcon({ insertText: "# ", removeIfExist: false });
+          }}
         >
           <Hash className="h-5 w-5" />
         </Button>
         <Button
           variant="outline"
-          id="post_controller_list_button"
           className="shadow-none"
           size="icon"
+          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
           onClick={() => onClickIcon({ insertText: "- ", removeIfExist: true })}
         >
           <List className="h-5 w-5" />

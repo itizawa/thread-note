@@ -24,8 +24,6 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [keyboardHeight, setKeyboardHeight] = React.useState(0);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   const insertAtCursor = ({
@@ -80,25 +78,6 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
     });
   };
 
-  React.useEffect(() => {
-    const handleResize = () => {
-      const newHeight = window.innerHeight; // 変更後の画面高さ
-      const fullHeight = document.documentElement.clientHeight; // 元の画面高さ
-      const keyboardSize = fullHeight - newHeight; // キーボードの高さ
-
-      if (keyboardSize > 100) {
-        setKeyboardHeight(keyboardSize);
-      } else {
-        setKeyboardHeight(0);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <>
       <div className="space-y-4">
@@ -109,15 +88,6 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
           value={textarea.value}
           onChange={(e) => textarea.onChange(e.target.value)}
           onKeyDown={textarea.onKeyPress}
-          onBlur={(e) => {
-            if (
-              e.relatedTarget?.id &&
-              ["post_controller_list_button", "post_controller_header_button"].includes(e.relatedTarget.id) // prettier-ignore
-            ) {
-              return;
-            }
-            setIsFocused(false);
-          }}
           forceFocus={textarea.forceFocus}
         />
         <PostController
@@ -126,18 +96,6 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
           onClickIcon={insertAtCursor}
         />
       </div>
-      {isFocused && (
-        <div
-          className={`fixed left-0 right-0 z-10 p-2 bg-white shadow-md`}
-          style={{ bottom: keyboardHeight }}
-        >
-          <PostController
-            bottomButtons={bottomButtons}
-            formState={formState}
-            onClickIcon={insertAtCursor}
-          />
-        </div>
-      )}
     </>
   );
 }
