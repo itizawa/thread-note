@@ -7,6 +7,7 @@ const Textarea = React.forwardRef<
   React.ComponentProps<"textarea"> & { forceFocus?: boolean }
 >(({ className, forceFocus, ...props }, ref) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
+  React.useImperativeHandle(ref, () => inputRef.current!, [inputRef]);
 
   React.useEffect(() => {
     if (!forceFocus) return;
@@ -23,7 +24,7 @@ const Textarea = React.forwardRef<
         "flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
         className
       )}
-      ref={ref || inputRef}
+      ref={inputRef}
       {...props}
     />
   );
