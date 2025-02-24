@@ -1,9 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Hash, List } from "lucide-react";
 import * as React from "react";
+import { PostController } from "./parts/postController";
 
 type Props = {
   textarea: {
@@ -25,6 +24,7 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
+  const [isFocused, setIsFocused] = React.useState(false);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   const insertAtCursor = ({
@@ -80,61 +80,42 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
   };
 
   return (
-    <div className="space-y-4">
-      <Textarea
-        ref={textareaRef}
-        placeholder={textarea.placeholder || "テキストを入力..."}
-        className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
-        value={textarea.value}
-        onChange={(e) => textarea.onChange(e.target.value)}
-        onKeyDown={textarea.onKeyPress}
-        forceFocus={textarea.forceFocus}
-      />
-
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            className="shadow-none"
-            size="icon"
-            onClick={() =>
-              insertAtCursor({ insertText: "# ", removeIfExist: false })
+    <>
+      <div className="space-y-4">
+        <Textarea
+          ref={textareaRef}
+          placeholder={textarea.placeholder || "テキストを入力..."}
+          className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
+          value={textarea.value}
+          onChange={(e) => textarea.onChange(e.target.value)}
+          onKeyDown={textarea.onKeyPress}
+          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => {
+            if (
+              e.relatedTarget?.id &&
+              ["post_controller_list_button", "post_controller_header_button"].includes(e.relatedTarget.id) // prettier-ignore
+            ) {
+              return;
             }
-          >
-            <Hash className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="outline"
-            className="shadow-none"
-            size="icon"
-            onClick={() =>
-              insertAtCursor({ insertText: "- ", removeIfExist: true })
-            }
-          >
-            <List className="h-5 w-5" />
-          </Button>
-          {/*<Button variant="ghost" size="icon">
-            <Link2 className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon">
-            <Paperclip className="h-5 w-5" />
-          </Button> */}
-        </div>
-        <div className="flex items-center space-x-2">
-          {bottomButtons.onCancel && (
-            <Button variant="ghost" onClick={bottomButtons.onCancel}>
-              キャンセル
-            </Button>
-          )}
-          <Button
-            onClick={bottomButtons.onSubmit}
-            disabled={formState.isDisabled}
-            loading={formState.isPending}
-          >
-            {bottomButtons.submitText}
-          </Button>
-        </div>
+            setIsFocused(false);
+          }}
+          forceFocus={textarea.forceFocus}
+        />
+        <PostController
+          bottomButtons={bottomButtons}
+          formState={formState}
+          onClickIcon={insertAtCursor}
+        />
       </div>
-    </div>
+      {isFocused && (
+        <div className="md:hidden block fixed bottom-0 left-0 right-0 z-10 p-2 bg-white shadow-md">
+          <PostController
+            bottomButtons={bottomButtons}
+            formState={formState}
+            onClickIcon={insertAtCursor}
+          />
+        </div>
+      )}
+    </>
   );
 }
