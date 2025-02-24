@@ -79,6 +79,18 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
     });
   };
 
+  React.useEffect(() => {
+    const handleResize = () => {
+      // キーボードが開いたかどうかを判定
+      setIsFocused(window.innerHeight < document.documentElement.clientHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <div className="space-y-4">
@@ -89,7 +101,6 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
           value={textarea.value}
           onChange={(e) => textarea.onChange(e.target.value)}
           onKeyDown={textarea.onKeyPress}
-          onFocus={() => setIsFocused(true)}
           onBlur={(e) => {
             if (
               e.relatedTarget?.id &&
@@ -108,7 +119,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
         />
       </div>
       {isFocused && (
-        <div className="md:hidden block fixed bottom-0 left-0 right-0 z-10 p-2 bg-white shadow-md">
+        <div className="fixed bottom-0 left-0 right-0 z-10 p-2 bg-white shadow-md">
           <PostController
             bottomButtons={bottomButtons}
             formState={formState}
