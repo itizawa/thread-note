@@ -25,6 +25,7 @@ type Props = {
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
   const [isFocused, setIsFocused] = React.useState(false);
+  const [keyboardHeight, setKeyboardHeight] = React.useState(0);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   const insertAtCursor = ({
@@ -81,8 +82,15 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
 
   React.useEffect(() => {
     const handleResize = () => {
-      // キーボードが開いたかどうかを判定
-      setIsFocused(window.innerHeight < document.documentElement.clientHeight);
+      const newHeight = window.innerHeight; // 変更後の画面高さ
+      const fullHeight = document.documentElement.clientHeight; // 元の画面高さ
+      const keyboardSize = fullHeight - newHeight; // キーボードの高さ
+
+      if (keyboardSize > 100) {
+        setKeyboardHeight(keyboardSize);
+      } else {
+        setKeyboardHeight(0);
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -119,7 +127,10 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
         />
       </div>
       {isFocused && (
-        <div className="fixed bottom-0 left-0 right-0 z-10 p-2 bg-white shadow-md">
+        <div
+          className={`fixed left-0 right-0 z-10 p-2 bg-white shadow-md`}
+          style={{ bottom: keyboardHeight }}
+        >
           <PostController
             bottomButtons={bottomButtons}
             formState={formState}
