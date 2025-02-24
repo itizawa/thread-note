@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Hash } from "lucide-react";
 import * as React from "react";
 
 type Props = {
@@ -24,9 +25,36 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const insertAtCursor = (insertText: string) => {
+    if (!textareaRef.current) return;
+
+    const start = textareaRef.current.selectionStart;
+    const end = textareaRef.current.selectionEnd;
+
+    // 文字列の更新
+    const newText = `${textarea.value.substring(
+      0,
+      start
+    )}${insertText}${textarea.value.substring(end)}`;
+    textarea.onChange(newText);
+
+    // カーソル位置を更新
+    requestAnimationFrame(() => {
+      if (!textareaRef.current) return;
+      textareaRef.current.setSelectionRange(
+        start + insertText.length,
+        start + insertText.length
+      );
+      textareaRef.current.focus();
+    });
+  };
+
   return (
     <div className="space-y-4">
       <Textarea
+        ref={textareaRef}
         placeholder={textarea.placeholder || "テキストを入力..."}
         className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
         value={textarea.value}
@@ -37,11 +65,15 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
 
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          {/* TODO: MDの各種機能を有効にする */}
-          {/* <Button variant="ghost" size="icon">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onClick={() => insertAtCursor("#")}
+          >
             <Hash className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon">
+          {/*<Button variant="ghost" size="icon">
             <ListTodo className="h-5 w-5" />
           </Button>
           <Button variant="ghost" size="icon">
