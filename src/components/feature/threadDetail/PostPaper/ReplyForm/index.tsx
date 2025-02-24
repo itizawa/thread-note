@@ -19,6 +19,9 @@ type Props = {
 export function ReplyForm({ threadId, parentPostId }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [body, setBody] = React.useState("");
+  const [type, setType] = React.useState<"agreement" | "survey" | "feedback">(
+    "survey"
+  );
 
   const { isPending, enqueueServerAction } = useServerAction();
   const isDisabled = isPending || body.length === 0;
@@ -64,7 +67,7 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
   const handleClickGenerateReply = () => {
     enqueueServerAction({
       action: () => {
-        return generateReplyPost({ postId: parentPostId });
+        return generateReplyPost({ postId: parentPostId, type });
       },
       error: {
         text: "生成に失敗しました",
@@ -111,7 +114,7 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
         返信
       </Button>
       <div className="flex items-center gap-x-2">
-        <AiModelSelect />
+        <AiModelSelect type={type} onSelect={(type) => setType(type)} />
         <Button
           loading={isPending}
           disabled={isPending}

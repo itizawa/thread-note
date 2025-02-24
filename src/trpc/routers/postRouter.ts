@@ -34,12 +34,18 @@ export const postRouter = router({
     }),
 
   generateReplyPost: protectedProcedure
-    .input(z.object({ postId: PostSchema.shape.id }))
+    .input(
+      z.object({
+        postId: PostSchema.shape.id,
+        type: z.enum(["agreement", "survey", "feedback"]),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const generateReplyPostsUseCase = new GenerateReplyPostsUseCase();
       return await generateReplyPostsUseCase.execute({
         postId: input.postId,
         userId: ctx.currentUser.id,
+        type: input.type,
       });
     }),
 });
