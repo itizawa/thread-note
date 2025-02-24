@@ -32,10 +32,7 @@ export function CreateNewPostForm({ threadId }: Props) {
     });
   };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newContent = e.target.value;
-    setBody(newContent);
-  };
+  const handleContentChange = (value: string) => setBody(value);
 
   const handleKeyPress = (
     e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>

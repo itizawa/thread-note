@@ -8,7 +8,7 @@ type Props = {
   textarea: {
     placeholder?: string;
     value: string;
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onChange: (value: string) => void;
     onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
     forceFocus?: boolean;
   };
@@ -30,7 +30,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
         placeholder={textarea.placeholder || "テキストを入力..."}
         className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
         value={textarea.value}
-        onChange={textarea.onChange}
+        onChange={(e) => textarea.onChange(e.target.value)}
         onKeyDown={textarea.onKeyPress}
         forceFocus={textarea.forceFocus}
       />
