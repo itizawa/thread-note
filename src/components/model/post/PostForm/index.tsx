@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Hash } from "lucide-react";
+import { Hash, List } from "lucide-react";
 import * as React from "react";
 
 type Props = {
@@ -27,26 +27,54 @@ type Props = {
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const insertAtCursor = (insertText: string) => {
+  const insertAtCursor = ({
+    insertText,
+    removeIfExist,
+  }: {
+    insertText: string;
+    removeIfExist: boolean;
+  }) => {
     if (!textareaRef.current) return;
 
     const start = textareaRef.current.selectionStart;
-    const end = textareaRef.current.selectionEnd;
+    const lines = textarea.value.split("\n");
+
+    // カーソルのある行を特定
+    let charCount = 0;
+    let lineIndex = 0;
+    for (let i = 0; i < lines.length; i++) {
+      charCount += lines[i].length + 1; // `+1` は改行文字を考慮
+      if (start < charCount) {
+        lineIndex = i;
+        break;
+      }
+    }
+    const currentLine = lines[lineIndex];
+    const isExist = currentLine.includes(insertText);
+    const shouldRemove = removeIfExist && isExist;
+    const convertedInsertText = isExist
+      ? insertText.replace(" ", "") // すでに存在する場合はスペースを削除
+      : insertText;
+
+    if (shouldRemove) {
+      lines[lineIndex] = currentLine.replaceAll(insertText, "");
+    } else {
+      lines[lineIndex] = `${convertedInsertText}${currentLine}`; // Use currentLine instead of lines[lineIndex]
+    }
 
     // 文字列の更新
-    const newText = `${textarea.value.substring(
-      0,
-      start
-    )}${insertText}${textarea.value.substring(end)}`;
+    const newText = lines.join("\n");
     textarea.onChange(newText);
 
     // カーソル位置を更新
     requestAnimationFrame(() => {
       if (!textareaRef.current) return;
-      textareaRef.current.setSelectionRange(
-        start + insertText.length,
-        start + insertText.length
-      );
+      const newCursorPos =
+        start +
+        (shouldRemove
+          ? -convertedInsertText.length
+          : convertedInsertText.length);
+      textareaRef.current.setSelectionRange(newCursorPos, newCursorPos);
       textareaRef.current.focus();
     });
   };
@@ -69,14 +97,23 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
             variant="outline"
             className="shadow-none"
             size="icon"
-            onClick={() => insertAtCursor("#")}
+            onClick={() =>
+              insertAtCursor({ insertText: "# ", removeIfExist: false })
+            }
           >
             <Hash className="h-5 w-5" />
           </Button>
-          {/*<Button variant="ghost" size="icon">
-            <ListTodo className="h-5 w-5" />
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onClick={() =>
+              insertAtCursor({ insertText: "- ", removeIfExist: true })
+            }
+          >
+            <List className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon">
+          {/*<Button variant="ghost" size="icon">
             <Link2 className="h-5 w-5" />
           </Button>
           <Button variant="ghost" size="icon">
