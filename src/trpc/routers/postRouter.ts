@@ -2,6 +2,7 @@ import { prisma } from "@/prisma";
 import { PostSchema } from "@/types/src/domains";
 import { z } from "zod";
 import { protectedProcedure, router } from "../init";
+import { GenerateReplyPostsUseCase } from "../usecases/threadDetail/GenerateReplyPostsUseCase";
 
 export const postRouter = router({
   updatePostBody: protectedProcedure
@@ -29,6 +30,16 @@ export const postRouter = router({
         data: {
           isArchived: true,
         },
+      });
+    }),
+
+  generateReplyPost: protectedProcedure
+    .input(z.object({ postId: PostSchema.shape.id }))
+    .mutation(async ({ ctx, input }) => {
+      const generateReplyPostsUseCase = new GenerateReplyPostsUseCase();
+      return await generateReplyPostsUseCase.execute({
+        postId: input.postId,
+        userId: ctx.currentUser.id,
       });
     }),
 });

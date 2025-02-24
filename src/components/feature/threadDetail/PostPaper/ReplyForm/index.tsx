@@ -1,5 +1,6 @@
 "use client";
 
+import { generateReplyPost } from "@/app/actions/postActions";
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { MessageCircle } from "lucide-react";
 import React, { useState } from "react";
+import { AiModelSelect } from "../AiModelSelectButton";
 
 type Props = {
   threadId: string;
@@ -59,6 +61,25 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
     }
   };
 
+  const handleClickGenerateReply = () => {
+    enqueueServerAction({
+      action: () => {
+        return generateReplyPost({ postId: parentPostId });
+      },
+      error: {
+        text: "生成に失敗しました",
+      },
+      success: {
+        text: "生成しました",
+        onSuccess: () => {
+          setIsEditing(false);
+          utils.thread.getThreadWithPosts.invalidate({ id: threadId });
+          setBody("");
+        },
+      },
+    });
+  };
+
   return isEditing ? (
     <div className="border-1 p-4 rounded-lg">
       <PostForm
@@ -84,9 +105,22 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
       />
     </div>
   ) : (
-    <Button variant="outline" onClick={() => setIsEditing(true)} size="sm">
-      <MessageCircle className="h-4 w-4" />
-      返信
-    </Button>
+    <div className="flex justify-between items-center">
+      <Button variant="outline" onClick={() => setIsEditing(true)} size="sm">
+        <MessageCircle className="h-4 w-4" />
+        返信
+      </Button>
+      <div className="flex items-center gap-x-2">
+        <AiModelSelect />
+        <Button
+          loading={isPending}
+          disabled={isPending}
+          className="rounded bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-2 px-4 rounded"
+          onClick={handleClickGenerateReply}
+        >
+          生成
+        </Button>
+      </div>
+    </div>
   );
 }
