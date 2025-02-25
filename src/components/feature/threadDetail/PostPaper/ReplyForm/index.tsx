@@ -17,6 +17,7 @@ type Props = {
 };
 
 export function ReplyForm({ threadId, parentPostId }: Props) {
+  const { data: currentUser } = trpc.user.getCurrentUser.useQuery();
   const [isEditing, setIsEditing] = useState(false);
   const [body, setBody] = React.useState("");
   const [type, setType] = React.useState<"agreement" | "survey" | "feedback">(
@@ -113,17 +114,19 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
         <MessageCircle className="h-4 w-4" />
         返信
       </Button>
-      <div className="flex items-center gap-x-2">
-        <AiModelSelect type={type} onSelect={(type) => setType(type)} />
-        <Button
-          loading={isPending}
-          disabled={isPending}
-          className="rounded bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-2 px-4 rounded"
-          onClick={handleClickGenerateReply}
-        >
-          生成
-        </Button>
-      </div>
+      {currentUser?.planSubscription?.plan.name === "admin" && (
+        <div className="flex items-center gap-x-2">
+          <AiModelSelect type={type} onSelect={(type) => setType(type)} />
+          <Button
+            loading={isPending}
+            disabled={isPending}
+            className="rounded bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-2 px-4 rounded"
+            onClick={handleClickGenerateReply}
+          >
+            生成
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

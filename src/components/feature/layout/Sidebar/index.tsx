@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/app/actions/user";
+import { getCurrentUser } from "@/app/actions/userActions";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { urls } from "@/consts/urls";
 import { cn } from "@/lib/utils";

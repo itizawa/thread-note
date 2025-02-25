@@ -2,7 +2,7 @@ import { DashboardNavigation } from "@/components/feature/dashboard/DashboardNav
 import { DashBoardSidebar } from "@/components/feature/layout/Sidebar";
 import { notFound } from "next/navigation";
 import type React from "react";
-import { getCurrentUser } from "../actions/user";
+import { getCurrentUser } from "../actions/userActions";
 
 export default async function DashboardLayout({
   children,

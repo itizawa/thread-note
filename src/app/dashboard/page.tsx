@@ -1,6 +1,6 @@
 import { ThreadList } from "@/components/feature/dashboard/ThreadList";
 import { notFound } from "next/navigation";
-import { getCurrentUser } from "../actions/user";
+import { getCurrentUser } from "../actions/userActions";
 
 export default async function Page() {
   const currentUser = await getCurrentUser();
