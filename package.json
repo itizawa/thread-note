@@ -14,7 +14,9 @@
     "migrate": "yarn migrate-for-single",
     "migrate-for-single:reset": "yarn prisma migrate reset --skip-generate --force --schema=./prisma/schema.prisma",
     "migrate:dev": "yarn migrate-for-single && DATABASE_URL=postgresql://app_user:local-password@localhost:5432/thread-note?schema=public yarn migrate-for-single",
-    "migrate:dev:reset": "yarn migrate-for-single:reset && DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public yarn migrate-for-single:reset"
+    "migrate:dev:reset": "yarn migrate-for-single:reset && DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public yarn migrate-for-single:reset",
+    "postmigrate:dev:reset": "tsx prisma/seed.ts",
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
