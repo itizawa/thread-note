@@ -40,6 +40,7 @@ model User {
   Authenticator Authenticator[]
   threads Thread[]
   posts Post[]
+  planSubscriptions PlanSubscription[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -140,4 +141,28 @@ model Post {
   isArchived Boolean @default(false)
 
   @@map("posts")
+}
+
+model Plan {
+  id         String  @id @default(uuid())
+
+  name String
+
+  planSubscriptions PlanSubscription[]
+
+  @@map("plans")
+}
+
+
+model PlanSubscription {
+  id         String  @id @default(uuid())
+
+  userId               String @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+
+  planId               String @map("plan_id")
+  plan Plan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@map("plan_subscriptions")
 }

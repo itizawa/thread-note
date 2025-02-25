@@ -5,3 +5,5 @@ export * from './VerificationTokenSchema';
 export * from './AuthenticatorSchema';
 export * from './ThreadSchema';
 export * from './PostSchema';
+export * from './PlanSchema';
+export * from './PlanSubscriptionSchema';
