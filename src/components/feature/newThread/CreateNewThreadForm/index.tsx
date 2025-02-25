@@ -19,7 +19,7 @@ export function CreateNewThreadForm() {
   const [body, setBody] = React.useState("");
 
   const { isPending, enqueueServerAction } = useServerAction();
-  const bothEmpty = title.length === 0 && body.length === 0;
+  const bothEmpty = title.trim().length === 0 && body.trim().length === 0;
   const isDisabled = isPending || bothEmpty;
 
   const handleSubmit = () => {

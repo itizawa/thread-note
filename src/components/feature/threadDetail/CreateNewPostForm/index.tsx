@@ -15,7 +15,7 @@ export function CreateNewPostForm({ threadId }: Props) {
   const { isPending, enqueueServerAction } = useServerAction();
   const [body, setBody] = React.useState("");
 
-  const isDisabled = isPending || body.length === 0;
+  const isDisabled = isPending || body.trim().length === 0;
 
   const handleSubmit = () => {
     enqueueServerAction({
