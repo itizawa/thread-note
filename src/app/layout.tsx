@@ -1,3 +1,4 @@
+import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { TRPCProvider } from "@/trpc/client";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -14,11 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Thread Note - スレッド形式のノートサービス",
-  description:
-    "Thread Note はスレッド形式で手軽にノートを残すことができるサービスです。",
-};
+export const metadata: Metadata = generateMetadataObject();
 
 export const viewport: Viewport = {
   themeColor: "#ffb86a",
