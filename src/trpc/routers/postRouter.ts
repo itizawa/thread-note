@@ -1,7 +1,7 @@
 import { prisma } from "@/prisma";
 import { PostSchema } from "@/types/src/domains";
 import { z } from "zod";
-import { protectedProcedure, router } from "../init";
+import { premiumPlanProcedure, protectedProcedure, router } from "../init";
 import { GenerateReplyPostsUseCase } from "../usecases/threadDetail/GenerateReplyPostsUseCase";
 
 export const postRouter = router({
@@ -33,7 +33,7 @@ export const postRouter = router({
       });
     }),
 
-  generateReplyPost: protectedProcedure
+  generateReplyPost: premiumPlanProcedure
     .input(
       z.object({
         postId: PostSchema.shape.id,
