@@ -50,7 +50,7 @@ export class GenerateReplyPostsUseCase {
         },
         {
           role: "user",
-          content: `以下のテキストについて返信を生成してください。\n\n${
+          content: `以下のテキストについて返信をマークダウン形式で生成してください。\n\n${
             lastChild
               ? `## 内容\n${lastChild.body}\n\n## コンテキスト\n${truncateText}`
               : `## 内容\n${postWithChildrenPosts.body}`
