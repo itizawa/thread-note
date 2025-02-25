@@ -1,7 +1,7 @@
 import { prisma } from "@/prisma";
 import { PostSchema, ThreadSchema, UserSchema } from "@/types/src/domains";
 import { z } from "zod";
-import { baseProcedure, protectedProcedure, router } from "../init";
+import { protectedProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
 import { CreateThreadWithFIrstPostUseCase } from "../usecases/newThread/CreateThreadWithFIrstPostUseCase";
 import { CreatePostInDetailUseCase } from "../usecases/threadDetail/CreatePostInDetailUseCase";
@@ -15,7 +15,7 @@ const listThreadsUseCase = new ListThreadsUseCase();
 const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 
 export const threadRouter = router({
-  listThreadsByUserId: baseProcedure
+  listThreadsByUserId: protectedProcedure
     .input(
       z.object({
         userId: UserSchema.shape.id,
@@ -39,7 +39,7 @@ export const threadRouter = router({
       });
     }),
 
-  updateThreadInfo: baseProcedure
+  updateThreadInfo: protectedProcedure
     .input(ThreadSchema.pick({ id: true, title: true }))
     .mutation(async ({ ctx, input }) => {
       return await prisma.thread.update({
@@ -53,7 +53,7 @@ export const threadRouter = router({
       });
     }),
 
-  getThreadWithPosts: baseProcedure
+  getThreadWithPosts: protectedProcedure
     .input(
       z.object({
         id: ThreadSchema.shape.id,
