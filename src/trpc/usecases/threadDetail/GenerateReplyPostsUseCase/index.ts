@@ -61,6 +61,7 @@ export class GenerateReplyPostsUseCase {
       model: "gpt-4o-mini",
     });
     const replyBody = chatCompletion.choices[0].message.content;
+    const botUserId = this.getBotId(type);
 
     if (replyBody) {
       await prisma.post.create({
@@ -68,7 +69,7 @@ export class GenerateReplyPostsUseCase {
           body: replyBody,
           parentId: postId,
           threadId: postWithChildrenPosts.threadId,
-          userId,
+          userId: botUserId,
         },
       });
     }
@@ -88,6 +89,19 @@ export class GenerateReplyPostsUseCase {
         const exhaustiveCheck: never = type;
         throw new Error(`${exhaustiveCheck} is invalid type`);
       }
+    }
+  }
+
+  private getBotId(type: "agreement" | "survey" | "feedback"): string {
+    switch (type) {
+      case "agreement":
+        return "agreement";
+      case "survey":
+        return "survey";
+      case "feedback":
+        return "feedback";
+      default:
+        throw new Error(`${type} is an invalid type`);
     }
   }
 }
