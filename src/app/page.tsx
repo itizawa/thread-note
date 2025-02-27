@@ -1,3 +1,4 @@
+import { signIn } from "@/auth";
 import { Navigation } from "@/components/feature/layout/Navigation";
 import { HydrateClient } from "@/trpc/server";
 import Image from "next/image";
@@ -8,18 +9,33 @@ export default async function Home() {
       <Navigation />
       <main>
         <section className="px-4 py-16 text-gray-600 space-y-4">
-          <div className="mx-auto container text-center">
+          <div className="mx-auto container text-center space-y-4">
             <h1 className="mx-auto max-w-2xl text-2xl font-bold">
               手軽に情報を残す
               <br />
               スレッド形式のメモサービス
             </h1>
-            {/* <p className="text-lg">まずは使い心地を確かめてみてください。</p>
-            <div className="space-y-4">
-              <Button variant="secondary" size="lg" className="min-w-[200px]">
-                Playground
-              </Button>
-              </div> */}
+            <div className="mx-auto container text-center space-y-2">
+              <p className="text-lg">利用規約に同意して始める</p>
+              <div className="space-y-4">
+                <form
+                  action={async () => {
+                    "use server";
+                    await signIn("google");
+                  }}
+                >
+                  <button className="mx-auto">
+                    <Image
+                      src="/google-login.png"
+                      alt="Google"
+                      width={180}
+                      height={200}
+                      className="mr-2"
+                    />
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
           <div className="mx-auto justify-center flex">
             <Image
