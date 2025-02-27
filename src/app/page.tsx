@@ -96,6 +96,24 @@ export default async function Home() {
             </div>
           </div>
         </section>
+        <footer className="bg-gray-800 text-white py-6">
+          <div className="container mx-auto text-center space-y-8">
+            <div className="container mx-auto text-center space-y-2">
+              <h2 className="text-2xl font-bold">Thread Note</h2>
+              <nav className="space-x-6">
+                <a href="#" className="text-gray-300 hover:text-white">
+                  利用規約
+                </a>
+                {/* <a href="#" className="text-gray-300 hover:text-white">
+                  お問い合わせ
+                </a> */}
+              </nav>
+            </div>
+            <p className="text-sm">
+              &copy; 2025 Thread Note. All rights reserved.
+            </p>
+          </div>
+        </footer>
       </main>
     </HydrateClient>
   );
