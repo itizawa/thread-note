@@ -91,6 +91,13 @@ jobs:
       - name: Install Node.js dependencies
         run: yarn
 
+      - name: Create .env
+        shell: bash
+        run: |
+          printf "DATABASE_URL=\"%s\"\OPENAI_API_KEY=\"%s\"\n" \
+            "${{ secrets.DATABASE_URL_FOR_MIGRATION }}" \
+            "${{ secrets.OPENAI_API_KEY }}" > .env
+
       - name: yarn build
         run: |
           yarn build
