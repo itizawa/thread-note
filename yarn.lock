@@ -1162,19 +1162,19 @@
     "@tanstack/query-core" "5.66.4"
 
 "@trpc/client@^11.0.0-rc.755":
-  version "11.0.0-rc.804"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.804.tgz#8f5e370a8ca85667c7610e30f0d36cb4bc58026f"
-  integrity sha512-JEgAjI2tFdcIpnIMqQFpqmc9KWAFcG5uNIMOo3rwpgIh5RGOEhPwlnXj3AAexC+r97QmSlsbUZSnjPAh4wxxJA==
+  version "11.0.0-rc.817"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.817.tgz#b4ee7deb6f754e644dfb65fa945399f42e1bc0a9"
+  integrity sha512-LHwdO16yYSJmEt1yXTVoYtwVyoefLUlQsYsD8ccl/KspFWMIaQSi1lph5TZri5QBWCsRmoNW0Hi9/oeUmOPrLw==
 
 "@trpc/react-query@^11.0.0-rc.755":
-  version "11.0.0-rc.804"
-  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.0.0-rc.804.tgz#dedea3493451ff5bf82495aca322c99f119dee81"
-  integrity sha512-tYrJyanWJ7vqJcEmsokW/4z5eoKK4eq1ZmmT7RqQvSqn7UmPJoodIsDmDpak7n2EZx+5MHRjw/QHGqQHYC5ajQ==
+  version "11.0.0-rc.817"
+  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.0.0-rc.817.tgz#09cb8e0ac2ef267489143e0d17c6e4cbfc8cda93"
+  integrity sha512-m2UevzgTkHO+Qjm1W+ML4CHVPRPe3oWxqfeQYon86HR8rrqhPW/pEgwFbo5ZLAAyPxjv1iRxIKUG33YvDnkvkQ==
 
 "@trpc/server@^11.0.0-rc.755":
-  version "11.0.0-rc.804"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.804.tgz#da3f5980b097340e10ed4099c0e3edc2ff5abf80"
-  integrity sha512-jTrSXzkahHvTKOM9AhDMTLMOI/oCQ04PfC+PRCfp0PIXYXmY4gdVUQjQAqRcenRFsuMz1vppBV0BzSeEk3v8uA==
+  version "11.0.0-rc.817"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.817.tgz#69d45c6cdc9f5cf42c82f4f0915120601c5738e5"
+  integrity sha512-O8WzK0c3KGvP1eYzQQWBQobQo8EH2vJYijJMl0NXYFOsKl12W0H2LWs+qlAPegPOdkUGTCh+0QCqy2P4dPNgHA==
 
 "@types/cookie@0.6.0":
   version "0.6.0"
@@ -2389,7 +2389,7 @@ esbuild-register@3.6.0:
   dependencies:
     debug "^4.3.4"
 
-"esbuild@>=0.12 <1", esbuild@~0.25.0:
+"esbuild@>=0.12 <1":
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.25.0.tgz#0de1787a77206c5a79eeb634a623d39b5006ce92"
   integrity sha512-BXq5mqc8ltbaN34cDqWuYKyNhX8D/Z0J1xdtdQ8UcIIIyJyz+ZMKUt58tF3SrZ85jcfN/PZYhjR5uDQAYNVbuw==
@@ -2834,7 +2834,7 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
-fsevents@2.3.3, fsevents@~2.3.3:
+fsevents@2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
@@ -5777,16 +5777,6 @@ tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.4.0, tslib@^2.8.0:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
-
-tsx@^4.19.3:
-  version "4.19.3"
-  resolved "https://registry.yarnpkg.com/tsx/-/tsx-4.19.3.tgz#2bdbcb87089374d933596f8645615142ed727666"
-  integrity sha512-4H8vUNGNjQ4V2EOoGw005+c+dGuPSnhpPBPHBtsZdGZBk/iJb4kguGlPWaZTZ3q5nMtFOEsY0nRDlh9PJyd6SQ==
-  dependencies:
-    esbuild "~0.25.0"
-    get-tsconfig "^4.7.5"
-  optionalDependencies:
-    fsevents "~2.3.3"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
