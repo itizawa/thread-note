@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/app/actions/userActions";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { urls } from "@/consts/urls";
 import { cn } from "@/lib/utils";
-import { Home, Pen } from "lucide-react";
+import { Home, Pen, Settings } from "lucide-react";
 import Link from "next/link";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
 
@@ -18,6 +18,11 @@ export const DashBoardSidebar = async () => {
       href: urls.dashboardThreadNew,
       label: "New",
       icon: Pen,
+    },
+    {
+      href: urls.dashboardSettings,
+      label: "Settings",
+      icon: Settings,
     },
     // {
     //   href: "/explore",
@@ -38,11 +43,6 @@ export const DashBoardSidebar = async () => {
     //   href: "/archived",
     //   label: "Archived",
     //   icon: Archive,
-    // },
-    // {
-    //   href: "/settings",
-    //   label: "Settings",
-    //   icon: Settings,
     // },
   ];
 
