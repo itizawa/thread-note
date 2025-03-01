@@ -1,10 +1,10 @@
 import { prisma } from "@/prisma";
 import { UserSchema } from "@/types/src/domains";
 import { z } from "zod";
-import { baseProcedure, protectedProcedure, router } from "../init";
+import { protectedProcedure, publicProcedure, router } from "../init";
 
 export const userRouter = router({
-  getCurrentUser: baseProcedure.query(async ({ ctx }) => {
+  getCurrentUser: publicProcedure.query(async ({ ctx }) => {
     return ctx.currentUser;
   }),
 
