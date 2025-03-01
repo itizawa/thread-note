@@ -2,9 +2,13 @@ import { signIn } from "@/auth";
 import { Footer } from "@/components/feature/layout/Footer";
 import { Navigation } from "@/components/feature/layout/Navigation";
 import { urls } from "@/consts/urls";
+import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { HydrateClient } from "@/trpc/server";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = generateMetadataObject();
 
 export default async function Home() {
   return (

@@ -1,12 +1,6 @@
 import { DashboardNavigation } from "@/components/feature/dashboard/DashboardNavigation";
 import { DashBoardSidebar } from "@/components/feature/layout/Sidebar";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
-import { Metadata } from "next";
 import type React from "react";
-
-export const metadata: Metadata = generateMetadataObject({
-  title: "Thread Note - ダッシュボード",
-});
 
 export default async function DashboardLayout({
   children,

@@ -1,7 +1,12 @@
 import { ThreadList } from "@/components/feature/dashboard/ThreadList";
+import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCurrentUser } from "../actions/userActions";
 
+export const metadata: Metadata = generateMetadataObject({
+  title: "Thread Note - ダッシュボード",
+});
 export default async function Page() {
   const currentUser = await getCurrentUser();
 

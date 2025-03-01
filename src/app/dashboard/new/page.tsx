@@ -9,7 +9,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { urls } from "@/consts/urls";
+import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = generateMetadataObject({
+  title: "Thread Note - New",
+});
 
 export default async function Page() {
   const currentUser = await getCurrentUser();

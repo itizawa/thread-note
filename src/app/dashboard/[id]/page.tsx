@@ -3,10 +3,16 @@ import { PostTimeLine } from "@/components/feature/threadDetail/PostTimeLine";
 import { ThreadInformation } from "@/components/feature/threadDetail/ThreadInformation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { urls } from "@/consts/urls";
+import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
+
+export const metadata: Metadata = generateMetadataObject({
+  title: "Thread Note - New",
+});
 
 export default async function Page({ params }: Props) {
   const { id: threadId } = await params;
