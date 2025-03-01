@@ -1,7 +1,8 @@
 import { ThreadList } from "@/components/feature/dashboard/ThreadList";
+import { urls } from "@/consts/urls";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getCurrentUser } from "../actions/userActions";
 
 export const metadata: Metadata = generateMetadataObject({
@@ -9,10 +10,7 @@ export const metadata: Metadata = generateMetadataObject({
 });
 export default async function Page() {
   const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return notFound();
-  }
+  if (!currentUser) redirect(urls.top);
 
   return (
     <div className="h-full relative">

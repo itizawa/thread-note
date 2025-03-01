@@ -1,16 +1,20 @@
 import { signIn } from "@/auth";
 import { Footer } from "@/components/feature/layout/Footer";
 import { Navigation } from "@/components/feature/layout/Navigation";
+import { Button } from "@/components/ui/button";
 import { urls } from "@/consts/urls";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getCurrentUser } from "./actions/userActions";
 
 export const metadata: Metadata = generateMetadataObject();
 
 export default async function Home() {
+  const currentUser = await getCurrentUser();
+
   return (
     <HydrateClient>
       <Navigation />
@@ -22,32 +26,42 @@ export default async function Home() {
               <br />
               スレッド形式のメモサービス
             </h1>
-            <div className="mx-auto container text-center space-y-2">
-              <p className="text-lg">
-                <Link href={urls.terms} className="text-sky-700">
-                  利用規約
+            {currentUser ? (
+              <div className="mx-auto container text-center space-y-2">
+                <Link href={urls.dashboard}>
+                  <Button size="lg" variant="default" className="font-bold">
+                    ダッシュボードへ
+                  </Button>
                 </Link>
-                に同意して始める
-              </p>
-              <div className="space-y-4">
-                <form
-                  action={async () => {
-                    "use server";
-                    await signIn("google");
-                  }}
-                >
-                  <button className="mx-auto">
-                    <Image
-                      src="/google-login.png"
-                      alt="Google"
-                      width={180}
-                      height={200}
-                      className="mr-2"
-                    />
-                  </button>
-                </form>
               </div>
-            </div>
+            ) : (
+              <div className="mx-auto container text-center space-y-2">
+                <p className="text-lg">
+                  <Link href={urls.terms} className="text-sky-700">
+                    利用規約
+                  </Link>
+                  に同意して始める
+                </p>{" "}
+                <div className="space-y-4">
+                  <form
+                    action={async () => {
+                      "use server";
+                      await signIn("google");
+                    }}
+                  >
+                    <button className="mx-auto">
+                      <Image
+                        src="/google-login.png"
+                        alt="Google"
+                        width={180}
+                        height={200}
+                        className="mr-2"
+                      />
+                    </button>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
           <div className="mx-auto justify-center flex">
             <Image
