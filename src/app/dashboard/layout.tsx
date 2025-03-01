@@ -2,9 +2,7 @@ import { DashboardNavigation } from "@/components/feature/dashboard/DashboardNav
 import { DashBoardSidebar } from "@/components/feature/layout/Sidebar";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import type React from "react";
-import { getCurrentUser } from "../actions/userActions";
 
 export const metadata: Metadata = generateMetadataObject({
   title: "Thread Note - ダッシュボード",
@@ -15,12 +13,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return notFound();
-  }
-
   return (
     <>
       <DashboardNavigation />

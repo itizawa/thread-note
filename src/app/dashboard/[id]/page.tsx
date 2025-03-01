@@ -1,12 +1,18 @@
+import { getCurrentUser } from "@/app/actions/userActions";
 import { PostTimeLine } from "@/components/feature/threadDetail/PostTimeLine";
 import { ThreadInformation } from "@/components/feature/threadDetail/ThreadInformation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { urls } from "@/consts/urls";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
 
 export default async function Page({ params }: Props) {
   const { id: threadId } = await params;
+
+  const currentUser = await getCurrentUser();
+  if (!currentUser) redirect(urls.top);
 
   return (
     <div className="h-full relative">
