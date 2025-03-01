@@ -3,7 +3,7 @@ import type { Post, User } from "@prisma/client";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env["OPENAI_API_KEY"],
+  apiKey: process.env["OPENAI_API_KEY"] || "",
 });
 
 export class GenerateReplyPostsUseCase {

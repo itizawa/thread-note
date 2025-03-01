@@ -1,3 +1,4 @@
+import { getCurrentUser } from "@/app/actions/userActions";
 import { CreateNewThreadForm } from "@/components/feature/newThread/CreateNewThreadForm";
 import {
   Breadcrumb,
@@ -8,8 +9,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { urls } from "@/consts/urls";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
+  const currentUser = await getCurrentUser();
+  if (!currentUser) redirect(urls.top);
+
   return (
     <div className="flex h-full">
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
