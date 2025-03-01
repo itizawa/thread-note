@@ -19,13 +19,15 @@ export const threadRouter = router({
     .input(
       z.object({
         userId: UserSchema.shape.id,
+        searchQuery: z.string().trim().optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
       })
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       return await listThreadsUseCase.execute({
-        userId: input.userId,
+        userId: ctx.currentUser.id,
+        searchQuery: input.searchQuery,
         cursor: input.cursor,
         limit: input.limit || 10,
       });

@@ -2,40 +2,66 @@
 
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Pen, Search } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"]["threads"][number];
 
 export function ThreadList({ currentUserId }: { currentUserId: string }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+
+  // 検索クエリのデバウンス処理
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // スレッド一覧取得（検索クエリがある場合は検索結果を表示）
   const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
     trpc.thread.listThreadsByUserId.useInfiniteQuery(
-      { userId: currentUserId, limit: 20 },
-      { getNextPageParam: (lastPage) => lastPage.nextCursor }
+      {
+        userId: currentUserId,
+        searchQuery: debouncedSearchQuery,
+        limit: 20,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
     );
+
   const threads = data?.pages.flatMap((v) => v.threads) || [];
 
   return (
     <div className="flex flex-col space-y-4 h-full">
-      <div className="flex justify-between">
-        {/* <div className="relative bg-white">
+      <div className="flex justify-between items-center gap-4">
+        <div className="relative bg-white flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
           <Input
             type="search"
-            placeholder="スレッドを検索"
+            placeholder="Search"
             className="pl-10"
-            onChange={(e) => setKeyWord(e.target.value)}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </div> */}
+        </div>
         <Link href={urls.dashboardThreadNew}>
-          <Button>新規Threadを作成する</Button>
+          <Button>
+            <Pen />
+            New
+          </Button>
         </Link>
       </div>
       <div className="overflow-y-auto flex flex-col rounded-lg border bg-white flex-1">
@@ -53,7 +79,7 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
             isFetching={isFetching}
             rowHeight={72}
             noRowsRenderer={() => (
-              <div className="p-2 text-center text-gray-500">
+              <div className="px-2 py-8 text-center text-gray-500">
                 スレッドが存在しません
               </div>
             )}
