@@ -1,8 +1,7 @@
 import { prisma } from "@/prisma";
 import type { User } from "@prisma/client";
-import { Prisma } from "@prisma/client";
 
-export class ListThreadsUseCase {
+export class SearchThreadsUseCase {
   async execute({
     userId,
     searchQuery,
@@ -10,12 +9,43 @@ export class ListThreadsUseCase {
     limit = 10,
   }: {
     userId: User["id"];
-    searchQuery?: string;
+    searchQuery: string;
     cursor?: string;
     limit?: number;
   }) {
-    // whereの条件を生成
-    const where = this.generateWhere(userId, searchQuery);
+    // 検索クエリが空の場合は空の結果を返す
+    if (!searchQuery.trim()) {
+      return {
+        threads: [],
+        nextCursor: null,
+        totalCount: 0,
+      };
+    }
+
+    // 基本的な検索条件
+    const where = {
+      userId,
+      OR: [
+        // タイトルで検索
+        {
+          title: {
+            contains: searchQuery,
+            mode: "insensitive" as const, // 大文字小文字を区別しない
+          },
+        },
+        // 投稿の本文で検索
+        {
+          posts: {
+            some: {
+              body: {
+                contains: searchQuery,
+                mode: "insensitive" as const,
+              },
+            },
+          },
+        },
+      ],
+    };
 
     // 検索条件に一致するスレッドの総数を取得
     const totalCount = await prisma.thread.count({ where });
@@ -43,6 +73,19 @@ export class ListThreadsUseCase {
             image: true,
           },
         },
+        // 検索結果のハイライト用に最初に一致した投稿を取得
+        posts: {
+          where: {
+            body: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+          select: {
+            body: true,
+          },
+          take: 1,
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -57,50 +100,6 @@ export class ListThreadsUseCase {
       threads: threads.slice(0, limit), // 余分に取得した 1 件を削除
       nextCursor: hasNextPage ? threads[threads.length - 1].id : null,
       totalCount,
-    };
-  }
-
-  /**
-   * 検索条件を生成するプライベートメソッド
-   * @param userId ユーザーID
-   * @param searchQuery 検索クエリ（オプション）
-   * @returns 検索条件オブジェクト
-   */
-  private generateWhere(
-    userId: User["id"],
-    searchQuery?: string
-  ): Prisma.ThreadWhereInput {
-    // 基本的な検索条件
-    const baseWhere: Prisma.ThreadWhereInput = {
-      userId,
-    };
-
-    if (!searchQuery) {
-      return baseWhere;
-    }
-
-    return {
-      ...baseWhere,
-      OR: [
-        // タイトルで検索
-        {
-          title: {
-            contains: searchQuery,
-            mode: "insensitive" as const, // 大文字小文字を区別しない
-          },
-        },
-        // 投稿の本文で検索
-        {
-          posts: {
-            some: {
-              body: {
-                contains: searchQuery,
-                mode: "insensitive" as const,
-              },
-            },
-          },
-        },
-      ],
     };
   }
 }
