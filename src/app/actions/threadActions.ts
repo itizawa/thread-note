@@ -21,3 +21,10 @@ export const createPostInThread = async (
 export const updateThreadInfo = async (args: { id: string; title: string }) => {
   await trpc.thread.updateThreadInfo(args);
 };
+
+export const updateThreadPublicStatus = async (args: {
+  id: string;
+  isPublic: boolean;
+}) => {
+  await trpc.thread.updateThreadPublicStatus(args);
+};
