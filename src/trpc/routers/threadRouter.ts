@@ -1,7 +1,7 @@
 import { prisma } from "@/prisma";
 import { PostSchema, ThreadSchema, UserSchema } from "@/types/src/domains";
 import { z } from "zod";
-import { protectedProcedure, router } from "../init";
+import { protectedProcedure, publicProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
 import { CreateThreadWithFIrstPostUseCase } from "../usecases/newThread/CreateThreadWithFIrstPostUseCase";
 import { CreatePostInDetailUseCase } from "../usecases/threadDetail/CreatePostInDetailUseCase";
@@ -41,6 +41,19 @@ export const threadRouter = router({
       });
     }),
 
+  getPublicThreadInfo: publicProcedure
+    .input(ThreadSchema.pick({ id: true }))
+    .query(async ({ input }) => {
+      const thread = await prisma.thread.findFirst({
+        where: {
+          id: input.id,
+          isPublic: true,
+        },
+      });
+
+      return thread;
+    }),
+
   updateThreadInfo: protectedProcedure
     .input(ThreadSchema.pick({ id: true, title: true }))
     .mutation(async ({ ctx, input }) => {
@@ -67,6 +80,60 @@ export const threadRouter = router({
         id: input.id,
         inCludeIsArchived: input.includeIsArchived,
       });
+    }),
+
+  getPublicThreadWithPosts: publicProcedure
+    .input(
+      z.object({
+        id: ThreadSchema.shape.id,
+      })
+    )
+    .query(async ({ input }) => {
+      const threadWithPosts = await prisma.thread.findFirst({
+        where: {
+          id: input.id,
+          isPublic: true,
+        },
+        include: {
+          posts: {
+            where: {
+              isArchived: false,
+              parentId: null,
+            },
+            orderBy: {
+              createdAt: "asc",
+            },
+            include: {
+              children: {
+                where: {
+                  isArchived: false,
+                },
+                include: {
+                  user: {
+                    select: {
+                      id: true,
+                      name: true,
+                      image: true,
+                    },
+                  },
+                },
+                orderBy: {
+                  createdAt: "asc",
+                },
+              },
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      return { threadWithPosts };
     }),
 
   createThreadWithFirstPost: protectedProcedure
