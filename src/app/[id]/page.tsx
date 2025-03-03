@@ -30,8 +30,8 @@ export default async function Page({ params }: Props) {
   return (
     <HydrateClient>
       <Navigation />
-      <div className="h-full relative bg-gray-100">
-        <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
+      <div className="relative bg-gray-100">
+        <main className="w-full min-h-screen overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
           <div className="w-full max-w-[700px] mx-auto space-y-4">
             <PublicThreadInformation threadId={threadId} />
             <div className="overflow-y-auto">
