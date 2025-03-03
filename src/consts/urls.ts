@@ -6,4 +6,5 @@ export const urls = {
   dashboardThreadNew: "/dashboard/new",
   dashboardThreadDetails: (id: string) => `/dashboard/${id}`,
   dashboardSettings: "/dashboard/settings",
+  threadDetails: (id: string) => `/${id}`,
 };
