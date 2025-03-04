@@ -12,10 +12,23 @@ import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
 
-export const metadata: Metadata = generateMetadataObject({
-  title: "Thread Note",
-});
+export const metadata = async ({ params }: Props): Promise<Metadata> => {
+  const { id: threadId } = await params;
+  const { threadWithPosts } = await trpc.thread.getPublicThreadWithPosts({
+    id: threadId,
+  });
 
+  if (!threadWithPosts)
+    return generateMetadataObject({
+      title: "Thread Not Found",
+      description: "The requested thread does not exist.",
+    });
+
+  return generateMetadataObject({
+    title: threadWithPosts.title || undefined,
+    description: threadWithPosts.posts[0]?.body || undefined,
+  });
+};
 export default async function Page({ params }: Props) {
   const { id: threadId } = await params;
 
