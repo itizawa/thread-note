@@ -12,7 +12,9 @@ import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
 
-export const metadata = async ({ params }: Props): Promise<Metadata> => {
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
   const { id: threadId } = await params;
   const { threadWithPosts } = await trpc.thread.getPublicThreadWithPosts({
     id: threadId,
