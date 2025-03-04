@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  updateThreadInfo,
-  updateThreadPublicStatus,
-} from "@/app/actions/threadActions";
+import { updateThreadInfo } from "@/app/actions/threadActions";
+import { PublicStatusDialog } from "@/components/feature/threadDetail/PublicStatusDialog";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,16 +17,8 @@ import { urls } from "@/consts/urls";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
-import { Eye, EyeOff, Globe, Lock, Pencil, Share } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
-import urlJoin from "url-join";
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
   const utils = trpc.useUtils();
@@ -42,24 +32,6 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
   });
   const [title, setTitle] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const threadDetailUrl = urlJoin(
-    window.location.origin,
-    urls.threadDetails(threadId)
-  );
-
-  const handleCopyUrl = () => {
-    navigator.clipboard.writeText(threadDetailUrl);
-    toast.success("URLをコピーしました");
-  };
-
-  const handleClickShare = () => {
-    navigator
-      ?.share({
-        title: `${threadInfo?.title}`,
-        url: threadDetailUrl,
-      })
-      .catch(() => void 0); // NOTE: シェアをキャンセルとするとエラーが投げられるため握りつぶす
-  };
 
   const disabled = !title || isPending;
 
@@ -81,27 +53,6 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
           setIsEditing(false);
           refetch();
         },
-      },
-    });
-  };
-
-  const handleTogglePublicStatus = async () => {
-    if (!threadInfo) return;
-
-    enqueueServerAction({
-      action: () =>
-        updateThreadPublicStatus({
-          id: threadId,
-          isPublic: !threadInfo.isPublic,
-        }),
-      error: {
-        text: "公開状態の更新に失敗しました",
-      },
-      success: {
-        onSuccess: () => refetch(),
-        text: threadInfo.isPublic
-          ? "非公開に設定しました"
-          : "公開に設定しました",
       },
     });
   };
@@ -201,91 +152,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         </div>
       )}
 
-      <div className="space-y-3 border p-3 rounded-md bg-white">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            {threadInfo.isPublic ? (
-              <TooltipProvider delayDuration={400}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center space-x-2">
-                      <Globe className="h-5 w-5 text-green-500" />
-                      <span className="font-bold">公開中</span>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    className="text-white bg-black p-2 rounded-md"
-                    sideOffset={8}
-                  >
-                    リンクを知っていれば誰でも閲覧可能
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <TooltipProvider delayDuration={400}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center space-x-2">
-                      <Lock className="h-5 w-5 text-yellow-500" />
-                      <span className="font-bold">非公開</span>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    className="text-white bg-black p-2 rounded-md"
-                    sideOffset={8}
-                  >
-                    あなただけが閲覧可能
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleTogglePublicStatus}
-            disabled={isPending}
-            loading={isPending}
-          >
-            {threadInfo.isPublic ? (
-              <>
-                <EyeOff className="h-4 w-4 mr-2" />
-                非公開にする
-              </>
-            ) : (
-              <>
-                <Eye className="h-4 w-4 mr-2" />
-                公開する
-              </>
-            )}
-          </Button>
-        </div>
-
-        {threadInfo.isPublic && (
-          <div className="flex items-end justify-between">
-            <div className="flex-1">
-              <p className="text-sm text-gray-500 mb-1">公開URL</p>
-              <div className="flex items-center">
-                <Input
-                  type="text"
-                  value={threadDetailUrl}
-                  readOnly
-                  className="cursor-pointer"
-                  onClick={handleCopyUrl}
-                />
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="ml-2"
-              onClick={handleClickShare}
-            >
-              <Share className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
-      </div>
+      <PublicStatusDialog threadId={threadId} isPublic={threadInfo.isPublic} />
     </div>
   );
 }
