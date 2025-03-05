@@ -1,13 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Hash, List, ListOrdered, Quote } from "lucide-react";
+import {
+  Hash,
+  Image as ImageIcon,
+  List,
+  ListOrdered,
+  Quote,
+} from "lucide-react";
 
 type Props = {
   onClickIcon: (options: {
     insertText: string;
     removeIfExist: boolean;
   }) => void;
+  onClickImageUpload: () => void;
   formState: {
     isDisabled: boolean;
     isPending: boolean;
@@ -23,6 +30,7 @@ export const PostController = ({
   bottomButtons,
   formState,
   onClickIcon,
+  onClickImageUpload,
 }: Props) => {
   return (
     <div className={"flex items-center justify-between"}>
@@ -66,6 +74,15 @@ export const PostController = ({
           onClick={() => onClickIcon({ insertText: "> ", removeIfExist: true })}
         >
           <Quote className="h-5 w-5" />
+        </Button>
+        <Button
+          variant="outline"
+          className="shadow-none"
+          size="icon"
+          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+          onClick={onClickImageUpload}
+        >
+          <ImageIcon className="h-5 w-5" />
         </Button>
       </div>
       <div className="flex items-center space-x-2">

@@ -2,6 +2,8 @@
 
 import { Textarea } from "@/components/ui/textarea";
 import * as React from "react";
+import { useImageUpload } from "./hooks/useImageUpload";
+import { useTextareaOperations } from "./hooks/useTextareaOperations";
 import { PostController } from "./parts/postController";
 
 type Props = {
@@ -24,63 +26,44 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
-  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-
-  const insertAtCursor = ({
-    insertText,
-    removeIfExist,
-  }: {
-    insertText: string;
-    removeIfExist: boolean;
-  }) => {
-    if (!textareaRef.current) return;
-
-    const start = textareaRef.current.selectionStart;
-    const lines = textarea.value.split("\n");
-
-    // カーソルのある行を特定
-    let charCount = 0;
-    let lineIndex = 0;
-    for (let i = 0; i < lines.length; i++) {
-      charCount += lines[i].length + 1; // `+1` は改行文字を考慮
-      if (start < charCount) {
-        lineIndex = i;
-        break;
-      }
-    }
-    const currentLine = lines[lineIndex];
-    const isExist = currentLine.includes(insertText);
-    const shouldRemove = removeIfExist && isExist;
-    const convertedInsertText = isExist
-      ? insertText.replace(" ", "") // すでに存在する場合はスペースを削除
-      : insertText;
-
-    if (shouldRemove) {
-      lines[lineIndex] = currentLine.replaceAll(insertText, "");
-    } else {
-      lines[lineIndex] = `${convertedInsertText}${currentLine}`; // Use currentLine instead of lines[lineIndex]
-    }
-
-    // 文字列の更新
-    const newText = lines.join("\n");
-    textarea.onChange(newText);
-
-    // カーソル位置を更新
-    requestAnimationFrame(() => {
-      if (!textareaRef.current) return;
-      const newCursorPos =
-        start +
-        (shouldRemove
-          ? -convertedInsertText.length
-          : convertedInsertText.length);
-      textareaRef.current.setSelectionRange(newCursorPos, newCursorPos);
-      textareaRef.current.focus();
+  // テキストエリア操作のカスタムフック
+  const { textareaRef, insertMarkdownAtCursor, insertAtCursor } =
+    useTextareaOperations({
+      value: textarea.value,
+      onChange: textarea.onChange,
     });
-  };
+
+  // 画像アップロードのカスタムフック
+  const {
+    fileInputRef,
+    isDragging,
+    isUploading,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragOver,
+    handleDrop,
+    handleFileChange,
+    handleImageButtonClick,
+  } = useImageUpload({
+    onImageUploaded: insertMarkdownAtCursor,
+  });
 
   return (
     <>
-      <div className="space-y-4">
+      <div
+        className={`space-y-4 ${isDragging ? "relative" : ""}`}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        {isDragging && (
+          <div className="absolute inset-0 bg-primary/10 border-2 border-dashed border-primary rounded-md flex items-center justify-center z-10">
+            <p className="text-primary font-medium">
+              画像をドロップしてアップロード
+            </p>
+          </div>
+        )}
         <Textarea
           ref={textareaRef}
           placeholder={textarea.placeholder || "テキストを入力..."}
@@ -94,7 +77,24 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
           bottomButtons={bottomButtons}
           formState={formState}
           onClickIcon={insertAtCursor}
+          onClickImageUpload={handleImageButtonClick}
         />
+        {/* 隠しファイル入力 */}
+        <input
+          id="image-upload"
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+        {isUploading && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-4 rounded-md">
+              <p className="text-center">画像をアップロード中...</p>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
