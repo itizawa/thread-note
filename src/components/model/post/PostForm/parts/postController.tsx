@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Hash, List } from "lucide-react";
+import { Hash, List, ListOrdered, Quote } from "lucide-react";
 
 type Props = {
   onClickIcon: (options: {
@@ -47,12 +47,26 @@ export const PostController = ({
         >
           <List className="h-5 w-5" />
         </Button>
-        {/*<Button variant="ghost" size="icon">
-            <Link2 className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon">
-            <Paperclip className="h-5 w-5" />
-          </Button> */}
+        <Button
+          variant="outline"
+          className="shadow-none"
+          size="icon"
+          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+          onClick={() =>
+            onClickIcon({ insertText: "1. ", removeIfExist: true })
+          }
+        >
+          <ListOrdered className="h-5 w-5" />
+        </Button>
+        <Button
+          variant="outline"
+          className="shadow-none"
+          size="icon"
+          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+          onClick={() => onClickIcon({ insertText: "> ", removeIfExist: true })}
+        >
+          <Quote className="h-5 w-5" />
+        </Button>
       </div>
       <div className="flex items-center space-x-2">
         {bottomButtons.onCancel && (
