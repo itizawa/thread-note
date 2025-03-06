@@ -74,7 +74,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
           <img
             src={src}
             alt={alt}
-            className="max-w-full h-auto rounded-lg shadow-md mx-auto"
+            className="max-w-full h-auto rounded-lg shadow-md mx-auto border"
           />
         ),
       }}
