@@ -33,7 +33,11 @@ export const PostController = ({
   onClickImageUpload,
 }: Props) => {
   return (
-    <div className={"flex items-center justify-between"}>
+    <div
+      className={
+        "md:flex items-center space-y-4 md:space-y-0 md:space-x-4 justify-between"
+      }
+    >
       <div className="flex items-center space-x-2">
         <Button
           variant="outline"
@@ -87,11 +91,16 @@ export const PostController = ({
       </div>
       <div className="flex items-center space-x-2">
         {bottomButtons.onCancel && (
-          <Button variant="ghost" onClick={bottomButtons.onCancel}>
+          <Button
+            variant="outline"
+            className="flex-1"
+            onClick={bottomButtons.onCancel}
+          >
             キャンセル
           </Button>
         )}
         <Button
+          className="flex-1"
           onClick={bottomButtons.onSubmit}
           disabled={formState.isDisabled}
           loading={formState.isPending}
