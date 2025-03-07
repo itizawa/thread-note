@@ -9,26 +9,7 @@ type UseImageUploadProps = {
 
 export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-
-  // ドラッグ&ドロップイベントハンドラ
-  const handleDragEnter = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  }, []);
-
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  }, []);
 
   // 画像アップロード処理
   const uploadImage = useCallback(
@@ -66,7 +47,6 @@ export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
         toast.error("画像のアップロードに失敗しました");
       } finally {
         setIsUploading(false);
-        setIsDragging(false);
       }
     },
     [onImageUploaded]
@@ -77,7 +57,6 @@ export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
     (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      setIsDragging(false);
 
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
         const file = e.dataTransfer.files[0];
@@ -111,11 +90,7 @@ export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
 
   return {
     fileInputRef,
-    isDragging,
     isUploading,
-    handleDragEnter,
-    handleDragLeave,
-    handleDragOver,
     handleDrop,
     handleFileChange,
     handleImageButtonClick,

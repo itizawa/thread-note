@@ -1,6 +1,7 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
+import { trpc } from "@/trpc/client";
 import * as React from "react";
 import { useImageUpload } from "./hooks/useImageUpload";
 import { useTextareaOperations } from "./hooks/useTextareaOperations";
@@ -26,6 +27,8 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
+  const { data: currentUser } = trpc.user.getCurrentUser.useQuery();
+  const isAdmin = currentUser?.planSubscription?.plan.name === "admin";
   // テキストエリア操作のカスタムフック
   const { textareaRef, insertMarkdownAtCursor, insertAtCursor } =
     useTextareaOperations({
@@ -36,11 +39,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
   // 画像アップロードのカスタムフック
   const {
     fileInputRef,
-    isDragging,
     isUploading,
-    handleDragEnter,
-    handleDragLeave,
-    handleDragOver,
     handleDrop,
     handleFileChange,
     handleImageButtonClick,
@@ -50,20 +49,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
 
   return (
     <>
-      <div
-        className={`space-y-4 ${isDragging ? "relative" : ""}`}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
-        {isDragging && (
-          <div className="absolute inset-0 bg-primary/10 border-2 border-dashed border-primary rounded-md flex items-center justify-center z-10">
-            <p className="text-primary font-medium">
-              画像をドロップしてアップロード
-            </p>
-          </div>
-        )}
+      <div className={`space-y-4`} onDrop={isAdmin ? handleDrop : undefined}>
         <Textarea
           ref={textareaRef}
           placeholder={textarea.placeholder || "テキストを入力..."}
