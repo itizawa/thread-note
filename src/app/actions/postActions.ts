@@ -16,6 +16,12 @@ export const changeToArchive = async (
   await trpc.post.changeToArchive(args);
 };
 
+export const changeToUnArchive = async (
+  args: inferRouterInputs<AppRouter>["post"]["changeToUnArchive"]
+) => {
+  await trpc.post.changeToUnArchive(args);
+};
+
 export const generateReplyPost = async (
   args: inferRouterInputs<AppRouter>["post"]["generateReplyPost"]
 ) => {

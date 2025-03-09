@@ -1,8 +1,13 @@
 "use client";
 
-import { changeToArchive, updatePostBody } from "@/app/actions/postActions";
+import {
+  changeToArchive,
+  changeToUnArchive,
+  updatePostBody,
+} from "@/app/actions/postActions";
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
+import { Button } from "@/components/ui/button";
 import { MarkdownViewer } from "@/components/ui/markdownViewer";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
@@ -68,11 +73,30 @@ export function PostPaper({ post }: Props) {
     }
   };
 
+  const handleClickUnArchiveButton = async () => {
+    startTransition(async () => {
+      await changeToUnArchive({ id: post.id });
+      utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
+      toast.success("アーカイブを取り消しました");
+    });
+  };
+
   const handleClickArchiveButton = async () => {
     startTransition(async () => {
       await changeToArchive({ id: post.id });
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
-      toast.success("アーカイブしました");
+      toast.success("アーカイブしました", {
+        action: (
+          <Button
+            size="sm"
+            className="ml-auto shadow-none "
+            variant="ghost"
+            onClick={handleClickUnArchiveButton}
+          >
+            取り消す
+          </Button>
+        ),
+      });
     });
   };
 
