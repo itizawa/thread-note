@@ -156,9 +156,9 @@ export function PostPaper({ post }: Props) {
           </div>
         )}
       </div>
-      <div className="space-y-0">
-        {isParentPost &&
-          post.children.map((v) => {
+      {isParentPost && (
+        <div className="space-y-0">
+          {post.children.map((v) => {
             return (
               <div key={v.id} className="flex relative pb-4">
                 <div className="pl-2 left-0 h-full absolute">
@@ -170,10 +170,9 @@ export function PostPaper({ post }: Props) {
               </div>
             );
           })}
-        {isParentPost && (
           <ReplyForm threadId={post.threadId} parentPostId={post.id} />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
