@@ -65,7 +65,7 @@ export function CreateNewThreadForm() {
     <div className="space-y-4">
       <Input
         placeholder="タイトルを入力してください"
-        className="bg-white"
+        className="bg-white shadow-none"
         onChange={(e) => setTitle(e.target.value)}
         onKeyDown={handleKeyPress}
         forceFocus

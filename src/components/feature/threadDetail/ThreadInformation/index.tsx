@@ -119,7 +119,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
           <Input
             defaultValue={threadInfo.title || ""}
             placeholder="タイトルを入力してください"
-            className="bg-white"
+            className="bg-white shadow-none"
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={handleKeyPress}
             forceFocus
