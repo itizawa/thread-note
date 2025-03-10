@@ -24,11 +24,15 @@ export const generateMetadata = async ({
     return generateMetadataObject({
       title: "Thread Not Found",
       description: "The requested thread does not exist.",
+      images: [`/api/og?title=NotFound`],
     });
 
   return generateMetadataObject({
     title: threadWithPosts.title || undefined,
     description: threadWithPosts.posts[0]?.body || undefined,
+    images: [
+      `/api/og?title=${encodeURIComponent(threadWithPosts.title || "")}`,
+    ],
   });
 };
 export default async function Page({ params }: Props) {
