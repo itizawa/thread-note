@@ -1,3 +1,4 @@
+import { OgpCard } from "@/components/ui/MarkdownViewer/OgpCard";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
@@ -18,9 +19,23 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
         h3: ({ children }) => (
           <h3 className="text-xl font-semibold mt-3">{children}</h3>
         ),
-        p: ({ children }) => (
-          <p className="text-gray-700 leading-relaxed">{children}</p>
-        ),
+        p: ({ node, children }) => {
+          const child = node?.children[0];
+          if (
+            node?.children.length === 1 &&
+            child?.type === "element" &&
+            child.tagName === "a" &&
+            typeof child.properties?.href === "string" &&
+            child.children[0].type === "text" &&
+            child.properties.href === child.children[0].value
+          ) {
+            if (/(https?:\/\/[^\s]+)/g.test(child.properties.href)) {
+              return <OgpCard url={child.properties.href} />;
+            }
+          }
+
+          return <p className="text-gray-700 leading-relaxed">{children}</p>;
+        },
         ul: ({ children }) => (
           <ul className="list-disc ml-5 space-y-1">{children}</ul>
         ),
