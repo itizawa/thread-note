@@ -126,7 +126,7 @@ export function PostPaper({ post }: Props) {
           />
         )}
       </div>
-      <div className={isEditing ? "pb-4 border-1 p-4 rounded-lg" : ""}>
+      <div className={isEditing ? "pb-4 border-1 p-4 rounded-lg" : "p-2"}>
         {isEditing ? (
           <PostForm
             textarea={{
