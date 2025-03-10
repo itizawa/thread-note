@@ -24,13 +24,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "認証が必要です" }, { status: 401 });
     }
 
-    if (currentUser.planSubscription?.plan.name !== "admin") {
-      return NextResponse.json(
-        { error: "管理者権限が必要です" },
-        { status: 403 }
-      );
-    }
-
     // フォームデータからファイルを取得
     const formData = await request.formData();
     const file = formData.get("file") as File;
@@ -38,6 +31,15 @@ export async function POST(request: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { error: "ファイルが見つかりません" },
+        { status: 400 }
+      );
+    }
+
+    // ファイルサイズの制限 (1MB)
+    const MAX_FILE_SIZE = 1 * 1024 * 1024;
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: "ファイルサイズは1MB以下にしてください" },
         { status: 400 }
       );
     }
