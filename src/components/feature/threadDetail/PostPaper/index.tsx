@@ -8,7 +8,7 @@ import {
 import { PostForm } from "@/components/model/post/PostForm";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
-import { MarkdownViewer } from "@/components/ui/markdownViewer";
+import { MarkdownViewer } from "@/components/ui/MarkdownViewer/index";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
@@ -126,9 +126,7 @@ export function PostPaper({ post }: Props) {
           />
         )}
       </div>
-      <div
-        className={isEditing ? "pb-4 border-1 p-4 rounded-lg" : "p-2 md:p-4"}
-      >
+      <div className={isEditing ? "pb-4 border-1 p-4 rounded-lg" : ""}>
         {isEditing ? (
           <PostForm
             textarea={{
