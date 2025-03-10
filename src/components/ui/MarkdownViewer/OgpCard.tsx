@@ -46,7 +46,7 @@ export const OgpCard = ({ url }: Props) => {
     >
       <div className="flex">
         <div className="p-4 flex-1 overflow-hidden space-y-1 flex flex-col">
-          <p className="font-bold text-md text-gray-900 line-clamp-2">
+          <p className="font-bold text-base text-gray-900 line-clamp-2">
             {data?.title}
           </p>
           <div className="w-full overflow-hidden space-y-0.5">
@@ -68,7 +68,7 @@ export const OgpCard = ({ url }: Props) => {
         <img
           src={data?.image || "/no-image.png"}
           alt={data?.title || url}
-          className="w-32 h-32 object-cover"
+          className="w-30 h-30 object-cover"
         />
       </div>
     </a>
