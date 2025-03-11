@@ -14,15 +14,43 @@ export async function GET(req: NextRequest) {
           display: "flex",
           width: "1200px",
           height: "630px",
-          backgroundColor: "#1a202c",
-          color: "white",
+          padding: "0px 100px",
+          backgroundColor: "#efefef",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: "64px",
-          fontWeight: "bold",
+          position: "relative",
+          fontFamily: "sans-serif",
         }}
       >
-        {title}
+        {/* 背景デザイン */}
+        <svg
+          width="1200"
+          height="630"
+          viewBox="0 0 1200 630"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ position: "absolute", top: 0, left: 0 }}
+        >
+          <polygon points="0,0 0,200 400,0" fill="orange" />
+          <polygon points="0,230 0,630 200,630" fill="lightgreen" />
+          <polygon points="1200,0 1200,400 900,0" fill="lightblue" />
+          <polygon points="1200,430 1200,630 800,630" fill="pink" />
+        </svg>
+        {/* 記事タイトル */}
+        <div
+          style={{
+            position: "relative",
+            fontSize: "50px",
+            fontWeight: "bold",
+            color: "black",
+            textAlign: "center",
+            padding: "20px",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            borderRadius: "10px",
+          }}
+        >
+          {title}
+        </div>
       </div>
     ),
     {
