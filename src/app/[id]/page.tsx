@@ -12,13 +12,10 @@ import { Suspense } from "react";
 
 export const generateMetadata = async ({
   params,
-  searchParams,
 }: NextSegmentPage<{
   params: { id: string };
 }>["arguments"]): Promise<Metadata> => {
   const { id: threadId } = await params;
-  const ogp = (await searchParams).ogp;
-  const type = typeof ogp === "string" ? ogp : "default";
 
   const { threadWithPosts } = await trpc.thread.getPublicThreadWithPosts({
     id: threadId,
@@ -28,16 +25,14 @@ export const generateMetadata = async ({
     return generateMetadataObject({
       title: "Thread Not Found",
       description: "The requested thread does not exist.",
-      images: [`/api/og?title=NotFound?type=${type}`],
+      images: ["/api/og?title=NotFound"],
     });
 
   return generateMetadataObject({
     title: threadWithPosts.title || undefined,
     description: threadWithPosts.posts[0]?.body || undefined,
     images: [
-      `/api/og?title=${encodeURIComponent(
-        threadWithPosts.title || ""
-      )}&type=${type}`,
+      `/api/og?title=${encodeURIComponent(threadWithPosts.title || "")}`,
     ],
   });
 };
