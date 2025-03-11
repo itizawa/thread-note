@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
           width: "1200px",
           height: "630px",
           padding: "0px 100px",
-          backgroundColor: "#efefef",
+          backgroundColor: "#ffffff",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
@@ -45,7 +45,6 @@ export async function GET(req: NextRequest) {
             color: "black",
             textAlign: "center",
             padding: "20px",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
             borderRadius: "10px",
           }}
         >
