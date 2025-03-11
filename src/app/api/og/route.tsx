@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
           xmlns="http://www.w3.org/2000/svg"
           style={{ position: "absolute", top: 0, left: 0 }}
         >
-          <polygon points="0,0 0,200 400,0" fill="orange" />
+          <polygon points="0,0 0,200 400,0" fill="#FFCC99" />
           <polygon points="0,230 0,630 200,630" fill="lightgreen" />
           <polygon points="1200,0 1200,400 900,0" fill="lightblue" />
           <polygon points="1200,430 1200,630 800,630" fill="pink" />
