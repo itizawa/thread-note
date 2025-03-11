@@ -31,7 +31,7 @@ export const OgpCard = ({ url }: Props) => {
               </div>
             </div>
           </div>
-          <div className="w-30 md:w-50 h-30 bg-slate-300 animate-pulse" />
+          <div className="w-30 md:w-50 h-31 bg-slate-300 animate-pulse" />
         </div>
       </a>
     );
@@ -68,7 +68,7 @@ export const OgpCard = ({ url }: Props) => {
         <img
           src={data?.image || "/no-image.png"}
           alt={data?.title || url}
-          className="w-30 md:w-50 h-30 object-cover"
+          className="w-30 md:w-50 h-31 object-cover"
         />
       </div>
     </a>
