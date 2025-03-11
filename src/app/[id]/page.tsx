@@ -6,16 +6,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { urls } from "@/consts/urls";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { HydrateClient, trpc } from "@/trpc/server";
-import { Metadata } from "next";
+import { Metadata, NextSegmentPage } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-type Props = { params: Promise<{ id: string }> };
-
 export const generateMetadata = async ({
   params,
-}: Props): Promise<Metadata> => {
+  searchParams,
+}: NextSegmentPage<{
+  params: { id: string };
+}>["arguments"]): Promise<Metadata> => {
   const { id: threadId } = await params;
+  const ogp = (await searchParams).ogp;
+  const type = typeof ogp === "string" ? ogp : "default";
+
   const { threadWithPosts } = await trpc.thread.getPublicThreadWithPosts({
     id: threadId,
   });
@@ -24,18 +28,22 @@ export const generateMetadata = async ({
     return generateMetadataObject({
       title: "Thread Not Found",
       description: "The requested thread does not exist.",
-      images: [`/api/og?title=NotFound`],
+      images: [`/api/og?title=NotFound?type=${type}`],
     });
 
   return generateMetadataObject({
     title: threadWithPosts.title || undefined,
     description: threadWithPosts.posts[0]?.body || undefined,
     images: [
-      `/api/og?title=${encodeURIComponent(threadWithPosts.title || "")}`,
+      `/api/og?title=${encodeURIComponent(
+        threadWithPosts.title || ""
+      )}&type=${type}`,
     ],
   });
 };
-export default async function Page({ params }: Props) {
+const Page: NextSegmentPage<{
+  params: { id: string };
+}> = async ({ params }) => {
   const { id: threadId } = await params;
 
   // 公開状態のThreadかどうかをチェック
@@ -64,4 +72,6 @@ export default async function Page({ params }: Props) {
       </div>
     </HydrateClient>
   );
-}
+};
+
+export default Page;
