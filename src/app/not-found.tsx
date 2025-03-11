@@ -12,8 +12,8 @@ export default function Page() {
     <HydrateClient>
       <div className="min-h-screen p-5">
         <h3 className="mx-auto">Not Found</h3>
-        <Link href={urls.top}>
-          <a className="mx-auto">Go to Home</a>
+        <Link href={urls.top} className="mx-auto">
+          Go to Home
         </Link>
       </div>
     </HydrateClient>
