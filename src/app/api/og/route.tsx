@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
         <div
           style={{
             position: "relative",
-            fontSize: "50px",
+            fontSize: "64px",
             fontWeight: "bold",
             color: "black",
             textAlign: "center",
