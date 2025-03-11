@@ -1,11 +1,11 @@
-import { DashBoardSidebar } from "@/components/feature/layout/Sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { Suspense } from "react";
+import { DashBoardSidebar } from "../../layout/Sidebar";
 import { NavigationUserIcon } from "./parts/NavigationUserIcon";
 import { SidebarSheet } from "./parts/SidebarSheet";
 
-export default function Page() {
+export const DashboardNavigation = () => {
   return (
     <header className="sticky z-50 top-0 bg-white shadow-md">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
@@ -31,4 +31,4 @@ export default function Page() {
       </div>
     </header>
   );
-}
+};

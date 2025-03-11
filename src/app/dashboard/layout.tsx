@@ -1,16 +1,15 @@
+import { DashboardNavigation } from "@/components/feature/dashboard/DashboardNavigation";
 import { DashBoardSidebar } from "@/components/feature/layout/Sidebar";
 import type React from "react";
 
 export default async function DashboardLayout({
   children,
-  navigation,
 }: {
   children: React.ReactNode;
-  navigation: React.ReactNode;
 }) {
   return (
     <>
-      {navigation}
+      <DashboardNavigation />
       <div className="flex h-[calc(100vh-56px)] bg-gray-100">
         <div className="md:block hidden w-60 border-r">
           <DashBoardSidebar />
