@@ -1,3 +1,4 @@
+import { UploadImageProvider } from "@/shared/components/UploadImageWrapper";
 import { TRPCProvider } from "@/trpc/client";
 import type { Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -31,7 +32,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
         >
-          {children}
+          <UploadImageProvider>{children}</UploadImageProvider>
           <Toaster richColors />
         </body>
       </TRPCProvider>

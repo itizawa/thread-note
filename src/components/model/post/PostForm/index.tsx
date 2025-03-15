@@ -1,9 +1,8 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
-import { trpc } from "@/trpc/client";
+import { useUploadImageContext } from "@/shared/components/UploadImageWrapper";
 import * as React from "react";
-import { useImageUpload } from "./hooks/useImageUpload";
 import { useTextareaOperations } from "./hooks/useTextareaOperations";
 import { PostController } from "./parts/postController";
 
@@ -27,8 +26,6 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
-  const { data: currentUser } = trpc.user.getCurrentUser.useQuery();
-  const isAdmin = currentUser?.planSubscription?.plan.name === "admin";
   // テキストエリア操作のカスタムフック
   const { textareaRef, insertMarkdownAtCursor, insertAtCursor } =
     useTextareaOperations({
@@ -36,20 +33,19 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
       onChange: textarea.onChange,
     });
 
-  // 画像アップロードのカスタムフック
-  const {
-    fileInputRef,
-    isUploading,
-    handleDrop,
-    handleFileChange,
-    handleImageButtonClick,
-  } = useImageUpload({
-    onImageUploaded: insertMarkdownAtCursor,
-  });
+  const { startSelect, handleDrop, isUploading, handleFileChange } =
+    useUploadImageContext();
 
   return (
+    // <UploadImageWrapper
+    //   onSuccess={(data, file) => {
+    //     // マークダウン形式で画像を挿入
+    //     const imageMarkdown = `![${file.name}](${data.url})`;
+    //     insertMarkdownAtCursor(imageMarkdown);
+    //   }}
+    // >
     <>
-      <div className={`space-y-4`} onDrop={isAdmin ? handleDrop : undefined}>
+      <div className={`space-y-4`} onDrop={handleDrop}>
         <Textarea
           ref={textareaRef}
           placeholder={textarea.placeholder || "テキストを入力..."}
@@ -63,18 +59,9 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
           bottomButtons={bottomButtons}
           formState={formState}
           onClickIcon={insertAtCursor}
-          onClickImageUpload={handleImageButtonClick}
+          onClickImageUpload={startSelect}
         />
       </div>
-      {/* 隠しファイル入力 */}
-      <input
-        id="image-upload"
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileChange}
-      />
       {isUploading && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-md">

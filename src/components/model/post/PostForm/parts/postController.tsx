@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/trpc/client";
 import {
   Hash,
   Image as ImageIcon,
@@ -33,8 +32,6 @@ export const PostController = ({
   onClickIcon,
   onClickImageUpload,
 }: Props) => {
-  const { data: currentUser } = trpc.user.getCurrentUser.useQuery();
-
   return (
     <div
       className={
@@ -82,17 +79,15 @@ export const PostController = ({
         >
           <Quote className="h-5 w-5" />
         </Button>
-        {currentUser?.planSubscription?.plan.name === "admin" && (
-          <Button
-            variant="outline"
-            className="shadow-none"
-            size="icon"
-            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-            onClick={onClickImageUpload}
-          >
-            <ImageIcon className="h-5 w-5" />
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          className="shadow-none"
+          size="icon"
+          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+          onClick={onClickImageUpload}
+        >
+          <ImageIcon className="h-5 w-5" />
+        </Button>
       </div>
       <div className="flex items-center space-x-2">
         {bottomButtons.onCancel && (
