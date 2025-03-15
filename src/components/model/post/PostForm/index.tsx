@@ -1,7 +1,7 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
-import { UploadImageWrapper } from "@/shared/components/UploadImageWrapper";
+import { useUploadImageContext } from "@/shared/components/UploadImageWrapper";
 import * as React from "react";
 import { useTextareaOperations } from "./hooks/useTextareaOperations";
 import { PostController } from "./parts/postController";
@@ -33,42 +33,42 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
       onChange: textarea.onChange,
     });
 
+  const { startSelect, handleDrop, isUploading, handleFileChange } =
+    useUploadImageContext();
+
   return (
-    <UploadImageWrapper
-      onSuccess={(data, file) => {
-        // マークダウン形式で画像を挿入
-        const imageMarkdown = `![${file.name}](${data.url})`;
-        insertMarkdownAtCursor(imageMarkdown);
-      }}
-    >
-      {({ startSelect, handleDrop, isUploading }) => (
-        <>
-          <div className={`space-y-4`} onDrop={handleDrop}>
-            <Textarea
-              ref={textareaRef}
-              placeholder={textarea.placeholder || "テキストを入力..."}
-              className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
-              value={textarea.value}
-              onChange={(e) => textarea.onChange(e.target.value)}
-              onKeyDown={textarea.onKeyPress}
-              forceFocus={textarea.forceFocus}
-            />
-            <PostController
-              bottomButtons={bottomButtons}
-              formState={formState}
-              onClickIcon={insertAtCursor}
-              onClickImageUpload={startSelect}
-            />
+    // <UploadImageWrapper
+    //   onSuccess={(data, file) => {
+    //     // マークダウン形式で画像を挿入
+    //     const imageMarkdown = `![${file.name}](${data.url})`;
+    //     insertMarkdownAtCursor(imageMarkdown);
+    //   }}
+    // >
+    <>
+      <div className={`space-y-4`} onDrop={handleDrop}>
+        <Textarea
+          ref={textareaRef}
+          placeholder={textarea.placeholder || "テキストを入力..."}
+          className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
+          value={textarea.value}
+          onChange={(e) => textarea.onChange(e.target.value)}
+          onKeyDown={textarea.onKeyPress}
+          forceFocus={textarea.forceFocus}
+        />
+        <PostController
+          bottomButtons={bottomButtons}
+          formState={formState}
+          onClickIcon={insertAtCursor}
+          onClickImageUpload={startSelect}
+        />
+      </div>
+      {isUploading && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-md">
+            <p className="text-center">画像をアップロード中...</p>
           </div>
-          {isUploading && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-center">画像をアップロード中...</p>
-              </div>
-            </div>
-          )}
-        </>
+        </div>
       )}
-    </UploadImageWrapper>
+    </>
   );
 }

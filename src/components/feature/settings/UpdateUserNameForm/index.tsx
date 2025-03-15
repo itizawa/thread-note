@@ -5,7 +5,6 @@ import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useServerAction } from "@/lib/useServerAction";
-import { UploadImageWrapper } from "@/shared/components/UploadImageWrapper";
 import { trpc } from "@/trpc/client";
 import { User } from "@prisma/client";
 import { useState } from "react";

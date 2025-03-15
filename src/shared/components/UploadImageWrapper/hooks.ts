@@ -8,22 +8,16 @@ export type UploadedImageData = {
   fileName: string;
 };
 
-export type UseUploadImageProps = {
-  /**
-   * 画像アップロード成功時に呼び出されるコールバック関数
-   * @param data アップロードされた画像のデータ
-   * @param file アップロードされたファイル
-   */
-  onSuccess: (data: UploadedImageData, file: File) => void;
-};
-
-export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
+export const useUploadImage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, startTransition] = useTransition();
 
   // 画像アップロード処理
   const uploadImage = useCallback(
-    async (file: File) =>
+    async (
+      file: File,
+      onSuccess?: (data: UploadedImageData, file: File) => void
+    ) =>
       startTransition(async () => {
         if (!file.type.startsWith("image/")) {
           toast.error("画像ファイルのみアップロードできます");
@@ -50,9 +44,9 @@ export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
         };
 
         // 成功時のコールバックを実行
-        onSuccess(imageData, file);
+        onSuccess?.(imageData, file);
       }),
-    [onSuccess]
+    []
   );
 
   // ドロップ処理
