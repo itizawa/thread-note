@@ -34,7 +34,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             }
           }
 
-          return <p className="text-gray-700 leading-relaxed">{children}</p>;
+          return <p className="text-gray-800">{children}</p>;
         },
         ul: ({ children }) => (
           <ul className="list-disc ml-5 space-y-1">{children}</ul>
