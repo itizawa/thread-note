@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { urls } from "@/consts/urls";
+import Link from "next/link";
 import { useCallback, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -30,27 +33,47 @@ export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
           return;
         }
 
-        const formData = new FormData();
-        formData.append("file", file);
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
 
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "アップロードに失敗しました");
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "アップロードに失敗しました");
+          }
+
+          const data = await response.json();
+          const imageData: UploadedImageData = {
+            url: data.url,
+            fileName: data.fileName,
+          };
+
+          // 成功時のコールバックを実行
+          onSuccess(imageData, file);
+        } catch (error) {
+          console.log(error);
+
+          if (error instanceof Error) {
+            toast.error((error as Error).message, {
+              action: (
+                <Link href={urls.dashboardSettings} passHref>
+                  <Button
+                    size="sm"
+                    className="ml-auto shadow-none font-bold"
+                    variant="destructive"
+                  >
+                    ファイル管理へ
+                  </Button>
+                </Link>
+              ),
+            });
+          }
         }
-
-        const data = await response.json();
-        const imageData: UploadedImageData = {
-          url: data.url,
-          fileName: data.fileName,
-        };
-
-        // 成功時のコールバックを実行
-        onSuccess(imageData, file);
       }),
     [onSuccess]
   );
