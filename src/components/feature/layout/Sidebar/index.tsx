@@ -20,7 +20,7 @@ export const DashBoardSidebar = async () => {
       icon: Pen,
     },
     {
-      href: urls.dashboardSettings,
+      href: urls.dashboardSettings("profile"),
       label: "Settings",
       icon: Settings,
     },
