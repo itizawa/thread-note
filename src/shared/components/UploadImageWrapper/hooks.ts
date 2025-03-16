@@ -1,26 +1,34 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
-type UseImageUploadProps = {
-  onImageUploaded: (markdownText: string) => void;
+export type UploadedImageData = {
+  url: string;
+  fileName: string;
 };
 
-export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
+export type UseUploadImageProps = {
+  /**
+   * 画像アップロード成功時に呼び出されるコールバック関数
+   * @param data アップロードされた画像のデータ
+   * @param file アップロードされたファイル
+   */
+  onSuccess: (data: UploadedImageData, file: File) => void;
+};
+
+export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startTransition] = useTransition();
 
   // 画像アップロード処理
   const uploadImage = useCallback(
-    async (file: File) => {
-      if (!file.type.startsWith("image/")) {
-        toast.error("画像ファイルのみアップロードできます");
-        return;
-      }
-
-      try {
-        setIsUploading(true);
+    async (file: File) =>
+      startTransition(async () => {
+        if (!file.type.startsWith("image/")) {
+          toast.error("画像ファイルのみアップロードできます");
+          return;
+        }
 
         const formData = new FormData();
         formData.append("file", file);
@@ -36,20 +44,15 @@ export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
         }
 
         const data = await response.json();
+        const imageData: UploadedImageData = {
+          url: data.url,
+          fileName: data.fileName,
+        };
 
-        // マークダウン形式で画像を挿入
-        const imageMarkdown = `![${file.name}](${data.url})`;
-        onImageUploaded(imageMarkdown);
-
-        toast.success("画像をアップロードしました");
-      } catch (error) {
-        console.error("画像アップロードエラー:", error);
-        toast.error("画像のアップロードに失敗しました");
-      } finally {
-        setIsUploading(false);
-      }
-    },
-    [onImageUploaded]
+        // 成功時のコールバックを実行
+        onSuccess(imageData, file);
+      }),
+    [onSuccess]
   );
 
   // ドロップ処理
@@ -81,8 +84,8 @@ export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
     [uploadImage]
   );
 
-  // 画像アップロードボタンクリック処理
-  const handleImageButtonClick = useCallback(() => {
+  // 画像の選択開始処理の開始
+  const startSelect = useCallback(() => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -91,8 +94,9 @@ export const useImageUpload = ({ onImageUploaded }: UseImageUploadProps) => {
   return {
     fileInputRef,
     isUploading,
-    handleDrop,
+    uploadImage,
     handleFileChange,
-    handleImageButtonClick,
+    startSelect,
+    handleDrop,
   };
 };

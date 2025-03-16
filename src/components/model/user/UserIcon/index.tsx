@@ -6,6 +6,7 @@ type Props = {
   size: "sm" | "md" | "lg";
   userImage?: User["image"];
   className?: string;
+  onClick?: () => void;
 };
 
 const sizeMap = {
@@ -14,9 +15,19 @@ const sizeMap = {
   lg: "h-12 w-12",
 };
 
-export function UserIcon({ userImage, className, size = "md" }: Props) {
+export function UserIcon({
+  userImage,
+  className,
+  size = "md",
+  onClick,
+}: Props) {
   return (
-    <Avatar className={`${sizeMap[size]} ${className ?? ""}`}>
+    <Avatar
+      className={`${sizeMap[size]} ${className ?? ""} ${
+        onClick ? "cursor-pointer" : ""
+      }`}
+      onClick={onClick}
+    >
       <AvatarImage src={userImage ?? undefined} />
       <AvatarFallback>
         <Skeleton className={`${sizeMap[size]} rounded-full`} />

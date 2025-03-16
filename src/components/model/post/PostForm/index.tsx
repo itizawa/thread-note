@@ -1,9 +1,8 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
-import { trpc } from "@/trpc/client";
+import { UploadImageWrapper } from "@/shared/components/UploadImageWrapper";
 import * as React from "react";
-import { useImageUpload } from "./hooks/useImageUpload";
 import { useTextareaOperations } from "./hooks/useTextareaOperations";
 import { PostController } from "./parts/postController";
 
@@ -27,8 +26,6 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
-  const { data: currentUser } = trpc.user.getCurrentUser.useQuery();
-  const isAdmin = currentUser?.planSubscription?.plan.name === "admin";
   // テキストエリア操作のカスタムフック
   const { textareaRef, insertMarkdownAtCursor, insertAtCursor } =
     useTextareaOperations({
@@ -36,52 +33,42 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
       onChange: textarea.onChange,
     });
 
-  // 画像アップロードのカスタムフック
-  const {
-    fileInputRef,
-    isUploading,
-    handleDrop,
-    handleFileChange,
-    handleImageButtonClick,
-  } = useImageUpload({
-    onImageUploaded: insertMarkdownAtCursor,
-  });
-
   return (
-    <>
-      <div className={`space-y-4`} onDrop={isAdmin ? handleDrop : undefined}>
-        <Textarea
-          ref={textareaRef}
-          placeholder={textarea.placeholder || "テキストを入力..."}
-          className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
-          value={textarea.value}
-          onChange={(e) => textarea.onChange(e.target.value)}
-          onKeyDown={textarea.onKeyPress}
-          forceFocus={textarea.forceFocus}
-        />
-        <PostController
-          bottomButtons={bottomButtons}
-          formState={formState}
-          onClickIcon={insertAtCursor}
-          onClickImageUpload={handleImageButtonClick}
-        />
-      </div>
-      {/* 隠しファイル入力 */}
-      <input
-        id="image-upload"
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileChange}
-      />
-      {isUploading && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-md">
-            <p className="text-center">画像をアップロード中...</p>
+    <UploadImageWrapper
+      onSuccess={(data, file) => {
+        // マークダウン形式で画像を挿入
+        const imageMarkdown = `![${file.name}](${data.url})`;
+        insertMarkdownAtCursor(imageMarkdown);
+      }}
+    >
+      {({ startSelect, handleDrop, isUploading }) => (
+        <>
+          <div className={`space-y-4`} onDrop={handleDrop}>
+            <Textarea
+              ref={textareaRef}
+              placeholder={textarea.placeholder || "テキストを入力..."}
+              className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
+              value={textarea.value}
+              onChange={(e) => textarea.onChange(e.target.value)}
+              onKeyDown={textarea.onKeyPress}
+              forceFocus={textarea.forceFocus}
+            />
+            <PostController
+              bottomButtons={bottomButtons}
+              formState={formState}
+              onClickIcon={insertAtCursor}
+              onClickImageUpload={startSelect}
+            />
           </div>
-        </div>
+          {isUploading && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+              <div className="bg-white p-4 rounded-md">
+                <p className="text-center">画像をアップロード中...</p>
+              </div>
+            </div>
+          )}
+        </>
       )}
-    </>
+    </UploadImageWrapper>
   );
 }

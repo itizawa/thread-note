@@ -1,10 +1,11 @@
 "use client";
 
-import { updateUserName } from "@/app/actions/userActions";
+import { updateUserSettings } from "@/app/actions/userActions";
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useServerAction } from "@/lib/useServerAction";
+import { UploadImageWrapper } from "@/shared/components/UploadImageWrapper";
 import { trpc } from "@/trpc/client";
 import { User } from "@prisma/client";
 import { useState } from "react";
@@ -28,7 +29,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
     }
 
     enqueueServerAction({
-      action: () => updateUserName({ name }),
+      action: () => updateUserSettings({ name }),
       error: {
         text: "名前の更新に失敗しました",
       },
@@ -42,7 +43,40 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex items-center space-x-4">
-        <UserIcon userImage={currentUser.image} size="md" />
+        <UploadImageWrapper
+          onSuccess={(data) => {
+            toast.success("プロフィール画像をアップロードしました");
+            // ユーザー画像を更新
+            enqueueServerAction({
+              action: () => updateUserSettings({ image: data.url }),
+              error: {
+                text: "プロフィール画像の更新に失敗しました",
+              },
+              success: {
+                onSuccess: () => utils.user.getCurrentUser.invalidate(),
+                text: "プロフィール画像を更新しました",
+              },
+            });
+          }}
+        >
+          {({ startSelect, isUploading }) => (
+            <div className="relative h-8 w-8">
+              <UserIcon
+                userImage={currentUser.image}
+                size="md"
+                onClick={startSelect}
+                className={`${
+                  isUploading ? "opacity-50" : ""
+                } hover:opacity-80 transition-opacity`}
+              />
+              {isUploading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-spin h-8 w-8 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+                </div>
+              )}
+            </div>
+          )}
+        </UploadImageWrapper>
         <div className="flex-1">
           <label
             htmlFor="name"
@@ -60,8 +94,12 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
         </div>
       </div>
       <div className="flex justify-end">
-        <Button type="submit" disabled={isPending || name === currentUser.name}>
-          {isPending ? "更新中..." : "更新"}
+        <Button
+          type="submit"
+          loading={isPending}
+          disabled={name === currentUser.name}
+        >
+          更新
         </Button>
       </div>
     </form>
