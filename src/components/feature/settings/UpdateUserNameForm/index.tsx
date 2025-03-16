@@ -59,13 +59,12 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             });
           }}
         >
-          {({ startSelect, handleDrop, isUploading }) => (
+          {({ startSelect, isUploading }) => (
             <div className="relative h-8 w-8">
               <UserIcon
                 userImage={currentUser.image}
                 size="md"
                 onClick={startSelect}
-                onDrop={handleDrop}
                 className={`${
                   isUploading ? "opacity-50" : ""
                 } hover:opacity-80 transition-opacity`}
