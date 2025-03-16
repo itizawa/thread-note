@@ -15,7 +15,7 @@ export const Image = ({ src, alt }: Props) => {
         src={src}
         alt={alt}
         className={
-          "max-w-full max-h-100 rounded-lg shadow-md mx-auto border cursor-zoom-in transition-transform transform hover:scale-105"
+          "max-w-full max-h-100 rounded-lg shadow-md mx-auto border cursor-zoom-in transition-transform transform"
         }
         onClick={() => setExpand(true)}
       />
