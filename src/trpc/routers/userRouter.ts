@@ -8,10 +8,11 @@ export const userRouter = router({
     return ctx.currentUser;
   }),
 
-  updateUserName: protectedProcedure
+  updateUserSettings: protectedProcedure
     .input(
       z.object({
-        name: UserSchema.shape.name,
+        name: UserSchema.shape.name.optional(),
+        image: z.string().url().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -20,7 +21,8 @@ export const userRouter = router({
           id: ctx.currentUser.id,
         },
         data: {
-          name: input.name,
+          name: input.name ?? ctx.currentUser.name,
+          image: input.image ?? ctx.currentUser.image,
         },
       });
     }),
