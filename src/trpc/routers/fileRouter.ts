@@ -2,21 +2,32 @@ import { prisma } from "@/prisma";
 import { del } from "@vercel/blob";
 import { z } from "zod";
 import { protectedProcedure, router } from "../init";
+import { ListFilesUseCase } from "../usecases/dashboard/ListFilesUseCase";
 
 export const fileRouter = router({
   /**
    * ログインユーザーのファイル一覧を取得する
    */
-  getFiles: protectedProcedure.query(async ({ ctx }) => {
-    return await prisma.file.findMany({
-      where: {
+  listFiles: protectedProcedure
+    .input(
+      z.object({
+        cursor: z.string().optional(),
+        limit: z.number().min(1).max(20).optional(),
+        sort: z.object({
+          type: z.union([z.literal("createdAt"), z.literal("size")]),
+          direction: z.union([z.literal("asc"), z.literal("desc")]),
+        }),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const listFilesUseCase = new ListFilesUseCase();
+      return await listFilesUseCase.execute({
         userId: ctx.currentUser.id,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-  }),
+        cursor: input.cursor,
+        limit: input.limit,
+        sort: input.sort,
+      });
+    }),
 
   /**
    * ファイルを削除する
