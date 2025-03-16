@@ -1,6 +1,7 @@
 export { TransactionIsolationLevelSchema } from './TransactionIsolationLevelSchema';
 export { UserScalarFieldEnumSchema } from './UserScalarFieldEnumSchema';
 export { RelationLoadStrategySchema } from './RelationLoadStrategySchema';
+export { FileScalarFieldEnumSchema } from './FileScalarFieldEnumSchema';
 export { AccountScalarFieldEnumSchema } from './AccountScalarFieldEnumSchema';
 export { SessionScalarFieldEnumSchema } from './SessionScalarFieldEnumSchema';
 export { VerificationTokenScalarFieldEnumSchema } from './VerificationTokenScalarFieldEnumSchema';

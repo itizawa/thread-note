@@ -1,4 +1,5 @@
 export * from './UserSchema';
+export * from './FileSchema';
 export * from './AccountSchema';
 export * from './SessionSchema';
 export * from './VerificationTokenSchema';
