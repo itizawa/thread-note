@@ -32,7 +32,6 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             child.properties.href === child.children[0].value
           ) {
             if (/(https?:\/\/[^\s]+)/g.test(child.properties.href)) {
-              console.log(child.properties.href);
               if (child.properties.href.includes("youtube.com/watch")) {
                 const videoId = child.properties.href.split("v=").pop(); // Use pop() to accommodate any additional parameters
                 if (!videoId) return null;
