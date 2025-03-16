@@ -3,9 +3,19 @@
 import { YouTubeEmbed } from "@next/third-parties/google";
 
 type Props = {
-  videoid: string;
+  url: string;
 };
 
-export const YouTubeCard = ({ videoid }: Props) => {
-  return <YouTubeEmbed videoid={videoid} />;
+export const YouTubeCard = ({ url }: Props) => {
+  let videoId: string | null;
+  if (url.includes("shorts/")) {
+    videoId = url.split("shorts/")[1].split("?")[0];
+  } else {
+    const urlParams = new URLSearchParams(new URL(url).search);
+    videoId = urlParams.get("v");
+  }
+
+  if (!videoId) return null;
+
+  return <YouTubeEmbed videoid={videoId} />;
 };
