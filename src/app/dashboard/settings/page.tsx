@@ -15,13 +15,13 @@ export const metadata: Metadata = generateMetadataObject({
 export default async function SettingsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const currentUser = await getCurrentUser();
   if (!currentUser) redirect(urls.top);
 
-  const tab =
-    typeof searchParams.tab === "string" ? searchParams.tab : "profile";
+  const tabFormParams = searchParams ? (await searchParams).tab : "profile";
+  const tab = typeof tabFormParams === "string" ? tabFormParams : "profile";
 
   return (
     <div className="flex h-full">
