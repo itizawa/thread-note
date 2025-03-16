@@ -24,9 +24,9 @@ export default async function SettingsPage({
 
   return (
     <div className="flex h-full">
-      <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
-          <Tabs defaultValue={tab}>
+      <main className="flex flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
+        <div className="flex-1 flex flex-col space-y-4 max-w-[700px] mx-auto">
+          <Tabs defaultValue={tab} className="h-full">
             <TabsList>
               <TabsTrigger value="profile" className="font-bold">
                 プロフィール設定
@@ -41,11 +41,8 @@ export default async function SettingsPage({
                 <UpdateUserNameForm currentUser={currentUser} />
               </div>
             </TabsContent>
-            <TabsContent value="files">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">ファイル管理</h2>
-                <FileManagement />
-              </div>
+            <TabsContent value="files" className="h-full">
+              <FileManagement />
             </TabsContent>
           </Tabs>
         </div>
