@@ -61,7 +61,7 @@ export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
           if (error instanceof Error) {
             toast.error((error as Error).message, {
               action: (
-                <Link href={urls.dashboardSettings} passHref>
+                <Link href={urls.dashboardSettings("files")} passHref>
                   <Button
                     size="sm"
                     className="ml-auto shadow-none font-bold"

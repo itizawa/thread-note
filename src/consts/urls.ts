@@ -5,6 +5,7 @@ export const urls = {
   dashboardWithQuery: (page: number) => `/dashboard?page=${page}`,
   dashboardThreadNew: "/dashboard/new",
   dashboardThreadDetails: (id: string) => `/dashboard/${id}`,
-  dashboardSettings: "/dashboard/settings",
+  dashboardSettings: (tab: "profile" | "files") =>
+    `/dashboard/settings?tab=${tab}`,
   threadDetails: (id: string) => `/${id}`,
 };
