@@ -2,6 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -31,7 +39,7 @@ export const FileManagement = () => {
     <div className="flex-1 flex flex-col space-y-4 h-full">
       <div className="overflow-y-auto flex flex-col rounded-lg border bg-white flex-1">
         <div className="border-b px-4 py-3 flex items-center justify-between">
-          <h2 className="font-medium">ファイル一覧</h2>
+          <h2 className="font-bold font-sm">ファイル一覧</h2>
           <Select
             onValueChange={(value) =>
               setSortOrder(value as "createdAt" | "size")
@@ -101,13 +109,17 @@ function FileListItem({
   };
   refetch: () => void;
 }) {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   const { mutate: deleteFile, isPending } = trpc.file.deleteFile.useMutation({
     onSuccess: () => {
       toast.success("ファイルを削除しました");
       refetch();
+      setIsDeleteDialogOpen(false);
     },
     onError: () => {
       toast.error("ファイルの削除に失敗しました");
+      setIsDeleteDialogOpen(false);
     },
   });
 
@@ -116,37 +128,71 @@ function FileListItem({
   };
 
   return (
-    <a href={file.path} target="_blank" rel="noopener noreferrer">
-      <div className="flex items-center justify-between gap-4 p-2 hover:bg-gray-100 cursor-pointer overflow-x-hidden">
-        <div className="flex flex-1 items-center gap-2 overflow-x-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-          <img src={file.path} className="w-6 h-6 rounded" />
-          <div className="flex-1 flex flex-col text-sm truncate">
-            <span className="flex-1 text-sm truncate">
-              {file.name || "タイトルなし"}
-            </span>
-            <div className="flex text-xs truncate text-gray-500 gap-4">
-              <span>
-                {format(new Date(file.createdAt), "yyyy/MM/dd HH:mm")}
+    <>
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>ファイル削除の確認</DialogTitle>
+            <DialogDescription className="flex flex-col items-center gap-2">
+              {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+              <img src={file.path} className="w-12 h-12 rounded mx-auto" />「
+              {file.name || "タイトルなし"}」を削除してもよろしいですか？
+              この操作は取り消せません。
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex flex-row">
+            <Button
+              variant="destructive"
+              className="flex-1"
+              onClick={() => handleDelete(file.id)}
+              disabled={isPending}
+              loading={isPending}
+            >
+              削除する
+            </Button>
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => setIsDeleteDialogOpen(false)}
+            >
+              キャンセル
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <a href={file.path} target="_blank" rel="noopener noreferrer">
+        <div className="flex items-center justify-between gap-4 p-2 hover:bg-gray-100 cursor-pointer overflow-x-hidden">
+          <div className="flex flex-1 items-center gap-2 overflow-x-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+            <img src={file.path} className="w-6 h-6 rounded" />
+            <div className="flex-1 flex flex-col text-sm truncate">
+              <span className="flex-1 text-sm truncate">
+                {file.name || "タイトルなし"}
               </span>
-              <span>{file.size} bytes</span>
+              <div className="flex text-xs truncate text-gray-500 gap-4">
+                <span>
+                  {format(new Date(file.createdAt), "yyyy/MM/dd HH:mm")}
+                </span>
+                <span>{file.size} bytes</span>
+              </div>
             </div>
           </div>
+          <Button
+            variant="destructive"
+            size="sm"
+            className="font-bold"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsDeleteDialogOpen(true);
+            }}
+            disabled={isPending}
+            loading={isPending}
+          >
+            削除
+          </Button>
         </div>
-        <Button
-          variant="destructive"
-          size="sm"
-          className="font-bold"
-          onClick={(e) => {
-            e.preventDefault();
-            handleDelete(file.id);
-          }}
-          disabled={isPending}
-          loading={isPending}
-        >
-          削除
-        </Button>
-      </div>
-    </a>
+      </a>
+    </>
   );
 }

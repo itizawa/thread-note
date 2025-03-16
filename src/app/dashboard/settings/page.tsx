@@ -4,6 +4,7 @@ import { UpdateUserNameForm } from "@/components/feature/settings/UpdateUserName
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { urls } from "@/consts/urls";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { File, Settings } from "lucide-react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -30,11 +31,13 @@ export default async function SettingsPage({
             defaultValue={tab}
             className="flex flex-col h-full overflow-y-auto"
           >
-            <TabsList>
+            <TabsList className="flex justify-start">
               <TabsTrigger value="profile" className="font-bold">
+                <Settings className="h-4 w-4 mr-1" />
                 プロフィール設定
               </TabsTrigger>
               <TabsTrigger value="files" className="font-bold">
+                <File className="h-4 w-4 mr-1" />
                 ファイル管理
               </TabsTrigger>
             </TabsList>
