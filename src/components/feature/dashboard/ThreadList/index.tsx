@@ -16,7 +16,7 @@ import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { MessageCircle, Pen, Search } from "lucide-react";
+import { ClockArrowDown, MessageCircle, Pen, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -88,7 +88,14 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
             defaultValue="lastPostedAt"
           >
             <SelectTrigger className="w-fit shadow-none cursor-pointer">
-              <SelectValue />
+              <SelectValue>
+                <span className="flex items-center">
+                  <ClockArrowDown className="h-4 w-4" />
+                  <span className="text-sm mx-2">
+                    {sortOrder === "createdAt" ? "作成日順" : "更新日順"}
+                  </span>
+                </span>
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="createdAt" className="cursor-pointer">
