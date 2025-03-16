@@ -188,6 +188,7 @@ function FileListItem({
           className="font-bold"
           onClick={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             setIsDeleteDialogOpen(true);
           }}
           disabled={isPending}
