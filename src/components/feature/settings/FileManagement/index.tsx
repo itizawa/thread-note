@@ -145,7 +145,7 @@ function FileListItem({
           <DialogFooter className="flex flex-row">
             <Button
               variant="destructive"
-              className="flex-1"
+              className="flex-1 font-bold"
               onClick={() => handleDelete(file.id)}
               disabled={isPending}
               loading={isPending}
