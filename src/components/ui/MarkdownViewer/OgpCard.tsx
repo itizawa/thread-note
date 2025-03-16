@@ -64,12 +64,14 @@ export const OgpCard = ({ url }: Props) => {
             </p>
           </div>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={data?.image || "/no-image.png"}
-          alt={data?.title || url}
-          className="w-30 md:w-50 h-31 object-cover"
-        />
+        {data?.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={data.image}
+            alt={data?.title || url}
+            className="w-30 md:w-50 h-31 object-cover"
+          />
+        )}
       </div>
     </a>
   );
