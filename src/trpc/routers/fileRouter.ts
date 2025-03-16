@@ -58,4 +58,20 @@ export const fileRouter = router({
         },
       });
     }),
+
+  /**
+   * ユーザーの現在のファイル使用量を取得する
+   */
+  getCurrentUsage: protectedProcedure.query(async ({ ctx }) => {
+    const usedStorage = await prisma.file.aggregate({
+      where: { userId: ctx.currentUser.id },
+      _sum: { size: true },
+    });
+
+    const currentUsage = usedStorage._sum.size ?? 0;
+
+    return {
+      currentUsage,
+    };
+  }),
 });

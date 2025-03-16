@@ -21,7 +21,7 @@ import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
 import { ClockArrowDown, File } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export const FileManagement = () => {
@@ -35,6 +35,19 @@ export const FileManagement = () => {
       { getNextPageParam: (lastPage) => lastPage.nextCursor }
     );
   const files = data?.pages.flatMap((v) => v.files) || [];
+
+  const [currentUsage, setCurrentUsage] = useState(0);
+  const [usagePercentage, setUsagePercentage] = useState(0);
+
+  useEffect(() => {
+    const fetchCurrentUsage = async () => {
+      const response = await trpc.file.getCurrentUsage.query();
+      setCurrentUsage(response.currentUsage);
+      setUsagePercentage((response.currentUsage / (10 * 1024 * 1024)) * 100);
+    };
+
+    fetchCurrentUsage();
+  }, []);
 
   return (
     <div className="flex-1 flex flex-col space-y-4 h-full">
@@ -65,6 +78,18 @@ export const FileManagement = () => {
               </SelectItem>
             </SelectContent>
           </Select>
+        </div>
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            <span>使用容量: {currentUsage} bytes / 10MB</span>
+            <span>{usagePercentage.toFixed(2)}%</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2.5">
+            <div
+              className="bg-blue-600 h-2.5 rounded-full"
+              style={{ width: `${usagePercentage}%` }}
+            ></div>
+          </div>
         </div>
         <div className="flex-1 overflow-y-auto">
           <VirtualizedList
