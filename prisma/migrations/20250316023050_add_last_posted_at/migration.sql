@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "threads" ADD COLUMN     "last_post_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP;

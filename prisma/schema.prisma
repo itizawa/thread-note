@@ -113,10 +113,12 @@ model Thread {
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+  lastPostedAt DateTime @default(now()) @map("last_post_at") @db.Timestamptz()
 
   posts Post[]
 
   @@map("threads")
+  @@index([userId])
 }
 
 

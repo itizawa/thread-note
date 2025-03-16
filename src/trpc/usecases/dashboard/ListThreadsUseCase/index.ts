@@ -8,11 +8,16 @@ export class ListThreadsUseCase {
     searchQuery,
     cursor,
     limit = 10,
+    sort,
   }: {
     userId: User["id"];
     searchQuery?: string;
     cursor?: string;
     limit?: number;
+    sort: {
+      type: "createdAt" | "lastPostedAt";
+      direction: "asc" | "desc";
+    };
   }) {
     // whereの条件を生成
     const where = this.generateWhere(userId, searchQuery);
@@ -27,6 +32,7 @@ export class ListThreadsUseCase {
         id: true,
         title: true,
         createdAt: true,
+        lastPostedAt: true,
         _count: {
           select: {
             posts: {
@@ -45,7 +51,7 @@ export class ListThreadsUseCase {
         },
       },
       orderBy: {
-        createdAt: "desc",
+        [sort.type]: sort.direction,
       },
       take: limit + 1, // 次のページがあるか確認するために 1 つ多く取得
       ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}), // カーソルがある場合はスキップ

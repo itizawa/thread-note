@@ -18,14 +18,18 @@ export function SidebarThreadList({
 }) {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
     trpc.thread.listThreadsByUserId.useInfiniteQuery(
-      { userId: currentUserId, limit: 20 },
+      {
+        userId: currentUserId,
+        limit: 20,
+        sort: { type: "lastPostedAt", direction: "desc" },
+      },
       { getNextPageParam: (lastPage) => lastPage.nextCursor }
     );
   const threads = data?.pages.flatMap((v) => v.threads) || [];
 
   return (
     <div className="overflow-y-auto flex flex-col flex-1">
-      <div className="p-2">
+      <div className="p-2 ">
         <h2 className="text-sm font-bold">スレッド一覧</h2>
       </div>
       <div className="flex-1">
@@ -35,8 +39,7 @@ export function SidebarThreadList({
           loadingRenderer={() => <PostListItemSkeleton />}
           loadMore={fetchNextPage}
           hasNextPage={hasNextPage}
-          isLoading={isLoading}
-          isFetching={isFetching}
+          isLoading={isLoading || isFetching}
           rowHeight={36}
           noRowsRenderer={() => (
             <div className="p-2 text-center text-gray-500">

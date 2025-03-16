@@ -22,6 +22,13 @@ export class CreatePostInDetailUseCase {
       },
     });
 
+    await prisma.thread.update({
+      where: { id: threadId },
+      data: {
+        lastPostedAt: new Date(),
+      },
+    });
+
     return { createdPost };
   }
 }
