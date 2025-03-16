@@ -3,9 +3,9 @@ import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import { Image } from "./Image";
-import { YouTube } from "@next/third-parties/google"; // P224a
+import { YouTube } from "@next/third-parties/google";
 
-const YouTubeEmbed: React.FC<{ url: string }> = ({ url }) => { // P99aa
+const YouTubeEmbed: React.FC<{ url: string }> = ({ url }) => {
   const videoId = url.split("v=")[1];
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
   return (
@@ -49,7 +49,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             child.properties.href === child.children[0].value
           ) {
             if (/(https?:\/\/[^\s]+)/g.test(child.properties.href)) {
-              if (child.properties.href.includes("youtube.com/watch")) { // Pfd87
+              if (child.properties.href.includes("youtube.com/watch")) {
                 return <YouTubeEmbed url={child.properties.href} />;
               }
               return <OgpCard url={child.properties.href} />;
