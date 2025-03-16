@@ -3,6 +3,13 @@
 import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
@@ -19,6 +26,9 @@ type Thread =
 export function ThreadList({ currentUserId }: { currentUserId: string }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<"createdAt" | "lastPostedAt">(
+    "lastPostedAt"
+  );
 
   // 検索クエリのデバウンス処理
   useEffect(() => {
@@ -36,6 +46,10 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
         userId: currentUserId,
         searchQuery: debouncedSearchQuery,
         limit: 20,
+        sort: {
+          type: sortOrder,
+          direction: "desc",
+        },
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -65,8 +79,26 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
         </Link>
       </div>
       <div className="overflow-y-auto flex flex-col rounded-lg border bg-white flex-1">
-        <div className="border-b px-4 py-3">
+        <div className="border-b px-4 py-3 flex items-center justify-between">
           <h2 className="font-medium">スレッド一覧</h2>
+          <Select
+            onValueChange={(value) =>
+              setSortOrder(value as "createdAt" | "lastPostedAt")
+            }
+            defaultValue="lastPostedAt"
+          >
+            <SelectTrigger className="w-fit shadow-none cursor-pointer">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="createdAt" className="cursor-pointer">
+                作成日順
+              </SelectItem>
+              <SelectItem value="lastPostedAt" className="cursor-pointer">
+                更新日順
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex-1">
           <VirtualizedList

@@ -22,6 +22,10 @@ export const threadRouter = router({
         searchQuery: z.string().trim().optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
+        sort: z.object({
+          type: z.union([z.literal("createdAt"), z.literal("lastPostedAt")]),
+          direction: z.union([z.literal("asc"), z.literal("desc")]),
+        }),
       })
     )
     .query(async ({ input, ctx }) => {
@@ -30,6 +34,7 @@ export const threadRouter = router({
         searchQuery: input.searchQuery,
         cursor: input.cursor,
         limit: input.limit || 10,
+        sort: input.sort,
       });
     }),
 

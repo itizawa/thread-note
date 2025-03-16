@@ -11,6 +11,7 @@ export const ThreadSchema = z.object({
   isPublic: z.boolean(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
+  lastPostedAt: z.coerce.date(),
 })
 
 export type Thread = z.infer<typeof ThreadSchema>
