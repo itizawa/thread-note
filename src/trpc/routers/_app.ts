@@ -1,4 +1,5 @@
 import { router } from "../init";
+import { fileRouter } from "./fileRouter";
 import { ogpRouter } from "./ogpRouter";
 import { postRouter } from "./postRouter";
 import { threadRouter } from "./threadRouter";
@@ -9,6 +10,7 @@ export const appRouter = router({
   post: postRouter,
   user: userRouter,
   ogp: ogpRouter,
+  file: fileRouter,
 });
 
 export type AppRouter = typeof appRouter;
