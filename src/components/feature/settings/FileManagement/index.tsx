@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ExpandedImage } from "@/components/ui/ExpandedImage";
 import {
   Select,
   SelectContent,
@@ -21,7 +22,6 @@ import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
 import { ClockArrowDown, File } from "lucide-react";
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import { toast } from "sonner";
 
 export const FileManagement = () => {
@@ -196,27 +196,12 @@ function FileListItem({
           削除
         </Button>
       </div>
-      {createPortal(
-        <div
-          className={`fixed top-0 left-0 w-full h-full bg-black/80 flex items-center justify-center z-100 ${
-            expand
-              ? "opacity-100 pointer-events-auto cursor-zoom-out"
-              : "opacity-0 pointer-events-none"
-          } transition-opacity`}
-          onClick={() => setExpand(false)}
-        >
-          <div className="absolute top-0 w-screen p-2">
-            <span className="text-white text-sm font-bold">{file.name}</span>
-          </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={file.path}
-            alt={file.name}
-            className="max-h-full max-w-full"
-          />
-        </div>,
-        document.body
-      )}
+      <ExpandedImage
+        expand={expand}
+        src={file.path}
+        alt={file.name}
+        onClick={() => setExpand(false)}
+      />
     </>
   );
 }
