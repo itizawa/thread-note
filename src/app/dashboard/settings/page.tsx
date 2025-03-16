@@ -42,10 +42,7 @@ export default async function SettingsPage({
               </TabsTrigger>
             </TabsList>
             <TabsContent value="profile">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">プロフィール設定</h2>
-                <UpdateUserNameForm currentUser={currentUser} />
-              </div>
+              <UpdateUserNameForm currentUser={currentUser} />
             </TabsContent>
             <TabsContent value="files" className="overflow-y-auto flex-1">
               <FileManagement />
