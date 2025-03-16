@@ -22,6 +22,10 @@ export default async function SettingsPage() {
             <h2 className="text-xl font-semibold mb-4">プロフィール設定</h2>
             <UpdateUserNameForm currentUser={currentUser} />
           </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4">ファイル管理</h2>
+            {/* <FileManagement currentUser={currentUser} /> */}
+          </div>
         </div>
       </main>
     </div>
