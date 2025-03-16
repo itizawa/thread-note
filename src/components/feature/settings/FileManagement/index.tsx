@@ -21,6 +21,7 @@ import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
 import { ClockArrowDown, File } from "lucide-react";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { toast } from "sonner";
 
 export const FileManagement = () => {
@@ -109,6 +110,7 @@ function FileListItem({
   };
   refetch: () => void;
 }) {
+  const [expand, setExpand] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { mutate: deleteFile, isPending } = trpc.file.deleteFile.useMutation({
@@ -161,38 +163,60 @@ function FileListItem({
         </DialogContent>
       </Dialog>
 
-      <a href={file.path} target="_blank" rel="noopener noreferrer">
-        <div className="flex items-center justify-between gap-4 p-2 hover:bg-gray-100 cursor-pointer overflow-x-hidden">
-          <div className="flex flex-1 items-center gap-2 overflow-x-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-            <img src={file.path} className="w-6 h-6 rounded" />
-            <div className="flex-1 flex flex-col text-sm truncate">
-              <span className="flex-1 text-sm truncate">
-                {file.name || "タイトルなし"}
+      <div
+        className="flex items-center justify-between gap-4 p-2 hover:bg-gray-100 cursor-pointer overflow-x-hidden"
+        onClick={() => setExpand(true)}
+      >
+        <div className="flex flex-1 items-center gap-2 overflow-x-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+          <img src={file.path} className="w-6 h-6 rounded" />
+          <div className="flex-1 flex flex-col text-sm truncate">
+            <span className="flex-1 text-sm truncate">
+              {file.name || "タイトルなし"}
+            </span>
+            <div className="flex text-xs truncate text-gray-500 gap-4">
+              <span>
+                {format(new Date(file.createdAt), "yyyy/MM/dd HH:mm")}
               </span>
-              <div className="flex text-xs truncate text-gray-500 gap-4">
-                <span>
-                  {format(new Date(file.createdAt), "yyyy/MM/dd HH:mm")}
-                </span>
-                <span>{file.size} bytes</span>
-              </div>
+              <span>{file.size} bytes</span>
             </div>
           </div>
-          <Button
-            variant="destructive"
-            size="sm"
-            className="font-bold"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsDeleteDialogOpen(true);
-            }}
-            disabled={isPending}
-            loading={isPending}
-          >
-            削除
-          </Button>
         </div>
-      </a>
+        <Button
+          variant="destructive"
+          size="sm"
+          className="font-bold"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsDeleteDialogOpen(true);
+          }}
+          disabled={isPending}
+          loading={isPending}
+        >
+          削除
+        </Button>
+      </div>
+      {createPortal(
+        <div
+          className={`fixed top-0 left-0 w-full h-full bg-black/80 flex items-center justify-center z-100 ${
+            expand
+              ? "opacity-100 pointer-events-auto cursor-zoom-out"
+              : "opacity-0 pointer-events-none"
+          } transition-opacity`}
+          onClick={() => setExpand(false)}
+        >
+          <div className="absolute top-0 w-screen p-2">
+            <span className="text-white text-sm font-bold">{file.name}</span>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={file.path}
+            alt={file.name}
+            className="max-h-full max-w-full"
+          />
+        </div>,
+        document.body
+      )}
     </>
   );
 }
