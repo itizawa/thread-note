@@ -3,6 +3,24 @@ import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import { Image } from "./Image";
+import { YouTube } from "@next/third-parties/google"; // P224a
+
+const YouTubeEmbed: React.FC<{ url: string }> = ({ url }) => { // P99aa
+  const videoId = url.split("v=")[1];
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  return (
+    <div className="youtube-embed">
+      <iframe
+        width="560"
+        height="315"
+        src={embedUrl}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
+  );
+};
 
 export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
   return (
@@ -31,6 +49,9 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             child.properties.href === child.children[0].value
           ) {
             if (/(https?:\/\/[^\s]+)/g.test(child.properties.href)) {
+              if (child.properties.href.includes("youtube.com/watch")) { // Pfd87
+                return <YouTubeEmbed url={child.properties.href} />;
+              }
               return <OgpCard url={child.properties.href} />;
             }
           }

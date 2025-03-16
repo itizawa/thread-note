@@ -1,12 +1,18 @@
 "use client";
 
 import { trpc } from "@/trpc/client";
+import { YouTube } from "@next/third-parties/google";
 
 type Props = {
   url: string;
 };
 
 export const OgpCard = ({ url }: Props) => {
+  if (url.includes("youtube.com/watch")) {
+    const videoId = url.split("v=")[1];
+    return <YouTube videoId={videoId} />;
+  }
+
   const { data, isLoading } = trpc.ogp.fetchByUrl.useQuery({ url });
 
   if (isLoading) {
