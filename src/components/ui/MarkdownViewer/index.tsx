@@ -2,6 +2,7 @@ import { OgpCard } from "@/components/ui/MarkdownViewer/OgpCard";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
+import { Image } from "./Image";
 
 export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
   return (
@@ -84,14 +85,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             {children}
           </a>
         ),
-        img: ({ src, alt }) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={src}
-            alt={alt}
-            className="max-w-full h-auto rounded-lg shadow-md mx-auto border"
-          />
-        ),
+        img: ({ src, alt }) => <Image src={src} alt={alt} />,
       }}
     >
       {body}
