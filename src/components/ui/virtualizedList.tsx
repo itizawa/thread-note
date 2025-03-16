@@ -10,7 +10,6 @@ type VirtualizedListProps<T> = {
   loadMore: () => void;
   hasNextPage: boolean;
   isLoading: boolean;
-  isFetching: boolean;
   rowHeight?: number;
 };
 
@@ -21,12 +20,11 @@ export function VirtualizedList<T>({
   loadMore,
   hasNextPage,
   isLoading,
-  isFetching,
   rowHeight = 50,
   noRowsRenderer,
 }: VirtualizedListProps<T>) {
   const loadMoreRows = async () => {
-    if (isFetching) return;
+    if (isLoading) return;
     if (!hasNextPage) return;
 
     loadMore();
@@ -46,7 +44,7 @@ export function VirtualizedList<T>({
               ref={registerChild}
               width={width}
               height={height}
-              rowCount={isFetching ? data.length + 20 : data.length}
+              rowCount={isLoading ? data.length + 20 : data.length}
               rowHeight={rowHeight}
               rowRenderer={({ index, key, style }) => {
                 const item = data[index];

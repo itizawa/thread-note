@@ -39,8 +39,7 @@ export function SidebarThreadList({
           loadingRenderer={() => <PostListItemSkeleton />}
           loadMore={fetchNextPage}
           hasNextPage={hasNextPage}
-          isLoading={isLoading}
-          isFetching={isFetching}
+          isLoading={isLoading || isFetching}
           rowHeight={36}
           noRowsRenderer={() => (
             <div className="p-2 text-center text-gray-500">

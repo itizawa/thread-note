@@ -107,8 +107,7 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
             loadingRenderer={() => <PostListItemSkeleton />}
             loadMore={fetchNextPage}
             hasNextPage={hasNextPage}
-            isLoading={isLoading}
-            isFetching={isFetching}
+            isLoading={isLoading || isFetching}
             rowHeight={72}
             noRowsRenderer={() => (
               <div className="px-2 py-8 text-center text-gray-500">
