@@ -24,26 +24,6 @@ export const DashBoardSidebar = async () => {
       label: "Settings",
       icon: Settings,
     },
-    // {
-    //   href: "/explore",
-    //   label: "Explore",
-    //   icon: Compass,
-    // },
-    // {
-    //   href: "/profile",
-    //   label: "Profile",
-    //   icon: User2,
-    // },
-    // {
-    //   href: "/inbox",
-    //   label: "Inbox",
-    //   icon: Bell,
-    // },
-    // {
-    //   href: "/archived",
-    //   label: "Archived",
-    //   icon: Archive,
-    // },
   ];
 
   return (
@@ -62,7 +42,6 @@ export const DashBoardSidebar = async () => {
               href={route.href}
               className={cn(
                 "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100"
-                // pathname === route.href ? "bg-gray-100 font-medium" : ""
               )}
             >
               <route.icon className="h-5 w-5" />
