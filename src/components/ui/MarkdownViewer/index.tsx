@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import { Image } from "./Image";
+import { YouTubeCard } from "./YouTubeCard";
 
 export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
   return (
@@ -31,7 +32,14 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             child.properties.href === child.children[0].value
           ) {
             if (/(https?:\/\/[^\s]+)/g.test(child.properties.href)) {
-              return <OgpCard url={child.properties.href} />;
+              const url = child.properties.href;
+              if (
+                url.includes("youtube.com/watch") ||
+                url.includes("youtube.com/shorts")
+              ) {
+                return <YouTubeCard url={url} />;
+              }
+              return <OgpCard url={url} />;
             }
           }
 
