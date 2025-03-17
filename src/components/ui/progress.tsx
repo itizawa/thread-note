@@ -1,9 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as ProgressPrimitive from "@radix-ui/react-progress"
+import * as ProgressPrimitive from "@radix-ui/react-progress";
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+
+const getColor = (value?: number | null) => {
+  if (!value) return "bg-primary";
+  if (value < 50) return "bg-primary";
+  if (value < 90) return "bg-yellow-500";
+  return "bg-red-500";
+};
 
 function Progress({
   className,
@@ -21,11 +28,11 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className="bg-primary h-full w-full flex-1 transition-all"
+        className={`${getColor(value)} h-full w-full flex-1 transition-all`}
         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </ProgressPrimitive.Root>
-  )
+  );
 }
 
-export { Progress }
+export { Progress };
