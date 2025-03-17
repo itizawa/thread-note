@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ExpandedImage } from "@/components/ui/ExpandedImage";
+import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectContent,
@@ -18,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { VirtualizedList } from "@/components/ui/virtualizedList";
+import { convertBytesToDisplay } from "@/lib/convertBytesToDisplay";
 import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
 import { ClockArrowDown, File } from "lucide-react";
@@ -34,7 +36,12 @@ export const FileManagement = () => {
       },
       { getNextPageParam: (lastPage) => lastPage.nextCursor }
     );
+  const { data: currentUsageData, refetch: refetchCurrentUsageData } =
+    trpc.file.getCurrentUsage.useQuery();
   const files = data?.pages.flatMap((v) => v.files) || [];
+  const currentUsage = currentUsageData?.currentUsage || 0;
+  const usagePercentage = (currentUsage / (10 * 1024 * 1024)) * 100;
+  const clampedUsagePercentage = Math.min(usagePercentage, 100);
 
   return (
     <div className="flex-1 flex flex-col space-y-4 h-full">
@@ -66,11 +73,29 @@ export const FileManagement = () => {
             </SelectContent>
           </Select>
         </div>
+        <div className="flex flex-col space-y-1 px-4 py-3 relative shadow-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">
+              使用容量：{convertBytesToDisplay(currentUsage)} / 10MB
+            </span>
+            <span className="text-sm text-gray-500">
+              {usagePercentage.toFixed(2)}%
+            </span>
+          </div>
+          <Progress value={clampedUsagePercentage} />
+        </div>
         <div className="flex-1 overflow-y-auto">
           <VirtualizedList
             data={files}
             rowRenderer={(item) => (
-              <FileListItem key={item.id} file={item} refetch={refetch} />
+              <FileListItem
+                key={item.id}
+                file={item}
+                refetch={() => {
+                  refetch();
+                  refetchCurrentUsageData();
+                }}
+              />
             )}
             loadingRenderer={() => <PostListItemSkeleton />}
             loadMore={fetchNextPage}
