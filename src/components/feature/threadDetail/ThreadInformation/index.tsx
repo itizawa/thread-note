@@ -19,6 +19,7 @@ import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
+import { EmojiIconPicker } from "@/components/ui/emojiIconPicker"; // P5c34
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
   const utils = trpc.useUtils();
@@ -31,6 +32,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
     id: threadId,
   });
   const [title, setTitle] = useState("");
+  const [emoji, setEmoji] = useState(""); // P5c34
   const [isEditing, setIsEditing] = useState(false);
 
   const disabled = !title || isPending;
@@ -41,6 +43,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         await updateThreadInfo({
           id: threadId,
           title,
+          emoji, // P3b24
         });
       },
       error: {
@@ -124,6 +127,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
             onKeyDown={handleKeyPress}
             forceFocus
           />
+          <EmojiIconPicker onSelect={setEmoji} /> {/* P5c34 */}
           <Button
             size="sm"
             className="h-9"
@@ -145,7 +149,9 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         </div>
       ) : (
         <div className="flex items-center justify-between">
-          <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+          <h3 className="font-bold">
+            {threadInfo.emoji} {threadInfo.title || "タイトルなし"} {/* P7d2a */}
+          </h3>
           <Button variant="ghost" onClick={() => setIsEditing(true)}>
             <Pencil className="h-4 w-4" />
           </Button>

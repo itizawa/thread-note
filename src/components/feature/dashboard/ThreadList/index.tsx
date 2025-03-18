@@ -153,7 +153,7 @@ function PostListItem({ thread }: { thread: Thread }) {
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">
               <span className="block w-full font-bold truncate">
-                {thread.title || "タイトルなし"}
+                {thread.emoji} {thread.title || "タイトルなし"}
               </span>
               <span className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 {format(new Date(thread.createdAt), "yyyy/MM/dd HH:mm")}
