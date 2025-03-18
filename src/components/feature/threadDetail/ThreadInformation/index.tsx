@@ -152,7 +152,11 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         </div>
       )}
 
-      <PublicStatusDialog threadId={threadId} isPublic={threadInfo.isPublic} />
+      <PublicStatusDialog
+        threadTitle={threadInfo.title}
+        threadId={threadId}
+        isPublic={threadInfo.isPublic}
+      />
     </div>
   );
 }
