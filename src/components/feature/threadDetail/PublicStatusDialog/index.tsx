@@ -19,7 +19,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import { Eye, EyeOff, Globe, Lock, Share } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Globe,
+  Lock,
+  Share,
+  SquareArrowOutUpRight,
+} from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -47,6 +54,10 @@ export function PublicStatusDialog({
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(threadDetailUrl);
     toast.success("URLをコピーしました");
+  };
+
+  const handleClickOpenPageIcon = () => {
+    window.open(threadDetailUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleClickShare = () => {
@@ -200,9 +211,9 @@ export function PublicStatusDialog({
                     variant="ghost"
                     size="icon"
                     className="ml-2"
-                    onClick={handleClickShare}
+                    onClick={handleClickOpenPageIcon}
                   >
-                    <Share className="h-4 w-4" />
+                    <SquareArrowOutUpRight className="h-4 w-4" />
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
@@ -210,30 +221,34 @@ export function PublicStatusDialog({
                 </p>
               </div>
 
-              <div className="flex items-center justify-center space-x-8">
+              <div className="flex items-center justify-center space-x-6">
                 <Image
                   src={"/sns/x.png"}
-                  width={32}
-                  height={32}
+                  width={24}
+                  height={24}
                   className="hover:opacity-60 cursor-pointer"
                   onClick={shareToTwitter}
                   alt={"x_icon"}
                 />
                 <Image
                   src={"/sns/line.png"}
-                  width={40}
-                  height={40}
+                  width={32}
+                  height={32}
                   className="hover:opacity-60 cursor-pointer"
                   onClick={shareToLine}
                   alt={"line_icon"}
                 />
                 <Image
                   src={"/sns/hatena.png"}
-                  width={40}
-                  height={40}
+                  width={32}
+                  height={32}
                   className="hover:opacity-60 cursor-pointer"
                   onClick={shareToHatena}
                   alt={"hatena_icon"}
+                />
+                <Share
+                  className="h-8 w-8 cursor-pointer hover:opacity-60"
+                  onClick={handleClickShare}
                 />
               </div>
             </div>
