@@ -144,43 +144,40 @@ export function PublicStatusDialog({
         <DialogHeader>
           <DialogTitle>公開設定</DialogTitle>
         </DialogHeader>
-        <div className="space-y-6 py-4">
-          <div className="space-y-2">
-            <h4 className="font-medium">公開ステータス</h4>
-            <div className="flex items-center justify-between">
-              <div>
-                {isPublic ? (
-                  <div className="flex items-center space-x-2">
-                    <Globe className="h-5 w-5 text-green-500" />
-                    <span className="font-bold">公開中</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center space-x-2">
-                    <Lock className="h-5 w-5 text-yellow-500" />
-                    <span className="font-bold">非公開</span>
-                  </div>
-                )}
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleTogglePublicStatus}
-                disabled={isPending}
-                loading={isPending}
-              >
-                {isPublic ? (
-                  <>
-                    <EyeOff className="h-4 w-4 mr-2" />
-                    非公開にする
-                  </>
-                ) : (
-                  <>
-                    <Eye className="h-4 w-4 mr-2" />
-                    公開する
-                  </>
-                )}
-              </Button>
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              {isPublic ? (
+                <div className="flex items-center space-x-2">
+                  <Globe className="h-5 w-5 text-green-500" />
+                  <span className="font-bold">公開中</span>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Lock className="h-5 w-5 text-yellow-500" />
+                  <span className="font-bold">非公開</span>
+                </div>
+              )}
             </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleTogglePublicStatus}
+              disabled={isPending}
+              loading={isPending}
+            >
+              {isPublic ? (
+                <>
+                  <EyeOff className="h-4 w-4 mr-2" />
+                  非公開にする
+                </>
+              ) : (
+                <>
+                  <Eye className="h-4 w-4 mr-2" />
+                  公開する
+                </>
+              )}
+            </Button>
           </div>
 
           {isPublic && (
@@ -216,8 +213,8 @@ export function PublicStatusDialog({
               <div className="flex items-center justify-center space-x-8">
                 <Image
                   src={"/sns/x.png"}
-                  width={40}
-                  height={40}
+                  width={32}
+                  height={32}
                   className="hover:opacity-60 cursor-pointer"
                   onClick={shareToTwitter}
                   alt={"x_icon"}
