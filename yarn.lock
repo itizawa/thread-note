@@ -1231,19 +1231,19 @@
     "@tanstack/query-core" "5.69.0"
 
 "@trpc/client@^11.0.0-rc.755":
-  version "11.0.0-rc.833"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.833.tgz#e9f1391b63c7d4002222dc476016ac05ba5bdc0d"
-  integrity sha512-RxPgX4xgznT2r00IZhvCtQZwisLF/Go01sMqBIHqGPKh5wRcigPVoSlZH/e/+xr71WY19mLsgzDMfzRZQ5a7cg==
+  version "11.0.0-rc.839"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.839.tgz#2b5dda544bebf8025433e82639c866baec1f206b"
+  integrity sha512-xTHW4WWf916W1wWJxIFveRIJ+mbRM0WIXqjMwTnAuyCKLt07HWqxCdRkE4l+YrZTIgtHvqNmGhNOW4MjHoYlBw==
 
 "@trpc/react-query@^11.0.0-rc.755":
-  version "11.0.0-rc.833"
-  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.0.0-rc.833.tgz#53086060a41ede88308aead11484cb781b8b7537"
-  integrity sha512-9B2oKcR0FCuIBaOtaGIFGEhuDJpbCLdBQKLYd3NifAu2Mzqq6q0IMl7rLb2duwDpIe8xzeZ+BOkwzUCWGX3/Bw==
+  version "11.0.0-rc.839"
+  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.0.0-rc.839.tgz#5e709b1e672011d078b593f6f3cdd4f2b96a2658"
+  integrity sha512-uaLK5PC+bvAxfP+aNqg2UPLz3WTkwPiqIMLomvH/4EJ1vaKOee8tErktTHxxz7KWjdxtMWTpBrefYdZHchc2Yg==
 
 "@trpc/server@^11.0.0-rc.755":
-  version "11.0.0-rc.833"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.833.tgz#76e33172d0cfafd290f8bb828a51164a7bc745c4"
-  integrity sha512-LQ5NJ3J5kCo+FpbUvS4YltnX5FOagS3ES6I2aCjqQjhloiYwr/vlaXAByc3a7ihJtLXZaIFbuAJ+AWvqZCEYlw==
+  version "11.0.0-rc.839"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.839.tgz#fa0f1e4be87ea0686181c76a1f2c8538213b862f"
+  integrity sha512-qkF1Zt8wQKK+Lw+xgWLgQBfwJ3aW4InC5BMyMAEPyHN7ygSf0oDub3QOWJ9Ou9i36D4xjOz4/avQ7ZiedyApWg==
 
 "@types/cookie@0.6.0":
   version "0.6.0"
