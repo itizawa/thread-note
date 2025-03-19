@@ -88,21 +88,20 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
             defaultValue="lastPostedAt"
           >
             <SelectTrigger className="w-fit shadow-none cursor-pointer">
-              <SelectValue>
-                <span className="flex items-center">
-                  <ClockArrowDown className="h-4 w-4" />
-                  <span className="text-sm mx-2">
-                    {sortOrder === "createdAt" ? "作成日順" : "更新日順"}
-                  </span>
-                </span>
-              </SelectValue>
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="createdAt" className="cursor-pointer">
-                作成日順
+                <span className="flex items-center">
+                  <ClockArrowDown className="h-4 w-4" />
+                  <span className="text-sm mx-2">作成日順</span>
+                </span>
               </SelectItem>
               <SelectItem value="lastPostedAt" className="cursor-pointer">
-                更新日順
+                <span className="flex items-center">
+                  <ClockArrowDown className="h-4 w-4" />
+                  <span className="text-sm mx-2">更新日順</span>
+                </span>
               </SelectItem>
             </SelectContent>
           </Select>
