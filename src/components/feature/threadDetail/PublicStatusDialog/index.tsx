@@ -71,17 +71,16 @@ export function PublicStatusDialog({
 
   // SNS共有用の関数
   const shareToTwitter = () => {
-    const text = "スレッドを共有";
     const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       threadDetailUrl
-    )}&text=${encodeURIComponent(text)}`;
+    )}&text=${threadTitle || ""}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const shareToLine = () => {
     const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
       threadDetailUrl
-    )}`;
+    )}&text=${threadTitle || ""}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
