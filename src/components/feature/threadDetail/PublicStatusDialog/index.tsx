@@ -246,10 +246,12 @@ export function PublicStatusDialog({
                   onClick={shareToHatena}
                   alt={"hatena_icon"}
                 />
-                <Share
-                  className="h-8 w-8 cursor-pointer hover:opacity-60"
+                <button
+                  className="p-2 hover:bg-gray-200 rounded-md"
                   onClick={handleClickShare}
-                />
+                >
+                  <Share className="h-5 w-5 cursor-pointer" />
+                </button>
               </div>
             </div>
           )}
