@@ -87,7 +87,7 @@ export function PublicStatusDialog({
   const shareToHatena = () => {
     const url = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIComponent(
       threadDetailUrl
-    )}${threadTitle ? `&title=${encodeURIComponent(threadTitle)}` : ""}`;
+    )}${threadTitle ? `&title=${threadTitle}` : ""}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
