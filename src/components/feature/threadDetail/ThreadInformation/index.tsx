@@ -49,7 +49,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
       success: {
         onSuccess: () => {
           utils.thread.getThreadInfo.invalidate({ id: threadId });
-          utils.thread.listThreadsByUserId.invalidate();
+          utils.thread.listThreadsByCurrentUser.invalidate();
           setIsEditing(false);
           refetch();
         },

@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import { PostSchema, ThreadSchema, UserSchema } from "@/types/src/domains";
+import { PostSchema, ThreadSchema } from "@/types/src/domains";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
@@ -15,10 +15,9 @@ const listThreadsUseCase = new ListThreadsUseCase();
 const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 
 export const threadRouter = router({
-  listThreadsByUserId: protectedProcedure
+  listThreadsByCurrentUser: protectedProcedure
     .input(
       z.object({
-        userId: UserSchema.shape.id,
         searchQuery: z.string().trim().optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),

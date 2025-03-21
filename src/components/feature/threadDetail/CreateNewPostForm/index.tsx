@@ -20,8 +20,8 @@ export function CreateNewPostForm({ threadId }: Props) {
   const handleSubmit = () => {
     enqueueServerAction({
       action: async () => {
-        const post = await createPostInThread({ threadId, body });
-        utils.thread.listThreadsByUserId.invalidate({ userId: post.userId });
+        await createPostInThread({ threadId, body });
+        utils.thread.listThreadsByCurrentUser.invalidate();
       },
       error: {
         text: "更新に失敗しました",

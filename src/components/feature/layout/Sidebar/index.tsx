@@ -50,9 +50,7 @@ export const DashBoardSidebar = async () => {
           ))}
         </div>
         <hr />
-        {currentUser?.id && (
-          <SidebarThreadList currentUserId={currentUser.id} />
-        )}
+        <SidebarThreadList />
       </nav>
     </div>
   );
