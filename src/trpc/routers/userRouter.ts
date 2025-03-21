@@ -26,4 +26,24 @@ export const userRouter = router({
         },
       });
     }),
+
+  getUser: publicProcedure
+    .input(
+      z.object({
+        id: UserSchema.shape.id,
+      })
+    )
+    .query(async ({ input }) => {
+      return await prisma.user.findUnique({
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          createdAt: true,
+        },
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
