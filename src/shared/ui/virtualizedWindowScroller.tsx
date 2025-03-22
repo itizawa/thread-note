@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   AutoSizer,
   InfiniteLoader,
   List,
   WindowScroller,
 } from "react-virtualized";
+import { SCROLL_CONTAINER_ID } from "../consts/domId";
 
 const DEFAULT_HEIGHT = 500;
 
@@ -32,6 +34,7 @@ export function VirtualizedWindowScroller<T>({
   rowHeight,
   noRowsRenderer,
 }: VirtualizedWindowScrollerProps<T>) {
+  const [scrollElement, setScrollElement] = useState<HTMLElement>();
   const loadMoreRows = async () => {
     if (isLoading || isFetching) return;
     if (!hasNextPage) return;
@@ -43,8 +46,13 @@ export function VirtualizedWindowScroller<T>({
     return !!data[index];
   };
 
+  useEffect(() => {
+    const element = document.getElementById(SCROLL_CONTAINER_ID);
+    if (element) setScrollElement(element);
+  }, []);
+
   return (
-    <WindowScroller>
+    <WindowScroller scrollElement={scrollElement || window}>
       {({ height, isScrolling, onChildScroll, scrollTop }) => (
         <AutoSizer disableHeight>
           {({ width }) => (

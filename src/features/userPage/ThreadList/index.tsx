@@ -33,7 +33,7 @@ export function ThreadList({ userId }: { userId: string }) {
   const threads = data?.pages.flatMap((v) => v.threads) || [];
 
   return (
-    <div className="rounded-lg border bg-white ">
+    <div className="rounded-lg border bg-white">
       <div className="border-b px-4 py-3 flex items-center justify-between">
         <h2 className="font-medium">スレッド一覧</h2>
       </div>
@@ -43,7 +43,7 @@ export function ThreadList({ userId }: { userId: string }) {
         loadingRenderer={() => <PostListItemSkeleton />}
         noRowsRenderer={() => <NoRowsRenderer />}
         loadMore={fetchNextPage}
-        hasNextPage={!!hasNextPage}
+        hasNextPage={hasNextPage}
         isLoading={isLoading}
         isFetching={isFetching}
         rowHeight={72}
