@@ -5,19 +5,12 @@ import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
 import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/shared/ui/breadcrumb";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
-import { Pencil } from "lucide-react";
+import { ArrowLeft, Pencil } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
@@ -75,19 +68,13 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>
-                <Skeleton className="w-20 h-4" />
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <Link
+          href={urls.dashboard}
+          className="flex space-x-1 items-center text-gray-700"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-xs">Home</span>
+        </Link>
         <Skeleton className="w-full h-9" />
       </div>
     );
@@ -100,19 +87,13 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
   return (
     <div className="space-y-4">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>
-              {threadInfo.title || "タイトルなし"}
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <Link
+        href={urls.dashboard}
+        className="flex space-x-1 items-center text-gray-700"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span className="text-xs">Home</span>
+      </Link>
 
       {isEditing ? (
         <div className="flex space-x-2">

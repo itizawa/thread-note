@@ -1,4 +1,4 @@
-import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
@@ -13,7 +13,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5",
+        "text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words",
         className
       )}
       {...props}
@@ -77,30 +77,46 @@ function BreadcrumbSeparator({
   );
 }
 
-function BreadcrumbEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+// 必要になったら有効化
+// function BreadcrumbEllipsis({
+//   className,
+//   ...props
+// }: React.ComponentProps<"span">) {
+//   return (
+//     <span
+//       data-slot="breadcrumb-ellipsis"
+//       role="presentation"
+//       aria-hidden="true"
+//       className={cn("flex size-9 items-center justify-center", className)}
+//       {...props}
+//     >
+//       <MoreHorizontal className="size-4" />
+//       <span className="sr-only">More</span>
+//     </span>
+//   );
+// }
+
+type Props = {
+  items: Array<{ label: React.ReactNode; href?: string }>;
+};
+
+export function Breadcrumbs({ items }: Props) {
   return (
-    <span
-      data-slot="breadcrumb-ellipsis"
-      role="presentation"
-      aria-hidden="true"
-      className={cn("flex size-9 items-center justify-center", className)}
-      {...props}
-    >
-      <MoreHorizontal className="size-4" />
-      <span className="sr-only">More</span>
-    </span>
+    <Breadcrumb>
+      <BreadcrumbList>
+        {items.map((item, index) => (
+          <React.Fragment key={index}>
+            <BreadcrumbItem>
+              {item.href ? (
+                <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+              ) : (
+                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+              )}
+            </BreadcrumbItem>
+            {index < items.length - 1 && <BreadcrumbSeparator />}
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 }
-
-export {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-};

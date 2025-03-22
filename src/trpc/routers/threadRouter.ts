@@ -52,6 +52,7 @@ export const threadRouter = router({
       })
     )
     .query(async ({ input }) => {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       return await listThreadsUseCase.execute({
         userId: input?.userId,
         searchQuery: input.searchQuery,

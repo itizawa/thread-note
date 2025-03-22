@@ -7,6 +7,7 @@ import {
 } from "@/app/actions/postActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
@@ -15,6 +16,7 @@ import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
+import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import { ManagePostDropDown } from "./ManagePostDropDown";
@@ -110,9 +112,16 @@ export function PostPaper({ post }: Props) {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <UserIcon userImage={user?.image} size="md" />
+          <Link
+            href={urls.userDetails(user.id)}
+            className="h-8 w-8 hover:opacity-60"
+          >
+            <UserIcon userImage={user?.image} size="md" />
+          </Link>
           <div>
-            <div className="text-sm">{user.name}</div>
+            <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
+              <div className="text-sm">{user.name}</div>
+            </Link>
             <div className="text-xs text-muted-foreground">
               {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
             </div>
