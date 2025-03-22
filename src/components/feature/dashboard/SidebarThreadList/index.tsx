@@ -4,22 +4,16 @@ import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
-import { User } from "@prisma/client";
 import { inferRouterOutputs } from "@trpc/server";
 import Link from "next/link";
 
 type Thread =
-  inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"]["threads"][number];
+  inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]["threads"][number];
 
-export function SidebarThreadList({
-  currentUserId,
-}: {
-  currentUserId: User["id"];
-}) {
+export function SidebarThreadList() {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
-    trpc.thread.listThreadsByUserId.useInfiniteQuery(
+    trpc.thread.listThreadsByCurrentUser.useInfiniteQuery(
       {
-        userId: currentUserId,
         limit: 20,
         sort: { type: "lastPostedAt", direction: "desc" },
       },

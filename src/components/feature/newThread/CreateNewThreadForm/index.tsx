@@ -35,7 +35,7 @@ export function CreateNewThreadForm() {
       success: {
         text: "スレッドを作成しました",
         onSuccess: ({ thread }) => {
-          utils.thread.listThreadsByUserId.refetch();
+          utils.thread.listThreadsByCurrentUser.refetch();
           router.push(urls.dashboardThreadDetails(thread.id));
         },
       },

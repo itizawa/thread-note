@@ -31,12 +31,12 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
   const handleSubmit = () => {
     enqueueServerAction({
       action: async () => {
-        const post = await createPostInThread({
+        await createPostInThread({
           threadId,
           body,
           parentId: parentPostId,
         });
-        utils.thread.listThreadsByUserId.invalidate({ userId: post.userId });
+        utils.thread.listThreadsByCurrentUser.invalidate();
       },
       error: {
         text: "更新に失敗しました",

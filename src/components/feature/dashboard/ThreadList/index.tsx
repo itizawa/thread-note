@@ -21,9 +21,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Thread =
-  inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"]["threads"][number];
+  inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]["threads"][number];
 
-export function ThreadList({ currentUserId }: { currentUserId: string }) {
+export function ThreadList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"createdAt" | "lastPostedAt">(
@@ -41,9 +41,8 @@ export function ThreadList({ currentUserId }: { currentUserId: string }) {
 
   // スレッド一覧取得（検索クエリがある場合は検索結果を表示）
   const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
-    trpc.thread.listThreadsByUserId.useInfiniteQuery(
+    trpc.thread.listThreadsByCurrentUser.useInfiniteQuery(
       {
-        userId: currentUserId,
         searchQuery: debouncedSearchQuery,
         limit: 20,
         sort: {
