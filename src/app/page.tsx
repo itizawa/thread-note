@@ -9,10 +9,12 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "./actions/userActions";
+import { useTranslation } from "next-i18next";
 
 export const metadata: Metadata = generateMetadataObject();
 
 export default async function Home() {
+  const { t } = useTranslation("common");
   const currentUser = await getCurrentUser();
 
   return (
@@ -22,15 +24,15 @@ export default async function Home() {
         <section className="px-4 py-16 text-gray-600 space-y-4">
           <div className="mx-auto container text-center space-y-4">
             <h1 className="mx-auto max-w-2xl text-2xl font-bold">
-              手軽に情報を残す
+              {t("home.title")}
               <br />
-              スレッド形式のメモサービス
+              {t("home.subtitle")}
             </h1>
             {currentUser ? (
               <div className="mx-auto container text-center space-y-2">
                 <Link href={urls.dashboard}>
                   <Button size="lg" variant="default" className="font-bold">
-                    ダッシュボードへ
+                    {t("home.dashboardButton")}
                   </Button>
                 </Link>
               </div>
@@ -38,9 +40,8 @@ export default async function Home() {
               <div className="mx-auto container text-center space-y-2">
                 <p className="text-lg">
                   <Link href={urls.terms} className="text-sky-700">
-                    利用規約
+                    {t("home.termsAgreement")}
                   </Link>
-                  に同意して始める
                 </p>{" "}
                 <div className="space-y-4">
                   <form
@@ -83,40 +84,34 @@ export default async function Home() {
         <section className="py-16 md:py-24 bg-gray-100">
           <div className="container mx-auto px-6 md:px-12 text-center">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">
-              Thread Note の特徴
+              {t("home.features.title")}
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              基本機能は全て無料で使用できます
+              {t("home.features.description")}
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="p-6 bg-white rounded-2xl shadow-md">
                 <h3 className="text-xl font-semibold text-gray-700">
-                  スレッド形式で情報整理
+                  {t("home.features.threadedInfo.title")}
                 </h3>
                 <p className="text-gray-600 mt-2">
-                  関連する情報をスレッドでまとめ
-                  <br />
-                  すばやくアクセスできます。
+                  {t("home.features.threadedInfo.description")}
                 </p>
               </div>
               <div className="p-6 bg-white rounded-2xl shadow-md">
                 <h3 className="text-xl font-semibold text-gray-700">
-                  シンプルで直感的なUI
+                  {t("home.features.simpleUI.title")}
                 </h3>
                 <p className="text-gray-600 mt-2">
-                  誰でも簡単に使えるデザインで
-                  <br />
-                  スムーズな操作が可能です。
+                  {t("home.features.simpleUI.description")}
                 </p>
               </div>
               <div className="p-6 bg-white rounded-2xl shadow-md">
                 <h3 className="text-xl font-semibold text-gray-700">
-                  柔軟な共有機能
+                  {t("home.features.flexibleSharing.title")}
                 </h3>
                 <p className="text-gray-600 mt-2">
-                  スレッドを簡単に共有し
-                  <br />
-                  世界中にシェアできます。
+                  {t("home.features.flexibleSharing.description")}
                 </p>
               </div>
             </div>

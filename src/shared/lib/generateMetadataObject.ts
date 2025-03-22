@@ -1,24 +1,28 @@
 import type { Metadata } from "next";
+import { useTranslation } from "next-i18next";
 
-const DEFAULT_TITLE = "Thread Note - スレッド形式のノートサービス";
-const DEFAULT_DESCRIPTION =
-  "Thread Note はスレッド形式で手軽に情報を残すことができるサービスです。";
+const DEFAULT_TITLE_KEY = "metadata.defaultTitle";
+const DEFAULT_DESCRIPTION_KEY = "metadata.defaultDescription";
 const DEFAULT_URL = "https://www.thread-note.com";
 const DEFAULT_IMAGE = "https://www.thread-note.com/ogp.png";
 
 type Args = {
-  title?: string;
-  description?: string;
+  titleKey?: string;
+  descriptionKey?: string;
   url?: string;
   images?: string[];
 };
 
 export const generateMetadataObject = ({
-  title = DEFAULT_TITLE,
-  description = DEFAULT_DESCRIPTION,
+  titleKey = DEFAULT_TITLE_KEY,
+  descriptionKey = DEFAULT_DESCRIPTION_KEY,
   url = DEFAULT_URL,
   images = [DEFAULT_IMAGE],
 }: Args = {}): Metadata => {
+  const { t } = useTranslation("common");
+  const title = t(titleKey);
+  const description = t(descriptionKey);
+
   return {
     title,
     description,
