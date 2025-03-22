@@ -63,7 +63,9 @@ export function VirtualizedWindowScroller<T>({
                   isScrolling={isScrolling}
                   onScroll={onChildScroll}
                   scrollTop={scrollTop}
-                  rowCount={isLoading ? data.length + 1 : data.length}
+                  rowCount={
+                    isLoading || isFetching ? data.length + 1 : data.length
+                  }
                   rowHeight={rowHeight}
                   rowRenderer={({ index, key, style }) => {
                     const item = data[index];
