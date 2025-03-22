@@ -1,8 +1,8 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { urls } from "@/consts/urls";
-import { FileManagement } from "@/feature/settings/FileManagement";
-import { UpdateUserNameForm } from "@/feature/settings/UpdateUserNameForm";
+import { FileManagement } from "@/features/settings/FileManagement";
+import { UpdateUserNameForm } from "@/features/settings/UpdateUserNameForm";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { File, Settings } from "lucide-react";
 import { Metadata } from "next";

@@ -1,6 +1,6 @@
 import { urls } from "@/consts/urls";
-import { Footer } from "@/feature/layout/Footer";
-import { Navigation } from "@/feature/layout/Navigation";
+import { Footer } from "@/features/layout/Footer";
+import { Navigation } from "@/features/layout/Navigation";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import Link from "next/link";
 

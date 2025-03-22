@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { urls } from "@/consts/urls";
-import { PublicStatusDialog } from "@/feature/threadDetail/PublicStatusDialog";
+import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";

@@ -1,5 +1,5 @@
 import { urls } from "@/consts/urls";
-import { ThreadList } from "@/feature/dashboard/ThreadList";
+import { ThreadList } from "@/features/dashboard/ThreadList";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";

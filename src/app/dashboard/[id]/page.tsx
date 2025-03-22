@@ -1,8 +1,8 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { Skeleton } from "@/components/ui/skeleton";
 import { urls } from "@/consts/urls";
-import { PostTimeLine } from "@/feature/threadDetail/PostTimeLine";
-import { ThreadInformation } from "@/feature/threadDetail/ThreadInformation";
+import { PostTimeLine } from "@/features/threadDetail/PostTimeLine";
+import { ThreadInformation } from "@/features/threadDetail/ThreadInformation";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";

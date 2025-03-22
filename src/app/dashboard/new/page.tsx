@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { urls } from "@/consts/urls";
-import { CreateNewThreadForm } from "@/feature/newThread/CreateNewThreadForm";
+import { CreateNewThreadForm } from "@/features/newThread/CreateNewThreadForm";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
