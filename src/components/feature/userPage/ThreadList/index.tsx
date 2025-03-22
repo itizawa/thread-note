@@ -97,7 +97,7 @@ function PostListItem({ thread }: { thread: Thread }) {
 function NoRowsRenderer() {
   return (
     <div className="px-2 py-8 text-center text-gray-500">
-      スレッドが存在しません
+      公開中のスレッドが存在しません
     </div>
   );
 }
