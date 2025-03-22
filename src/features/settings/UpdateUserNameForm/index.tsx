@@ -2,7 +2,7 @@
 
 import { updateUserSettings } from "@/app/actions/userActions";
 import { UserIcon } from "@/entities/user/UserIcon";
-import { useServerAction } from "@/lib/useServerAction";
+import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { UploadImageWrapper } from "@/shared/ui/UploadImageWrapper";

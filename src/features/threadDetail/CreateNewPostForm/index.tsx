@@ -2,8 +2,8 @@
 
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
-import { isMacOs, isWindowsOs } from "@/lib/getOs";
-import { useServerAction } from "@/lib/useServerAction";
+import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
+import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import React from "react";
 

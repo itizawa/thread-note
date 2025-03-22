@@ -2,7 +2,7 @@ import { Footer } from "@/features/layout/Footer";
 import { Navigation } from "@/features/layout/Navigation";
 import { ThreadList } from "@/features/userPage/ThreadList";
 import { UserInformation } from "@/features/userPage/UserInformation";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { HydrateClient, trpc } from "@/trpc/server";
 import { Metadata, NextSegmentPage } from "next";
 import { notFound } from "next/navigation";

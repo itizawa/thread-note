@@ -1,8 +1,8 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
-import { urls } from "@/consts/urls";
-import { useServerAction } from "@/lib/useServerAction";
+import { urls } from "@/shared/consts/urls";
+import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import {
   Dialog,

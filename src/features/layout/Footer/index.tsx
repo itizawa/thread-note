@@ -1,4 +1,4 @@
-import { urls } from "@/consts/urls";
+import { urls } from "@/shared/consts/urls";
 import Link from "next/link";
 
 export const Footer = () => (

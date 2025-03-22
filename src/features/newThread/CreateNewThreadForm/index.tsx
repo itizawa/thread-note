@@ -1,12 +1,12 @@
 "use client";
 
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
-import { urls } from "@/consts/urls";
 import { PostForm } from "@/entities/post/PostForm";
+import { urls } from "@/shared/consts/urls";
 import { Input } from "@/shared/ui/input";
 
-import { isMacOs, isWindowsOs } from "@/lib/getOs";
-import { useServerAction } from "@/lib/useServerAction";
+import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
+import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

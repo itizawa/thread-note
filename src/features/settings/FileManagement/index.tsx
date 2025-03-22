@@ -1,6 +1,6 @@
 "use client";
 
-import { convertBytesToDisplay } from "@/lib/convertBytesToDisplay";
+import { convertBytesToDisplay } from "@/shared/lib/convertBytesToDisplay";
 import { Button } from "@/shared/ui/button";
 import {
   Dialog,

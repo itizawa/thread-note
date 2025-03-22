@@ -1,7 +1,7 @@
 "use client";
 
-import { urls } from "@/consts/urls";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { urls } from "@/shared/consts/urls";
 import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";

@@ -1,5 +1,5 @@
-import { urls } from "@/consts/urls";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";
 import Link from "next/link";

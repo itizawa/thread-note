@@ -1,7 +1,7 @@
 "use client";
 
-import { urls } from "@/consts/urls";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { urls } from "@/shared/consts/urls";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import {

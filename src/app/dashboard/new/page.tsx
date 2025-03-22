@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { urls } from "@/consts/urls";
 import { CreateNewThreadForm } from "@/features/newThread/CreateNewThreadForm";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import {
   Breadcrumb,
   BreadcrumbItem,

@@ -1,9 +1,9 @@
-import { urls } from "@/consts/urls";
 import { Footer } from "@/features/layout/Footer";
 import { Navigation } from "@/features/layout/Navigation";
 import { PublicPostTimeLine } from "@/features/threadDetail/PublicPostTimeLine";
 import { PublicThreadInformation } from "@/features/threadDetail/PublicThreadInformation";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { HydrateClient, trpc } from "@/trpc/server";
 import { Metadata, NextSegmentPage } from "next";

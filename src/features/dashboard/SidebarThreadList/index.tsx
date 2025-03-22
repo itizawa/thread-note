@@ -1,6 +1,6 @@
 "use client";
 
-import { urls } from "@/consts/urls";
+import { urls } from "@/shared/consts/urls";
 import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";

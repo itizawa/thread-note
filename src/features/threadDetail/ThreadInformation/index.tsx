@@ -1,10 +1,10 @@
 "use client";
 
 import { updateThreadInfo } from "@/app/actions/threadActions";
-import { urls } from "@/consts/urls";
 import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
-import { isMacOs, isWindowsOs } from "@/lib/getOs";
-import { useServerAction } from "@/lib/useServerAction";
+import { urls } from "@/shared/consts/urls";
+import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
+import { useServerAction } from "@/shared/lib/useServerAction";
 import {
   Breadcrumb,
   BreadcrumbItem,

@@ -1,6 +1,6 @@
-import { urls } from "@/consts/urls";
 import { ThreadList } from "@/features/dashboard/ThreadList";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "../actions/userActions";

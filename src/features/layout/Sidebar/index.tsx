@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { urls } from "@/consts/urls";
 import { UserIcon } from "@/entities/user/UserIcon";
-import { cn } from "@/lib/utils";
+import { urls } from "@/shared/consts/urls";
+import { cn } from "@/shared/lib/utils";
 import { Home, Pen, Settings } from "lucide-react";
 import Link from "next/link";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
