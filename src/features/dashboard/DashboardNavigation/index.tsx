@@ -1,7 +1,7 @@
 import { Skeleton } from "@/shared/ui/skeleton";
 import Link from "next/link";
 import { Suspense } from "react";
-import { DashBoardSidebar } from "../../layout/Sidebar";
+import { DashBoardSidebar } from "../DashBoardSidebar";
 import { NavigationUserIcon } from "./parts/NavigationUserIcon";
 import { SidebarSheet } from "./parts/SidebarSheet";
 
