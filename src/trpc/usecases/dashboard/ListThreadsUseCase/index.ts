@@ -32,13 +32,13 @@ export class ListThreadsUseCase {
       select,
       orderBy,
       take: limit + 1, // 次のページがあるか確認するために 1 つ多く取得
-      ...(args.cursor ? { skip: 1, cursor: { id: args.cursor } } : {}), // カーソルがある場合はスキップ
+      cursor: args.cursor ? { id: args.cursor } : undefined,
     });
 
     const hasNextPage = threads.length > limit;
 
     return {
-      threads: threads.slice(0, limit), // 余分に取得した 1 件を削除
+      threads: hasNextPage ? threads.slice(0, limit) : threads, // 余分に取得した 1 件を削除
       nextCursor: hasNextPage ? threads[limit].id : null,
       totalCount,
     };
