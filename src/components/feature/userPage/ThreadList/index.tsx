@@ -1,6 +1,7 @@
 "use client";
 
 import { UserIcon } from "@/components/model/user/UserIcon";
+import { VirtualizedWindowScroller } from "@/components/ui/virtualizedWindowScroller";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
@@ -8,13 +9,6 @@ import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
-import {
-  AutoSizer,
-  InfiniteLoader,
-  List,
-  ListRowProps,
-  WindowScroller,
-} from "react-virtualized";
 
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"]["threads"][number];
@@ -38,78 +32,22 @@ export function ThreadList({ userId }: { userId: string }) {
 
   const threads = data?.pages.flatMap((v) => v.threads) || [];
 
-  const loadMoreRows = async () => {
-    if (isLoading || isFetching) return;
-    if (!hasNextPage) return;
-
-    await fetchNextPage();
-  };
-
-  const isRowLoaded = ({ index }: { index: number }) => {
-    return !!threads[index];
-  };
-
-  const rowRenderer = ({ index, key, style }: ListRowProps) => {
-    const thread = threads[index];
-    return (
-      <div key={key} style={style}>
-        {thread ? <PostListItem thread={thread} /> : <PostListItemSkeleton />}
-      </div>
-    );
-  };
-
-  const noRowsRenderer = () => (
-    <div className="px-2 py-8 text-center text-gray-500">
-      スレッドが存在しません
-    </div>
-  );
-
   return (
-    <div className="flex flex-col space-y-4 h-full">
-      <div className="flex flex-col rounded-lg border bg-white flex-1">
-        <div className="border-b px-4 py-3 flex items-center justify-between">
-          <h2 className="font-medium">スレッド一覧</h2>
-        </div>
-        <div className="flex-1">
-          <WindowScroller>
-            {({ height, isScrolling, onChildScroll, scrollTop }) => (
-              <AutoSizer disableHeight>
-                {({ width }) => (
-                  <InfiniteLoader
-                    isRowLoaded={isRowLoaded}
-                    loadMoreRows={loadMoreRows}
-                    rowCount={hasNextPage ? threads.length + 1 : threads.length}
-                    threshold={10}
-                  >
-                    {({ onRowsRendered, registerChild }) => (
-                      <List
-                        ref={registerChild}
-                        autoHeight
-                        height={height || 500}
-                        width={width}
-                        isScrolling={isScrolling}
-                        onScroll={onChildScroll}
-                        scrollTop={scrollTop}
-                        rowCount={
-                          isLoading || isFetching
-                            ? threads.length + 20
-                            : threads.length
-                        }
-                        rowHeight={72}
-                        rowRenderer={rowRenderer}
-                        onRowsRendered={onRowsRendered}
-                        noRowsRenderer={
-                          isLoading || isFetching ? undefined : noRowsRenderer
-                        }
-                      />
-                    )}
-                  </InfiniteLoader>
-                )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-        </div>
+    <div className="rounded-lg border bg-white ">
+      <div className="border-b px-4 py-3 flex items-center justify-between">
+        <h2 className="font-medium">スレッド一覧</h2>
       </div>
+      <VirtualizedWindowScroller
+        data={threads}
+        rowRenderer={(thread: Thread) => <PostListItem thread={thread} />}
+        loadingRenderer={() => <PostListItemSkeleton />}
+        noRowsRenderer={() => <NoRowsRenderer />}
+        loadMore={fetchNextPage}
+        hasNextPage={!!hasNextPage}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        rowHeight={72}
+      />
     </div>
   );
 }
@@ -132,7 +70,7 @@ function PostListItemSkeleton() {
 
 function PostListItem({ thread }: { thread: Thread }) {
   return (
-    <Link href={urls.dashboardThreadDetails(thread.id)}>
+    <Link href={urls.threadDetails(thread.id)}>
       <div className="flex items-center gap-4 p-4 hover:bg-gray-100 cursor-pointer">
         <UserIcon userImage={thread.user.image} size="md" />
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
@@ -153,5 +91,13 @@ function PostListItem({ thread }: { thread: Thread }) {
         </div>
       </div>
     </Link>
+  );
+}
+
+function NoRowsRenderer() {
+  return (
+    <div className="px-2 py-8 text-center text-gray-500">
+      スレッドが存在しません
+    </div>
   );
 }
