@@ -5,6 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { Tooltip } from "@/shared/ui/Tooltip";
 
 import { Archive, MoreHorizontal, Pencil } from "lucide-react";
 
@@ -21,11 +22,13 @@ export function ManagePostDropDown({
 }: Props) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" disabled={isPending}>
-          <MoreHorizontal className="h-4 w-4" />
-          <span className="sr-only">メニューを開く</span>
-        </Button>
+      <DropdownMenuTrigger>
+        <Tooltip content="スレッドを操作">
+          <Button variant="ghost" size="icon" disabled={isPending}>
+            <MoreHorizontal className="h-4 w-4" />
+            <span className="sr-only">メニューを開く</span>
+          </Button>
+        </Tooltip>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={onClickEditButton}>

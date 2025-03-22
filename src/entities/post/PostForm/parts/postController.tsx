@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import {
   Hash,
   Image as ImageIcon,
@@ -39,55 +40,69 @@ export const PostController = ({
       }
     >
       <div className="flex items-center space-x-2">
-        <Button
-          variant="outline"
-          className="shadow-none"
-          size="icon"
-          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-          onClick={() => {
-            onClickIcon({ insertText: "# ", removeIfExist: false });
-          }}
-        >
-          <Hash className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="outline"
-          className="shadow-none"
-          size="icon"
-          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-          onClick={() => onClickIcon({ insertText: "- ", removeIfExist: true })}
-        >
-          <List className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="outline"
-          className="shadow-none"
-          size="icon"
-          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-          onClick={() =>
-            onClickIcon({ insertText: "1. ", removeIfExist: true })
-          }
-        >
-          <ListOrdered className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="outline"
-          className="shadow-none"
-          size="icon"
-          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-          onClick={() => onClickIcon({ insertText: "> ", removeIfExist: true })}
-        >
-          <Quote className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="outline"
-          className="shadow-none"
-          size="icon"
-          onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-          onClick={onClickImageUpload}
-        >
-          <ImageIcon className="h-5 w-5" />
-        </Button>
+        <Tooltip content="見出し">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+            onClick={() => {
+              onClickIcon({ insertText: "# ", removeIfExist: false });
+            }}
+          >
+            <Hash className="h-5 w-5" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="箇条書きリスト">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+            onClick={() =>
+              onClickIcon({ insertText: "- ", removeIfExist: true })
+            }
+          >
+            <List className="h-5 w-5" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="番号付きリスト">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+            onClick={() =>
+              onClickIcon({ insertText: "1. ", removeIfExist: true })
+            }
+          >
+            <ListOrdered className="h-5 w-5" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="引用">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+            onClick={() =>
+              onClickIcon({ insertText: "> ", removeIfExist: true })
+            }
+          >
+            <Quote className="h-5 w-5" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="画像をアップロード">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+            onClick={onClickImageUpload}
+          >
+            <ImageIcon className="h-5 w-5" />
+          </Button>
+        </Tooltip>
       </div>
       <div className="flex items-center space-x-2">
         {bottomButtons.onCancel && (
