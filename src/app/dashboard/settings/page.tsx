@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { FileManagement } from "@/features/settings/FileManagement";
 import { UpdateUserNameForm } from "@/features/settings/UpdateUserNameForm";
+import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
@@ -25,12 +26,12 @@ export default async function SettingsPage({
 
   return (
     <div className="flex h-full">
-      <main className="flex flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
+      <main
+        className="flex flex-1 border-r md:px-6 px-2 md:pt-6 pt-4 pb-4 overflow-y-auto"
+        id={SCROLL_CONTAINER_ID}
+      >
         <div className="flex-1 flex flex-col space-y-4 max-w-[700px] mx-auto">
-          <Tabs
-            defaultValue={tab}
-            className="flex flex-col h-full overflow-y-auto"
-          >
+          <Tabs defaultValue={tab} className="flex flex-col h-full">
             <TabsList className="flex justify-start">
               <TabsTrigger value="profile" className="font-bold">
                 <Settings className="h-4 w-4 mr-1" />
@@ -44,7 +45,7 @@ export default async function SettingsPage({
             <TabsContent value="profile">
               <UpdateUserNameForm currentUser={currentUser} />
             </TabsContent>
-            <TabsContent value="files" className="overflow-y-auto flex-1">
+            <TabsContent value="files" className="flex-1">
               <FileManagement />
             </TabsContent>
           </Tabs>

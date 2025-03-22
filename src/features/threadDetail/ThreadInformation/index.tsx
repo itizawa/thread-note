@@ -8,6 +8,7 @@ import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import { ArrowLeft, Pencil } from "lucide-react";
 import Link from "next/link";
@@ -127,9 +128,11 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
       ) : (
         <div className="flex items-center justify-between">
           <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
-          <Button variant="ghost" onClick={() => setIsEditing(true)}>
-            <Pencil className="h-4 w-4" />
-          </Button>
+          <Tooltip content="編集">
+            <Button variant="ghost" onClick={() => setIsEditing(true)}>
+              <Pencil className="h-4 w-4" />
+            </Button>
+          </Tooltip>
         </div>
       )}
 
