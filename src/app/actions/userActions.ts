@@ -1,6 +1,6 @@
 "use server";
 
-import { urls } from "@/consts/urls";
+import { urls } from "@/shared/consts/urls";
 import { AppRouter } from "@/trpc/routers/_app";
 import { trpc } from "@/trpc/server";
 import { inferRouterInputs } from "@trpc/server";

@@ -1,9 +1,9 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { FileManagement } from "@/components/feature/settings/FileManagement";
-import { UpdateUserNameForm } from "@/components/feature/settings/UpdateUserNameForm";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { urls } from "@/consts/urls";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { FileManagement } from "@/features/settings/FileManagement";
+import { UpdateUserNameForm } from "@/features/settings/UpdateUserNameForm";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { File, Settings } from "lucide-react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";

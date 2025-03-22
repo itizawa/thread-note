@@ -1,9 +1,9 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { PostTimeLine } from "@/components/feature/threadDetail/PostTimeLine";
-import { ThreadInformation } from "@/components/feature/threadDetail/ThreadInformation";
-import { Skeleton } from "@/components/ui/skeleton";
-import { urls } from "@/consts/urls";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { PostTimeLine } from "@/features/threadDetail/PostTimeLine";
+import { ThreadInformation } from "@/features/threadDetail/ThreadInformation";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
+import { Skeleton } from "@/shared/ui/skeleton";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";

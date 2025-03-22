@@ -1,7 +1,7 @@
 "use client";
 
-import { urls } from "@/consts/urls";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Metadata } from "next";
 import Link from "next/link";
 

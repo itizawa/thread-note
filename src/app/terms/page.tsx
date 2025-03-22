@@ -1,7 +1,7 @@
-import { Footer } from "@/components/feature/layout/Footer";
-import { Navigation } from "@/components/feature/layout/Navigation";
-import { urls } from "@/consts/urls";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+import { Footer } from "@/features/layout/Footer";
+import { Navigation } from "@/features/layout/Navigation";
+import { urls } from "@/shared/consts/urls";
+import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import Link from "next/link";
 
 export async function generateMetadata() {
