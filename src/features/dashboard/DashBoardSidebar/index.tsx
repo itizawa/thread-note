@@ -34,12 +34,7 @@ export const DashBoardSidebar = async () => {
           <UserIcon userImage={currentUser?.image} size="md" />
           <span>{currentUser?.name}</span>
           {currentUser && (
-            <Link
-              href={urls.userDetails(currentUser.id)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-auto"
-            >
+            <Link href={urls.userDetails(currentUser.id)} className="ml-auto">
               <Button size="icon" variant="link">
                 <SquareArrowOutUpRight className="h-4 w-4" />
               </Button>
