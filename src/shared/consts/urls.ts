@@ -8,4 +8,5 @@ export const urls = {
   dashboardSettings: (tab: "profile" | "files") =>
     `/dashboard/settings?tab=${tab}`,
   threadDetails: (id: string) => `/${id}`,
+  userDetails: (id: string) => `/users/${id}`,
 };
