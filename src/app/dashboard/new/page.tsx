@@ -2,14 +2,7 @@ import { getCurrentUser } from "@/app/actions/userActions";
 import { CreateNewThreadForm } from "@/features/newThread/CreateNewThreadForm";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/shared/ui/breadcrumb";
+import { Breadcrumbs } from "@/shared/ui/breadcrumb";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -25,17 +18,15 @@ export default async function Page() {
     <div className="flex h-full">
       <main className="flex-1 overflow-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
         <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>New</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <Breadcrumbs
+            items={[
+              {
+                label: "Home",
+                href: urls.dashboard,
+              },
+              { label: "New" },
+            ]}
+          />
           <CreateNewThreadForm />
         </div>
       </main>

@@ -5,14 +5,7 @@ import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
 import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/shared/ui/breadcrumb";
+import { Breadcrumbs } from "@/shared/ui/breadcrumb";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -75,19 +68,12 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>
-                <Skeleton className="w-20 h-4" />
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: urls.dashboard },
+            { label: <Skeleton className="w-20 h-4" /> },
+          ]}
+        />
         <Skeleton className="w-full h-9" />
       </div>
     );
@@ -100,19 +86,12 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
   return (
     <div className="space-y-4">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href={urls.dashboard}>Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>
-              {threadInfo.title || "タイトルなし"}
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: urls.dashboard },
+          { label: threadInfo.title || "タイトルなし" },
+        ]}
+      />
 
       {isEditing ? (
         <div className="flex space-x-2">
