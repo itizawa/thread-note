@@ -1,6 +1,5 @@
 "use client";
 
-import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { urls } from "@/consts/urls";
+import { UserIcon } from "@/entities/user/UserIcon";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";

@@ -1,10 +1,10 @@
 "use client";
 
 import { updateUserSettings } from "@/app/actions/userActions";
-import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UploadImageWrapper } from "@/components/ui/UploadImageWrapper";
+import { UserIcon } from "@/entities/user/UserIcon";
 import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { User } from "@prisma/client";

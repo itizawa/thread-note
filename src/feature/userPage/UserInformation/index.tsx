@@ -1,4 +1,4 @@
-import { UserIcon } from "@/components/model/user/UserIcon";
+import { UserIcon } from "@/entities/user/UserIcon";
 
 type Props = {
   user: {

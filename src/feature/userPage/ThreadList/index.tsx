@@ -1,8 +1,8 @@
 "use client";
 
-import { UserIcon } from "@/components/model/user/UserIcon";
 import { VirtualizedWindowScroller } from "@/components/ui/virtualizedWindowScroller";
 import { urls } from "@/consts/urls";
+import { UserIcon } from "@/entities/user/UserIcon";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";

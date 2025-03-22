@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { UserIcon } from "@/components/model/user/UserIcon";
 import { urls } from "@/consts/urls";
+import { UserIcon } from "@/entities/user/UserIcon";
 import { cn } from "@/lib/utils";
 import { Home, Pen, Settings } from "lucide-react";
 import Link from "next/link";

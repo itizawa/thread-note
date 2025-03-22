@@ -5,10 +5,10 @@ import {
   changeToUnArchive,
   updatePostBody,
 } from "@/app/actions/postActions";
-import { PostForm } from "@/components/model/post/PostForm";
-import { UserIcon } from "@/components/model/user/UserIcon";
 import { Button } from "@/components/ui/button";
 import { MarkdownViewer } from "@/components/ui/MarkdownViewer/index";
+import { PostForm } from "@/entities/post/PostForm";
+import { UserIcon } from "@/entities/user/UserIcon";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
 import { trpc } from "@/trpc/client";
