@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { urls } from "@/consts/urls";
+import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { useCallback, useRef, useTransition } from "react";
 import { toast } from "sonner";

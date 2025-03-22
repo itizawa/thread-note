@@ -2,10 +2,10 @@
 
 import { generateReplyPost } from "@/app/actions/postActions";
 import { createPostInThread } from "@/app/actions/threadActions";
-import { Button } from "@/components/ui/button";
 import { PostForm } from "@/entities/post/PostForm";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
+import { Button } from "@/shared/ui/button";
 import { trpc } from "@/trpc/client";
 import { MessageCircle } from "lucide-react";
 import React, { useState } from "react";

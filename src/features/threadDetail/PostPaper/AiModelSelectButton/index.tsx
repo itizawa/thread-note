@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/ui/select";
 import { Heart, MessageCircleWarningIcon, Search } from "lucide-react";
 
 interface Props {

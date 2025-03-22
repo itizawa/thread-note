@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/shared/ui/sheet";
 import { AlignJustify } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";

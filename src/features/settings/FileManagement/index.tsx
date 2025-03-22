@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { convertBytesToDisplay } from "@/lib/convertBytesToDisplay";
+import { Button } from "@/shared/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,18 +9,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { ExpandedImage } from "@/components/ui/ExpandedImage";
-import { Progress } from "@/components/ui/progress";
+} from "@/shared/ui/dialog";
+import { ExpandedImage } from "@/shared/ui/ExpandedImage";
+import { Progress } from "@/shared/ui/progress";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { VirtualizedList } from "@/components/ui/virtualizedList";
-import { convertBytesToDisplay } from "@/lib/convertBytesToDisplay";
+} from "@/shared/ui/select";
+import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
 import { ClockArrowDown, File } from "lucide-react";

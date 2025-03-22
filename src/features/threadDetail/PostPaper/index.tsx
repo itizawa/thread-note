@@ -5,12 +5,12 @@ import {
   changeToUnArchive,
   updatePostBody,
 } from "@/app/actions/postActions";
-import { Button } from "@/components/ui/button";
-import { MarkdownViewer } from "@/components/ui/MarkdownViewer/index";
 import { PostForm } from "@/entities/post/PostForm";
 import { UserIcon } from "@/entities/user/UserIcon";
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";
+import { Button } from "@/shared/ui/button";
+import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";

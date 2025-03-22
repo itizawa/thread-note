@@ -1,17 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { urls } from "@/consts/urls";
+import { UserIcon } from "@/entities/user/UserIcon";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { VirtualizedList } from "@/components/ui/virtualizedList";
-import { urls } from "@/consts/urls";
-import { UserIcon } from "@/entities/user/UserIcon";
+} from "@/shared/ui/select";
+import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";

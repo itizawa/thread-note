@@ -1,9 +1,9 @@
 "use client";
 
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
-import { Input } from "@/components/ui/input";
 import { urls } from "@/consts/urls";
 import { PostForm } from "@/entities/post/PostForm";
+import { Input } from "@/shared/ui/input";
 
 import { isMacOs, isWindowsOs } from "@/lib/getOs";
 import { useServerAction } from "@/lib/useServerAction";

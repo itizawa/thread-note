@@ -1,17 +1,17 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
-import { Button } from "@/components/ui/button";
+import { urls } from "@/consts/urls";
+import { useServerAction } from "@/lib/useServerAction";
+import { Button } from "@/shared/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { urls } from "@/consts/urls";
-import { useServerAction } from "@/lib/useServerAction";
+} from "@/shared/ui/dialog";
+import { Input } from "@/shared/ui/input";
 import { trpc } from "@/trpc/client";
 import {
   Tooltip,

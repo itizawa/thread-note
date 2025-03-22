@@ -1,4 +1,7 @@
 import { getCurrentUser } from "@/app/actions/userActions";
+import { urls } from "@/consts/urls";
+import { CreateNewThreadForm } from "@/features/newThread/CreateNewThreadForm";
+import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,10 +9,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { urls } from "@/consts/urls";
-import { CreateNewThreadForm } from "@/features/newThread/CreateNewThreadForm";
-import { generateMetadataObject } from "@/lib/generateMetadataObject";
+} from "@/shared/ui/breadcrumb";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 

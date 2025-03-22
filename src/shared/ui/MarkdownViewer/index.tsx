@@ -1,4 +1,4 @@
-import { OgpCard } from "@/components/ui/MarkdownViewer/OgpCard";
+import { OgpCard } from "@/shared/ui/MarkdownViewer/OgpCard";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";

@@ -1,6 +1,10 @@
 "use client";
 
 import { updateThreadInfo } from "@/app/actions/threadActions";
+import { urls } from "@/consts/urls";
+import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
+import { isMacOs, isWindowsOs } from "@/lib/getOs";
+import { useServerAction } from "@/lib/useServerAction";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,14 +12,10 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
-import { urls } from "@/consts/urls";
-import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
-import { isMacOs, isWindowsOs } from "@/lib/getOs";
-import { useServerAction } from "@/lib/useServerAction";
+} from "@/shared/ui/breadcrumb";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
 import { Pencil } from "lucide-react";
 import { useState } from "react";

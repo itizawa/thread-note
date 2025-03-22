@@ -1,7 +1,7 @@
 "use client";
 
-import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { urls } from "@/consts/urls";
+import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";

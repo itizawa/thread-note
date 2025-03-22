@@ -1,14 +1,14 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { signIn, signOut } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { UserIcon } from "@/entities/user/UserIcon";
+import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { UserIcon } from "@/entities/user/UserIcon";
+} from "@/shared/ui/dropdown-menu";
 
 import Link from "next/link";
 

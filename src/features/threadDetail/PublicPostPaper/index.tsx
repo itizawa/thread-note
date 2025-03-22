@@ -1,7 +1,7 @@
 "use client";
 
-import { MarkdownViewer } from "@/components/ui/MarkdownViewer";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { MarkdownViewer } from "@/shared/ui/MarkdownViewer";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
