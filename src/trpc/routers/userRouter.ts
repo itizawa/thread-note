@@ -40,6 +40,12 @@ export const userRouter = router({
           name: true,
           image: true,
           createdAt: true,
+          _count: {
+            select: {
+              threads: true,
+              posts: true,
+            },
+          },
         },
         where: {
           id: input.id,
