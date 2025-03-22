@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { File, Settings } from "lucide-react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { useTranslation } from "next-i18next";
 
 export const metadata: Metadata = generateMetadataObject({
   title: "Thread Note - 設定",
@@ -17,6 +18,7 @@ export default async function SettingsPage({
 }: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const { t } = useTranslation("common");
   const currentUser = await getCurrentUser();
   if (!currentUser) redirect(urls.top);
 
@@ -34,11 +36,11 @@ export default async function SettingsPage({
             <TabsList className="flex justify-start">
               <TabsTrigger value="profile" className="font-bold">
                 <Settings className="h-4 w-4 mr-1" />
-                プロフィール設定
+                {t("settings.profileSettings")}
               </TabsTrigger>
               <TabsTrigger value="files" className="font-bold">
                 <File className="h-4 w-4 mr-1" />
-                ファイル管理
+                {t("settings.fileManagement")}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="profile">

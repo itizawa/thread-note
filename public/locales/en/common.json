@@ -1,0 +1,66 @@
+{
+  "settings": {
+    "profileSettings": "Profile Settings",
+    "fileManagement": "File Management"
+  },
+  "home": {
+    "title": "Easily Save Information",
+    "subtitle": "Threaded Note Service",
+    "dashboardButton": "Go to Dashboard",
+    "termsAgreement": "Agree to the Terms of Service to start",
+    "features": {
+      "title": "Features of Thread Note",
+      "description": "All basic features are free to use",
+      "threadedInfo": {
+        "title": "Organize Information in Threads",
+        "description": "Quickly access related information in threads."
+      },
+      "simpleUI": {
+        "title": "Simple and Intuitive UI",
+        "description": "Smooth operation with an easy-to-use design."
+      },
+      "flexibleSharing": {
+        "title": "Flexible Sharing",
+        "description": "Easily share threads with the world."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "sections": {
+      "introduction": {
+        "title": "Article 1 (Introduction)",
+        "content": "The 'Thread Note' team aims to provide a service that users are truly satisfied with. Please agree to the following terms of service (hereinafter referred to as 'these Terms') before using the service. These Terms define the conditions of use of this service between the operating team and the user. The operating team reserves the right to revise these Terms without notice. The revised terms will take effect by posting them on this service."
+      },
+      "content": {
+        "title": "Article 2 (Content on this Service)",
+        "content": "Users must comply with laws and regulations and take full responsibility for the content they provide. Please post only content that does not interfere with others. The use or reliance on content obtained or published through this service is the responsibility of the user. The operating team does not guarantee the completeness, truthfulness, accuracy, or reliability of the content. Users understand and acknowledge the risk of encountering inappropriate content. The operating team reserves the right to remove content that violates the terms of use."
+      },
+      "usage": {
+        "title": "Article 3 (Use of this Service)",
+        "content": "This service may be changed at the discretion of the operating team. The service may also be temporarily suspended, terminated, or restricted without notice."
+      },
+      "termination": {
+        "title": "Article 4 (Termination of these Terms)",
+        "content": "The operating team reserves the right to suspend or delete the user's account for violations of these Terms or other reasons."
+      },
+      "generalConditions": {
+        "title": "Article 5 (General Conditions)",
+        "content": "These Terms may be revised at any time, and the latest version can be confirmed in the Terms of Service. The revised Terms will be deemed agreed upon by the user by continuing to use the service."
+      }
+    }
+  },
+  "postActions": {
+    "updateFailed": "Update failed",
+    "archived": "Archived",
+    "unarchived": "Unarchived",
+    "cancel": "Cancel",
+    "update": "Update",
+    "reply": "Reply",
+    "generate": "Generate"
+  },
+  "metadata": {
+    "defaultTitle": "Thread Note - Threaded Note Service",
+    "defaultDescription": "Thread Note is a service that allows you to easily save information in threads."
+  }
+}
