@@ -1,52 +1,33 @@
 "use client";
 
 import { UserIcon } from "@/components/model/user/UserIcon";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { VirtualizedList } from "@/components/ui/virtualizedList";
 import { urls } from "@/consts/urls";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { ClockArrowDown, MessageCircle, Pen, Search } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {
+  AutoSizer,
+  InfiniteLoader,
+  List,
+  ListRowProps,
+  WindowScroller,
+} from "react-virtualized";
 
 type Thread =
-  inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]["threads"][number];
+  inferRouterOutputs<AppRouter>["thread"]["listThreadsByUserId"]["threads"][number];
 
-export function ThreadList() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
-  const [sortOrder, setSortOrder] = useState<"createdAt" | "lastPostedAt">(
-    "lastPostedAt"
-  );
-
-  // 検索クエリのデバウンス処理
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
+export function ThreadList({ userId }: { userId: string }) {
   // スレッド一覧取得（検索クエリがある場合は検索結果を表示）
   const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
-    trpc.thread.listThreadsByCurrentUser.useInfiniteQuery(
+    trpc.thread.listThreadsByUserId.useInfiniteQuery(
       {
-        searchQuery: debouncedSearchQuery,
+        userId,
         limit: 20,
         sort: {
-          type: sortOrder,
+          type: "lastPostedAt",
           direction: "desc",
         },
       },
@@ -57,69 +38,76 @@ export function ThreadList() {
 
   const threads = data?.pages.flatMap((v) => v.threads) || [];
 
+  const loadMoreRows = async () => {
+    if (isLoading || isFetching) return;
+    if (!hasNextPage) return;
+
+    await fetchNextPage();
+  };
+
+  const isRowLoaded = ({ index }: { index: number }) => {
+    return !!threads[index];
+  };
+
+  const rowRenderer = ({ index, key, style }: ListRowProps) => {
+    const thread = threads[index];
+    return (
+      <div key={key} style={style}>
+        {thread ? <PostListItem thread={thread} /> : <PostListItemSkeleton />}
+      </div>
+    );
+  };
+
+  const noRowsRenderer = () => (
+    <div className="px-2 py-8 text-center text-gray-500">
+      スレッドが存在しません
+    </div>
+  );
+
   return (
     <div className="flex flex-col space-y-4 h-full">
-      <div className="flex justify-between items-center gap-4">
-        <div className="relative bg-white flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-          <Input
-            type="search"
-            placeholder="Search"
-            className="pl-10"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <Link href={urls.dashboardThreadNew}>
-          <Button>
-            <Pen />
-            New
-          </Button>
-        </Link>
-      </div>
-      <div className="overflow-y-auto flex flex-col rounded-lg border bg-white flex-1">
+      <div className="flex flex-col rounded-lg border bg-white flex-1">
         <div className="border-b px-4 py-3 flex items-center justify-between">
           <h2 className="font-medium">スレッド一覧</h2>
-          <Select
-            onValueChange={(value) =>
-              setSortOrder(value as "createdAt" | "lastPostedAt")
-            }
-            defaultValue="lastPostedAt"
-          >
-            <SelectTrigger className="w-fit shadow-none cursor-pointer">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="createdAt" className="cursor-pointer">
-                <span className="flex items-center">
-                  <ClockArrowDown className="h-4 w-4" />
-                  <span className="text-sm mx-2">作成日順</span>
-                </span>
-              </SelectItem>
-              <SelectItem value="lastPostedAt" className="cursor-pointer">
-                <span className="flex items-center">
-                  <ClockArrowDown className="h-4 w-4" />
-                  <span className="text-sm mx-2">更新日順</span>
-                </span>
-              </SelectItem>
-            </SelectContent>
-          </Select>
         </div>
         <div className="flex-1">
-          <VirtualizedList
-            data={threads}
-            rowRenderer={(item) => <PostListItem key={item.id} thread={item} />}
-            loadingRenderer={() => <PostListItemSkeleton />}
-            loadMore={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isLoading={isLoading || isFetching}
-            rowHeight={72}
-            noRowsRenderer={() => (
-              <div className="px-2 py-8 text-center text-gray-500">
-                スレッドが存在しません
-              </div>
+          <WindowScroller>
+            {({ height, isScrolling, onChildScroll, scrollTop }) => (
+              <AutoSizer disableHeight>
+                {({ width }) => (
+                  <InfiniteLoader
+                    isRowLoaded={isRowLoaded}
+                    loadMoreRows={loadMoreRows}
+                    rowCount={hasNextPage ? threads.length + 1 : threads.length}
+                    threshold={10}
+                  >
+                    {({ onRowsRendered, registerChild }) => (
+                      <List
+                        ref={registerChild}
+                        autoHeight
+                        height={height || 500}
+                        width={width}
+                        isScrolling={isScrolling}
+                        onScroll={onChildScroll}
+                        scrollTop={scrollTop}
+                        rowCount={
+                          isLoading || isFetching
+                            ? threads.length + 20
+                            : threads.length
+                        }
+                        rowHeight={72}
+                        rowRenderer={rowRenderer}
+                        onRowsRendered={onRowsRendered}
+                        noRowsRenderer={
+                          isLoading || isFetching ? undefined : noRowsRenderer
+                        }
+                      />
+                    )}
+                  </InfiniteLoader>
+                )}
+              </AutoSizer>
             )}
-          />
+          </WindowScroller>
         </div>
       </div>
     </div>
