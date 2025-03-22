@@ -123,7 +123,9 @@ export function PostPaper({ post }: Props) {
               <div className="text-sm">{user.name}</div>
             </Link>
             <div className="text-xs text-muted-foreground">
-              {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+              <time>
+                {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+              </time>
             </div>
           </div>
         </div>
