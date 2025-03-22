@@ -1,9 +1,9 @@
-import { Footer } from "@/components/feature/layout/Footer";
-import { Navigation } from "@/components/feature/layout/Navigation";
-import { PublicPostTimeLine } from "@/components/feature/threadDetail/PublicPostTimeLine";
-import { PublicThreadInformation } from "@/components/feature/threadDetail/PublicThreadInformation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { urls } from "@/consts/urls";
+import { Footer } from "@/feature/layout/Footer";
+import { Navigation } from "@/feature/layout/Navigation";
+import { PublicPostTimeLine } from "@/feature/threadDetail/PublicPostTimeLine";
+import { PublicThreadInformation } from "@/feature/threadDetail/PublicThreadInformation";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { HydrateClient, trpc } from "@/trpc/server";
 import { Metadata, NextSegmentPage } from "next";

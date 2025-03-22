@@ -1,8 +1,8 @@
 import { signIn } from "@/auth";
-import { Footer } from "@/components/feature/layout/Footer";
-import { Navigation } from "@/components/feature/layout/Navigation";
 import { Button } from "@/components/ui/button";
 import { urls } from "@/consts/urls";
+import { Footer } from "@/feature/layout/Footer";
+import { Navigation } from "@/feature/layout/Navigation";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
-import { UploadImageWrapper } from "@/shared/components/UploadImageWrapper";
+import { UploadImageWrapper } from "@/components/ui/UploadImageWrapper";
 import * as React from "react";
 import { useTextareaOperations } from "./hooks/useTextareaOperations";
 import { PostController } from "./parts/postController";

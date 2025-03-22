@@ -56,8 +56,6 @@ export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
           // 成功時のコールバックを実行
           onSuccess(imageData, file);
         } catch (error) {
-          console.log(error);
-
           if (error instanceof Error) {
             toast.error((error as Error).message, {
               action: (

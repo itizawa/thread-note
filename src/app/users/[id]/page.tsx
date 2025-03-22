@@ -1,7 +1,7 @@
-import { Footer } from "@/components/feature/layout/Footer";
-import { Navigation } from "@/components/feature/layout/Navigation";
-import { ThreadList } from "@/components/feature/userPage/ThreadList";
-import { UserInformation } from "@/components/feature/userPage/UserInformation";
+import { Footer } from "@/feature/layout/Footer";
+import { Navigation } from "@/feature/layout/Navigation";
+import { ThreadList } from "@/feature/userPage/ThreadList";
+import { UserInformation } from "@/feature/userPage/UserInformation";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { HydrateClient, trpc } from "@/trpc/server";
 import { Metadata, NextSegmentPage } from "next";

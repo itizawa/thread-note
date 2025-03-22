@@ -1,5 +1,4 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { CreateNewThreadForm } from "@/components/feature/newThread/CreateNewThreadForm";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,6 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { urls } from "@/consts/urls";
+import { CreateNewThreadForm } from "@/feature/newThread/CreateNewThreadForm";
 import { generateMetadataObject } from "@/lib/generateMetadataObject";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
