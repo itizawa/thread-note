@@ -6,7 +6,8 @@ import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
-import { format } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
+import { ja } from "date-fns/locale";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -80,7 +81,10 @@ function PostListItem({ thread }: { thread: Thread }) {
                 {thread.title || "タイトルなし"}
               </span>
               <span className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                {format(new Date(thread.createdAt), "yyyy/MM/dd HH:mm")}
+                {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {
+                  addSuffix: true,
+                  locale: ja,
+                })}に更新`}
               </span>
             </div>
             <div className="flex items-center gap-1 text-muted-foreground">

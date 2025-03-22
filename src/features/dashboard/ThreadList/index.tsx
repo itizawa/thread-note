@@ -9,7 +9,8 @@ import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
-import { format } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
+import { ja } from "date-fns/locale";
 import { MessageCircle, Pen, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -68,7 +69,10 @@ export function ThreadList() {
           </Button>
         </Link>
       </div>
-      <div className="flex-1 rounded-lg border bg-white">
+      <div className="rounded-lg border bg-white">
+        <div className="border-b px-4 py-3 flex items-center justify-between">
+          <h2 className="font-medium">スレッド一覧</h2>
+        </div>
         <VirtualizedWindowScroller
           data={threads}
           rowRenderer={(thread) => <PostListItem thread={thread} />}
@@ -124,8 +128,11 @@ function PostListItem({ thread }: { thread: Thread }) {
               <span className="block w-full font-bold truncate">
                 {thread.title || "タイトルなし"}
               </span>
-              <span className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                {format(new Date(thread.createdAt), "yyyy/MM/dd HH:mm")}
+              <span className="flex flex-wrap items-center gap-0.5 text-xs text-muted-foreground">
+                {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {
+                  addSuffix: true,
+                  locale: ja,
+                })}に更新`}
               </span>
             </div>
             <div className="flex items-center gap-1 text-muted-foreground">
