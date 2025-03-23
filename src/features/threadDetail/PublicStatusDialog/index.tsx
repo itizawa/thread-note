@@ -12,13 +12,8 @@ import {
   DialogTrigger,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
 import {
   Eye,
   EyeOff,
@@ -111,44 +106,23 @@ export function PublicStatusDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          {isPublic ? (
-            <TooltipProvider delayDuration={400}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center space-x-2">
-                    <Globe className="h-5 w-5 text-green-500" />
-                    <span className="font-bold">公開中</span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="text-white bg-black p-2 rounded-md"
-                  sideOffset={16}
-                >
-                  リンクを知っていれば誰でも閲覧可能
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ) : (
-            <TooltipProvider delayDuration={400}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center space-x-2">
-                    <Lock className="h-5 w-5 text-yellow-500" />
-                    <span className="font-bold">非公開</span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="text-white bg-black p-2 rounded-md"
-                  sideOffset={16}
-                >
-                  あなただけが閲覧可能
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </Button>
+      <DialogTrigger onClick={() => setOpen(true)}>
+        <Tooltip
+          text={
+            isPublic
+              ? "リンクを知っていれば誰でも閲覧可能"
+              : "あなただけが閲覧可能"
+          }
+        >
+          <Button variant="outline" size="sm">
+            <div className="flex items-center space-x-2">
+              <Globe className="h-5 w-5 text-green-500" />
+              <span className="font-bold">
+                {isPublic ? "公開中" : "非公開"}
+              </span>
+            </div>
+          </Button>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

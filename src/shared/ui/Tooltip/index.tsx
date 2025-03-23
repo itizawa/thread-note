@@ -18,16 +18,6 @@ function TooltipProvider({
   );
 }
 
-function Tooltip({
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return (
-    <TooltipProvider>
-      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-    </TooltipProvider>
-  );
-}
-
 function TooltipTrigger({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
@@ -58,4 +48,26 @@ function TooltipContent({
   );
 }
 
-export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };
+export function Tooltip({
+  children,
+  text,
+}: {
+  children: React.ReactNode;
+  text: string;
+}) {
+  return (
+    <TooltipProvider>
+      <TooltipProvider delayDuration={200}>
+        <TooltipPrimitive.Root data-slot="tooltip">
+          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipContent
+            className="text-white bg-black p-2 rounded-md"
+            sideOffset={8}
+          >
+            {text}
+          </TooltipContent>
+        </TooltipPrimitive.Root>
+      </TooltipProvider>
+    </TooltipProvider>
+  );
+}
