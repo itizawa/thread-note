@@ -28,7 +28,7 @@ export function UserIcon({
       }`}
       onClick={onClick}
     >
-      <AvatarImage src={userImage ?? undefined} />
+      <AvatarImage src={userImage ?? undefined} className="rounded-full" />
       <AvatarFallback>
         <Skeleton className={`${sizeMap[size]} rounded-full`} />
       </AvatarFallback>
