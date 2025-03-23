@@ -47,13 +47,12 @@ function TooltipContent({
     </TooltipPrimitive.Portal>
   );
 }
-
 export function Tooltip({
   children,
-  text,
+  content,
 }: {
   children: React.ReactNode;
-  text: string;
+  content: React.ReactNode;
 }) {
   return (
     <TooltipProvider>
@@ -61,10 +60,10 @@ export function Tooltip({
         <TooltipPrimitive.Root data-slot="tooltip">
           <TooltipTrigger asChild>{children}</TooltipTrigger>
           <TooltipContent
-            className="text-white bg-black p-2 rounded-md"
-            sideOffset={8}
+            className="text-white p-2 rounded-md font-bold"
+            sideOffset={0}
           >
-            {text}
+            {content}
           </TooltipContent>
         </TooltipPrimitive.Root>
       </TooltipProvider>
