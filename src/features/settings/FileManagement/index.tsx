@@ -1,5 +1,6 @@
 "use client";
 
+import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { convertBytesToDisplay } from "@/shared/lib/convertBytesToDisplay";
 import { Button } from "@/shared/ui/button";
 import {
@@ -19,16 +20,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
-import { VirtualizedList } from "@/shared/ui/virtualizedList";
+import { Tooltip } from "@/shared/ui/Tooltip";
+import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller";
 import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
-import { ClockArrowDown, File } from "lucide-react";
+import { ClockArrowDown, File, Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export const FileManagement = () => {
   const [sortOrder, setSortOrder] = useState<"createdAt" | "size">("createdAt");
-  const { data, hasNextPage, fetchNextPage, isLoading, refetch } =
+  const { data, hasNextPage, fetchNextPage, isLoading, isFetching, refetch } =
     trpc.file.listFiles.useInfiniteQuery(
       {
         limit: 20,
@@ -45,7 +47,7 @@ export const FileManagement = () => {
 
   return (
     <div className="flex-1 flex flex-col space-y-4 h-full">
-      <div className="overflow-y-auto flex flex-col rounded-lg border bg-white flex-1">
+      <div className="flex flex-col rounded-lg border bg-white flex-1">
         <div className="border-b px-4 py-3 flex items-center justify-between">
           <h2 className="font-bold font-sm">ファイル一覧</h2>
           <Select
@@ -84,32 +86,43 @@ export const FileManagement = () => {
           </div>
           <Progress value={clampedUsagePercentage} />
         </div>
-        <div className="flex-1 overflow-y-auto">
-          <VirtualizedList
-            data={files}
-            rowRenderer={(item) => (
-              <FileListItem
-                key={item.id}
-                file={item}
-                refetch={() => {
-                  refetch();
-                  refetchCurrentUsageData();
-                }}
-              />
-            )}
-            loadingRenderer={() => <PostListItemSkeleton />}
-            loadMore={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isLoading={isLoading}
-            rowHeight={48}
-            noRowsRenderer={() => (
-              <div className="pt-5 px-2 text-center text-gray-500">
-                ファイルが存在しません
-              </div>
-            )}
-          />
-        </div>
+        <VirtualizedWindowScroller
+          data={files}
+          rowRenderer={(item) => (
+            <FileListItem
+              key={item.id}
+              file={item}
+              refetch={() => {
+                refetch();
+                refetchCurrentUsageData();
+              }}
+            />
+          )}
+          loadingRenderer={() => <PostListItemSkeleton />}
+          loadMore={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isLoading={isLoading}
+          isFetching={isFetching}
+          rowHeight={48}
+          noRowsRenderer={() => (
+            <div className="pt-5 px-2 text-center text-gray-500">
+              ファイルが存在しません
+            </div>
+          )}
+        />
       </div>
+      {files.length > 10 && (
+        <div
+          className="py-8 text-center text-gray-500 cursor-pointer hover:opacity-60"
+          onClick={() =>
+            document
+              .getElementById(SCROLL_CONTAINER_ID)
+              ?.scrollTo({ top: 0, behavior: "smooth" })
+          }
+        >
+          <span>トップに戻る</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -207,20 +220,22 @@ function FileListItem({
             </div>
           </div>
         </div>
-        <Button
-          variant="destructive"
-          size="sm"
-          className="font-bold"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsDeleteDialogOpen(true);
-          }}
-          disabled={isPending}
-          loading={isPending}
-        >
-          削除
-        </Button>
+        <Tooltip content="削除する">
+          <Button
+            variant="link"
+            size="icon"
+            className="font-bold text-red-500"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsDeleteDialogOpen(true);
+            }}
+            disabled={isPending}
+            loading={isPending}
+          >
+            <Trash className="h-4 w-4" />
+          </Button>
+        </Tooltip>
       </div>
       <ExpandedImage
         expand={expand}
