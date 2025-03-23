@@ -58,12 +58,12 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
           </blockquote>
         ),
         pre: ({ children }) => (
-          <pre className="bg-gray-900 text-white p-4 rounded-md overflow-x-auto ">
+          <pre className="bg-gray-900 text-white p-3 rounded-md text-sm overflow-x-auto">
             {children}
           </pre>
         ),
         code: ({ children }) => (
-          <code className="px-1 py-0.5 rounded">{children}</code>
+          <code className="px-1 py-0.5 rounded text-sm">{children}</code>
         ),
         table: ({ children }) => (
           <table className="table-auto border-collapse border border-gray-300">
