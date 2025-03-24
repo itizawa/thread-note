@@ -13,6 +13,7 @@ export const userRouter = router({
       z.object({
         name: UserSchema.shape.name.optional(),
         image: z.string().url().optional(),
+        description: UserSchema.shape.description.optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -23,6 +24,7 @@ export const userRouter = router({
         data: {
           name: input.name ?? ctx.currentUser.name,
           image: input.image ?? ctx.currentUser.image,
+          description: input.description ?? ctx.currentUser.description,
         },
       });
     }),

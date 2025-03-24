@@ -13,10 +13,12 @@ export const getCurrentUser = async () => {
 export const updateUserSettings = async ({
   name,
   image,
+  description,
 }: inferRouterInputs<AppRouter>["user"]["updateUserSettings"]) => {
   const result = await trpc.user.updateUserSettings({
     name,
     image,
+    description,
   });
 
   // ダッシュボード関連のパスを再検証して、getCurrentUserのデータを再取得

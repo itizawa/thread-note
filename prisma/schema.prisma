@@ -34,6 +34,7 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  description   String?         @db.VarChar(240)
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support

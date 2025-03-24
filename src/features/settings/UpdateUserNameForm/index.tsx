@@ -18,6 +18,7 @@ interface UpdateUserNameFormProps {
 export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
   const utils = trpc.useUtils();
   const [name, setName] = useState(currentUser.name || "");
+  const [description, setDescription] = useState(currentUser.description || "");
   const { isPending, enqueueServerAction } = useServerAction();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,14 +29,19 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
       return;
     }
 
+    if (description.length > 240) {
+      toast.error("自己紹介は240文字以内で入力してください");
+      return;
+    }
+
     enqueueServerAction({
-      action: () => updateUserSettings({ name }),
+      action: () => updateUserSettings({ name, description }),
       error: {
-        text: "名前の更新に失敗しました",
+        text: "プロフィールの更新に失敗しました",
       },
       success: {
         onSuccess: () => utils.user.getCurrentUser.invalidate(),
-        text: "名前を更新しました",
+        text: "プロフィールを更新しました",
       },
     });
   };
@@ -95,11 +101,26 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             />
           </div>
         </div>
+        <div className="flex-1">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            自己紹介
+          </label>
+          <Input
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="自己紹介を入力してください"
+            className="max-w-md"
+          />
+        </div>
         <div className="flex justify-end">
           <Button
             type="submit"
             loading={isPending}
-            disabled={name === currentUser.name}
+            disabled={name === currentUser.name && description === currentUser.description}
           >
             更新
           </Button>
