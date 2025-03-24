@@ -12,13 +12,8 @@ import {
   DialogTrigger,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
 import {
   Eye,
   EyeOff,
@@ -111,44 +106,23 @@ export function PublicStatusDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          {isPublic ? (
-            <TooltipProvider delayDuration={400}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center space-x-2">
-                    <Globe className="h-5 w-5 text-green-500" />
-                    <span className="font-bold">公開中</span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="text-white bg-black p-2 rounded-md"
-                  sideOffset={16}
-                >
-                  リンクを知っていれば誰でも閲覧可能
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ) : (
-            <TooltipProvider delayDuration={400}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center space-x-2">
-                    <Lock className="h-5 w-5 text-yellow-500" />
-                    <span className="font-bold">非公開</span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="text-white bg-black p-2 rounded-md"
-                  sideOffset={16}
-                >
-                  あなただけが閲覧可能
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </Button>
+      <DialogTrigger onClick={() => setOpen(true)}>
+        <Tooltip
+          content={
+            isPublic
+              ? "リンクを知っていれば誰でも閲覧可能"
+              : "あなただけが閲覧可能"
+          }
+        >
+          <Button variant="outline" size="sm">
+            <div className="flex items-center space-x-2">
+              <Globe className="h-5 w-5 text-green-500" />
+              <span className="font-bold">
+                {isPublic ? "公開中" : "非公開"}
+              </span>
+            </div>
+          </Button>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -206,14 +180,16 @@ export function PublicStatusDialog({
                       />
                     </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="ml-2"
-                    onClick={handleClickOpenPageIcon}
-                  >
-                    <SquareArrowOutUpRight className="h-4 w-4" />
-                  </Button>
+                  <Tooltip content="別タブでページを開く">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="ml-2"
+                      onClick={handleClickOpenPageIcon}
+                    >
+                      <SquareArrowOutUpRight className="h-4 w-4" />
+                    </Button>
+                  </Tooltip>
                 </div>
                 <p className="text-xs text-muted-foreground">
                   URLをクリックするとコピーできます
@@ -221,36 +197,44 @@ export function PublicStatusDialog({
               </div>
 
               <div className="flex items-center justify-center space-x-6">
-                <Image
-                  src={"/sns/x.png"}
-                  width={24}
-                  height={24}
-                  className="hover:opacity-60 cursor-pointer"
-                  onClick={shareToTwitter}
-                  alt={"x_icon"}
-                />
-                <Image
-                  src={"/sns/line.png"}
-                  width={32}
-                  height={32}
-                  className="hover:opacity-60 cursor-pointer"
-                  onClick={shareToLine}
-                  alt={"line_icon"}
-                />
-                <Image
-                  src={"/sns/hatena.png"}
-                  width={32}
-                  height={32}
-                  className="hover:opacity-60 cursor-pointer"
-                  onClick={shareToHatena}
-                  alt={"hatena_icon"}
-                />
-                <button
-                  className="p-2 hover:bg-gray-200 rounded-md"
-                  onClick={handleClickShare}
-                >
-                  <Share className="h-5 w-5 cursor-pointer" />
-                </button>
+                <Tooltip content="Xでシェア">
+                  <Image
+                    src={"/sns/x.png"}
+                    width={24}
+                    height={24}
+                    className="hover:opacity-60 cursor-pointer"
+                    onClick={shareToTwitter}
+                    alt={"x_icon"}
+                  />
+                </Tooltip>
+                <Tooltip content="LINEでシェア">
+                  <Image
+                    src={"/sns/line.png"}
+                    width={32}
+                    height={32}
+                    className="hover:opacity-60 cursor-pointer"
+                    onClick={shareToLine}
+                    alt={"line_icon"}
+                  />
+                </Tooltip>
+                <Tooltip content="はてなブックマークでシェア">
+                  <Image
+                    src={"/sns/hatena.png"}
+                    width={32}
+                    height={32}
+                    className="hover:opacity-60 cursor-pointer"
+                    onClick={shareToHatena}
+                    alt={"hatena_icon"}
+                  />
+                </Tooltip>
+                <Tooltip content="その他のSNSでシェア">
+                  <button
+                    className="p-2 hover:bg-gray-200 rounded-md"
+                    onClick={handleClickShare}
+                  >
+                    <Share className="h-5 w-5 cursor-pointer" />
+                  </button>
+                </Tooltip>
               </div>
             </div>
           )}

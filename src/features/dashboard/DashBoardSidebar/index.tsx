@@ -3,6 +3,7 @@ import { UserIcon } from "@/entities/user/UserIcon";
 import { urls } from "@/shared/consts/urls";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import { Home, Pen, Settings, SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
@@ -34,10 +35,12 @@ export const DashBoardSidebar = async () => {
           <UserIcon userImage={currentUser?.image} size="md" />
           <span>{currentUser?.name}</span>
           {currentUser && (
-            <Link href={urls.userDetails(currentUser.id)} className="ml-auto">
-              <Button size="icon" variant="link">
-                <SquareArrowOutUpRight className="h-4 w-4" />
-              </Button>
+            <Link href={urls.userDetails(currentUser.id)} target="_blank">
+              <Tooltip content="ユーザーページを開く">
+                <Button size="icon" variant="link">
+                  <SquareArrowOutUpRight className="h-4 w-4" />
+                </Button>
+              </Tooltip>
             </Link>
           )}
         </div>
