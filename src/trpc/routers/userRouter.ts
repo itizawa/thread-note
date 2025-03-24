@@ -40,6 +40,7 @@ export const userRouter = router({
         select: {
           id: true,
           name: true,
+          description: true,
           image: true,
           createdAt: true,
           _count: {
