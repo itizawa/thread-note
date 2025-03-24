@@ -33,11 +33,7 @@ export async function NavigationUserIcon() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <UserIcon
-          userImage={currentUser.image}
-          className="cursor-pointer"
-          size="md"
-        />
+        <UserIcon userImage={currentUser.image} className="cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild className="cursor-pointer">

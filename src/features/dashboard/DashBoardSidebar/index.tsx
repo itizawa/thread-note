@@ -32,7 +32,7 @@ export const DashBoardSidebar = async () => {
     <div className="flex h-full flex-col bg-white overflow-y-auto">
       <div className="p-4">
         <div className="flex items-center space-x-2">
-          <UserIcon userImage={currentUser?.image} size="md" />
+          <UserIcon userImage={currentUser?.image} />
           <span>{currentUser?.name}</span>
           {currentUser && (
             <Link href={urls.userDetails(currentUser.id)} target="_blank">
