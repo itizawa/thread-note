@@ -51,7 +51,10 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
       <h2 className="text-xl font-semibold mb-4">基本設定</h2>
-      <form onSubmit={handleSubmit} className="flex space-x-6">
+      <form
+        onSubmit={handleSubmit}
+        className="flex md:flex-row flex-col gap-6 items-center md:items-start content-center"
+      >
         <UploadImageWrapper
           onSuccess={(data) => {
             toast.success("プロフィール画像をアップロードしました");
@@ -88,7 +91,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             </Tooltip>
           )}
         </UploadImageWrapper>
-        <div className="space-y-4 flex-1">
+        <div className="space-y-4 w-full">
           <div className="flex items-center space-x-4">
             <div className="flex-1">
               <label
@@ -123,6 +126,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
           <div className="flex justify-center">
             <Button
               type="submit"
+              className="w-full md:w-auto"
               loading={isPending}
               disabled={
                 name === currentUser.name &&
