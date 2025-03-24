@@ -8,7 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = generateMetadataObject({
-  title: "Thread Note - 作成",
+  title: "Thread Note - 新規作成",
 });
 
 export default async function Page() {

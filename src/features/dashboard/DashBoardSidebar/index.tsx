@@ -18,7 +18,7 @@ export const DashBoardSidebar = async () => {
     },
     {
       href: urls.dashboardThreadNew,
-      label: "作成",
+      label: "新規作成",
       icon: Pen,
     },
     {

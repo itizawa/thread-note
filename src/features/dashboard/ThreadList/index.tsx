@@ -65,7 +65,7 @@ export function ThreadList() {
         <Link href={urls.dashboardThreadNew}>
           <Button>
             <Pen />
-            作成
+            新規作成
           </Button>
         </Link>
       </div>
