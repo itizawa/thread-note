@@ -13,17 +13,17 @@ export const DashBoardSidebar = async () => {
   const routes = [
     {
       href: urls.dashboard,
-      label: "Home",
+      label: "ホーム",
       icon: Home,
     },
     {
       href: urls.dashboardThreadNew,
-      label: "New",
+      label: "作成",
       icon: Pen,
     },
     {
       href: urls.dashboardSettings("profile"),
-      label: "Settings",
+      label: "設定",
       icon: Settings,
     },
   ];

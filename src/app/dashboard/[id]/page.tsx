@@ -11,7 +11,7 @@ import { Suspense } from "react";
 type Props = { params: Promise<{ id: string }> };
 
 export const metadata: Metadata = generateMetadataObject({
-  title: "Thread Note - New",
+  title: "Thread Note - 作成",
 });
 
 export default async function Page({ params }: Props) {

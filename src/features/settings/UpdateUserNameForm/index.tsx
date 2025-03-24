@@ -50,7 +50,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
-      <h2 className="text-xl font-semibold mb-4">プロフィール設定</h2>
+      <h2 className="text-xl font-semibold mb-4">基本設定</h2>
       <form onSubmit={handleSubmit} className="flex space-x-6">
         <UploadImageWrapper
           onSuccess={(data) => {

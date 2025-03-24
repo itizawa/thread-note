@@ -14,7 +14,7 @@ export default function Page() {
     <div className="min-h-screen p-5">
       <h3 className="mx-auto">Error</h3>
       <Link href={urls.top} className="mx-auto">
-        Go to Home
+        ホームに戻る
       </Link>
     </div>
   );
