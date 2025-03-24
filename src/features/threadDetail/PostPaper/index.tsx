@@ -21,6 +21,7 @@ import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
+import { useTranslation } from "next-i18next";
 
 type Post = NonNullable<
   inferRouterOutputs<AppRouter>["thread"]["getThreadWithPosts"]["threadWithPosts"]
@@ -31,6 +32,7 @@ interface Props {
 }
 
 export function PostPaper({ post }: Props) {
+  const { t } = useTranslation("common");
   const isParentPost = "children" in post;
   const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);
@@ -45,7 +47,7 @@ export function PostPaper({ post }: Props) {
     enqueueServerAction({
       action: () => updatePostBody({ id: post.id, body }),
       error: {
-        text: "更新に失敗しました",
+        text: t("postActions.updateFailed"),
       },
       success: {
         onSuccess: () => {
@@ -79,7 +81,7 @@ export function PostPaper({ post }: Props) {
     startTransition(async () => {
       await changeToUnArchive({ id: post.id });
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
-      toast.success("アーカイブを取り消しました");
+      toast.success(t("postActions.unarchived"));
     });
   };
 
@@ -87,7 +89,7 @@ export function PostPaper({ post }: Props) {
     startTransition(async () => {
       await changeToArchive({ id: post.id });
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
-      toast.success("アーカイブしました", {
+      toast.success(t("postActions.archived"), {
         action: (
           <Button
             size="sm"
@@ -95,7 +97,7 @@ export function PostPaper({ post }: Props) {
             variant="ghost"
             onClick={handleClickUnArchiveButton}
           >
-            取り消す
+            {t("postActions.cancel")}
           </Button>
         ),
       });
@@ -149,7 +151,7 @@ export function PostPaper({ post }: Props) {
               isPending,
             }}
             bottomButtons={{
-              submitText: "更新",
+              submitText: t("postActions.update"),
               onCancel: () => {
                 setBody(post.body); // 初期化
                 setIsEditing(false);
