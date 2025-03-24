@@ -35,7 +35,11 @@ export const DashBoardSidebar = async () => {
           <UserIcon userImage={currentUser?.image} />
           <span>{currentUser?.name}</span>
           {currentUser && (
-            <Link href={urls.userDetails(currentUser.id)} target="_blank">
+            <Link
+              href={urls.userDetails(currentUser.id)}
+              target="_blank"
+              className="ml-auto"
+            >
               <Tooltip content="ユーザーページを開く">
                 <Button size="icon" variant="link">
                   <SquareArrowOutUpRight className="h-4 w-4" />
