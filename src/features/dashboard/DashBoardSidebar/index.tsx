@@ -41,7 +41,7 @@ export const DashBoardSidebar = async () => {
               className="ml-auto"
             >
               <Tooltip content="ユーザーページを開く">
-                <Button size="icon" variant="link">
+                <Button variant="ghost" size="icon">
                   <SquareArrowOutUpRight className="h-4 w-4" />
                 </Button>
               </Tooltip>

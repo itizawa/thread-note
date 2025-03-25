@@ -14,12 +14,10 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
           <h1 className="text-3xl font-bold border-b pb-2">{children}</h1>
         ),
         h2: ({ children }) => (
-          <h2 className="text-2xl font-semibold mt-4 border-b pb-1">
-            {children}
-          </h2>
+          <h2 className="text-2xl font-semibold border-b pb-1">{children}</h2>
         ),
         h3: ({ children }) => (
-          <h3 className="text-xl font-semibold mt-3">{children}</h3>
+          <h3 className="text-xl font-semibold">{children}</h3>
         ),
         p: ({ node, children }) => {
           const child = node?.children[0];
@@ -43,7 +41,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             }
           }
 
-          return <p className="text-gray-800">{children}</p>;
+          return <p className="text-gray-900">{children}</p>;
         },
         ul: ({ children }) => (
           <ul className="list-disc ml-5 space-y-1">{children}</ul>
@@ -51,7 +49,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
         ol: ({ children }) => (
           <ol className="list-decimal ml-5 space-y-1">{children}</ol>
         ),
-        li: ({ children }) => <li className="text-gray-800">{children}</li>,
+        li: ({ children }) => <li className="text-gray-900">{children}</li>,
         blockquote: ({ children }) => (
           <blockquote className="border-l-4 border-gray-400 pl-4 italic text-gray-600">
             {children}

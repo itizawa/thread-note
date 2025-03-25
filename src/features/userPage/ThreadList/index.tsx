@@ -56,7 +56,7 @@ export function ThreadList({ userId }: { userId: string }) {
 function PostListItemSkeleton() {
   return (
     <div className="flex items-center gap-4 p-4">
-      <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+      <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
       <div className="flex flex-1 flex-col gap-1">
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-col gap-2">
