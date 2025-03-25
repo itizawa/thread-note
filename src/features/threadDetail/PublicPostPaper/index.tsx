@@ -22,9 +22,10 @@ export function PublicPostPaper({ post }: Props) {
 
   return (
     <div
+      id={post.id}
       className={
         isParentPost
-          ? "rounded-lg border p-4 bg-white space-y-4"
+          ? "rounded-lg border p-4 bg-white space-y-4 target:border-orange-300"
           : "rounded-lg p-2 pr-0 space-y-4"
       }
     >
@@ -36,13 +37,15 @@ export function PublicPostPaper({ post }: Props) {
           >
             <UserIcon userImage={user?.image} />
           </Link>
-          <div>
+          <div className="flex flex-col space-y-1">
             <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
               <div className="text-sm">{user.name}</div>
             </Link>
-            <div className="text-xs text-muted-foreground">
-              {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
-            </div>
+            <a href={`#${post.id}`} className="text-xs text-muted-foreground">
+              <time>
+                {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+              </time>
+            </a>
           </div>
         </div>
       </div>
