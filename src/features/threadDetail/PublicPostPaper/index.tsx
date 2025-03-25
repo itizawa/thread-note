@@ -14,15 +14,16 @@ type Post = NonNullable<
 
 interface Props {
   post: Post | Post["children"][number];
+  onClickScrollTarget: (scrollId: string) => void;
 }
 
-export function PublicPostPaper({ post }: Props) {
+export function PublicPostPaper({ post, onClickScrollTarget }: Props) {
   const isParentPost = "children" in post;
   const { user } = post;
 
   return (
     <div
-      id={post.id}
+      data-scroll-id={post.id}
       className={
         isParentPost
           ? "rounded-lg border p-4 bg-white space-y-4 target:border-orange-300"
@@ -41,7 +42,11 @@ export function PublicPostPaper({ post }: Props) {
             <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
               <div className="text-sm">{user.name}</div>
             </Link>
-            <a href={`#${post.id}`} className="text-xs text-muted-foreground">
+            <a
+              href={`#${post.id}`}
+              onClick={() => onClickScrollTarget(post.id)}
+              className="text-xs text-muted-foreground"
+            >
               <time>
                 {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
               </time>
@@ -63,7 +68,10 @@ export function PublicPostPaper({ post }: Props) {
                   <div className="w-[2px] h-full bg-gray-200" />
                 </div>
                 <div className="w-full pl-6">
-                  <PublicPostPaper post={childPost} />
+                  <PublicPostPaper
+                    post={childPost}
+                    onClickScrollTarget={onClickScrollTarget}
+                  />
                 </div>
               </div>
             );
