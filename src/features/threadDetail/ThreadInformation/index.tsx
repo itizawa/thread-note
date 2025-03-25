@@ -74,7 +74,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
           className="flex space-x-1 items-center text-gray-700"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span className="text-xs">Home</span>
+          <span className="text-xs">一覧に戻る</span>
         </Link>
         <Skeleton className="w-full h-9" />
       </div>
@@ -83,7 +83,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
   if (!threadInfo) {
     // TODO: ポストのデータを取得できなかった時のエラー処理画面を作成する https://github.com/itizawa/thread-note/issues/15
-    return <p>No posts available.</p>;
+    return <p>ポストが存在しません</p>;
   }
 
   return (
@@ -93,7 +93,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         className="flex space-x-1 items-center text-gray-700"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span className="text-xs">Home</span>
+        <span className="text-xs">一覧に戻る</span>
       </Link>
 
       {isEditing ? (

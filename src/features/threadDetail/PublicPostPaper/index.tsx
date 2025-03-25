@@ -34,7 +34,7 @@ export function PublicPostPaper({ post }: Props) {
             href={urls.userDetails(user.id)}
             className="h-8 w-8 hover:opacity-60"
           >
-            <UserIcon userImage={user?.image} size="md" />
+            <UserIcon userImage={user?.image} />
           </Link>
           <div>
             <Link href={urls.userDetails(user.id)} className="hover:opacity-60">

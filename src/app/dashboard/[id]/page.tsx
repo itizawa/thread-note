@@ -4,15 +4,36 @@ import { ThreadInformation } from "@/features/threadDetail/ThreadInformation";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Skeleton } from "@/shared/ui/skeleton";
-import { Metadata } from "next";
+import { trpc } from "@/trpc/server";
+import { Metadata, NextSegmentPage } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
 
-export const metadata: Metadata = generateMetadataObject({
-  title: "Thread Note - New",
-});
+export const generateMetadata = async ({
+  params,
+}: NextSegmentPage<{
+  params: { id: string };
+}>["arguments"]): Promise<Metadata> => {
+  const { id: threadId } = await params;
+
+  const thread = await trpc.thread.getThreadInfo({
+    id: threadId,
+  });
+
+  if (!thread)
+    return generateMetadataObject({
+      title: "Thread Not Found",
+      description: "The requested thread does not exist.",
+      images: ["/api/og?title=NotFound"],
+    });
+
+  return generateMetadataObject({
+    title: thread.title || undefined,
+    images: [`/api/og?title=${encodeURIComponent(thread.title || "")}`],
+  });
+};
 
 export default async function Page({ params }: Props) {
   const { id: threadId } = await params;

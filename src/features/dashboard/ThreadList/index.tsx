@@ -56,7 +56,7 @@ export function ThreadList() {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
           <Input
             type="search"
-            placeholder="Search"
+            placeholder="検索..."
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -65,7 +65,7 @@ export function ThreadList() {
         <Link href={urls.dashboardThreadNew}>
           <Button>
             <Pen />
-            New
+            新規作成
           </Button>
         </Link>
       </div>
@@ -121,7 +121,7 @@ function PostListItem({ thread }: { thread: Thread }) {
   return (
     <Link href={urls.dashboardThreadDetails(thread.id)}>
       <div className="flex items-center gap-4 p-4 hover:bg-gray-100 cursor-pointer">
-        <UserIcon userImage={thread.user.image} size="md" />
+        <UserIcon userImage={thread.user.image} size={10} />
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">

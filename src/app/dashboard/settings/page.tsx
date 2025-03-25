@@ -35,7 +35,7 @@ export default async function SettingsPage({
             <TabsList className="flex justify-start">
               <TabsTrigger value="profile" className="font-bold">
                 <Settings className="h-4 w-4 mr-1" />
-                プロフィール設定
+                基本設定
               </TabsTrigger>
               <TabsTrigger value="files" className="font-bold">
                 <File className="h-4 w-4 mr-1" />
