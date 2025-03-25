@@ -115,12 +115,13 @@ export function ThreadInformation({
           </Button>
         </div>
       ) : (
-        <div className="flex items-center justify-between group">
+        <div className="flex items-center justify-between">
           <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
           <Tooltip content="編集">
             <Button
               variant="ghost"
-              className="md:opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              size="icon"
+              className="transition-opacity hover:bg-gray-200"
               onClick={() => setIsEditing(true)}
             >
               <Pencil className="h-4 w-4" />
