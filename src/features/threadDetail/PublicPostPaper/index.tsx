@@ -2,11 +2,14 @@
 
 import { UserIcon } from "@/entities/user/UserIcon";
 import { urls } from "@/shared/consts/urls";
+import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import Link from "next/link";
+import urlJoin from "url-join";
+import { ManagePostDropDown } from "./ManagePostDropDown";
 
 type Post = NonNullable<
   inferRouterOutputs<AppRouter>["thread"]["getPublicThreadWithPosts"]["threadWithPosts"]
@@ -20,6 +23,17 @@ interface Props {
 export function PublicPostPaper({ post, onClickScrollTarget }: Props) {
   const isParentPost = "children" in post;
   const { user } = post;
+  const { copy } = useClipBoardCopy();
+
+  const handleClickPostCreatedAt = () => {
+    copy(
+      urlJoin(
+        window.location.origin,
+        urls.threadDetails(post.threadId, post.id)
+      ),
+      "URLをコピーしました"
+    );
+  };
 
   return (
     <div
@@ -53,6 +67,7 @@ export function PublicPostPaper({ post, onClickScrollTarget }: Props) {
             </a>
           </div>
         </div>
+        <ManagePostDropDown onClickShareButton={handleClickPostCreatedAt} />
       </div>
       <div className="pb-4">
         <div className="prose space-y-4 break-words">
