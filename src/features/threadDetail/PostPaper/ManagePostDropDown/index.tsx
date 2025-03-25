@@ -37,6 +37,12 @@ export function ManagePostDropDown({
           <Pencil className="h-4 w-4" />
           編集
         </DropdownMenuItem>
+        {onClickShareButton && (
+          <DropdownMenuItem onClick={onClickShareButton}>
+            <Link className="mr-2 h-4 w-4" />
+            共有リンクをコピー
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
           onClick={onClickArchiveButton}
           className="text-destructive focus:text-destructive"
@@ -44,12 +50,6 @@ export function ManagePostDropDown({
           <Archive className="h-4 w-4" />
           アーカイブ
         </DropdownMenuItem>
-        {onClickShareButton && (
-          <DropdownMenuItem onClick={onClickShareButton}>
-            <Link className="mr-2 h-4 w-4" />
-            共有リンクをコピー
-          </DropdownMenuItem>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
