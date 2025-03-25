@@ -48,9 +48,9 @@ export function PublicPostPaper({ post, onClickScrollTarget }: Props) {
         <div className="flex items-center space-x-2">
           <Link
             href={urls.userDetails(user.id)}
-            className="h-8 w-8 hover:opacity-60"
+            className="h-10 w-10 hover:opacity-60"
           >
-            <UserIcon userImage={user?.image} />
+            <UserIcon userImage={user?.image} size={10} />
           </Link>
           <div className="flex flex-col space-y-1">
             <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
