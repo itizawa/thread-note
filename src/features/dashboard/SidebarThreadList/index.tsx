@@ -1,11 +1,24 @@
 "use client";
 
+import { updateThreadInfo } from "@/app/actions/threadActions";
 import { urls } from "@/shared/consts/urls";
+import { useServerAction } from "@/shared/lib/useServerAction";
+import { Button } from "@/shared/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
+import { Input } from "@/shared/ui/input";
 import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
+import { Edit, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import React, { useState } from "react";
+import { PublicStatusDialog } from "../../threadDetail/PublicStatusDialog";
 
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]["threads"][number];
@@ -55,13 +68,102 @@ function PostListItemSkeleton() {
 }
 
 function PostListItem({ thread }: { thread: Thread }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(thread.title || "");
+  const { isPending, enqueueServerAction } = useServerAction();
+  const utils = trpc.useUtils();
+
+  const handleStartEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setEditTitle(thread.title || "");
+    setIsEditing(true);
+  };
+
+  const handleSaveTitle = () => {
+    if (editTitle.trim() === "") return;
+
+    enqueueServerAction({
+      action: () => updateThreadInfo({ id: thread.id, title: editTitle }),
+      error: {
+        text: "タイトルの更新に失敗しました",
+      },
+      success: {
+        onSuccess: () => {
+          utils.thread.listThreadsByCurrentUser.invalidate();
+          setIsEditing(false);
+        },
+        text: "タイトルを更新しました",
+      },
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSaveTitle();
+    } else if (e.key === "Escape") {
+      setIsEditing(false);
+    }
+  };
+
   return (
-    <Link href={urls.dashboardThreadDetails(thread.id)}>
-      <div className="flex items-center justify-between rounded-lg gap-4 p-2 hover:bg-gray-100 cursor-pointer">
-        <span className="text-sm truncate max-w-xs">
-          {thread.title || "タイトルなし"}
-        </span>
+    <div className="flex items-center justify-between rounded-lg gap-4 p-2 hover:bg-gray-100 cursor-pointer">
+      {isEditing ? (
+        <div className="flex-1" onClick={(e) => e.stopPropagation()}>
+          <Input
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleSaveTitle}
+            autoFocus
+            disabled={isPending}
+            className="h-6 text-sm"
+          />
+        </div>
+      ) : (
+        <Link href={urls.dashboardThreadDetails(thread.id)} className="flex-1">
+          <span className="text-sm truncate max-w-xs">
+            {thread.title || "タイトルなし"}
+          </span>
+        </Link>
+      )}
+      <div onClick={(e) => e.stopPropagation()}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 p-0"
+              onClick={(e) => e.stopPropagation()}
+              disabled={isEditing || isPending}
+            >
+              <MoreHorizontal className="h-4 w-4" />
+              <span className="sr-only">メニューを開く</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleStartEdit}>
+              <Edit className="mr-2 h-4 w-4" />
+              タイトルを編集
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+              asChild
+            >
+              <div className="w-full">
+                <PublicStatusDialog
+                  threadTitle={thread.title}
+                  threadId={thread.id}
+                  isPublic={thread.isPublic}
+                />
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </Link>
+    </div>
   );
 }
