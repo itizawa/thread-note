@@ -13,6 +13,7 @@ import { trpc } from "@/trpc/client";
 import { ArrowLeft, Pencil } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { ClosedStatusDialog } from "../ClosedStatusDialog";
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
   const utils = trpc.useUtils();
@@ -136,11 +137,17 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
         </div>
       )}
 
-      <PublicStatusDialog
-        threadTitle={threadInfo.title}
-        threadId={threadId}
-        isPublic={threadInfo.isPublic}
-      />
+      <div className="flex space-x-2">
+        <PublicStatusDialog
+          threadTitle={threadInfo.title}
+          threadId={threadId}
+          isPublic={threadInfo.isPublic}
+        />
+        <ClosedStatusDialog
+          threadId={threadId}
+          isClosed={Boolean(threadInfo.isClosed)}
+        />
+      </div>
     </div>
   );
 }

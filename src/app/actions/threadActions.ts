@@ -28,3 +28,10 @@ export const updateThreadPublicStatus = async (args: {
 }) => {
   await trpc.thread.updateThreadPublicStatus(args);
 };
+
+export const updateThreadClosedStatus = async (args: {
+  id: string;
+  isClosed: boolean;
+}) => {
+  await trpc.thread.updateThreadClosedStatus(args);
+};

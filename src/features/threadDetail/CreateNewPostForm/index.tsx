@@ -5,6 +5,7 @@ import { PostForm } from "@/entities/post/PostForm";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
+import { Archive } from "lucide-react";
 import React from "react";
 
 type Props = {
@@ -14,8 +15,12 @@ export function CreateNewPostForm({ threadId }: Props) {
   const utils = trpc.useUtils();
   const { isPending, enqueueServerAction } = useServerAction();
   const [body, setBody] = React.useState("");
+  const { data: threadInfo } = trpc.thread.getThreadInfo.useQuery({
+    id: threadId,
+  });
 
-  const isDisabled = isPending || body.trim().length === 0;
+  const isDisabled =
+    isPending || body.trim().length === 0 || threadInfo?.isClosed;
 
   const handleSubmit = () => {
     enqueueServerAction({
@@ -56,21 +61,30 @@ export function CreateNewPostForm({ threadId }: Props) {
 
   return (
     <div className="rounded-lg border p-4 bg-white">
-      <PostForm
-        textarea={{
-          value: body,
-          onChange: handleContentChange,
-          onKeyPress: handleKeyPress,
-        }}
-        formState={{
-          isDisabled,
-          isPending,
-        }}
-        bottomButtons={{
-          submitText: "投稿",
-          onSubmit: handleSubmit,
-        }}
-      />
+      {threadInfo?.isClosed ? (
+        <div className="flex items-center justify-center p-4 text-gray-500">
+          <div className="flex items-center space-x-2">
+            <Archive className="h-5 w-5" />
+            <span>このスレッドは終了しています。新しい投稿はできません。</span>
+          </div>
+        </div>
+      ) : (
+        <PostForm
+          textarea={{
+            value: body,
+            onChange: handleContentChange,
+            onKeyPress: handleKeyPress,
+          }}
+          formState={{
+            isDisabled: Boolean(isDisabled),
+            isPending,
+          }}
+          bottomButtons={{
+            submitText: "投稿",
+            onSubmit: handleSubmit,
+          }}
+        />
+      )}
     </div>
   );
 }

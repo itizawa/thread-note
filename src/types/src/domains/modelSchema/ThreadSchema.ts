@@ -9,6 +9,7 @@ export const ThreadSchema = z.object({
   userId: z.string(),
   title: z.string().nullable(),
   isPublic: z.boolean(),
+  isClosed: z.boolean(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   lastPostedAt: z.coerce.date(),
