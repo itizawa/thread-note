@@ -22,6 +22,9 @@ export function PublicPostTimeLine({ threadId }: { threadId: string }) {
 
   return (
     <div className="w-full flex-col space-y-4 overflow-y-auto pb-10">
+      {threadWithPosts.posts.length === 0 && (
+        <p className="text-sm text-gray-800">まだポストがありません。</p>
+      )}
       {threadWithPosts.posts.map((post: Post) => {
         return (
           <PublicPostPaper
