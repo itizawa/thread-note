@@ -2,6 +2,7 @@
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
 import { urls } from "@/shared/consts/urls";
+import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import {
@@ -24,7 +25,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { toast } from "sonner";
 import urlJoin from "url-join";
 
 interface PublicStatusDialogProps {
@@ -45,11 +45,7 @@ export function PublicStatusDialog({
     window.location.origin,
     urls.threadDetails(threadId)
   );
-
-  const handleCopyUrl = () => {
-    navigator.clipboard.writeText(threadDetailUrl);
-    toast.success("URLをコピーしました");
-  };
+  const { copy } = useClipBoardCopy();
 
   const handleClickOpenPageIcon = () => {
     window.open(threadDetailUrl, "_blank", "noopener,noreferrer");
@@ -176,7 +172,7 @@ export function PublicStatusDialog({
                         value={threadDetailUrl}
                         readOnly
                         className="cursor-pointer"
-                        onClick={handleCopyUrl}
+                        onClick={() => copy(threadDetailUrl)}
                       />
                     </div>
                   </div>
