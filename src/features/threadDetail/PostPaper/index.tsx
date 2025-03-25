@@ -12,10 +12,12 @@ import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
+import { Archive } from "lucide-react";
 import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
@@ -35,9 +37,7 @@ export function PostPaper({ post }: Props) {
   const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);
   const { user } = post;
-
   const [body, setBody] = React.useState(post.body);
-
   const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
 
@@ -63,15 +63,11 @@ export function PostPaper({ post }: Props) {
   ) => {
     if (isDisabled) return;
 
-    if (isMacOs()) {
-      if (e.key === "Enter" && e.metaKey) {
-        handleSubmit();
-      }
+    if (isMacOs() && e.key === "Enter" && e.metaKey) {
+      handleSubmit();
     }
-    if (isWindowsOs()) {
-      if (e.key === "Enter" && e.ctrlKey) {
-        handleSubmit();
-      }
+    if (isWindowsOs() && e.key === "Enter" && e.ctrlKey) {
+      handleSubmit();
     }
   };
 
@@ -104,13 +100,31 @@ export function PostPaper({ post }: Props) {
 
   return (
     <div
-      className={
-        isParentPost
-          ? "rounded-lg border p-4 bg-white space-y-4"
-          : "rounded-lg p-2 pr-0 space-y-4"
-      }
+      className={`
+        ${
+          isParentPost
+            ? "rounded-lg border p-4 space-y-4"
+            : "rounded-lg p-2 pr-0 space-y-4"
+        }
+        ${post.isArchived ? "bg-red-50" : "bg-white"}
+        relative
+      `}
     >
       <div className="flex items-center justify-between">
+        {post.isArchived && (
+          <Tooltip content="クリックしてアーカイブを解除">
+            <div className="absolute right-3 top-3 z-10">
+              <button
+                onClick={handleClickUnArchiveButton}
+                className="bg-red-200 hover:opacity-80 text-gray-600 text-xs px-2 py-0.5 rounded-full flex items-center transition-colors cursor-pointer"
+                title="クリックしてアーカイブを解除"
+              >
+                <Archive className="h-3 w-3 mr-1" />
+                アーカイブ済み
+              </button>
+            </div>
+          </Tooltip>
+        )}
         <div className="flex items-center space-x-2">
           <Link
             href={urls.userDetails(user.id)}
@@ -127,7 +141,7 @@ export function PostPaper({ post }: Props) {
             </div>
           </div>
         </div>
-        {!isEditing && (
+        {!isEditing && !post.isArchived && (
           <ManagePostDropDown
             isPending={isPending}
             isArchived={post.isArchived}
@@ -160,7 +174,11 @@ export function PostPaper({ post }: Props) {
             }}
           />
         ) : (
-          <div className="prose space-y-4 break-words">
+          <div
+            className={`prose space-y-4 break-words ${
+              post.isArchived ? "opacity-75" : ""
+            }`}
+          >
             <MarkdownViewer body={post.body} />
           </div>
         )}
@@ -179,7 +197,9 @@ export function PostPaper({ post }: Props) {
               </div>
             );
           })}
-          <ReplyForm threadId={post.threadId} parentPostId={post.id} />
+          {!post.isArchived && (
+            <ReplyForm threadId={post.threadId} parentPostId={post.id} />
+          )}
         </div>
       )}
     </div>
