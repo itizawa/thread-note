@@ -11,13 +11,15 @@ import { Archive, MoreHorizontal, Pencil } from "lucide-react";
 
 type Props = {
   isPending: boolean;
+  isArchived: boolean;
   onClickEditButton: () => void;
-  onClickArchiveButton?: () => void;
-  onClickUnArchiveButton?: () => void;
+  onClickArchiveButton: () => void;
+  onClickUnArchiveButton: () => void;
 };
 
 export function ManagePostDropDown({
   isPending,
+  isArchived,
   onClickEditButton,
   onClickArchiveButton,
   onClickUnArchiveButton,
@@ -33,11 +35,13 @@ export function ManagePostDropDown({
         </Tooltip>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onClickEditButton}>
-          <Pencil className="h-4 w-4" />
-          編集
-        </DropdownMenuItem>
-        {onClickArchiveButton && (
+        {!isArchived && (
+          <DropdownMenuItem onClick={onClickEditButton}>
+            <Pencil className="h-4 w-4" />
+            編集
+          </DropdownMenuItem>
+        )}
+        {!isArchived && (
           <DropdownMenuItem
             onClick={onClickArchiveButton}
             className="text-destructive focus:text-destructive"
@@ -46,7 +50,7 @@ export function ManagePostDropDown({
             アーカイブ
           </DropdownMenuItem>
         )}
-        {onClickUnArchiveButton && (
+        {isArchived && (
           <DropdownMenuItem
             onClick={onClickUnArchiveButton}
             className="text-destructive focus:text-destructive"

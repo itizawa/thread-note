@@ -130,13 +130,10 @@ export function PostPaper({ post }: Props) {
         {!isEditing && (
           <ManagePostDropDown
             isPending={isPending}
+            isArchived={post.isArchived}
             onClickEditButton={() => setIsEditing(true)}
-            onClickArchiveButton={
-              post.isArchived ? undefined : handleClickArchiveButton
-            }
-            onClickUnArchiveButton={
-              post.isArchived ? handleClickUnArchiveButton : undefined
-            }
+            onClickArchiveButton={handleClickArchiveButton}
+            onClickUnArchiveButton={handleClickUnArchiveButton}
           />
         )}
       </div>
