@@ -3,6 +3,7 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as React from "react";
 
+import { getIsMobile } from "@/shared/lib/useIsMobile";
 import { cn } from "@/shared/lib/utils";
 
 function TooltipProvider({
@@ -54,6 +55,11 @@ export function Tooltip({
   children: React.ReactNode;
   content: React.ReactNode;
 }) {
+  // スマホならTooltipを表示しない
+  if (getIsMobile()) {
+    return children;
+  }
+
   return (
     <TooltipProvider>
       <TooltipProvider delayDuration={200}>
