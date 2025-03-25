@@ -5,6 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { Tooltip } from "@/shared/ui/Tooltip";
 
 import { Archive, MoreHorizontal } from "lucide-react";
 
@@ -19,11 +20,13 @@ export function ManageThreadDropDown({
 }: Props) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="hover:bg-gray-200">
-          <MoreHorizontal className="h-4 w-4" />
-          <span className="sr-only">メニューを開く</span>
-        </Button>
+      <DropdownMenuTrigger>
+        <Tooltip content="スレッドを操作">
+          <Button variant="ghost" size="icon" className="hover:bg-gray-200">
+            <MoreHorizontal className="h-4 w-4" />
+            <span className="sr-only">メニューを開く</span>
+          </Button>
+        </Tooltip>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={onClickToggleDisplayArchiveButton}>

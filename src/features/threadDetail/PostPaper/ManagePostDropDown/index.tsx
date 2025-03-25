@@ -12,18 +12,20 @@ import { Archive, MoreHorizontal, Pencil } from "lucide-react";
 type Props = {
   isPending: boolean;
   onClickEditButton: () => void;
-  onClickArchiveButton: () => void;
+  onClickArchiveButton?: () => void;
+  onClickUnArchiveButton?: () => void;
 };
 
 export function ManagePostDropDown({
   isPending,
   onClickEditButton,
   onClickArchiveButton,
+  onClickUnArchiveButton,
 }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Tooltip content="スレッドを操作">
+        <Tooltip content="ポストを操作">
           <Button variant="ghost" size="icon" disabled={isPending}>
             <MoreHorizontal className="h-4 w-4" />
             <span className="sr-only">メニューを開く</span>
@@ -35,13 +37,24 @@ export function ManagePostDropDown({
           <Pencil className="h-4 w-4" />
           編集
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={onClickArchiveButton}
-          className="text-destructive focus:text-destructive"
-        >
-          <Archive className="h-4 w-4" />
-          アーカイブ
-        </DropdownMenuItem>
+        {onClickArchiveButton && (
+          <DropdownMenuItem
+            onClick={onClickArchiveButton}
+            className="text-destructive focus:text-destructive"
+          >
+            <Archive className="h-4 w-4" />
+            アーカイブ
+          </DropdownMenuItem>
+        )}
+        {onClickUnArchiveButton && (
+          <DropdownMenuItem
+            onClick={onClickUnArchiveButton}
+            className="text-destructive focus:text-destructive"
+          >
+            <Archive className="h-4 w-4" />
+            アーカイブを取り消す
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -79,7 +79,7 @@ export function ThreadInformation({
     <div className="space-y-4">
       <Link
         href={urls.dashboard}
-        className="flex space-x-1 items-center text-gray-700"
+        className="flex space-x-1 items-center text-gray-700 hover:opacity-60"
       >
         <ArrowLeft className="w-4 h-4" />
         <span className="text-xs">一覧に戻る</span>
