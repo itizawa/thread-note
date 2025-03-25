@@ -93,8 +93,10 @@ export function PublicStatusDialog({
         text: "公開状態の更新に失敗しました",
       },
       success: {
-        onSuccess: () =>
-          utils.thread.getThreadInfo.invalidate({ id: threadId }),
+        onSuccess: () => {
+          utils.thread.getThreadInfo.invalidate({ id: threadId });
+          utils.thread.getThreadWithPosts.invalidate({ id: threadId });
+        },
         text: isPublic ? "非公開に設定しました" : "公開に設定しました",
       },
     });
