@@ -150,12 +150,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
             <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
               <div className="text-sm">{user.name}</div>
             </Link>
-            <div
-              className={`text-xs text-muted-foreground ${
-                isPublicThread ? "hover:opacity-60 cursor-pointer" : ""
-              }`}
-              onClick={isPublicThread ? handleClickPostCreatedAt : undefined}
-            >
+            <div className={`text-xs text-muted-foreground`}>
               <time>
                 {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
               </time>
@@ -165,10 +160,11 @@ export function PostPaper({ post, isPublicThread }: Props) {
         {!isEditing && !post.isArchived && (
           <ManagePostDropDown
             isPending={isPending}
-            isArchived={post.isArchived}
             onClickEditButton={() => setIsEditing(true)}
+            onClickShareButton={
+              isPublicThread ? handleClickPostCreatedAt : undefined
+            }
             onClickArchiveButton={handleClickArchiveButton}
-            onClickUnArchiveButton={handleClickUnArchiveButton}
           />
         )}
       </div>
