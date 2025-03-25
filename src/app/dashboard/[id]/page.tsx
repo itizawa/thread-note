@@ -1,13 +1,10 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { PostTimeLine } from "@/features/threadDetail/PostTimeLine";
-import { ThreadInformation } from "@/features/threadDetail/ThreadInformation";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
-import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/server";
 import { Metadata, NextSegmentPage } from "next";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -44,13 +41,8 @@ export default async function Page({ params }: Props) {
   return (
     <div className="h-full relative">
       <main className="w-full overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4">
-        <div className="w-full max-w-[700px] mx-auto space-y-4">
-          <ThreadInformation threadId={threadId} />
-          <div className="overflow-y-auto">
-            <Suspense fallback={<Skeleton className="w-full h-20" />}>
-              <PostTimeLine threadId={threadId} />
-            </Suspense>
-          </div>
+        <div className="w-full max-w-[700px] mx-auto">
+          <PostTimeLine threadId={threadId} />
         </div>
       </main>
 
