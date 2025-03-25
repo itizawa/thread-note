@@ -32,14 +32,14 @@ export function ManagePostDropDown({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={onClickEditButton}>
-          <Pencil className="mr-2 h-4 w-4" />
+          <Pencil className="h-4 w-4" />
           編集
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={onClickArchiveButton}
           className="text-destructive focus:text-destructive"
         >
-          <Archive className="mr-2 h-4 w-4" />
+          <Archive className="h-4 w-4" />
           アーカイブ
         </DropdownMenuItem>
       </DropdownMenuContent>
