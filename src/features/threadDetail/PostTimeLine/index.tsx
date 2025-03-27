@@ -71,7 +71,13 @@ const PostTimeLineCore = ({
   return (
     <div className="w-full flex-col space-y-4 overflow-y-auto pb-10">
       {threadWithPosts.posts.map((v) => {
-        return <PostPaper key={v.id} post={v} />;
+        return (
+          <PostPaper
+            key={v.id}
+            post={v}
+            isPublicThread={threadWithPosts.isPublic}
+          />
+        );
       })}
 
       <CreateNewPostForm threadId={threadId} />
