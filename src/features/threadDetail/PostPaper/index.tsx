@@ -8,6 +8,7 @@ import {
 import { PostForm } from "@/entities/post/PostForm";
 import { UserIcon } from "@/entities/user/UserIcon";
 import { urls } from "@/shared/consts/urls";
+import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
@@ -21,6 +22,7 @@ import { Archive } from "lucide-react";
 import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
+import urlJoin from "url-join";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
 
@@ -30,9 +32,10 @@ type Post = NonNullable<
 
 interface Props {
   post: Post | Post["children"][number];
+  isPublicThread: boolean;
 }
 
-export function PostPaper({ post }: Props) {
+export function PostPaper({ post, isPublicThread }: Props) {
   const isParentPost = "children" in post;
   const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);
@@ -40,6 +43,7 @@ export function PostPaper({ post }: Props) {
   const [body, setBody] = React.useState(post.body);
   const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
+  const { copy } = useClipBoardCopy();
 
   const handleSubmit = () => {
     enqueueServerAction({
@@ -98,6 +102,16 @@ export function PostPaper({ post }: Props) {
     });
   };
 
+  const handleClickPostCreatedAt = () => {
+    copy(
+      urlJoin(
+        window.location.origin,
+        urls.threadDetails(post.threadId, post.id)
+      ),
+      "共有URLをコピーしました"
+    );
+  };
+
   return (
     <div
       className={`
@@ -128,26 +142,29 @@ export function PostPaper({ post }: Props) {
         <div className="flex items-center space-x-2">
           <Link
             href={urls.userDetails(user.id)}
-            className="h-8 w-8 hover:opacity-60"
+            className="h-10 w-10 hover:opacity-60"
           >
-            <UserIcon userImage={user?.image} />
+            <UserIcon userImage={user?.image} size={10} />
           </Link>
           <div>
             <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
               <div className="text-sm">{user.name}</div>
             </Link>
-            <div className="text-xs text-muted-foreground">
-              {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+            <div className={`text-xs text-muted-foreground`}>
+              <time>
+                {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+              </time>
             </div>
           </div>
         </div>
         {!isEditing && !post.isArchived && (
           <ManagePostDropDown
             isPending={isPending}
-            isArchived={post.isArchived}
             onClickEditButton={() => setIsEditing(true)}
+            onClickShareButton={
+              isPublicThread ? handleClickPostCreatedAt : undefined
+            }
             onClickArchiveButton={handleClickArchiveButton}
-            onClickUnArchiveButton={handleClickUnArchiveButton}
           />
         )}
       </div>
@@ -192,7 +209,7 @@ export function PostPaper({ post }: Props) {
                   <div className="w-[2px] h-full bg-gray-200" />
                 </div>
                 <div className="w-full pl-6">
-                  <PostPaper post={v} />
+                  <PostPaper post={v} isPublicThread={isPublicThread} />
                 </div>
               </div>
             );
