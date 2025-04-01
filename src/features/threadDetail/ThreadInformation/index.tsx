@@ -7,10 +7,10 @@ import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
-import { ArrowLeft, Pencil } from "lucide-react";
-import Link from "next/link";
+import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { ManageThreadDropDown } from "./ManageThreadDropDown";
 
@@ -71,19 +71,17 @@ export function ThreadInformation({
   };
 
   if (!threadInfo) {
-    // TODO: ポストのデータを取得できなかった時のエラー処理画面を作成する https://github.com/itizawa/thread-note/issues/15
-    return <p>ポストが存在しません</p>;
+    return (
+      <div className="space-y-4">
+        <LinkToBack href={urls.dashboard} text="一覧に戻る" />
+        <p>ポストが存在しません</p>
+      </div>
+    );
   }
 
   return (
     <div className="space-y-4">
-      <Link
-        href={urls.dashboard}
-        className="flex space-x-1 items-center text-gray-700 hover:opacity-60"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-xs">一覧に戻る</span>
-      </Link>
+      <LinkToBack href={urls.dashboard} text="一覧に戻る" />
 
       {isEditing ? (
         <div className="flex space-x-2">
@@ -137,6 +135,7 @@ export function ThreadInformation({
           isPublic={threadInfo.isPublic}
         />
         <ManageThreadDropDown
+          threadId={threadId}
           includeIsArchived={includeIsArchived}
           onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
         />

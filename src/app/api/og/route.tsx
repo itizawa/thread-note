@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
           <polygon points="1200,0 1200,400 900,0" fill="lightblue" />
           <polygon points="1200,430 1200,630 800,630" fill="pink" />
         </svg>
-        {/* 記事タイトル */}
+        {/* タイトル */}
         <div
           style={{
             position: "relative",

@@ -1,10 +1,9 @@
 "use client";
 
 import { urls } from "@/shared/consts/urls";
+import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { Suspense, useState } from "react";
 import { CreateNewPostForm } from "../CreateNewPostForm";
 import { PostPaper } from "../PostPaper";
@@ -22,13 +21,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
       <Suspense
         fallback={
           <div className="space-y-4">
-            <Link
-              href={urls.dashboard}
-              className="flex space-x-1 items-center text-gray-700"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-xs">Home</span>
-            </Link>
+            <LinkToBack href={urls.dashboard} text="Home" />
             <Skeleton className="w-full h-9" />
           </div>
         }
