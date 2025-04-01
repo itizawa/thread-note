@@ -8,9 +8,20 @@ import { trpc } from "@/trpc/client";
 import { RefreshCw } from "lucide-react";
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
-  const [threadInfo, { refetch }] = trpc.thread.getThreadInfo.useSuspenseQuery({
-    id: threadId,
-  });
+  const [threadInfo, { refetch: refetchThreadInfo }] =
+    trpc.thread.getThreadInfo.useSuspenseQuery({
+      id: threadId,
+    });
+  const [, { refetch: refetchPosts }] =
+    trpc.thread.getThreadWithPosts.useSuspenseQuery({
+      id: threadId,
+      includeIsArchived: false,
+    });
+
+  const handleClickRefetch = () => {
+    refetchThreadInfo();
+    refetchPosts();
+  };
 
   if (!threadInfo) {
     return (
@@ -38,7 +49,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
             variant="ghost"
             size="icon"
             className="transition-opacity hover:bg-gray-200"
-            onClick={() => refetch()}
+            onClick={handleClickRefetch}
           >
             <RefreshCw className="h-4 w-4" />
           </Button>
