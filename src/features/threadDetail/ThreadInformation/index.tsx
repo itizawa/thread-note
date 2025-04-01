@@ -137,6 +137,7 @@ export function ThreadInformation({
           isPublic={threadInfo.isPublic}
         />
         <ManageThreadDropDown
+          threadId={threadId}
           includeIsArchived={includeIsArchived}
           onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
         />

@@ -1,3 +1,4 @@
+import { urls } from "@/shared/consts/urls";
 import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
@@ -7,14 +8,17 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Tooltip } from "@/shared/ui/Tooltip";
 
-import { Archive, MoreHorizontal } from "lucide-react";
+import { Archive, MoreHorizontal, PlaneTakeoff } from "lucide-react";
+import Link from "next/link";
 
 type Props = {
+  threadId: string;
   includeIsArchived: boolean;
   onClickToggleDisplayArchiveButton: () => void;
 };
 
 export function ManageThreadDropDown({
+  threadId,
   includeIsArchived,
   onClickToggleDisplayArchiveButton,
 }: Props) {
@@ -29,6 +33,12 @@ export function ManageThreadDropDown({
         </Tooltip>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <Link href={urls.dashboardThreadDetailsExports(threadId)} passHref>
+          <DropdownMenuItem>
+            <PlaneTakeoff className="h-4 w-4" />
+            ページのエクスポート
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuItem onClick={onClickToggleDisplayArchiveButton}>
           <Archive className="h-4 w-4" />
           {includeIsArchived ? "アーカイブの非表示" : "アーカイブの表示"}
