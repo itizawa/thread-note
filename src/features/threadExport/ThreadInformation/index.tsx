@@ -21,7 +21,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
     <div className="space-y-4">
       <LinkToBack
         href={urls.dashboardThreadDetails(threadId)}
-        text="記事編集に戻る"
+        text="編集に戻る"
       />
 
       <div className="flex items-center justify-between">
