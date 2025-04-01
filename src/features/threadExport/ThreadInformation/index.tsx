@@ -2,10 +2,10 @@
 
 import { urls } from "@/shared/consts/urls";
 import { Button } from "@/shared/ui/button";
+import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
-import { ArrowLeft, RefreshCw } from "lucide-react";
-import Link from "next/link";
+import { RefreshCw } from "lucide-react";
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
   const [threadInfo, { refetch }] = trpc.thread.getThreadInfo.useSuspenseQuery({
@@ -19,13 +19,10 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
   return (
     <div className="space-y-4">
-      <Link
+      <LinkToBack
         href={urls.dashboardThreadDetails(threadId)}
-        className="flex space-x-1 items-center text-gray-700 hover:opacity-60 w-fit"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-xs">記事編集に戻る</span>
-      </Link>
+        text="記事編集に戻る"
+      />
 
       <div className="flex items-center justify-between">
         <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
