@@ -21,7 +21,7 @@ export default async function Page() {
         <div className="flex flex-col space-y-4 max-w-[700px] mx-auto">
           <Link
             href={urls.dashboard}
-            className="flex items-center space-x-1 text-gray-700"
+            className="flex items-center space-x-1 text-gray-700 w-fit"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="text-xs">スレッド一覧に戻る</span>

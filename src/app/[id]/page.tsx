@@ -59,7 +59,7 @@ const Page: NextSegmentPage<{
           <div className="w-full max-w-[700px] mx-auto space-y-4 flex flex-col">
             <Link
               href={urls.userDetails(thread.userId)}
-              className="flex items-center space-x-1 text-gray-700"
+              className="flex items-center space-x-1 text-gray-700 w-fit"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="text-xs">一覧に戻る</span>
