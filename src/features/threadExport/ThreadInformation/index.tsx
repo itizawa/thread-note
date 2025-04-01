@@ -13,8 +13,15 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
   });
 
   if (!threadInfo) {
-    // TODO: ポストのデータを取得できなかった時のエラー処理画面を作成する https://github.com/itizawa/thread-note/issues/15
-    return <p>ポストが存在しません</p>;
+    return (
+      <div className="space-y-4">
+        <LinkToBack
+          href={urls.dashboardThreadDetails(threadId)}
+          text="編集に戻る"
+        />
+        <p>ポストが存在しません</p>
+      </div>
+    );
   }
 
   return (
