@@ -3,6 +3,7 @@
 import { Textarea } from "@/shared/ui/textarea";
 import { UploadImageWrapper } from "@/shared/ui/UploadImageWrapper";
 import * as React from "react";
+import { useAutoResizeTextarea } from "./hooks/useAutoResizeTextarea";
 import { useContinueListOnEnter } from "./hooks/useContinueListOnEnter";
 import { useHandlePaste } from "./hooks/useHandlePaste";
 import { useHandleTabIndent } from "./hooks/useHandleTabIndent";
@@ -33,6 +34,9 @@ type Props = {
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   const { value, onChange } = textarea;
+
+  // テキストエリアの高さを自動調整するフックを使用
+  const { handleResize } = useAutoResizeTextarea({ value, textareaRef });
 
   const { insertMarkdownAtCursor } = useInsertMarkdownAtCursor({ value, onChange, textareaRef}); // prettier-ignore
   const { insertAtCursor } = useInsertAtCursor({ value, onChange, textareaRef }); // prettier-ignore
@@ -82,7 +86,11 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
               placeholder={textarea.placeholder || "テキストを入力..."}
               className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
               value={textarea.value}
-              onChange={(e) => textarea.onChange(e.target.value)}
+              onChange={(e) => {
+                textarea.onChange(e.target.value);
+                // カスタムフックの関数を使用して高さを調整
+                handleResize();
+              }}
               onKeyDown={handleKeyDown}
               onPaste={handlePaste}
               forceFocus={textarea.forceFocus}
