@@ -12,14 +12,14 @@ type Props = {
 export function UserIcon({ userImage, className, size = 8, onClick }: Props) {
   return (
     <Avatar
-      className={`w-${size} h-${size}  ${className ?? ""} ${
+      className={`w-${size} h-${size} ${className ?? ""} ${
         onClick ? "cursor-pointer" : ""
       }`}
       onClick={onClick}
     >
       <AvatarImage
         src={userImage ?? undefined}
-        className="rounded-full border border-gray-200"
+        className={`rounded-full border w-${size} h-${size} border-gray-200`}
       />
       <AvatarFallback>
         <Skeleton className={`w-${size} h-${size} rounded-full`} />
