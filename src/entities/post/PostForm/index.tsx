@@ -5,6 +5,7 @@ import { UploadImageWrapper } from "@/shared/ui/UploadImageWrapper";
 import * as React from "react";
 import { useContinueListOnEnter } from "./hooks/useContinueListOnEnter";
 import { useHandlePaste } from "./hooks/useHandlePaste";
+import { useHandleTabIndent } from "./hooks/useHandleTabIndent";
 import { useInsertAtCursor } from "./hooks/useInsertAtCursor";
 import { useInsertMarkdownAtCursor } from "./hooks/useInsertMarkdownAtCursor";
 import { useWrapSelectedTextWithMarkdown } from "./hooks/useWrapSelectedTextWithMarkdown";
@@ -38,6 +39,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
   const { handlePaste } = useHandlePaste({ value, onChange, textareaRef });
   const { wrapSelectedTextWithMarkdown } = useWrapSelectedTextWithMarkdown({ value, onChange, textareaRef }); // prettier-ignore
   const { handleEnterKey } = useContinueListOnEnter({ value, onChange, textareaRef }); // prettier-ignore
+  const { handleTabKey } = useHandleTabIndent({ value, onChange, textareaRef }); // prettier-ignore
 
   // キーボードショートカットの処理
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -55,15 +57,14 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
       return;
     }
 
+    // Tab キー
+    if (handleTabKey(e)) return;
+
     // Enter キー
-    if (handleEnterKey(e)) {
-      return;
-    }
+    if (handleEnterKey(e)) return;
 
     // 元のonKeyPressを呼び出す
-    if (textarea.onKeyPress) {
-      textarea.onKeyPress(e);
-    }
+    if (textarea.onKeyPress) textarea.onKeyPress(e);
   };
 
   return (
