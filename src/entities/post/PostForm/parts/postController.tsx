@@ -6,7 +6,6 @@ import {
   Bold,
   Hash,
   Image as ImageIcon,
-  Italic,
   List,
   ListOrdered,
   Quote,
@@ -105,19 +104,6 @@ export const PostController = ({
             }
           >
             <Quote className="h-5 w-5" />
-          </Button>
-        </Tooltip>
-        <Tooltip content="斜体">
-          <Button
-            variant="outline"
-            className="shadow-none"
-            size="icon"
-            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
-            onClick={() =>
-              onClickIcon({ insertText: "*", removeIfExist: false })
-            }
-          >
-            <Italic className="h-5 w-5" />
           </Button>
         </Tooltip>
         <Tooltip content="画像をアップロード">
