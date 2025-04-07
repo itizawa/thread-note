@@ -3,7 +3,9 @@
 import { Textarea } from "@/shared/ui/textarea";
 import { UploadImageWrapper } from "@/shared/ui/UploadImageWrapper";
 import * as React from "react";
-import { useTextareaOperations } from "./hooks/useTextareaOperations";
+import { useHandlePaste } from "./hooks/useHandlePaste";
+import { useInsertAtCursor } from "./hooks/useInsertAtCursor";
+import { useInsertMarkdownAtCursor } from "./hooks/useInsertMarkdownAtCursor";
 import { PostController } from "./parts/postController";
 
 type Props = {
@@ -26,17 +28,16 @@ type Props = {
 };
 
 export function PostForm({ bottomButtons, textarea, formState }: Props) {
-  // テキストエリア操作のカスタムフック
-  const { textareaRef, insertMarkdownAtCursor, insertAtCursor } =
-    useTextareaOperations({
-      value: textarea.value,
-      onChange: textarea.onChange,
-    });
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const { value, onChange } = textarea;
+
+  const { insertMarkdownAtCursor } = useInsertMarkdownAtCursor({ value, onChange, textareaRef}); // prettier-ignore
+  const { insertAtCursor } = useInsertAtCursor({ value, onChange, textareaRef }); // prettier-ignore
+  const { handlePaste } = useHandlePaste({ value, onChange, textareaRef });
 
   return (
     <UploadImageWrapper
       onSuccess={(data, file) => {
-        // マークダウン形式で画像を挿入
         const imageMarkdown = `![${file.name}](${data.url})`;
         insertMarkdownAtCursor(imageMarkdown);
       }}
@@ -51,6 +52,7 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
               value={textarea.value}
               onChange={(e) => textarea.onChange(e.target.value)}
               onKeyDown={textarea.onKeyPress}
+              onPaste={handlePaste}
               forceFocus={textarea.forceFocus}
             />
             <PostController
