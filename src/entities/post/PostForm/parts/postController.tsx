@@ -3,6 +3,7 @@
 import { Button } from "@/shared/ui/button";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import {
+  Bold,
   Hash,
   Image as ImageIcon,
   List,
@@ -51,6 +52,19 @@ export const PostController = ({
             }}
           >
             <Hash className="h-5 w-5" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="強調">
+          <Button
+            variant="outline"
+            className="shadow-none"
+            size="icon"
+            onMouseDown={(e) => e.preventDefault()} // フォーカスが外れるのを防ぐ
+            onClick={() =>
+              onClickIcon({ insertText: "****", removeIfExist: true })
+            }
+          >
+            <Bold className="h-5 w-5" />
           </Button>
         </Tooltip>
         <Tooltip content="箇条書きリスト">
