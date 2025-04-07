@@ -19,7 +19,8 @@ export function UserIcon({ userImage, className, size = 8, onClick }: Props) {
     >
       <AvatarImage
         src={userImage ?? undefined}
-        className={`rounded-full border w-${size} h-${size} border-gray-200 object-fit`}
+        className={`rounded-full border w-${size} h-${size} border-gray-200 object-contain`}
+        alt="User Image"
       />
       <AvatarFallback>
         <Skeleton className={`w-${size} h-${size} rounded-full`} />
