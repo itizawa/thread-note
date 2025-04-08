@@ -5,14 +5,14 @@ import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/shared/ui/sheet";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import {
@@ -27,17 +27,17 @@ import Image from "next/image";
 import { useState } from "react";
 import urlJoin from "url-join";
 
-interface PublicStatusDialogProps {
+interface PublicStatusSheetProps {
   threadTitle: string | null;
   threadId: string;
   isPublic: boolean;
 }
 
-export function PublicStatusDialog({
+export function PublicStatusSheet({
   threadTitle,
   threadId,
   isPublic,
-}: PublicStatusDialogProps) {
+}: PublicStatusSheetProps) {
   const [open, setOpen] = useState(false);
   const { isPending, enqueueServerAction } = useServerAction();
   const utils = trpc.useUtils();
@@ -103,8 +103,8 @@ export function PublicStatusDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger onClick={() => setOpen(true)}>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger onClick={() => setOpen(true)}>
         <Tooltip
           content={
             isPublic
@@ -114,19 +114,23 @@ export function PublicStatusDialog({
         >
           <Button variant="outline" size="sm">
             <div className="flex items-center space-x-2">
-              <Globe className="h-5 w-5 text-green-500" />
+              {isPublic ? (
+                <Globe className="h-5 w-5 text-green-500" />
+              ) : (
+                <Lock className="h-5 w-5 text-yellow-500" />
+              )}
               <span className="font-bold">
                 {isPublic ? "公開中" : "非公開"}
               </span>
             </div>
           </Button>
         </Tooltip>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>公開設定</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-6">
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>公開設定</SheetTitle>
+        </SheetHeader>
+        <div className="space-y-6 px-4">
           <div className="flex items-center justify-between">
             <div>
               {isPublic ? (
@@ -237,7 +241,7 @@ export function PublicStatusDialog({
             </div>
           )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
