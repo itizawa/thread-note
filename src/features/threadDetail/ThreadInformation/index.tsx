@@ -1,7 +1,7 @@
 "use client";
 
 import { updateThreadInfo } from "@/app/actions/threadActions";
-import { PublicStatusDialog } from "@/features/threadDetail/PublicStatusDialog";
+import { PublicStatusSheet } from "@/features/threadDetail/PublicStatusSheet";
 import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
@@ -129,7 +129,7 @@ export function ThreadInformation({
       )}
 
       <div className="flex items-center justify-between space-x-2">
-        <PublicStatusDialog
+        <PublicStatusSheet
           threadTitle={threadInfo.title}
           threadId={threadId}
           isPublic={threadInfo.isPublic}

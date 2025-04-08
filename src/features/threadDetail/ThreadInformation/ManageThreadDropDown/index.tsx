@@ -36,7 +36,7 @@ export function ManageThreadDropDown({
         <Link href={urls.dashboardThreadDetailsExports(threadId)} passHref>
           <DropdownMenuItem>
             <PlaneTakeoff className="h-4 w-4" />
-            ページのエクスポート
+            スレッドのエクスポート
           </DropdownMenuItem>
         </Link>
         <DropdownMenuItem onClick={onClickToggleDisplayArchiveButton}>
