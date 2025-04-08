@@ -91,7 +91,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             </Tooltip>
           )}
         </UploadImageWrapper>
-        <div className="space-y-4 w-full">
+        <div className="space-y-4 flex-1">
           <div className="flex items-center space-x-4">
             <div className="flex-1">
               <label
