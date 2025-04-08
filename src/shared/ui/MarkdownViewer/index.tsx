@@ -27,9 +27,7 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
             node?.children.length === 1 &&
             child?.type === "element" &&
             child.tagName === "a" &&
-            typeof child.properties?.href === "string" &&
-            child.children[0]?.type === "text" &&
-            child.properties.href === child.children[0].value
+            typeof child.properties?.href === "string"
           ) {
             if (/(https?:\/\/[^\s]+)/g.test(child.properties.href)) {
               const url = child.properties.href;
