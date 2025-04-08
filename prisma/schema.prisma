@@ -129,6 +129,7 @@ model Thread {
 
   title String?
   isPublic Boolean @default(false) @map("is_public")
+  isClosed Boolean @default(false) @map("is_closed")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()

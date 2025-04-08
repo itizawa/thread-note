@@ -5,11 +5,9 @@ import { protectedProcedure, publicProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
 import { CreateThreadWithFIrstPostUseCase } from "../usecases/newThread/CreateThreadWithFIrstPostUseCase";
 import { CreatePostInDetailUseCase } from "../usecases/threadDetail/CreatePostInDetailUseCase";
-import { GetThreadInfoUseCase } from "../usecases/threadDetail/GetThreadInfoUseCase";
 import { GetThreadWithPostsUseCase } from "../usecases/threadDetail/GetThreadWithPostsUseCase";
 
 const createThreadWithFIrstPostUseCase = new CreateThreadWithFIrstPostUseCase();
-const getThreadWithInfoUseCase = new GetThreadInfoUseCase();
 const getThreadWithPostsUseCase = new GetThreadWithPostsUseCase();
 const listThreadsUseCase = new ListThreadsUseCase();
 const createPostInDetailUseCase = new CreatePostInDetailUseCase();
@@ -75,9 +73,23 @@ export const threadRouter = router({
   getThreadInfo: protectedProcedure
     .input(ThreadSchema.pick({ id: true }))
     .query(async ({ input }) => {
-      return await getThreadWithInfoUseCase.execute({
-        id: input.id,
+      // GetThreadInfoUseCaseを使用する代わりに、直接Prismaを使用して必要なフィールドを取得
+      const thread = await prisma.thread.findUnique({
+        where: {
+          id: input.id,
+        },
+        select: {
+          id: true,
+          title: true,
+          isPublic: true,
+          isClosed: true,
+          createdAt: true,
+          updatedAt: true,
+          userId: true,
+        },
       });
+
+      return thread;
     }),
 
   getPublicThreadInfo: publicProcedure
@@ -87,6 +99,15 @@ export const threadRouter = router({
         where: {
           id: input.id,
           isPublic: true,
+        },
+        select: {
+          id: true,
+          title: true,
+          isPublic: true,
+          isClosed: true,
+          createdAt: true,
+          updatedAt: true,
+          userId: true,
         },
       });
 
@@ -122,6 +143,25 @@ export const threadRouter = router({
         },
         data: {
           isPublic: input.isPublic,
+        },
+      });
+    }),
+
+  updateThreadClosedStatus: protectedProcedure
+    .input(
+      z.object({
+        id: ThreadSchema.shape.id,
+        isClosed: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.thread.update({
+        where: {
+          id: input.id,
+          userId: ctx.currentUser?.id,
+        },
+        data: {
+          isClosed: input.isClosed,
         },
       });
     }),
