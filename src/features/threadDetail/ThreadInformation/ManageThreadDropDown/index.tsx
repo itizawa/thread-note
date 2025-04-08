@@ -1,13 +1,6 @@
+import { DeleteThreadDialog } from "@/entities/thread/DeleteThreadDialog";
 import { urls } from "@/shared/consts/urls";
 import { Button } from "@/shared/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,42 +9,29 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Tooltip } from "@/shared/ui/Tooltip";
-import { trpc } from "@/trpc/client";
 import { Archive, MoreHorizontal, PlaneTakeoff, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 
 type Props = {
   threadId: string;
+  threadTitle: string | null;
   includeIsArchived: boolean;
   onClickToggleDisplayArchiveButton: () => void;
 };
 
 export function ManageThreadDropDown({
   threadId,
+  threadTitle,
   includeIsArchived,
   onClickToggleDisplayArchiveButton,
 }: Props) {
-  const router = useRouter();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const utils = trpc.useUtils();
+  const router = useRouter();
 
-  const deleteThreadMutation = trpc.thread.deleteThread.useMutation({
-    onSuccess: () => {
-      toast.success("スレッドを削除しました");
-      utils.thread.listThreadsByCurrentUser.invalidate();
-      router.push(urls.dashboard);
-    },
-    onError: (error) => {
-      toast.error(`削除に失敗しました: ${error.message}`);
-    },
-  });
-
-  const handleDeleteThread = async () => {
-    deleteThreadMutation.mutate({ id: threadId });
-    setIsDeleteDialogOpen(false);
+  const handleDeleteSuccess = () => {
+    router.push(urls.dashboard);
   };
 
   return (
@@ -84,32 +64,13 @@ export function ManageThreadDropDown({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>スレッドの削除</DialogTitle>
-            <DialogDescription className="font-bold text-red-500 min-h-[100px] flex flex-col items-center justify-center">
-              スレッドを削除すると、スレッド内のすべての投稿が削除されます。
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteDialogOpen(false)}
-            >
-              キャンセル
-            </Button>
-            <Button
-              variant="destructive"
-              className="font-bold"
-              onClick={handleDeleteThread}
-              loading={deleteThreadMutation.isPending}
-            >
-              削除する
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeleteThreadDialog
+        threadId={threadId}
+        threadTitle={threadTitle}
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        onSuccess={handleDeleteSuccess}
+      />
     </>
   );
 }
