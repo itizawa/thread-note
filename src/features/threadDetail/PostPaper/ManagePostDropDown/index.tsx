@@ -12,7 +12,7 @@ import { Archive, Link, MoreHorizontal, Pencil } from "lucide-react";
 type Props = {
   isPending: boolean;
   onClickEditButton: () => void;
-  onClickShareButton?: () => void;
+  onClickShareButton: () => void;
   onClickArchiveButton: () => void;
 };
 
