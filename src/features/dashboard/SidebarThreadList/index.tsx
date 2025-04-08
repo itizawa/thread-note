@@ -1,11 +1,21 @@
 "use client";
 
+import { DeleteThreadDialog } from "@/entities/thread/DeleteThreadDialog";
 import { urls } from "@/shared/consts/urls";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
 import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
+import { MoreHorizontal, PlaneTakeoff, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]["threads"][number];
@@ -55,13 +65,53 @@ function PostListItemSkeleton() {
 }
 
 function PostListItem({ thread }: { thread: Thread }) {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteDialogOpen(true);
+  };
+
   return (
-    <Link href={urls.dashboardThreadDetails(thread.id)}>
-      <div className="flex items-center justify-between rounded-lg gap-4 p-2 hover:bg-gray-100 cursor-pointer">
-        <span className="text-sm truncate max-w-xs">
-          {thread.title || "タイトルなし"}
-        </span>
+    <>
+      <div className="flex items-center justify-between rounded-lg p-2 hover:bg-gray-100 group">
+        <Link
+          href={urls.dashboardThreadDetails(thread.id)}
+          className="flex-1 min-w-0"
+        >
+          <div className="flex items-center cursor-pointer">
+            <span className="text-sm truncate max-w-xs">
+              {thread.title || "タイトルなし"}
+            </span>
+          </div>
+        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <MoreHorizontal className="h-5 w-5 cursor-pointer hidden group-hover:block transition-opacity" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" alignOffset={-8} sideOffset={24}>
+            <Link href={urls.dashboardThreadDetailsExports(thread.id)} passHref>
+              <DropdownMenuItem>
+                <PlaneTakeoff className="h-4 w-4" />
+                スレッドのエクスポート
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleDeleteClick}>
+              <Trash2 className="h-4 w-4 text-red-500" />
+              <span className="text-red-500">スレッドの削除</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </Link>
+
+      <DeleteThreadDialog
+        threadId={thread.id}
+        threadTitle={thread.title}
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      />
+    </>
   );
 }

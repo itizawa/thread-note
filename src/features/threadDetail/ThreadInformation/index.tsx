@@ -136,6 +136,7 @@ export function ThreadInformation({
         />
         <ManageThreadDropDown
           threadId={threadId}
+          threadTitle={threadInfo.title}
           includeIsArchived={includeIsArchived}
           onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
         />
