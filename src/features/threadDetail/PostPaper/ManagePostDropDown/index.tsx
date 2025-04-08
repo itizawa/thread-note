@@ -7,7 +7,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Tooltip } from "@/shared/ui/Tooltip";
 
-import { Archive, MoreHorizontal, Pencil } from "lucide-react";
+import { Archive, Link, MoreHorizontal, Pencil } from "lucide-react";
 
 type Props = {
   isPending: boolean;
@@ -19,6 +19,7 @@ type Props = {
 export function ManagePostDropDown({
   isPending,
   onClickEditButton,
+  onClickShareButton,
   onClickArchiveButton,
 }: Props) {
   return (
@@ -36,12 +37,12 @@ export function ManagePostDropDown({
           <Pencil className="h-4 w-4" />
           編集
         </DropdownMenuItem>
-        {/* {onClickShareButton && (
+        {onClickShareButton && (
           <DropdownMenuItem onClick={onClickShareButton}>
             <Link className="mr-2 h-4 w-4" />
             共有リンクをコピー
           </DropdownMenuItem>
-        )} */}
+        )}
         <DropdownMenuItem
           onClick={onClickArchiveButton}
           className="text-destructive focus:text-destructive"
