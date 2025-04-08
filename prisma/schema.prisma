@@ -130,6 +130,8 @@ model Thread {
   title String?
   isPublic Boolean @default(false) @map("is_public")
 
+  structuredPost String? @map("structured_post")
+
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
   lastPostedAt DateTime @default(now()) @map("last_post_at") @db.Timestamptz()
