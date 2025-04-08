@@ -21,8 +21,6 @@ export const MarkdownViewer: React.FC<{ body: string }> = ({ body }) => {
         ),
         p: ({ node, children }) => {
           const child = node?.children[0];
-          console.log(child);
-
           if (
             node?.children.length === 1 &&
             child?.type === "element" &&
