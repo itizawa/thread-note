@@ -2,6 +2,7 @@
 
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer";
 import { trpc } from "@/trpc/client";
+import { generateBodyForExportPage } from "../hooks/generateBodyForExportPage";
 
 export function ExportPostPaper({ threadId }: { threadId: string }) {
   const [{ threadWithPosts }] = trpc.thread.getThreadWithPosts.useSuspenseQuery(
@@ -19,7 +20,7 @@ export function ExportPostPaper({ threadId }: { threadId: string }) {
     );
   }
 
-  const body = threadWithPosts.posts.map((v) => v.body).join("\n");
+  const body = generateBodyForExportPage(threadWithPosts?.posts || []);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">

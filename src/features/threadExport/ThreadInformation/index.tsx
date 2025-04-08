@@ -10,6 +10,7 @@ import { Clipboard, RefreshCw } from "lucide-react";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
+import { generateBodyForExportPage } from "../hooks/generateBodyForExportPage";
 
 export function ThreadInformation({ threadId }: { threadId: string }) {
   const { copy } = useClipBoardCopy();
@@ -48,7 +49,7 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
       </div>
     );
   }
-  const body = (threadWithPosts?.posts || []).map((v) => v.body).join("\n");
+  const body = generateBodyForExportPage(threadWithPosts?.posts || []);
 
   return (
     <div className="space-y-4">
