@@ -15,6 +15,16 @@ const listThreadsUseCase = new ListThreadsUseCase();
 const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 
 export const threadRouter = router({
+  deleteThread: protectedProcedure
+    .input(ThreadSchema.pick({ id: true }))
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.thread.delete({
+        where: {
+          id: input.id,
+          userId: ctx.currentUser.id,
+        },
+      });
+    }),
   listThreadsByCurrentUser: protectedProcedure
     .input(
       z.object({
