@@ -10,5 +10,5 @@ export function generateBodyForExportPage(
     }
   });
 
-  return rows.join("\n");
+  return rows.join("\n\n");
 }
