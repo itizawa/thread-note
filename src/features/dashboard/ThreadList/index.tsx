@@ -51,7 +51,6 @@ export function ThreadList() {
 
   return (
     <div className="flex flex-col space-y-4 h-full">
-      <h2 className="font-bold">スレッド一覧</h2>
       <div className="flex justify-between items-center gap-4">
         <div className="relative bg-white flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
@@ -71,6 +70,9 @@ export function ThreadList() {
         </Link>
       </div>
       <div className="rounded-lg border bg-white">
+        <div className="border-b px-4 py-3 flex items-center justify-between">
+          <h2 className="font-medium">スレッド一覧</h2>
+        </div>
         <VirtualizedWindowScroller
           data={threads}
           rowRenderer={(thread) => <PostListItem thread={thread} />}
