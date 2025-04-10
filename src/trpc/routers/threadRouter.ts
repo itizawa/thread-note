@@ -166,6 +166,27 @@ export const threadRouter = router({
       });
     }),
 
+  updateThreadSeoInfo: protectedProcedure
+    .input(
+      z.object({
+        id: ThreadSchema.shape.id,
+        seoTitle: z.string().nullable(),
+        seoDescription: z.string().nullable(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.thread.update({
+        where: {
+          id: input.id,
+          userId: ctx.currentUser.id,
+        },
+        data: {
+          seoTitle: input.seoTitle,
+          seoDescription: input.seoDescription,
+        },
+      });
+    }),
+
   getThreadWithPosts: protectedProcedure
     .input(
       z.object({
