@@ -205,6 +205,39 @@ export const threadRouter = router({
       });
     }),
 
+  getPublicThreadForOgp: publicProcedure
+    .input(
+      z.object({
+        id: ThreadSchema.shape.id,
+      })
+    )
+    .query(async ({ input }) => {
+      const threadWithPost = await prisma.thread.findFirst({
+        where: {
+          id: input.id,
+          isPublic: true,
+        },
+        select: {
+          id: true,
+          title: true,
+          ogpTitle: true,
+          ogpDescription: true,
+          posts: {
+            where: {
+              isArchived: false,
+              parentId: null,
+            },
+            take: 1,
+            orderBy: {
+              createdAt: "asc",
+            },
+          },
+        },
+      });
+
+      return { threadWithPost };
+    }),
+
   getPublicThreadWithPosts: publicProcedure
     .input(
       z.object({
