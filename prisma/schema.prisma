@@ -131,8 +131,8 @@ model Thread {
   isPublic Boolean @default(false) @map("is_public")
   isClosed Boolean @default(false) @map("is_closed")
 
-  seoTitle String? @map("seo_title")
-  seoDescription String? @map("seo_description")
+  ogpTitle String? @map("ogp_title")
+  ogpDescription String? @map("ogp_description")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
