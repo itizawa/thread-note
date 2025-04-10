@@ -1,6 +1,7 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
+import { useAutoResizeTextarea } from "@/entities/post/PostForm/hooks/useAutoResizeTextarea";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -15,9 +16,11 @@ import {
 import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
+import { useForm, useStore } from "@tanstack/react-form";
 import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useRef, useState } from "react";
+import { z } from "zod";
 import { ShareInformation } from "./parts/ShareInformation";
 
 interface PublicStatusSheetProps {
@@ -26,12 +29,6 @@ interface PublicStatusSheetProps {
   isPublic: boolean;
   ogpTitle: string | null;
   ogpDescription: string | null;
-}
-
-// OGP フォームの値の型定義
-interface OgpFormValues {
-  ogpTitle: string;
-  ogpDescription: string;
 }
 
 export function PublicStatusSheet({
@@ -44,18 +41,7 @@ export function PublicStatusSheet({
   const [open, setOpen] = useState(false);
   const { isPending, enqueueServerAction } = useServerAction();
   const utils = trpc.useUtils();
-
-  // フォームの状態管理
-  const [formValues, setFormValues] = useState<OgpFormValues>({
-    ogpTitle: ogpTitle || "",
-    ogpDescription: ogpDescription || "",
-  });
-  const isDirty = useMemo(() => {
-    return (
-      formValues.ogpTitle !== (ogpTitle || "") ||
-      formValues.ogpDescription !== (ogpDescription || "")
-    );
-  }, [formValues, ogpTitle, ogpDescription]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate: updateOgpInfo, isPending: isOgpUpdatePending } =
     trpc.thread.updateThreadOgpInfo.useMutation({
@@ -64,6 +50,34 @@ export function PublicStatusSheet({
         utils.thread.getThreadWithPosts.invalidate({ id: threadId });
       },
     });
+
+  const { Field, store, Subscribe, handleSubmit } = useForm({
+    defaultValues: {
+      ogpTitle: ogpTitle || "",
+      ogpDescription: ogpDescription || "",
+    },
+    onSubmit: async ({ value }) => {
+      updateOgpInfo({
+        id: threadId,
+        ogpTitle: value.ogpTitle || null,
+        ogpDescription: value.ogpDescription || null,
+      });
+    },
+    validators: {
+      onChange: z.object({
+        ogpTitle: z.string().max(48, "48文字以内で入力してください"),
+        ogpDescription: z.string().max(270, "270文字以内で入力してください"),
+      }),
+    },
+  });
+
+  const value = useStore(store, (state) => state.values.ogpDescription);
+  // テキストエリアの高さを自動調整するフックを使用
+  const { handleResize } = useAutoResizeTextarea({
+    value,
+    textareaRef,
+    minHeight: 78,
+  });
 
   const handleTogglePublicStatus = async () => {
     enqueueServerAction({
@@ -82,25 +96,6 @@ export function PublicStatusSheet({
         },
         text: isPublic ? "非公開に設定しました" : "公開に設定しました",
       },
-    });
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof OgpFormValues
-  ) => {
-    setFormValues((prev) => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateOgpInfo({
-      id: threadId,
-      ogpTitle: formValues.ogpTitle || null,
-      ogpDescription: formValues.ogpDescription || null,
     });
   };
 
@@ -182,24 +177,52 @@ export function PublicStatusSheet({
                 <label htmlFor="ogpTitle" className="text-sm font-medium">
                   OGPタイトル
                 </label>
-                <Input
-                  id="ogpTitle"
-                  placeholder="未入力の場合はスレッドタイトルが使用されます"
-                  value={formValues.ogpTitle}
-                  onChange={(e) => handleInputChange(e, "ogpTitle")}
-                />
+                <Field name="ogpTitle">
+                  {({ state, handleBlur, handleChange }) => (
+                    <div className="flex flex-col space-y-2">
+                      <Input
+                        id="ogpTitle"
+                        placeholder="未入力の場合はスレッドタイトルが使用されます"
+                        value={state.value}
+                        onBlur={handleBlur}
+                        onChange={(e) => handleChange(e.target.value)}
+                      />
+                      {state.meta.errors[0]?.message && (
+                        <p className="text-red-500 text-xs">
+                          {state.meta.errors[0]?.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </Field>
               </div>
               <div className="flex flex-col space-y-2">
                 <label htmlFor="ogpDescription" className="text-sm font-medium">
                   OGP説明文
                 </label>
-                <Textarea
-                  id="ogpDescription"
-                  placeholder="OGP説明文を入力（検索結果に表示される説明文）"
-                  rows={3}
-                  value={formValues.ogpDescription}
-                  onChange={(e) => handleInputChange(e, "ogpDescription")}
-                />
+                <Field name="ogpDescription">
+                  {({ state, handleBlur, handleChange }) => (
+                    <div className="flex flex-col space-y-2">
+                      <Textarea
+                        id="ogpDescription"
+                        placeholder="OGP説明文を入力（検索結果に表示される説明文）"
+                        value={state.value}
+                        onBlur={handleBlur}
+                        rows={3}
+                        onChange={(e) => {
+                          handleChange(e.target.value);
+                          handleResize();
+                        }}
+                        ref={textareaRef}
+                      />
+                      {state.meta.errors[0]?.message && (
+                        <p className="text-red-500 text-xs">
+                          {state.meta.errors[0]?.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </Field>
               </div>
               <div className="flex flex-col space-y-2">
                 <label htmlFor="ogpImage" className="text-sm font-medium">
@@ -219,16 +242,20 @@ export function PublicStatusSheet({
           )}
         </div>
         <SheetFooter className="sticky bottom-0 bg-white pt-4 border-t">
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isOgpUpdatePending || !isDirty}
-            loading={isOgpUpdatePending}
-            onClick={handleSubmit}
-          >
-            <Save className="h-4 w-4" />
-            OGP設定を保存
-          </Button>
+          <Subscribe>
+            {({ isDirty, isValid }) => (
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isOgpUpdatePending || !isDirty || !isValid}
+                loading={isOgpUpdatePending}
+                onClick={handleSubmit}
+              >
+                <Save className="h-4 w-4" />
+                OGP設定を保存
+              </Button>
+            )}
+          </Subscribe>
         </SheetFooter>
       </SheetContent>
     </Sheet>
