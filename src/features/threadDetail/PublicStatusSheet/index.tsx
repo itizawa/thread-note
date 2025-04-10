@@ -17,7 +17,7 @@ import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ShareInformation } from "./parts/ShareInformation";
 
 interface PublicStatusSheetProps {
@@ -50,7 +50,12 @@ export function PublicStatusSheet({
     ogpTitle: ogpTitle || "",
     ogpDescription: ogpDescription || "",
   });
-  const [isDirty, setIsDirty] = useState(false);
+  const isDirty = useMemo(() => {
+    return (
+      formValues.ogpTitle !== (ogpTitle || "") ||
+      formValues.ogpDescription !== (ogpDescription || "")
+    );
+  }, [formValues, ogpTitle, ogpDescription]);
 
   const { mutate: updateOgpInfo, isPending: isOgpUpdatePending } =
     trpc.thread.updateThreadOgpInfo.useMutation({
@@ -88,7 +93,6 @@ export function PublicStatusSheet({
       ...prev,
       [field]: e.target.value,
     }));
-    setIsDirty(true);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
