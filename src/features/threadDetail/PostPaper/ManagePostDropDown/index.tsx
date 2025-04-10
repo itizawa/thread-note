@@ -39,7 +39,7 @@ export function ManagePostDropDown({
         </DropdownMenuItem>
         {onClickShareButton && (
           <DropdownMenuItem onClick={onClickShareButton}>
-            <Link className="mr-2 h-4 w-4" />
+            <Link className="h-4 w-4" />
             共有リンクをコピー
           </DropdownMenuItem>
         )}

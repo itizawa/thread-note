@@ -86,6 +86,8 @@ export const threadRouter = router({
           createdAt: true,
           updatedAt: true,
           userId: true,
+          ogpTitle: true,
+          ogpDescription: true,
         },
       });
 
@@ -108,6 +110,8 @@ export const threadRouter = router({
           createdAt: true,
           updatedAt: true,
           userId: true,
+          ogpTitle: true,
+          ogpDescription: true,
         },
       });
 
@@ -166,6 +170,27 @@ export const threadRouter = router({
       });
     }),
 
+  updateThreadOgpInfo: protectedProcedure
+    .input(
+      z.object({
+        id: ThreadSchema.shape.id,
+        ogpTitle: z.string().nullable(),
+        ogpDescription: z.string().nullable(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.thread.update({
+        where: {
+          id: input.id,
+          userId: ctx.currentUser.id,
+        },
+        data: {
+          ogpTitle: input.ogpTitle,
+          ogpDescription: input.ogpDescription,
+        },
+      });
+    }),
+
   getThreadWithPosts: protectedProcedure
     .input(
       z.object({
@@ -178,6 +203,39 @@ export const threadRouter = router({
         id: input.id,
         inCludeIsArchived: input.includeIsArchived,
       });
+    }),
+
+  getPublicThreadForOgp: publicProcedure
+    .input(
+      z.object({
+        id: ThreadSchema.shape.id,
+      })
+    )
+    .query(async ({ input }) => {
+      const threadWithPost = await prisma.thread.findFirst({
+        where: {
+          id: input.id,
+          isPublic: true,
+        },
+        select: {
+          id: true,
+          title: true,
+          ogpTitle: true,
+          ogpDescription: true,
+          posts: {
+            where: {
+              isArchived: false,
+              parentId: null,
+            },
+            take: 1,
+            orderBy: {
+              createdAt: "asc",
+            },
+          },
+        },
+      });
+
+      return { threadWithPost };
     }),
 
   getPublicThreadWithPosts: publicProcedure

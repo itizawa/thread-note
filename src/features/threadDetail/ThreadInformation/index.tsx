@@ -133,6 +133,8 @@ export function ThreadInformation({
           threadTitle={threadInfo.title}
           threadId={threadId}
           isPublic={threadInfo.isPublic}
+          ogpTitle={threadInfo.ogpTitle}
+          ogpDescription={threadInfo.ogpDescription}
         />
         <ManageThreadDropDown
           threadId={threadId}

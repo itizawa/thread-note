@@ -18,23 +18,28 @@ export const generateMetadata = async ({
 }>["arguments"]): Promise<Metadata> => {
   const { id: threadId } = await params;
 
-  const { threadWithPosts } = await trpc.thread.getPublicThreadWithPosts({
+  const { threadWithPost } = await trpc.thread.getPublicThreadForOgp({
     id: threadId,
   });
 
-  if (!threadWithPosts)
+  if (!threadWithPost)
     return generateMetadataObject({
       title: "Thread Not Found",
       description: "The requested thread does not exist.",
       images: ["/api/og?title=NotFound"],
     });
 
+  const title =
+    threadWithPost.ogpTitle || threadWithPost.title || "タイトルなし";
+  const description =
+    threadWithPost.ogpDescription ||
+    threadWithPost.posts[0]?.body ||
+    "スレッドの内容がありません。";
+
   return generateMetadataObject({
-    title: threadWithPosts.title || undefined,
-    description: threadWithPosts.posts[0]?.body || undefined,
-    images: [
-      `/api/og?title=${encodeURIComponent(threadWithPosts.title || "")}`,
-    ],
+    title,
+    description,
+    images: [`/api/og?title=${encodeURIComponent(title || "")}`],
   });
 };
 const Page: NextSegmentPage<{

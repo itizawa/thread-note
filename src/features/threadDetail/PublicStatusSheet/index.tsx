@@ -1,86 +1,83 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
-import { urls } from "@/shared/consts/urls";
-import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
+import { useAutoResizeTextarea } from "@/entities/post/PostForm/hooks/useAutoResizeTextarea";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import {
   Sheet,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/shared/ui/sheet";
+import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
-import {
-  Eye,
-  EyeOff,
-  Globe,
-  Lock,
-  Share,
-  SquareArrowOutUpRight,
-} from "lucide-react";
+import { useForm, useStore } from "@tanstack/react-form";
+import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-import urlJoin from "url-join";
+import { useRef, useState } from "react";
+import { z } from "zod";
+import { ShareInformation } from "./parts/ShareInformation";
 
 interface PublicStatusSheetProps {
   threadTitle: string | null;
   threadId: string;
   isPublic: boolean;
+  ogpTitle: string | null;
+  ogpDescription: string | null;
 }
 
 export function PublicStatusSheet({
   threadTitle,
   threadId,
   isPublic,
+  ogpTitle,
+  ogpDescription,
 }: PublicStatusSheetProps) {
   const [open, setOpen] = useState(false);
   const { isPending, enqueueServerAction } = useServerAction();
   const utils = trpc.useUtils();
-  const threadDetailUrl = urlJoin(
-    window.location.origin,
-    urls.threadDetails(threadId)
-  );
-  const { copy } = useClipBoardCopy();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleClickOpenPageIcon = () => {
-    window.open(threadDetailUrl, "_blank", "noopener,noreferrer");
-  };
+  const { mutate: updateOgpInfo, isPending: isOgpUpdatePending } =
+    trpc.thread.updateThreadOgpInfo.useMutation({
+      onSuccess: () => {
+        utils.thread.getThreadInfo.invalidate({ id: threadId });
+        utils.thread.getThreadWithPosts.invalidate({ id: threadId });
+      },
+    });
 
-  const handleClickShare = () => {
-    navigator
-      ?.share({
-        title: "スレッドを共有",
-        url: threadDetailUrl,
-      })
-      .catch(() => void 0); // NOTE: シェアをキャンセルとするとエラーが投げられるため握りつぶす
-  };
+  const { Field, store, Subscribe, handleSubmit } = useForm({
+    defaultValues: {
+      ogpTitle: ogpTitle || "",
+      ogpDescription: ogpDescription || "",
+    },
+    onSubmit: async ({ value }) => {
+      updateOgpInfo({
+        id: threadId,
+        ogpTitle: value.ogpTitle || null,
+        ogpDescription: value.ogpDescription || null,
+      });
+    },
+    validators: {
+      onChange: z.object({
+        ogpTitle: z.string().max(48, "48文字以内で入力してください"),
+        ogpDescription: z.string().max(270, "270文字以内で入力してください"),
+      }),
+    },
+  });
 
-  // SNS共有用の関数
-  const shareToTwitter = () => {
-    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      threadDetailUrl
-    )}&text=${threadTitle || ""}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
-  const shareToLine = () => {
-    const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
-      threadDetailUrl
-    )}&text=${threadTitle || ""}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
-  const shareToHatena = () => {
-    const url = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIComponent(
-      threadDetailUrl
-    )}${threadTitle ? `&title=${threadTitle}` : ""}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+  const value = useStore(store, (state) => state.values.ogpDescription);
+  // テキストエリアの高さを自動調整するフックを使用
+  const { handleResize } = useAutoResizeTextarea({
+    value,
+    textareaRef,
+    minHeight: 78,
+  });
 
   const handleTogglePublicStatus = async () => {
     enqueueServerAction({
@@ -126,11 +123,11 @@ export function PublicStatusSheet({
           </Button>
         </Tooltip>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
+      <SheetContent className="flex flex-col gap-0 h-full">
+        <SheetHeader className="border-b">
           <SheetTitle>公開設定</SheetTitle>
         </SheetHeader>
-        <div className="space-y-6 px-4">
+        <div className="space-y-6 p-4 overflow-y-auto">
           <div className="flex items-center justify-between">
             <div>
               {isPublic ? (
@@ -167,80 +164,99 @@ export function PublicStatusSheet({
           </div>
 
           {isPublic && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h4 className="font-medium">公開URL</h4>
-                <div className="flex items-end justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center">
-                      <Input
-                        type="text"
-                        value={threadDetailUrl}
-                        readOnly
-                        className="cursor-pointer"
-                        onClick={() => copy(threadDetailUrl)}
-                      />
-                    </div>
-                  </div>
-                  <Tooltip content="別タブでページを開く">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="ml-2"
-                      onClick={handleClickOpenPageIcon}
-                    >
-                      <SquareArrowOutUpRight className="h-4 w-4" />
-                    </Button>
-                  </Tooltip>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  URLをクリックするとコピーできます
-                </p>
-              </div>
+            <ShareInformation threadTitle={threadTitle} threadId={threadId} />
+          )}
 
-              <div className="flex items-center justify-center space-x-6">
-                <Tooltip content="Xでシェア">
-                  <Image
-                    src={"/sns/x.png"}
-                    width={24}
-                    height={24}
-                    className="hover:opacity-60 cursor-pointer"
-                    onClick={shareToTwitter}
-                    alt={"x_icon"}
-                  />
-                </Tooltip>
-                <Tooltip content="LINEでシェア">
-                  <Image
-                    src={"/sns/line.png"}
-                    width={32}
-                    height={32}
-                    className="hover:opacity-60 cursor-pointer"
-                    onClick={shareToLine}
-                    alt={"line_icon"}
-                  />
-                </Tooltip>
-                <Tooltip content="はてなブックマークでシェア">
-                  <Image
-                    src={"/sns/hatena.png"}
-                    width={32}
-                    height={32}
-                    className="hover:opacity-60 cursor-pointer"
-                    onClick={shareToHatena}
-                    alt={"hatena_icon"}
-                  />
-                </Tooltip>
-                <Tooltip content="その他のSNSでシェア">
-                  <button
-                    className="p-2 hover:bg-gray-200 rounded-md"
-                    onClick={handleClickShare}
-                  >
-                    <Share className="h-5 w-5 cursor-pointer" />
-                  </button>
-                </Tooltip>
+          {isPublic && (
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col space-y-4 mt-6 pt-6 border-t"
+            >
+              <h4 className="font-medium">OGP設定</h4>
+              <div className="flex flex-col space-y-2">
+                <label htmlFor="ogpTitle" className="text-sm font-medium">
+                  OGPタイトル
+                </label>
+                <Field name="ogpTitle">
+                  {({ state, handleBlur, handleChange }) => (
+                    <div className="flex flex-col space-y-2">
+                      <Input
+                        id="ogpTitle"
+                        placeholder="未入力の場合はスレッドタイトルが使用されます"
+                        value={state.value}
+                        onBlur={handleBlur}
+                        onChange={(e) => handleChange(e.target.value)}
+                      />
+                      {state.meta.errors[0]?.message && (
+                        <p className="text-red-500 text-xs">
+                          {state.meta.errors[0]?.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </Field>
               </div>
-            </div>
+              <div className="flex flex-col space-y-2">
+                <label htmlFor="ogpDescription" className="text-sm font-medium">
+                  OGP説明文
+                </label>
+                <Field name="ogpDescription">
+                  {({ state, handleBlur, handleChange }) => (
+                    <div className="flex flex-col space-y-2">
+                      <Textarea
+                        id="ogpDescription"
+                        placeholder="OGP説明文を入力（検索結果に表示される説明文）"
+                        value={state.value}
+                        onBlur={handleBlur}
+                        rows={3}
+                        onChange={(e) => {
+                          handleChange(e.target.value);
+                          handleResize();
+                        }}
+                        ref={textareaRef}
+                      />
+                      {state.meta.errors[0]?.message && (
+                        <p className="text-red-500 text-xs">
+                          {state.meta.errors[0]?.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </Field>
+              </div>
+              <div className="flex flex-col space-y-2">
+                <label htmlFor="ogpImage" className="text-sm font-medium">
+                  OGPイメージ(保存すると反映されます)
+                </label>
+                <Image
+                  src={`/api/og?title=${encodeURIComponent(
+                    ogpTitle || threadTitle || ""
+                  )}`}
+                  alt="OGPイメージ"
+                  width={1200}
+                  height={630}
+                  className="rounded-md"
+                />
+              </div>
+            </form>
           )}
         </div>
+        <SheetFooter className="sticky bottom-0 bg-white pt-4 border-t">
+          <Subscribe>
+            {({ isDirty, isValid }) => (
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isOgpUpdatePending || !isDirty || !isValid}
+                loading={isOgpUpdatePending}
+                onClick={handleSubmit}
+              >
+                <Save className="h-4 w-4" />
+                OGP設定を保存
+              </Button>
+            )}
+          </Subscribe>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
