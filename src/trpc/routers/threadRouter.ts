@@ -86,6 +86,8 @@ export const threadRouter = router({
           createdAt: true,
           updatedAt: true,
           userId: true,
+          ogpTitle: true,
+          ogpDescription: true,
         },
       });
 
@@ -108,6 +110,8 @@ export const threadRouter = router({
           createdAt: true,
           updatedAt: true,
           userId: true,
+          ogpTitle: true,
+          ogpDescription: true,
         },
       });
 
@@ -166,12 +170,12 @@ export const threadRouter = router({
       });
     }),
 
-  updateThreadSeoInfo: protectedProcedure
+  updateThreadOgpInfo: protectedProcedure
     .input(
       z.object({
         id: ThreadSchema.shape.id,
-        seoTitle: z.string().nullable(),
-        seoDescription: z.string().nullable(),
+        ogpTitle: z.string().nullable(),
+        ogpDescription: z.string().nullable(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -181,8 +185,8 @@ export const threadRouter = router({
           userId: ctx.currentUser.id,
         },
         data: {
-          seoTitle: input.seoTitle,
-          seoDescription: input.seoDescription,
+          ogpTitle: input.ogpTitle,
+          ogpDescription: input.ogpDescription,
         },
       });
     }),
