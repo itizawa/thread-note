@@ -10,6 +10,8 @@ export const ThreadSchema = z.object({
   title: z.string().nullable(),
   isPublic: z.boolean(),
   isClosed: z.boolean(),
+  seoTitle: z.string().nullable(),
+  seoDescription: z.string().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   lastPostedAt: z.coerce.date(),
