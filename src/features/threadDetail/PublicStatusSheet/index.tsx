@@ -1,7 +1,6 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
-import { useAutoResizeTextarea } from "@/entities/post/PostForm/hooks/useAutoResizeTextarea";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -15,11 +14,12 @@ import {
 } from "@/shared/ui/sheet";
 import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
+import { WithLabel } from "@/shared/ui/WithLabel";
 import { trpc } from "@/trpc/client";
-import { useForm, useStore } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { ShareInformation } from "./parts/ShareInformation";
 
@@ -41,7 +41,6 @@ export function PublicStatusSheet({
   const [open, setOpen] = useState(false);
   const { isPending, enqueueServerAction } = useServerAction();
   const utils = trpc.useUtils();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate: updateOgpInfo, isPending: isOgpUpdatePending } =
     trpc.thread.updateThreadOgpInfo.useMutation({
@@ -51,7 +50,7 @@ export function PublicStatusSheet({
       },
     });
 
-  const { Field, store, Subscribe, handleSubmit } = useForm({
+  const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: {
       ogpTitle: ogpTitle || "",
       ogpDescription: ogpDescription || "",
@@ -69,14 +68,6 @@ export function PublicStatusSheet({
         ogpDescription: z.string().max(270, "270文字以内で入力してください"),
       }),
     },
-  });
-
-  const value = useStore(store, (state) => state.values.ogpDescription);
-  // テキストエリアの高さを自動調整するフックを使用
-  const { handleResize } = useAutoResizeTextarea({
-    value,
-    textareaRef,
-    minHeight: 78,
   });
 
   const handleTogglePublicStatus = async () => {
@@ -173,61 +164,41 @@ export function PublicStatusSheet({
               className="flex flex-col space-y-4 mt-6 pt-6 border-t"
             >
               <h4 className="font-medium">OGP設定</h4>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="ogpTitle" className="text-sm font-medium">
-                  OGPタイトル
-                </label>
-                <Field name="ogpTitle">
-                  {({ state, handleBlur, handleChange }) => (
-                    <div className="flex flex-col space-y-2">
-                      <Input
-                        id="ogpTitle"
-                        placeholder="未入力の場合はスレッドタイトルが使用されます"
-                        value={state.value}
-                        onBlur={handleBlur}
-                        onChange={(e) => handleChange(e.target.value)}
-                      />
-                      {state.meta.errors[0]?.message && (
-                        <p className="text-red-500 text-xs">
-                          {state.meta.errors[0]?.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="ogpDescription" className="text-sm font-medium">
-                  OGP説明文
-                </label>
-                <Field name="ogpDescription">
-                  {({ state, handleBlur, handleChange }) => (
-                    <div className="flex flex-col space-y-2">
-                      <Textarea
-                        id="ogpDescription"
-                        placeholder="OGP説明文を入力（検索結果に表示される説明文）"
-                        value={state.value}
-                        onBlur={handleBlur}
-                        rows={3}
-                        onChange={(e) => {
-                          handleChange(e.target.value);
-                          handleResize();
-                        }}
-                        ref={textareaRef}
-                      />
-                      {state.meta.errors[0]?.message && (
-                        <p className="text-red-500 text-xs">
-                          {state.meta.errors[0]?.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="ogpImage" className="text-sm font-medium">
-                  OGPイメージ(保存すると反映されます)
-                </label>
+              <Field name="ogpTitle">
+                {({ state, handleBlur, handleChange }) => (
+                  <WithLabel label="OGPタイトル">
+                    <Input
+                      id="ogpTitle"
+                      placeholder="未入力の場合はスレッドタイトルが使用されます"
+                      value={state.value}
+                      onBlur={handleBlur}
+                      error={!!state.meta.errors[0]?.message}
+                      errorMessage={state.meta.errors[0]?.message}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                  </WithLabel>
+                )}
+              </Field>
+              <Field name="ogpDescription">
+                {({ state, handleBlur, handleChange }) => (
+                  <WithLabel label="OGP説明文">
+                    <Textarea
+                      id="ogpDescription"
+                      placeholder="OGP説明文を入力（検索結果に表示される説明文）"
+                      value={state.value}
+                      onBlur={handleBlur}
+                      rows={5}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                    {state.meta.errors[0]?.message && (
+                      <p className="text-red-500 text-xs">
+                        {state.meta.errors[0]?.message}
+                      </p>
+                    )}
+                  </WithLabel>
+                )}
+              </Field>
+              <WithLabel label="OGPイメージ(保存すると反映されます)">
                 <Image
                   src={`/api/og?title=${encodeURIComponent(
                     ogpTitle || threadTitle || ""
@@ -237,7 +208,7 @@ export function PublicStatusSheet({
                   height={630}
                   className="rounded-md"
                 />
-              </div>
+              </WithLabel>
             </form>
           )}
         </div>
