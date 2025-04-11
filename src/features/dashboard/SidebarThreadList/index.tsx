@@ -94,7 +94,7 @@ function PostListItem({ thread }: { thread: Thread }) {
             <Link href={urls.dashboardThreadDetailsExports(thread.id)} passHref>
               <DropdownMenuItem>
                 <PlaneTakeoff className="h-4 w-4" />
-                スレッドのエクスポート
+                スレッドの出力
               </DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
