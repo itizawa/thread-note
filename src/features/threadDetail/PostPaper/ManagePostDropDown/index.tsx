@@ -3,6 +3,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Tooltip } from "@/shared/ui/Tooltip";
@@ -43,6 +44,7 @@ export function ManagePostDropDown({
             共有リンクをコピー
           </DropdownMenuItem>
         )}
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={onClickArchiveButton}
           className="text-destructive focus:text-destructive"
