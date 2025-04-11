@@ -15,6 +15,7 @@ import {
 } from "@/shared/ui/sheet";
 import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
+import { WithLabel } from "@/shared/ui/WithLabel";
 import { trpc } from "@/trpc/client";
 import { useForm, useStore } from "@tanstack/react-form";
 import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
@@ -173,12 +174,9 @@ export function PublicStatusSheet({
               className="flex flex-col space-y-4 mt-6 pt-6 border-t"
             >
               <h4 className="font-medium">OGP設定</h4>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="ogpTitle" className="text-sm font-medium">
-                  OGPタイトル
-                </label>
-                <Field name="ogpTitle">
-                  {({ state, handleBlur, handleChange }) => (
+              <Field name="ogpTitle">
+                {({ state, handleBlur, handleChange }) => (
+                  <WithLabel label="OGPタイトル">
                     <Input
                       id="ogpTitle"
                       placeholder="未入力の場合はスレッドタイトルが使用されます"
@@ -188,41 +186,33 @@ export function PublicStatusSheet({
                       errorMessage={state.meta.errors[0]?.message}
                       onChange={(e) => handleChange(e.target.value)}
                     />
-                  )}
-                </Field>
-              </div>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="ogpDescription" className="text-sm font-medium">
-                  OGP説明文
-                </label>
-                <Field name="ogpDescription">
-                  {({ state, handleBlur, handleChange }) => (
-                    <div className="flex flex-col space-y-2">
-                      <Textarea
-                        id="ogpDescription"
-                        placeholder="OGP説明文を入力（検索結果に表示される説明文）"
-                        value={state.value}
-                        onBlur={handleBlur}
-                        rows={3}
-                        onChange={(e) => {
-                          handleChange(e.target.value);
-                          handleResize();
-                        }}
-                        ref={textareaRef}
-                      />
-                      {state.meta.errors[0]?.message && (
-                        <p className="text-red-500 text-xs">
-                          {state.meta.errors[0]?.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="ogpImage" className="text-sm font-medium">
-                  OGPイメージ(保存すると反映されます)
-                </label>
+                  </WithLabel>
+                )}
+              </Field>
+              <Field name="ogpDescription">
+                {({ state, handleBlur, handleChange }) => (
+                  <WithLabel label="OGP説明文">
+                    <Textarea
+                      id="ogpDescription"
+                      placeholder="OGP説明文を入力（検索結果に表示される説明文）"
+                      value={state.value}
+                      onBlur={handleBlur}
+                      rows={3}
+                      onChange={(e) => {
+                        handleChange(e.target.value);
+                        handleResize();
+                      }}
+                      ref={textareaRef}
+                    />
+                    {state.meta.errors[0]?.message && (
+                      <p className="text-red-500 text-xs">
+                        {state.meta.errors[0]?.message}
+                      </p>
+                    )}
+                  </WithLabel>
+                )}
+              </Field>
+              <WithLabel label="OGPイメージ(保存すると反映されます)">
                 <Image
                   src={`/api/og?title=${encodeURIComponent(
                     ogpTitle || threadTitle || ""
@@ -232,7 +222,7 @@ export function PublicStatusSheet({
                   height={630}
                   className="rounded-md"
                 />
-              </div>
+              </WithLabel>
             </form>
           )}
         </div>
