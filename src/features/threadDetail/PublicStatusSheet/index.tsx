@@ -179,20 +179,15 @@ export function PublicStatusSheet({
                 </label>
                 <Field name="ogpTitle">
                   {({ state, handleBlur, handleChange }) => (
-                    <div className="flex flex-col space-y-2">
-                      <Input
-                        id="ogpTitle"
-                        placeholder="未入力の場合はスレッドタイトルが使用されます"
-                        value={state.value}
-                        onBlur={handleBlur}
-                        onChange={(e) => handleChange(e.target.value)}
-                      />
-                      {state.meta.errors[0]?.message && (
-                        <p className="text-red-500 text-xs">
-                          {state.meta.errors[0]?.message}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      id="ogpTitle"
+                      placeholder="未入力の場合はスレッドタイトルが使用されます"
+                      value={state.value}
+                      onBlur={handleBlur}
+                      error={!!state.meta.errors[0]?.message}
+                      errorMessage={state.meta.errors[0]?.message}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
                   )}
                 </Field>
               </div>
