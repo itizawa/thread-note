@@ -1,7 +1,6 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
-import { useAutoResizeTextarea } from "@/entities/post/PostForm/hooks/useAutoResizeTextarea";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -17,10 +16,10 @@ import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { WithLabel } from "@/shared/ui/WithLabel";
 import { trpc } from "@/trpc/client";
-import { useForm, useStore } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { ShareInformation } from "./parts/ShareInformation";
 
@@ -42,7 +41,6 @@ export function PublicStatusSheet({
   const [open, setOpen] = useState(false);
   const { isPending, enqueueServerAction } = useServerAction();
   const utils = trpc.useUtils();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate: updateOgpInfo, isPending: isOgpUpdatePending } =
     trpc.thread.updateThreadOgpInfo.useMutation({
@@ -52,7 +50,7 @@ export function PublicStatusSheet({
       },
     });
 
-  const { Field, store, Subscribe, handleSubmit } = useForm({
+  const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: {
       ogpTitle: ogpTitle || "",
       ogpDescription: ogpDescription || "",
@@ -70,14 +68,6 @@ export function PublicStatusSheet({
         ogpDescription: z.string().max(270, "270文字以内で入力してください"),
       }),
     },
-  });
-
-  const value = useStore(store, (state) => state.values.ogpDescription);
-  // テキストエリアの高さを自動調整するフックを使用
-  const { handleResize } = useAutoResizeTextarea({
-    value,
-    textareaRef,
-    minHeight: 78,
   });
 
   const handleTogglePublicStatus = async () => {
@@ -197,12 +187,8 @@ export function PublicStatusSheet({
                       placeholder="OGP説明文を入力（検索結果に表示される説明文）"
                       value={state.value}
                       onBlur={handleBlur}
-                      rows={3}
-                      onChange={(e) => {
-                        handleChange(e.target.value);
-                        handleResize();
-                      }}
-                      ref={textareaRef}
+                      rows={5}
+                      onChange={(e) => handleChange(e.target.value)}
                     />
                     {state.meta.errors[0]?.message && (
                       <p className="text-red-500 text-xs">
