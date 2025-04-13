@@ -88,6 +88,7 @@ export const threadRouter = router({
           userId: true,
           ogpTitle: true,
           ogpDescription: true,
+          ogpImagePath: true,
         },
       });
 
@@ -176,6 +177,7 @@ export const threadRouter = router({
         id: ThreadSchema.shape.id,
         ogpTitle: z.string().nullable(),
         ogpDescription: z.string().nullable(),
+        ogpImagePath: z.string().nullable(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -187,6 +189,7 @@ export const threadRouter = router({
         data: {
           ogpTitle: input.ogpTitle,
           ogpDescription: input.ogpDescription,
+          ogpImagePath: input.ogpImagePath,
         },
       });
     }),

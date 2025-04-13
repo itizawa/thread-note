@@ -135,6 +135,7 @@ export function ThreadInformation({
           isPublic={threadInfo.isPublic}
           ogpTitle={threadInfo.ogpTitle}
           ogpDescription={threadInfo.ogpDescription}
+          ogpImagePath={threadInfo.ogpImagePath}
         />
         <ManageThreadDropDown
           threadId={threadId}
