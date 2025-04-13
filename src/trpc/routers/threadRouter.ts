@@ -225,6 +225,7 @@ export const threadRouter = router({
           title: true,
           ogpTitle: true,
           ogpDescription: true,
+          ogpImagePath: true,
           posts: {
             where: {
               isArchived: false,

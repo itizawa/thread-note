@@ -39,7 +39,10 @@ export const generateMetadata = async ({
   return generateMetadataObject({
     title,
     description,
-    images: [`/api/og?title=${encodeURIComponent(title || "")}`],
+    images: [
+      threadWithPost.ogpImagePath ||
+        `/api/og?title=${encodeURIComponent(title || "")}`,
+    ],
   });
 };
 const Page: NextSegmentPage<{
