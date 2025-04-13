@@ -43,9 +43,25 @@ model User {
   posts Post[]
   files File[]
   planSubscription PlanSubscription?
+  llmTokenUsages LLMTokenUsage[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model LLMTokenUsage {
+  id               String   @id @default(cuid())
+
+  userId               String @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  promptTokens     Int @map("prompt_tokens")
+  completionTokens Int @map("completion_tokens")
+  totalTokens      Int @map("total_tokens")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("llm_token_usages")
+  @@index([userId, createdAt])
 }
 
 
