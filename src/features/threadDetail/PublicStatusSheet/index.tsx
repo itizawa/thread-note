@@ -2,6 +2,7 @@
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
 import { useServerAction } from "@/shared/lib/useServerAction";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import {
@@ -12,13 +13,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/shared/ui/sheet";
+import { Skeleton } from "@/shared/ui/skeleton";
 import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { WithLabel } from "@/shared/ui/WithLabel";
 import { trpc } from "@/trpc/client";
 import { useForm } from "@tanstack/react-form";
 import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 import { z } from "zod";
 import { ShareInformation } from "./parts/ShareInformation";
@@ -29,6 +30,7 @@ interface PublicStatusSheetProps {
   isPublic: boolean;
   ogpTitle: string | null;
   ogpDescription: string | null;
+  ogpImagePath: string | null;
 }
 
 export function PublicStatusSheet({
@@ -37,10 +39,22 @@ export function PublicStatusSheet({
   isPublic,
   ogpTitle,
   ogpDescription,
+  ogpImagePath,
 }: PublicStatusSheetProps) {
   const [open, setOpen] = useState(false);
   const { isPending, enqueueServerAction } = useServerAction();
   const utils = trpc.useUtils();
+
+  const { data, hasNextPage, fetchNextPage, isLoading, isFetching } =
+    trpc.file.listFiles.useInfiniteQuery(
+      {
+        limit: 10,
+        sort: { type: "createdAt", direction: "desc" },
+      },
+      { getNextPageParam: (lastPage) => lastPage.nextCursor }
+    );
+  const filePaths =
+    data?.pages.flatMap((v) => v.files.map((v) => v.path)) || [];
 
   const { mutate: updateOgpInfo, isPending: isOgpUpdatePending } =
     trpc.thread.updateThreadOgpInfo.useMutation({
@@ -54,18 +68,21 @@ export function PublicStatusSheet({
     defaultValues: {
       ogpTitle: ogpTitle || "",
       ogpDescription: ogpDescription || "",
+      ogpImagePath: ogpImagePath,
     },
     onSubmit: async ({ value }) => {
       updateOgpInfo({
         id: threadId,
         ogpTitle: value.ogpTitle || null,
         ogpDescription: value.ogpDescription || null,
+        ogpImagePath: value.ogpImagePath || null,
       });
     },
     validators: {
       onChange: z.object({
         ogpTitle: z.string().max(48, "48文字以内で入力してください"),
         ogpDescription: z.string().max(270, "270文字以内で入力してください"),
+        ogpImagePath: z.string().nullable(),
       }),
     },
   });
@@ -142,16 +159,32 @@ export function PublicStatusSheet({
             >
               {isPublic ? (
                 <>
-                  <EyeOff className="h-4 w-4 mr-2" />
+                  <EyeOff className="h-4 w-4" />
                   非公開にする
                 </>
               ) : (
                 <>
-                  <Eye className="h-4 w-4 mr-2" />
+                  <Eye className="h-4 w-4" />
                   公開する
                 </>
               )}
             </Button>
+          </div>
+
+          <div className="relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={
+                ogpImagePath ||
+                `/api/og?title=${encodeURIComponent(
+                  ogpTitle || threadTitle || ""
+                )}`
+              }
+              height="100%"
+              width="100%"
+              alt="OGPイメージ"
+              className="rounded-md object-cover aspect-video h-full w-full border-1"
+            />
           </div>
 
           {isPublic && (
@@ -198,17 +231,54 @@ export function PublicStatusSheet({
                   </WithLabel>
                 )}
               </Field>
-              <WithLabel label="OGPイメージ(保存すると反映されます)">
-                <Image
-                  src={`/api/og?title=${encodeURIComponent(
-                    ogpTitle || threadTitle || ""
-                  )}`}
-                  alt="OGPイメージ"
-                  width={1200}
-                  height={630}
-                  className="rounded-md"
-                />
-              </WithLabel>
+              <Field name="ogpImagePath">
+                {({ state, handleChange }) => (
+                  <WithLabel label="OGPイメージ">
+                    <div className="flex flex-wrap">
+                      {[null, ...filePaths].map((value, index) => (
+                        <div className="relative w-1/2 p-1" key={index}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={value || "/custom-ogp/1.png"}
+                            alt="OGPイメージ"
+                            width="100%"
+                            height="auto"
+                            onClick={() => handleChange(value)}
+                            className={cn(
+                              "rounded-md object-cover aspect-video",
+                              {
+                                "outline-4 outline-orange-400":
+                                  state.value === value,
+                              }
+                            )}
+                          />
+                        </div>
+                      ))}
+                      {(isLoading || isFetching) && (
+                        <>
+                          {[...new Array(5)].map((_, index) => (
+                            <div key={index} className="relative w-1/2 p-1">
+                              <Skeleton className="w-full h-full rounded-md aspect-video" />
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  </WithLabel>
+                )}
+              </Field>
+              {hasNextPage && !isLoading && !isFetching && (
+                <Button
+                  variant="outline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (isLoading || isFetching) return;
+                    fetchNextPage();
+                  }}
+                >
+                  もっと見る
+                </Button>
+              )}
             </form>
           )}
         </div>

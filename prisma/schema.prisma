@@ -133,6 +133,7 @@ model Thread {
 
   ogpTitle String? @map("ogp_title")
   ogpDescription String? @map("ogp_description")
+  ogpImagePath String? @map("ogp_image_path")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()

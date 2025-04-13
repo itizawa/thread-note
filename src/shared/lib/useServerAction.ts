@@ -24,6 +24,9 @@ type Response<T> =
       isOk: false;
     };
 
+/**
+ * @deprecated tanstack-queryのmutateAsyncを使うようにする
+ */
 export const useServerAction = () => {
   const [isPending, startTransition] = useTransition();
 
