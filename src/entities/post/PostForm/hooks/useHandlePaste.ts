@@ -42,8 +42,11 @@ export const useHandlePaste = ({
     (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
       const clipboardData = event.clipboardData;
       const pastedData = clipboardData.getData("Text");
+      const { currentTarget } = event;
+      const isTextSelected =
+        currentTarget.selectionStart !== currentTarget.selectionEnd;
 
-      if (pastedData.startsWith("http")) {
+      if (pastedData.startsWith("http") && isTextSelected) {
         event.preventDefault();
         insertMarkdownLinkAtCursor(pastedData);
       }
