@@ -159,12 +159,12 @@ export function PublicStatusSheet({
             >
               {isPublic ? (
                 <>
-                  <EyeOff className="h-4 w-4 mr-2" />
+                  <EyeOff className="h-4 w-4" />
                   非公開にする
                 </>
               ) : (
                 <>
-                  <Eye className="h-4 w-4 mr-2" />
+                  <Eye className="h-4 w-4" />
                   公開する
                 </>
               )}
