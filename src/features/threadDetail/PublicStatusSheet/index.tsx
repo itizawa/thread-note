@@ -171,21 +171,23 @@ export function PublicStatusSheet({
             </Button>
           </div>
 
-          <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={
-                ogpImagePath ||
-                `/api/og?title=${encodeURIComponent(
-                  ogpTitle || threadTitle || ""
-                )}`
-              }
-              height="100%"
-              width="100%"
-              alt="OGPイメージ"
-              className="rounded-md object-cover aspect-video h-full w-full border-1"
-            />
-          </div>
+          {isPublic && (
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={
+                  ogpImagePath ||
+                  `/api/og?title=${encodeURIComponent(
+                    ogpTitle || threadTitle || ""
+                  )}`
+                }
+                height="100%"
+                width="100%"
+                alt="OGPイメージ"
+                className="rounded-md object-cover aspect-video h-full w-full border-1"
+              />
+            </div>
+          )}
 
           {isPublic && (
             <ShareInformation threadTitle={threadTitle} threadId={threadId} />
@@ -202,7 +204,7 @@ export function PublicStatusSheet({
                   <WithLabel label="OGPタイトル">
                     <Input
                       id="ogpTitle"
-                      placeholder="未入力の場合はスレッドタイトルが使用されます"
+                      placeholder={threadTitle || "タイトルなし"}
                       value={state.value}
                       onBlur={handleBlur}
                       error={!!state.meta.errors[0]?.message}
