@@ -5009,9 +5009,9 @@ open@7.4.2:
     is-wsl "^2.1.1"
 
 openai@^4.85.4:
-  version "4.95.0"
-  resolved "https://registry.yarnpkg.com/openai/-/openai-4.95.0.tgz#e391f02561874b7cd5e8becd56feec77d88be32f"
-  integrity sha512-tWHLTA+/HHyWlP8qg0mQLDSpI2NQLhk6zHLJL8yb59qn2pEI8rbEiAGSDPViLvi3BRDoQZIX5scaJ3xYGr2nhw==
+  version "4.95.1"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-4.95.1.tgz#7157697c2b150a546b13eb860180c4a6058051da"
+  integrity sha512-IqJy+ymeW+k/Wq+2YVN3693OQMMcODRtHEYOlz263MdUwnN/Dwdl9c2EXSxLLtGEHkSHAfvzpDMHI5MaWJKXjQ==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
