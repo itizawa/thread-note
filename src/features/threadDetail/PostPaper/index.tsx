@@ -24,7 +24,6 @@ import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
-import { undefined } from "zod";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
 
@@ -127,7 +126,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
             : "rounded-lg p-2 pr-0 space-y-4"
         }
         ${post.isArchived ? "bg-red-50" : "bg-white"}
-        relative group
+        relative
       `}
     >
       <div className="flex items-center justify-between">
@@ -164,14 +163,13 @@ export function PostPaper({ post, isPublicThread }: Props) {
             </div>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center">
           {!isEditing && (
             <Tooltip content="投稿内容をコピー">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleCopyPostContent}
-                className={`opacity-0 group-hover:opacity-100 transition-opacity`}
                 disabled={isPending}
               >
                 <Copy className="h-4 w-4" />
