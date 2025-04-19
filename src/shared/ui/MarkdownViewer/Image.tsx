@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ExpandedImage } from "../ExpandedImage";
 
 type Props = {
-  src: string | undefined;
+  src: string | Blob | undefined;
   alt: string | undefined;
 };
 
