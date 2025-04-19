@@ -6,6 +6,7 @@ import {
   updatePostBody,
 } from "@/app/actions/postActions";
 import { PostForm } from "@/entities/post/PostForm";
+import { generateBodyRecursive } from "@/entities/post/PostForm/hooks/generateBodyRecursive";
 import { UserIcon } from "@/entities/user/UserIcon";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
@@ -18,11 +19,12 @@ import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { Archive } from "lucide-react";
+import { Archive, Copy } from "lucide-react";
 import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
+import { undefined } from "zod";
 import { ManagePostDropDown } from "./ManagePostDropDown";
 import { ReplyForm } from "./ReplyForm";
 
@@ -112,6 +114,10 @@ export function PostPaper({ post, isPublicThread }: Props) {
     );
   };
 
+  const handleCopyPostContent = () => {
+    copy(generateBodyRecursive(post), "内容をコピーしました");
+  };
+
   return (
     <div
       className={`
@@ -121,7 +127,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
             : "rounded-lg p-2 pr-0 space-y-4"
         }
         ${post.isArchived ? "bg-red-50" : "bg-white"}
-        relative
+        relative group
       `}
     >
       <div className="flex items-center justify-between">
@@ -139,6 +145,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
             </div>
           </Tooltip>
         )}
+
         <div className="flex items-center space-x-2">
           <Link
             href={urls.userDetails(user.id)}
@@ -157,16 +164,31 @@ export function PostPaper({ post, isPublicThread }: Props) {
             </div>
           </div>
         </div>
-        {!isEditing && !post.isArchived && (
-          <ManagePostDropDown
-            isPending={isPending}
-            onClickEditButton={() => setIsEditing(true)}
-            onClickShareButton={
-              isPublicThread ? handleClickPostCreatedAt : undefined
-            }
-            onClickArchiveButton={handleClickArchiveButton}
-          />
-        )}
+        <div className="flex items-center space-x-2">
+          {!isEditing && (
+            <Tooltip content="投稿内容をコピー">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleCopyPostContent}
+                className={`opacity-0 group-hover:opacity-100 transition-opacity`}
+                disabled={isPending}
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </Tooltip>
+          )}
+          {!isEditing && !post.isArchived && (
+            <ManagePostDropDown
+              isPending={isPending}
+              onClickEditButton={() => setIsEditing(true)}
+              onClickShareButton={
+                isPublicThread ? handleClickPostCreatedAt : undefined
+              }
+              onClickArchiveButton={handleClickArchiveButton}
+            />
+          )}
+        </div>
       </div>
       <div className={isEditing ? "pb-4 border-1 p-4 rounded-lg" : "p-2"}>
         {isEditing ? (
