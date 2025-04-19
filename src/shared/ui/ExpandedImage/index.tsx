@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 
 type Props = {
-  src: string | undefined;
+  src: string | Blob | undefined;
   alt: string | undefined;
   expand: boolean;
   onClick: () => void;
