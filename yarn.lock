@@ -4753,9 +4753,9 @@ new-github-issue-url@0.2.1:
   integrity sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==
 
 next-auth@^5.0.0-beta.25:
-  version "5.0.0-beta.26"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.26.tgz#0fffa59366c5c04d47385c5235f089549cb0e3ba"
-  integrity sha512-yAQLIP2x6FAM+GX6FTlQjoPph6msO/9HI3pjI1z1yws3VnvS77atetcxQOmCpxSLTO4jzvpQqPaBZMgRxDgsYg==
+  version "5.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.27.tgz#dff4cbedc07dc3e6a88148ffd8bdd41c1e87ff13"
+  integrity sha512-/QtP9C0C99YpEuBEJqMaDXH3ISWMgObQalwVZEoC7sskaIPhv5fQl6fXS/rXJQKqLY6MNJ42rqjqmRdoXZH2EQ==
   dependencies:
     "@auth/core" "0.39.0"
 
