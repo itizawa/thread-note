@@ -6,7 +6,7 @@ import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { File, MessageSquare, Settings } from "lucide-react";
+import { File, Settings } from "lucide-react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -42,10 +42,10 @@ export default async function SettingsPage({
                 <File className="h-4 w-4 mr-1" />
                 ファイル管理
               </TabsTrigger>
-              <TabsTrigger value="tokens" className="font-bold">
+              {/* <TabsTrigger value="tokens" className="font-bold">
                 <MessageSquare className="h-4 w-4 mr-1" />
                 トークン使用量
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
             <TabsContent value="profile">
               <UpdateUserNameForm currentUser={currentUser} />
