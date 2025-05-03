@@ -75,36 +75,36 @@ function PostListItem({ thread }: { thread: Thread }) {
 
   return (
     <>
-      <div className="flex items-center justify-between rounded-lg p-2 hover:bg-gray-100 group">
-        <Link
-          href={urls.dashboardThreadDetails(thread.id)}
-          className="flex-1 min-w-0"
-        >
-          <div className="flex items-center cursor-pointer">
+      <Link href={urls.dashboardThreadDetails(thread.id)} className="">
+        <div className="flex items-center justify-between rounded-lg p-2 hover:bg-gray-100 group">
+          <div className="flex items-center cursor-pointer flex-1 min-w-0">
             <span className="text-sm truncate max-w-xs">
               {thread.title || "タイトルなし"}
             </span>
           </div>
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <MoreHorizontal className="h-5 w-5 cursor-pointer hidden group-hover:block transition-opacity" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" alignOffset={-8} sideOffset={24}>
-            <Link href={urls.dashboardThreadDetailsExports(thread.id)} passHref>
-              <DropdownMenuItem>
-                <PlaneTakeoff className="h-4 w-4" />
-                スレッドの出力
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <MoreHorizontal className="h-5 w-5 cursor-pointer hidden group-hover:block transition-opacity" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" alignOffset={-8} sideOffset={24}>
+              <Link
+                href={urls.dashboardThreadDetailsExports(thread.id)}
+                passHref
+              >
+                <DropdownMenuItem>
+                  <PlaneTakeoff className="h-4 w-4" />
+                  スレッドの出力
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleDeleteClick}>
+                <Trash2 className="h-4 w-4 text-red-500" />
+                <span className="text-red-500">スレッドの削除</span>
               </DropdownMenuItem>
-            </Link>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleDeleteClick}>
-              <Trash2 className="h-4 w-4 text-red-500" />
-              <span className="text-red-500">スレッドの削除</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </Link>
 
       <DeleteThreadDialog
         threadId={thread.id}
