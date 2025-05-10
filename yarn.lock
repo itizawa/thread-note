@@ -20,17 +20,6 @@
   resolved "https://registry.yarnpkg.com/@antfu/ni/-/ni-0.21.4.tgz#a6c1e3d6fbd86e4cb36ec5ff97302ae8878f3eee"
   integrity sha512-O0Uv9LbLDSoEg26fnMDdDRiPwFJnQSoD4WnrflDwKCJm8Cx/0mV4cGxwBLXan5mGIrpK4Dd7vizf4rQm0QCEAA==
 
-"@auth/core@0.39.0":
-  version "0.39.0"
-  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.39.0.tgz#39468332bdd6d710f859dcfb6597618f6d99efff"
-  integrity sha512-jusviw/sUSfAh6S/wjY5tRmJOq0Itd3ImF+c/b4HB9DfmfChtcfVJTNJeqCeExeCG8oh4PBKRsMQJsn2W6NhFQ==
-  dependencies:
-    "@panva/hkdf" "^1.2.1"
-    jose "^6.0.6"
-    oauth4webapi "^3.3.0"
-    preact "10.24.3"
-    preact-render-to-string "6.5.11"
-
 "@auth/core@0.39.1":
   version "0.39.1"
   resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.39.1.tgz#2b42697154f29b9f8c4c76f6978ed94ea6e19219"
@@ -5062,11 +5051,11 @@ new-github-issue-url@0.2.1:
   integrity sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==
 
 next-auth@^5.0.0-beta.25:
-  version "5.0.0-beta.27"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.27.tgz#dff4cbedc07dc3e6a88148ffd8bdd41c1e87ff13"
-  integrity sha512-/QtP9C0C99YpEuBEJqMaDXH3ISWMgObQalwVZEoC7sskaIPhv5fQl6fXS/rXJQKqLY6MNJ42rqjqmRdoXZH2EQ==
+  version "5.0.0-beta.28"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.28.tgz#6a7673f858980aaa92668d5c41e5ec3d800866bc"
+  integrity sha512-2RDR1h3DJb4nizcd5UBBwC2gtyP7j/jTvVLvEtDaFSKUWNfou3Gek2uTNHSga/Q4I/GF+OJobA4mFbRaWJgIDQ==
   dependencies:
-    "@auth/core" "0.39.0"
+    "@auth/core" "0.39.1"
 
 next-nprogress-bar@^2.4.7:
   version "2.4.7"
