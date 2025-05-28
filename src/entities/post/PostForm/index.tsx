@@ -14,6 +14,7 @@ import { PostController } from "./parts/postController";
 
 type Props = {
   textarea: {
+    minHeight?: number;
     placeholder?: string;
     value: string;
     onChange: (value: string) => void;
@@ -36,7 +37,11 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
   const { value, onChange } = textarea;
 
   // テキストエリアの高さを自動調整するフックを使用
-  const { handleResize } = useAutoResizeTextarea({ value, textareaRef });
+  const { handleResize } = useAutoResizeTextarea({
+    value,
+    textareaRef,
+    minHeight: textarea.minHeight || 200,
+  });
 
   const { insertMarkdownAtCursor } = useInsertMarkdownAtCursor({ value, onChange, textareaRef}); // prettier-ignore
   const { insertAtCursor } = useInsertAtCursor({ value, onChange, textareaRef }); // prettier-ignore
@@ -84,7 +89,8 @@ export function PostForm({ bottomButtons, textarea, formState }: Props) {
             <Textarea
               ref={textareaRef}
               placeholder={textarea.placeholder || "テキストを入力..."}
-              className="min-h-[200px] resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
+              className="resize-none w-full border-0 p-0 bg-transparent text-base outline-none focus:shadow-none shadow-none rounded-none md:text-base"
+              onKeyPress={textarea.onKeyPress}
               value={textarea.value}
               onChange={(e) => {
                 textarea.onChange(e.target.value);
