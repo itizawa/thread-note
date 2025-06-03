@@ -4810,9 +4810,9 @@ open@7.4.2:
     is-wsl "^2.1.1"
 
 openai@^5.0.0:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/openai/-/openai-5.0.2.tgz#783769ffe8860ba33d11e9caeb5dc96efa816304"
-  integrity sha512-NN7LAAImgBmd4RIe6WyRpLmwCbn+HQ1iaXeIG7K9DM3Auy/G2waKFhrDfRgaEeY0UUPnm6nohaCsqcS+zO8+2g==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-5.1.0.tgz#76543d5c9e40e3f284e30efd25a2f6cb257c1341"
+  integrity sha512-YQBgPJykHrDOlngB/8QpOsFNg36yofBatpeDWg1zejl9R59/ELuN7AMPSU95ZIdChbKc/o5vg1UnBJ1OEB0IJA==
 
 optionator@^0.9.3:
   version "0.9.4"
