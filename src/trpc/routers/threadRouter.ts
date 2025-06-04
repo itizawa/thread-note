@@ -89,6 +89,7 @@ export const threadRouter = router({
           ogpTitle: true,
           ogpDescription: true,
           ogpImagePath: true,
+          emoji: true,
         },
       });
 
@@ -113,6 +114,7 @@ export const threadRouter = router({
           userId: true,
           ogpTitle: true,
           ogpDescription: true,
+          emoji: true,
         },
       });
 
@@ -120,7 +122,11 @@ export const threadRouter = router({
     }),
 
   updateThreadInfo: protectedProcedure
-    .input(ThreadSchema.pick({ id: true, title: true }))
+    .input(
+      ThreadSchema.pick({ id: true, title: true }).extend({
+        emoji: ThreadSchema.shape.emoji.optional(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       return await prisma.thread.update({
         where: {
@@ -129,6 +135,7 @@ export const threadRouter = router({
         },
         data: {
           title: input.title,
+          emoji: input.emoji,
         },
       });
     }),
@@ -301,12 +308,14 @@ export const threadRouter = router({
       z.object({
         body: PostSchema.shape.body.optional(),
         title: ThreadSchema.shape.title,
+        emoji: ThreadSchema.shape.emoji.optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       return await createThreadWithFIrstPostUseCase.execute({
         postBody: input.body,
         title: input.title,
+        emoji: input.emoji,
         currentUser: ctx.currentUser,
       });
     }),

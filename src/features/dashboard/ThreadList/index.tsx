@@ -126,6 +126,7 @@ function PostListItem({ thread }: { thread: Thread }) {
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">
               <span className="block w-full font-bold truncate">
+                {thread.emoji ? `${thread.emoji} ` : ""}
                 {thread.title || "タイトルなし"}
               </span>
               <span className="flex flex-wrap items-center gap-0.5 text-xs text-muted-foreground">

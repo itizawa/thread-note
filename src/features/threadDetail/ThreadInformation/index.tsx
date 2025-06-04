@@ -29,9 +29,10 @@ export function ThreadInformation({
     id: threadId,
   });
   const [title, setTitle] = useState(threadInfo?.title || "");
+  const [emoji, setEmoji] = useState(threadInfo?.emoji || "");
   const [isEditing, setIsEditing] = useState(false);
 
-  const disabled = !title || isPending;
+  const disabled = !title.trim() || isPending;
 
   const handleUpdate = async () => {
     enqueueServerAction({
@@ -39,6 +40,7 @@ export function ThreadInformation({
         await updateThreadInfo({
           id: threadId,
           title,
+          emoji,
         });
       },
       error: {
@@ -86,9 +88,18 @@ export function ThreadInformation({
       {isEditing ? (
         <div className="flex space-x-2">
           <Input
-            defaultValue={threadInfo.title || ""}
-            placeholder="タイトルを入力してください"
+            value={emoji}
+            onChange={(e) => setEmoji(e.target.value)}
+            placeholder="😀"
             className="bg-white shadow-none"
+            style={{ width: "70px" }}
+            onKeyDown={handleKeyPress}
+            maxLength={4}
+          />
+          <Input
+            value={title}
+            placeholder="タイトルを入力してください"
+            className="bg-white shadow-none flex-1"
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={handleKeyPress}
             forceFocus
@@ -97,7 +108,11 @@ export function ThreadInformation({
             size="sm"
             className="h-9"
             variant="outline"
-            onClick={() => setIsEditing(false)}
+            onClick={() => {
+              setIsEditing(false);
+              setTitle(threadInfo.title || "");
+              setEmoji(threadInfo.emoji || "");
+            }}
             disabled={isPending}
           >
             キャンセル
@@ -114,13 +129,20 @@ export function ThreadInformation({
         </div>
       ) : (
         <div className="flex items-center justify-between">
-          <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+          <h3 className="font-bold">
+            {threadInfo.emoji ? `${threadInfo.emoji} ` : ""}
+            {threadInfo.title || "タイトルなし"}
+          </h3>
           <Tooltip content="編集">
             <Button
               variant="ghost"
               size="icon"
               className="transition-opacity hover:bg-gray-200"
-              onClick={() => setIsEditing(true)}
+              onClick={() => {
+                setTitle(threadInfo.title || "");
+                setEmoji(threadInfo.emoji || "");
+                setIsEditing(true);
+              }}
             >
               <Pencil className="h-4 w-4" />
             </Button>
