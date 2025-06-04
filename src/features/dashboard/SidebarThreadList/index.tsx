@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-icon";
 import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
@@ -87,20 +88,19 @@ function PostListItem({ thread }: { thread: Thread }) {
               <MoreHorizontal className="h-5 w-5 cursor-pointer hidden group-hover:block transition-opacity" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" alignOffset={-8} sideOffset={24}>
-              <Link
-                href={urls.dashboardThreadDetailsExports(thread.id)}
-                passHref
-              >
-                <DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={urls.dashboardThreadDetailsExports(thread.id)}>
                   <PlaneTakeoff className="h-4 w-4" />
                   スレッドの出力
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleDeleteClick}>
-                <Trash2 className="h-4 w-4 text-red-500" />
-                <span className="text-red-500">スレッドの削除</span>
+                </Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItemWithIcon
+                icon={Trash2}
+                text="スレッドの削除"
+                variant="destructive"
+                onClick={handleDeleteClick}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

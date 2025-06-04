@@ -2,10 +2,10 @@ import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-icon";
 import { Tooltip } from "@/shared/ui/Tooltip";
 
 import { Archive, Link, MoreHorizontal, Pencil } from "lucide-react";
@@ -34,24 +34,25 @@ export function ManagePostDropDown({
         </Tooltip>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onClickEditButton}>
-          <Pencil className="h-4 w-4" />
-          編集
-        </DropdownMenuItem>
+        <DropdownMenuItemWithIcon
+          icon={Pencil}
+          text="編集"
+          onClick={onClickEditButton}
+        />
         {onClickShareButton && (
-          <DropdownMenuItem onClick={onClickShareButton}>
-            <Link className="h-4 w-4" />
-            共有リンクをコピー
-          </DropdownMenuItem>
+          <DropdownMenuItemWithIcon
+            icon={Link}
+            text="共有リンクをコピー"
+            onClick={onClickShareButton}
+          />
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem
+        <DropdownMenuItemWithIcon
+          icon={Archive}
+          text="アーカイブ"
+          variant="destructive"
           onClick={onClickArchiveButton}
-          className="text-destructive focus:text-destructive"
-        >
-          <Archive className="h-4 w-4" />
-          アーカイブ
-        </DropdownMenuItem>
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );

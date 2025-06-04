@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-icon";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { Archive, MoreHorizontal, PlaneTakeoff, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -46,21 +47,24 @@ export function ManageThreadDropDown({
           </Tooltip>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <Link href={urls.dashboardThreadDetailsExports(threadId)} passHref>
-            <DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={urls.dashboardThreadDetailsExports(threadId)}>
               <PlaneTakeoff className="h-4 w-4" />
               スレッドの出力
-            </DropdownMenuItem>
-          </Link>
-          <DropdownMenuItem onClick={onClickToggleDisplayArchiveButton}>
-            <Archive className="h-4 w-4" />
-            {includeIsArchived ? "アーカイブの非表示" : "アーカイブの表示"}
+            </Link>
           </DropdownMenuItem>
+          <DropdownMenuItemWithIcon
+            icon={Archive}
+            text={includeIsArchived ? "アーカイブの非表示" : "アーカイブの表示"}
+            onClick={onClickToggleDisplayArchiveButton}
+          />
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setIsDeleteDialogOpen(true)}>
-            <Trash2 className="h-4 w-4 text-red-500" />
-            <span className="text-red-500">スレッドの削除</span>
-          </DropdownMenuItem>
+          <DropdownMenuItemWithIcon
+            icon={Trash2}
+            text="スレッドの削除"
+            variant="destructive"
+            onClick={() => setIsDeleteDialogOpen(true)}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
 

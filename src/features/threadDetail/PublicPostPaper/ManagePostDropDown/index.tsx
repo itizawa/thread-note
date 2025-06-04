@@ -2,9 +2,9 @@ import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-icon";
 
 import { Link, MoreHorizontal } from "lucide-react";
 
@@ -22,10 +22,11 @@ export function ManagePostDropDown({ onClickShareButton }: Props) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onClickShareButton}>
-          <Link className="mr-2 h-4 w-4" />
-          リンクをコピー
-        </DropdownMenuItem>
+        <DropdownMenuItemWithIcon
+          icon={Link}
+          text="リンクをコピー"
+          onClick={onClickShareButton}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );

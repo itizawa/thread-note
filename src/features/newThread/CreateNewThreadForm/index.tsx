@@ -3,7 +3,6 @@
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { urls } from "@/shared/consts/urls";
-import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
@@ -11,15 +10,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { Input } from "@/shared/ui/input";
 import { TEMPLATES } from "./consts";
 
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
+import { NotebookText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
-
 
 export function CreateNewThreadForm() {
   const utils = trpc.useUtils();
@@ -91,17 +90,21 @@ export function CreateNewThreadForm() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="bg-white">
+              <NotebookText />
               テンプレート
-              <ChevronDown className="ml-1" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => applyTemplate("DAILY_REPORT")}>
-              {TEMPLATES.DAILY_REPORT.label}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => applyTemplate("BLOG")}>
-              {TEMPLATES.BLOG.label}
-            </DropdownMenuItem>
+            {(Object.keys(TEMPLATES) as Array<keyof typeof TEMPLATES>).map(
+              (templateKey) => (
+                <DropdownMenuItem
+                  key={templateKey}
+                  onClick={() => applyTemplate(templateKey)}
+                >
+                  {TEMPLATES[templateKey].label}
+                </DropdownMenuItem>
+              )
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
