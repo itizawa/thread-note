@@ -1,13 +1,12 @@
+import { format } from "date-fns";
+
 // Template definitions
 export const TEMPLATES = {
   DAILY_REPORT: {
     label: "日報",
     title: () => {
       const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const day = String(today.getDate()).padStart(2, "0");
-      return `${year}/${month}/${day}の日報`;
+      return `${format(today, "yyyy/MM/dd")}の日報`;
     },
     body: `## 今日やったこと
 - 
