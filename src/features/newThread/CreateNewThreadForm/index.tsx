@@ -4,12 +4,22 @@ import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { urls } from "@/shared/consts/urls";
 import { Input } from "@/shared/ui/input";
+import { Button } from "@/shared/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
+import { TEMPLATES } from "./consts";
 
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
 
 export function CreateNewThreadForm() {
   const utils = trpc.useUtils();
@@ -21,6 +31,12 @@ export function CreateNewThreadForm() {
   const { isPending, enqueueServerAction } = useServerAction();
   const bothEmpty = title.trim().length === 0 && body.trim().length === 0;
   const isDisabled = isPending || bothEmpty;
+
+  const applyTemplate = (templateKey: keyof typeof TEMPLATES) => {
+    const template = TEMPLATES[templateKey];
+    setTitle(template.title());
+    setBody(template.body);
+  };
 
   const handleSubmit = () => {
     enqueueServerAction({
@@ -63,13 +79,32 @@ export function CreateNewThreadForm() {
 
   return (
     <div className="space-y-4">
-      <Input
-        placeholder="タイトルを入力してください"
-        className="bg-white shadow-none"
-        onChange={(e) => setTitle(e.target.value)}
-        onKeyDown={handleKeyPress}
-        forceFocus
-      />
+      <div className="flex gap-2">
+        <Input
+          placeholder="タイトルを入力してください"
+          className="bg-white shadow-none flex-1"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={handleKeyPress}
+          forceFocus
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="bg-white">
+              テンプレート
+              <ChevronDown className="ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => applyTemplate("DAILY_REPORT")}>
+              {TEMPLATES.DAILY_REPORT.label}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => applyTemplate("BLOG")}>
+              {TEMPLATES.BLOG.label}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <div className="rounded-lg border p-4 bg-white">
         <PostForm
           textarea={{

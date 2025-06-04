@@ -2,11 +2,6 @@ import { prisma } from "@/prisma";
 import { z } from "zod";
 import { protectedProcedure, router } from "../init";
 
-// prisma クライアントのキーを確認
-type PrismaKeys = keyof typeof prisma;
-const prismaKeys: PrismaKeys[] = Object.keys(prisma) as PrismaKeys[];
-console.log("Prisma keys:", prismaKeys);
-
 export const tokenRouter = router({
   /**
    * ログインユーザーのトークン使用履歴を取得する（常に作成日の降順でソート）
