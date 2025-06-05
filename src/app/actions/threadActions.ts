@@ -28,3 +28,7 @@ export const updateThreadPublicStatus = async (args: {
 }) => {
   await trpc.thread.updateThreadPublicStatus(args);
 };
+
+export const getPublicThreadCount = async () => {
+  return await trpc.thread.countPublicThreads();
+};
