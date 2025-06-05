@@ -1,6 +1,7 @@
 export const urls = {
   top: "/",
   terms: "/terms",
+  privacy: "/privacy",
   dashboard: "/dashboard",
   dashboardWithQuery: (page: number) => `/dashboard?page=${page}`,
   dashboardThreadNew: "/dashboard/new",
