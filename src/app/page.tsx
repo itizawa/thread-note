@@ -9,11 +9,13 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "./actions/userActions";
+import { getPublicThreadCount } from "./actions/threadActions";
 
 export const metadata: Metadata = generateMetadataObject();
 
 export default async function Home() {
   const currentUser = await getCurrentUser();
+  const threadCount = await getPublicThreadCount();
 
   return (
     <HydrateClient>
@@ -87,6 +89,9 @@ export default async function Home() {
             </h2>
             <p className="text-xl text-gray-600 mb-8">
               基本機能は全て無料で使用できます
+            </p>
+            <p className="text-xl text-gray-600 mb-8">
+              現在 {threadCount} 個のスレッドが公開中です！
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="p-6 bg-white rounded-2xl shadow-md">
