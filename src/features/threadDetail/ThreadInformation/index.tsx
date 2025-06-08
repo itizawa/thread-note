@@ -9,6 +9,7 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Tooltip } from "@/shared/ui/Tooltip";
+import { EmojiPicker } from "@/shared/ui/EmojiPicker";
 import { trpc } from "@/trpc/client";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
@@ -29,6 +30,7 @@ export function ThreadInformation({
     id: threadId,
   });
   const [title, setTitle] = useState(threadInfo?.title || "");
+  const [emojiIcon, setEmojiIcon] = useState(threadInfo?.emojiIcon || null);
   const [isEditing, setIsEditing] = useState(false);
 
   const disabled = !title || isPending;
@@ -39,6 +41,7 @@ export function ThreadInformation({
         await updateThreadInfo({
           id: threadId,
           title,
+          emojiIcon,
         });
       },
       error: {
@@ -84,37 +87,51 @@ export function ThreadInformation({
       <LinkToBack href={urls.dashboard} text="一覧に戻る" />
 
       {isEditing ? (
-        <div className="flex space-x-2">
-          <Input
-            defaultValue={threadInfo.title || ""}
-            placeholder="タイトルを入力してください"
-            className="bg-white shadow-none"
-            onChange={(e) => setTitle(e.target.value)}
-            onKeyDown={handleKeyPress}
-            forceFocus
-          />
-          <Button
-            size="sm"
-            className="h-9"
-            variant="outline"
-            onClick={() => setIsEditing(false)}
-            disabled={isPending}
-          >
-            キャンセル
-          </Button>
-          <Button
-            size="sm"
-            className="h-9"
-            onClick={handleUpdate}
-            disabled={disabled}
-            loading={isPending}
-          >
-            更新
-          </Button>
+        <div className="space-y-2">
+          <div className="flex space-x-2">
+            <Input
+              defaultValue={threadInfo.title || ""}
+              placeholder="タイトルを入力してください"
+              className="bg-white shadow-none flex-1"
+              onChange={(e) => setTitle(e.target.value)}
+              onKeyDown={handleKeyPress}
+              forceFocus
+            />
+            <EmojiPicker
+              selectedEmoji={emojiIcon}
+              onEmojiSelect={setEmojiIcon}
+              placeholder="絵文字"
+            />
+          </div>
+          <div className="flex space-x-2">
+            <Button
+              size="sm"
+              className="h-9"
+              variant="outline"
+              onClick={() => setIsEditing(false)}
+              disabled={isPending}
+            >
+              キャンセル
+            </Button>
+            <Button
+              size="sm"
+              className="h-9"
+              onClick={handleUpdate}
+              disabled={disabled}
+              loading={isPending}
+            >
+              更新
+            </Button>
+          </div>
         </div>
       ) : (
         <div className="flex items-center justify-between">
-          <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+          <div className="flex items-center gap-2">
+            {threadInfo.emojiIcon && (
+              <span className="text-xl">{threadInfo.emojiIcon}</span>
+            )}
+            <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+          </div>
           <Tooltip content="編集">
             <Button
               variant="ghost"

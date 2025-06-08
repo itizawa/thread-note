@@ -95,6 +95,7 @@ export class ListThreadsUseCase {
     return {
       id: true,
       title: true,
+      emojiIcon: true,
       createdAt: true,
       lastPostedAt: true,
       _count: {

@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Input } from "@/shared/ui/input";
+import { EmojiPicker } from "@/shared/ui/EmojiPicker";
 import { TEMPLATES } from "./consts";
 
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
@@ -26,6 +27,7 @@ export function CreateNewThreadForm() {
 
   const [title, setTitle] = useState("");
   const [body, setBody] = React.useState("");
+  const [emojiIcon, setEmojiIcon] = useState<string | null>(null);
 
   const { isPending, enqueueServerAction } = useServerAction();
   const bothEmpty = title.trim().length === 0 && body.trim().length === 0;
@@ -43,6 +45,7 @@ export function CreateNewThreadForm() {
         createThreadWithFirstPost({
           title,
           body,
+          emojiIcon,
         }),
       error: {
         text: "スレッドの作成に失敗しました",
@@ -86,6 +89,11 @@ export function CreateNewThreadForm() {
           onChange={(e) => setTitle(e.target.value)}
           onKeyDown={handleKeyPress}
           forceFocus
+        />
+        <EmojiPicker
+          selectedEmoji={emojiIcon}
+          onEmojiSelect={setEmojiIcon}
+          placeholder="絵文字"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

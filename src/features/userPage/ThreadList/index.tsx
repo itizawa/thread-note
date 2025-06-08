@@ -77,9 +77,14 @@ function PostListItem({ thread }: { thread: Thread }) {
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">
-              <span className="block w-full font-bold truncate">
-                {thread.title || "タイトルなし"}
-              </span>
+              <div className="flex items-center gap-2">
+                {thread.emojiIcon && (
+                  <span className="text-lg">{thread.emojiIcon}</span>
+                )}
+                <span className="block w-full font-bold truncate">
+                  {thread.title || "タイトルなし"}
+                </span>
+              </div>
               <span className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {
                   addSuffix: true,

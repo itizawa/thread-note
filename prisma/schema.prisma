@@ -144,6 +144,7 @@ model Thread {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   title String?
+  emojiIcon String? @map("emoji_icon") @db.VarChar(10)
   isPublic Boolean @default(false) @map("is_public")
   isClosed Boolean @default(false) @map("is_closed")
 

@@ -30,7 +30,12 @@ export function PublicThreadInformation({ threadId }: { threadId: string }) {
 
   return (
     <div className="flex items-center justify-between">
-      <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+      <div className="flex items-center gap-2">
+        {threadInfo.emojiIcon && (
+          <span className="text-xl">{threadInfo.emojiIcon}</span>
+        )}
+        <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+      </div>
       {currentUser?.id === threadInfo.userId && (
         <Link href={urls.dashboardThreadDetails(threadId)}>
           <Button variant="outline" size="sm">
