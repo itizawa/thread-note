@@ -1,0 +1,103 @@
+name: AI開発依頼
+description: 生成AIを使った機能開発の依頼
+title: "[AI Dev]: "
+labels: ["ai-development", "enhancement", "triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        生成AIを使った機能開発の依頼です。できるだけ具体的に記載してください。
+  
+  - type: textarea
+    id: overview
+    attributes:
+      label: 機能の概要
+      description: 開発したい機能の概要を説明してください
+      placeholder: |
+        例：ユーザーがスレッドを検索できる機能を追加したい
+    validations:
+      required: true
+  
+  - type: textarea
+    id: requirements
+    attributes:
+      label: 詳細な要件
+      description: 機能の詳細な要件を箇条書きで記載してください
+      placeholder: |
+        - 検索バーをヘッダーに配置
+        - スレッドのタイトルと本文を検索対象にする
+        - 検索結果をリアルタイムで表示
+        - 検索履歴を保存する機能
+    validations:
+      required: true
+  
+  - type: textarea
+    id: user_flow
+    attributes:
+      label: ユーザーフロー
+      description: ユーザーがこの機能をどのように使うか、ステップバイステップで説明してください
+      placeholder: |
+        1. ユーザーがヘッダーの検索バーをクリック
+        2. 検索キーワードを入力
+        3. 入力中にリアルタイムで検索結果が表示される
+        4. 検索結果をクリックして該当スレッドに遷移
+    validations:
+      required: true
+  
+  - type: textarea
+    id: ui_ux
+    attributes:
+      label: UI/UXの要件
+      description: デザインやレイアウトに関する要望があれば記載してください
+      placeholder: |
+        - 検索バーはヘッダーの右側に配置
+        - 検索結果はドロップダウンで表示
+        - モバイルでは全画面表示
+    validations:
+      required: false
+  
+  - type: textarea
+    id: technical_constraints
+    attributes:
+      label: 技術的な制約・要件
+      description: 使用すべき技術やライブラリ、パフォーマンス要件などがあれば記載してください
+      placeholder: |
+        - 既存のtRPCルーターを使用
+        - 検索は500ms以内にレスポンスを返す
+        - Prismaの全文検索機能を使用
+    validations:
+      required: false
+  
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先度
+      description: この機能の優先度を選択してください
+      options:
+        - 高（すぐに必要）
+        - 中（近いうちに必要）
+        - 低（あると良い）
+    validations:
+      required: true
+  
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: 受け入れ条件
+      description: この機能が完成したと判断する条件を記載してください
+      placeholder: |
+        - [ ] 検索機能が正常に動作する
+        - [ ] テストが書かれている
+        - [ ] レスポンシブデザインに対応
+        - [ ] エラーハンドリングが実装されている
+    validations:
+      required: true
+  
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考資料
+      description: 参考になるサイトやスクリーンショット、関連するissueなどがあれば記載してください
+    validations:
+      required: false
