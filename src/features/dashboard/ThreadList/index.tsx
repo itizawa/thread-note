@@ -125,9 +125,22 @@ function PostListItem({ thread }: { thread: Thread }) {
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">
-              <span className="block w-full font-bold truncate">
-                {thread.title || "タイトルなし"}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="block font-bold truncate">
+                  {thread.title || "タイトルなし"}
+                </span>
+                {thread.status && (
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      thread.status === "WIP"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-purple-100 text-purple-800"
+                    }`}
+                  >
+                    {thread.status === "WIP" ? "進行中" : "終了"}
+                  </span>
+                )}
+              </div>
               <span className="flex flex-wrap items-center gap-0.5 text-xs text-muted-foreground">
                 {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {
                   addSuffix: true,

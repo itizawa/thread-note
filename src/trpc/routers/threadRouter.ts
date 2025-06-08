@@ -68,6 +68,7 @@ export const threadRouter = router({
         limit: input.limit || 10,
         sort: input.sort,
         inCludePrivate: false,
+        excludeClosed: false,
       });
     }),
 
