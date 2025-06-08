@@ -52,7 +52,7 @@ jobs:
       - name: Migrate
         uses: nick-fields/retry@v3
         with:
-          command: yarn migrate:dev
+          command: yarn migrate-for-single
           max_attempts: 5
           timeout_minutes: 10
           retry_on: error
