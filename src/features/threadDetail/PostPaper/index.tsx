@@ -235,7 +235,7 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
               </div>
             );
           })}
-          {!post.isArchived && threadStatus !== "CLOSED" && (
+          {!post.isArchived && (threadStatus || "WIP") !== "CLOSED" && (
             <ReplyForm threadId={post.threadId} parentPostId={post.id} />
           )}
         </div>

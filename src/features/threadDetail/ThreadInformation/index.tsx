@@ -139,14 +139,14 @@ export function ThreadInformation({
             ogpDescription={threadInfo.ogpDescription}
             ogpImagePath={threadInfo.ogpImagePath}
           />
-          <ThreadStatusBadge status={threadInfo.status} />
+          <ThreadStatusBadge status={threadInfo.status || "WIP"} />
         </div>
         <ManageThreadDropDown
           threadId={threadId}
           threadTitle={threadInfo.title}
           includeIsArchived={includeIsArchived}
           onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
-          status={threadInfo.status}
+          status={threadInfo.status || "WIP"}
         />
       </div>
     </div>

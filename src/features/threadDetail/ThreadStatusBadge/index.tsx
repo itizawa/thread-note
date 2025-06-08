@@ -6,20 +6,16 @@ interface ThreadStatusBadgeProps {
   status: ThreadStatus;
 }
 
-export function ThreadStatusBadge({ status }: ThreadStatusBadgeProps) {
-  const getStatusColor = () => {
-    switch (status) {
-      case "WIP":
-        return "bg-green-100 text-green-800";
-      case "CLOSED":
-        return "bg-purple-800 text-white";
-      default:
-        return "";
-    }
-  };
+const statusColorMap = {
+  WIP: "bg-green-700 text-white",
+  CLOSED: "bg-purple-800 text-white",
+} satisfies Record<ThreadStatus, string>;
 
+export function ThreadStatusBadge({ status }: ThreadStatusBadgeProps) {
   return (
-    <span className={`px-2 py-1 rounded-full font-medium ${getStatusColor()}`}>
+    <span
+      className={`text-xs font-bold px-4 py-1 rounded-full ${statusColorMap[status]}`}
+    >
       {status}
     </span>
   );
