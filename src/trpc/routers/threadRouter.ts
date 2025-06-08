@@ -7,7 +7,9 @@ import { CreateThreadWithFIrstPostUseCase } from "../usecases/newThread/CreateTh
 import { CreatePostInDetailUseCase } from "../usecases/threadDetail/CreatePostInDetailUseCase";
 import { GetThreadWithPostsUseCase } from "../usecases/threadDetail/GetThreadWithPostsUseCase";
 
-const createThreadWithFIrstPostUseCase = new CreateThreadWithFIrstPostUseCase();
+const createThreadWithFIrstPostUseCase = new CreateThreadWithFIrstPostUseCase(
+  prisma
+);
 const getThreadWithPostsUseCase = new GetThreadWithPostsUseCase();
 const listThreadsUseCase = new ListThreadsUseCase();
 const createPostInDetailUseCase = new CreatePostInDetailUseCase();
