@@ -34,7 +34,7 @@ type Post = NonNullable<
 interface Props {
   post: Post | Post["children"][number];
   isPublicThread: boolean;
-  threadStatus?: string;
+  threadStatus: string;
 }
 
 export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
@@ -230,12 +230,16 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
                   <div className="w-[2px] h-full bg-gray-200" />
                 </div>
                 <div className="w-full pl-6">
-                  <PostPaper post={v} isPublicThread={isPublicThread} threadStatus={threadStatus} />
+                  <PostPaper
+                    post={v}
+                    isPublicThread={isPublicThread}
+                    threadStatus={threadStatus}
+                  />
                 </div>
               </div>
             );
           })}
-          {!post.isArchived && (threadStatus || "WIP") !== "CLOSED" && (
+          {!post.isArchived && threadStatus !== "CLOSED" && (
             <ReplyForm threadId={post.threadId} parentPostId={post.id} />
           )}
         </div>

@@ -130,7 +130,7 @@ function PostListItem({ thread }: { thread: Thread }) {
                 <span className="block font-bold truncate">
                   {thread.title || "タイトルなし"}
                 </span>
-                <ThreadStatusBadge status={thread.status || "WIP"} />
+                <ThreadStatusBadge status={thread.status} size="sm" />
               </div>
               <span className="flex flex-wrap items-center gap-0.5 text-xs text-muted-foreground">
                 {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {

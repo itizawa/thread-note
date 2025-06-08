@@ -4,6 +4,8 @@ import { ThreadStatus } from "@prisma/client";
 
 interface ThreadStatusBadgeProps {
   status: ThreadStatus;
+  className?: string;
+  size?: "sm" | "md";
 }
 
 const statusColorMap = {
@@ -11,10 +13,18 @@ const statusColorMap = {
   CLOSED: "bg-purple-800 text-white",
 } satisfies Record<ThreadStatus, string>;
 
-export function ThreadStatusBadge({ status }: ThreadStatusBadgeProps) {
+const sizeMap = {
+  sm: "px-3 py-0.5 text-xs",
+  md: "px-4 py-1 text-sm",
+};
+
+export function ThreadStatusBadge({
+  status,
+  size = "md",
+}: ThreadStatusBadgeProps) {
   return (
     <span
-      className={`text-xs font-bold px-4 py-1 rounded-full ${statusColorMap[status]}`}
+      className={`font-bold ${sizeMap[size]} rounded-full ${statusColorMap[status]}`}
     >
       {status}
     </span>
