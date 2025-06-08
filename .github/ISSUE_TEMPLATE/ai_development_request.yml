@@ -33,19 +33,6 @@ body:
       required: true
 
   - type: textarea
-    id: user_flow
-    attributes:
-      label: ユーザーフロー
-      description: ユーザーがこの機能をどのように使うか、ステップバイステップで説明してください
-      placeholder: |
-        1. ユーザーがヘッダーの検索バーをクリック
-        2. 検索キーワードを入力
-        3. 入力中にリアルタイムで検索結果が表示される
-        4. 検索結果をクリックして該当スレッドに遷移
-    validations:
-      required: true
-
-  - type: textarea
     id: ui_ux
     attributes:
       label: UI/UXの要件
