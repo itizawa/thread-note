@@ -10,6 +10,7 @@ export const ThreadSchema = z.object({
   id: z.string().uuid(),
   userId: z.string(),
   title: z.string().nullable(),
+  emoji: z.string().nullable(),
   isPublic: z.boolean(),
   ogpTitle: z.string().nullable(),
   ogpDescription: z.string().nullable(),

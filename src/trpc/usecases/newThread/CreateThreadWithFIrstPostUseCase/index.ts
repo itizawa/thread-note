@@ -6,14 +6,17 @@ export class CreateThreadWithFIrstPostUseCase {
     postBody,
     title,
     currentUser,
+    emoji,
   }: {
     postBody?: Post["body"];
     title?: Thread["title"];
     currentUser: User;
+    emoji?: Thread["emoji"];
   }): Promise<{ thread: Thread }> {
     const thread = await prisma.thread.create({
       data: {
         title,
+        emoji,
         posts: {
           create: postBody
             ? {

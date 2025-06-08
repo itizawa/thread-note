@@ -126,12 +126,11 @@ function PostListItem({ thread }: { thread: Thread }) {
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">
-              <div className="flex items-center gap-2">
-                <span className="block font-bold truncate">
-                  {thread.title || "タイトルなし"}
-                </span>
+              <span className="block w-full font-bold truncate">
+                {thread.emoji ? `${thread.emoji} ` : ""}
+                {thread.title || "タイトルなし"}
                 <ThreadStatusBadge status={thread.status} size="sm" />
-              </div>
+              </span>
               <span className="flex flex-wrap items-center gap-0.5 text-xs text-muted-foreground">
                 {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {
                   addSuffix: true,
