@@ -334,4 +334,14 @@ export const threadRouter = router({
         parentId: input.parentId,
       });
     }),
+
+  countPublicThreads: publicProcedure.query(async () => {
+    const count = await prisma.thread.count({
+      where: {
+        isPublic: true,
+      },
+    });
+
+    return count;
+  }),
 });
