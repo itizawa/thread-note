@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import { PostSchema, ThreadSchema } from "@/types/src/domains";
+import { PostSchema, ThreadSchema, ThreadStatusSchema } from "@/types/src/domains";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
@@ -43,6 +43,7 @@ export const threadRouter = router({
         limit: input.limit || 10,
         sort: input.sort,
         inCludePrivate: true,
+        excludeClosed: true,
       });
     }),
 
@@ -82,7 +83,7 @@ export const threadRouter = router({
           id: true,
           title: true,
           isPublic: true,
-          isClosed: true,
+          status: true,
           createdAt: true,
           updatedAt: true,
           userId: true,
@@ -107,7 +108,7 @@ export const threadRouter = router({
           id: true,
           title: true,
           isPublic: true,
-          isClosed: true,
+          status: true,
           createdAt: true,
           updatedAt: true,
           userId: true,
@@ -152,11 +153,11 @@ export const threadRouter = router({
       });
     }),
 
-  updateThreadClosedStatus: protectedProcedure
+  updateThreadStatus: protectedProcedure
     .input(
       z.object({
         id: ThreadSchema.shape.id,
-        isClosed: z.boolean(),
+        status: ThreadStatusSchema,
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -166,7 +167,7 @@ export const threadRouter = router({
           userId: ctx.currentUser?.id,
         },
         data: {
-          isClosed: input.isClosed,
+          status: input.status,
         },
       });
     }),

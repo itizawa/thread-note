@@ -20,7 +20,7 @@ export function CreateNewPostForm({ threadId }: Props) {
   });
 
   const isDisabled =
-    isPending || body.trim().length === 0 || threadInfo?.isClosed;
+    isPending || body.trim().length === 0 || threadInfo?.status === "CLOSED";
 
   const handleSubmit = () => {
     enqueueServerAction({
@@ -61,7 +61,7 @@ export function CreateNewPostForm({ threadId }: Props) {
 
   return (
     <div className="rounded-lg border p-4 bg-white">
-      {threadInfo?.isClosed ? (
+      {threadInfo?.status === "CLOSED" ? (
         <div className="flex items-center justify-center p-4 text-gray-500">
           <div className="flex items-center space-x-2">
             <Archive className="h-5 w-5" />
@@ -74,7 +74,7 @@ export function CreateNewPostForm({ threadId }: Props) {
             value: body,
             onChange: handleContentChange,
             onKeyPress: handleKeyPress,
-            forceFocus: true,
+            forceFocus: threadInfo?.status !== "CLOSED",
           }}
           formState={{
             isDisabled: Boolean(isDisabled),

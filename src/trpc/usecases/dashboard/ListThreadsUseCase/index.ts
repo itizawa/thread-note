@@ -8,6 +8,7 @@ type Args = {
   cursor?: string;
   limit?: number;
   inCludePrivate?: boolean;
+  excludeClosed?: boolean;
   sort: {
     type: "createdAt" | "lastPostedAt";
     direction: "asc" | "desc";
@@ -54,6 +55,7 @@ export class ListThreadsUseCase {
     const baseWhere: Prisma.ThreadWhereInput = {
       userId: args.userId,
       ...(args.inCludePrivate ? {} : { isPublic: true }),
+      ...(args.excludeClosed ? { NOT: { status: "CLOSED" } } : {}),
     };
 
     if (!args.searchQuery) {
@@ -95,6 +97,7 @@ export class ListThreadsUseCase {
     return {
       id: true,
       title: true,
+      status: true,
       createdAt: true,
       lastPostedAt: true,
       _count: {

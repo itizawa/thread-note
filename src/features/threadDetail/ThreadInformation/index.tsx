@@ -2,6 +2,7 @@
 
 import { updateThreadInfo } from "@/app/actions/threadActions";
 import { PublicStatusSheet } from "@/features/threadDetail/PublicStatusSheet";
+import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
 import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
@@ -129,14 +130,19 @@ export function ThreadInformation({
       )}
 
       <div className="flex items-center justify-between space-x-2">
-        <PublicStatusSheet
-          threadTitle={threadInfo.title}
-          threadId={threadId}
-          isPublic={threadInfo.isPublic}
-          ogpTitle={threadInfo.ogpTitle}
-          ogpDescription={threadInfo.ogpDescription}
-          ogpImagePath={threadInfo.ogpImagePath}
-        />
+        <div className="flex items-center space-x-2">
+          <PublicStatusSheet
+            threadTitle={threadInfo.title}
+            threadId={threadId}
+            isPublic={threadInfo.isPublic}
+            ogpTitle={threadInfo.ogpTitle}
+            ogpDescription={threadInfo.ogpDescription}
+            ogpImagePath={threadInfo.ogpImagePath}
+          />
+          {threadInfo.status && (
+            <ThreadStatusBadge threadId={threadId} status={threadInfo.status} />
+          )}
+        </div>
         <ManageThreadDropDown
           threadId={threadId}
           threadTitle={threadInfo.title}
