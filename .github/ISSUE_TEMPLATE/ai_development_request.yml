@@ -1,14 +1,14 @@
 name: AI開発依頼
 description: 生成AIを使った機能開発の依頼
 title: "[AI Dev]: "
-labels: ["ai-development", "enhancement", "triage"]
+labels: ["For Claude"]
 assignees: []
 body:
   - type: markdown
     attributes:
       value: |
         生成AIを使った機能開発の依頼です。できるだけ具体的に記載してください。
-  
+
   - type: textarea
     id: overview
     attributes:
@@ -18,7 +18,7 @@ body:
         例：ユーザーがスレッドを検索できる機能を追加したい
     validations:
       required: true
-  
+
   - type: textarea
     id: requirements
     attributes:
@@ -31,7 +31,7 @@ body:
         - 検索履歴を保存する機能
     validations:
       required: true
-  
+
   - type: textarea
     id: user_flow
     attributes:
@@ -44,7 +44,7 @@ body:
         4. 検索結果をクリックして該当スレッドに遷移
     validations:
       required: true
-  
+
   - type: textarea
     id: ui_ux
     attributes:
@@ -56,7 +56,7 @@ body:
         - モバイルでは全画面表示
     validations:
       required: false
-  
+
   - type: textarea
     id: technical_constraints
     attributes:
@@ -68,7 +68,7 @@ body:
         - Prismaの全文検索機能を使用
     validations:
       required: false
-  
+
   - type: dropdown
     id: priority
     attributes:
@@ -80,7 +80,7 @@ body:
         - 低（あると良い）
     validations:
       required: true
-  
+
   - type: textarea
     id: acceptance_criteria
     attributes:
@@ -93,7 +93,7 @@ body:
         - [ ] エラーハンドリングが実装されている
     validations:
       required: true
-  
+
   - type: textarea
     id: references
     attributes:
