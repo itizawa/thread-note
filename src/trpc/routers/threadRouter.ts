@@ -1,5 +1,9 @@
 import { prisma } from "@/prisma";
-import { PostSchema, ThreadSchema, ThreadStatusSchema } from "@/types/src/domains";
+import {
+  PostSchema,
+  ThreadSchema,
+  ThreadStatusSchema,
+} from "@/types/src/domains";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
@@ -29,6 +33,7 @@ export const threadRouter = router({
         searchQuery: z.string().trim().optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
+        excludeClosed: z.boolean().default(false),
         sort: z.object({
           type: z.union([z.literal("createdAt"), z.literal("lastPostedAt")]),
           direction: z.union([z.literal("asc"), z.literal("desc")]),
@@ -43,7 +48,7 @@ export const threadRouter = router({
         limit: input.limit || 10,
         sort: input.sort,
         inCludePrivate: true,
-        excludeClosed: true,
+        excludeClosed: input.excludeClosed,
       });
     }),
 

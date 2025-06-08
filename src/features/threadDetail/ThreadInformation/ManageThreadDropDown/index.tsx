@@ -12,7 +12,14 @@ import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-ic
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import { ThreadStatus } from "@prisma/client";
-import { Archive, LockKeyhole, MoreHorizontal, Pencil, PlaneTakeoff, Trash2 } from "lucide-react";
+import {
+  Archive,
+  ListCheck,
+  MoreHorizontal,
+  Pencil,
+  PlaneTakeoff,
+  Trash2,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -37,16 +44,17 @@ export function ManageThreadDropDown({
   const router = useRouter();
   const utils = trpc.useUtils();
 
-  const { mutate: updateStatus, isPending } = trpc.thread.updateThreadStatus.useMutation({
-    onSuccess: () => {
-      toast.success("ステータスを更新しました");
-      utils.thread.getThreadInfo.invalidate({ id: threadId });
-      utils.thread.listThreadsByCurrentUser.invalidate();
-    },
-    onError: (error) => {
-      toast.error(`ステータスの更新に失敗しました: ${error.message}`);
-    },
-  });
+  const { mutate: updateStatus, isPending } =
+    trpc.thread.updateThreadStatus.useMutation({
+      onSuccess: () => {
+        toast.success("ステータスを更新しました");
+        utils.thread.getThreadInfo.invalidate({ id: threadId });
+        utils.thread.listThreadsByCurrentUser.invalidate();
+      },
+      onError: (error) => {
+        toast.error(`ステータスの更新に失敗しました: ${error.message}`);
+      },
+    });
 
   const handleDeleteSuccess = () => {
     router.push(urls.dashboard);
@@ -92,7 +100,7 @@ export function ManageThreadDropDown({
           )}
           {status !== "CLOSED" && (
             <DropdownMenuItemWithIcon
-              icon={LockKeyhole}
+              icon={ListCheck}
               text="Closedに変更する"
               onClick={() => handleStatusChange("CLOSED")}
               disabled={isPending}
