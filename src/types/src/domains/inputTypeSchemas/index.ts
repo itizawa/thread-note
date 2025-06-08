@@ -14,3 +14,4 @@ export { PlanSubscriptionScalarFieldEnumSchema } from './PlanSubscriptionScalarF
 export { SortOrderSchema } from './SortOrderSchema';
 export { QueryModeSchema } from './QueryModeSchema';
 export { NullsOrderSchema } from './NullsOrderSchema';
+export { ThreadStatusSchema } from './ThreadStatusSchema';

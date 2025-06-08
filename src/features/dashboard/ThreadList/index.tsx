@@ -1,6 +1,7 @@
 "use client";
 
 import { UserIcon } from "@/entities/user/UserIcon";
+import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { urls } from "@/shared/consts/urls";
 import { Button } from "@/shared/ui/button";
@@ -125,9 +126,12 @@ function PostListItem({ thread }: { thread: Thread }) {
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">
           <div className="flex items-center justify-between gap-2 overflow-x-hidden">
             <div className="overflow-x-hidden relative">
-              <span className="block w-full font-bold truncate">
-                {thread.title || "タイトルなし"}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="block font-bold truncate">
+                  {thread.title || "タイトルなし"}
+                </span>
+                <ThreadStatusBadge status={thread.status} size="sm" />
+              </div>
               <span className="flex flex-wrap items-center gap-0.5 text-xs text-muted-foreground">
                 {`${formatDistanceToNowStrict(new Date(thread.lastPostedAt), {
                   addSuffix: true,

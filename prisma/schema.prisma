@@ -28,6 +28,11 @@ generator zod {
   writeNullishInModelTypes         = false // default is false
 }
 
+enum ThreadStatus {
+  WIP
+  CLOSED
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -145,7 +150,7 @@ model Thread {
 
   title String?
   isPublic Boolean @default(false) @map("is_public")
-  isClosed Boolean @default(false) @map("is_closed")
+  status ThreadStatus @default(WIP) @map("status")
 
   ogpTitle String? @map("ogp_title")
   ogpDescription String? @map("ogp_description")

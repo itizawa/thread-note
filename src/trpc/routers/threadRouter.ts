@@ -1,5 +1,9 @@
 import { prisma } from "@/prisma";
-import { PostSchema, ThreadSchema } from "@/types/src/domains";
+import {
+  PostSchema,
+  ThreadSchema,
+  ThreadStatusSchema,
+} from "@/types/src/domains";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../init";
 import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
@@ -29,6 +33,7 @@ export const threadRouter = router({
         searchQuery: z.string().trim().optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
+        excludeClosed: z.boolean().default(false),
         sort: z.object({
           type: z.union([z.literal("createdAt"), z.literal("lastPostedAt")]),
           direction: z.union([z.literal("asc"), z.literal("desc")]),
@@ -43,6 +48,7 @@ export const threadRouter = router({
         limit: input.limit || 10,
         sort: input.sort,
         inCludePrivate: true,
+        excludeClosed: input.excludeClosed,
       });
     }),
 
@@ -67,6 +73,7 @@ export const threadRouter = router({
         limit: input.limit || 10,
         sort: input.sort,
         inCludePrivate: false,
+        excludeClosed: false,
       });
     }),
 
@@ -82,7 +89,7 @@ export const threadRouter = router({
           id: true,
           title: true,
           isPublic: true,
-          isClosed: true,
+          status: true,
           createdAt: true,
           updatedAt: true,
           userId: true,
@@ -107,7 +114,7 @@ export const threadRouter = router({
           id: true,
           title: true,
           isPublic: true,
-          isClosed: true,
+          status: true,
           createdAt: true,
           updatedAt: true,
           userId: true,
@@ -152,11 +159,11 @@ export const threadRouter = router({
       });
     }),
 
-  updateThreadClosedStatus: protectedProcedure
+  updateThreadStatus: protectedProcedure
     .input(
       z.object({
         id: ThreadSchema.shape.id,
-        isClosed: z.boolean(),
+        status: ThreadStatusSchema,
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -166,7 +173,7 @@ export const threadRouter = router({
           userId: ctx.currentUser?.id,
         },
         data: {
-          isClosed: input.isClosed,
+          status: input.status,
         },
       });
     }),

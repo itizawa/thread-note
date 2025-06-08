@@ -27,6 +27,7 @@ export function SidebarThreadList() {
       {
         limit: 20,
         sort: { type: "lastPostedAt", direction: "desc" },
+        excludeClosed: true,
       },
       { getNextPageParam: (lastPage) => lastPage.nextCursor }
     );
