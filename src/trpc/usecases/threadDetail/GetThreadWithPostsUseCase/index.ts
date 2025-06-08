@@ -1,15 +1,11 @@
-import { prisma } from "@/prisma";
 import type { Thread } from "@prisma/client";
-
-const selectUserDateObject = {
-  select: {
-    id: true,
-    name: true,
-    image: true,
-  },
-};
+import type { 
+  IThreadNoteRepository 
+} from "@/trpc/applications/interfaces/repositories/ThreadNoteRepository";
 
 export class GetThreadWithPostsUseCase {
+  constructor(private threadRepository: IThreadNoteRepository) {}
+
   async execute({
     id,
     inCludeIsArchived,
@@ -17,36 +13,10 @@ export class GetThreadWithPostsUseCase {
     id: Thread["id"];
     inCludeIsArchived: boolean;
   }) {
-    const threadWithPosts = await prisma.thread.findFirst({
-      where: {
-        id,
-      },
-      include: {
-        posts: {
-          where: {
-            isArchived: inCludeIsArchived ? undefined : false,
-            parentId: null,
-          },
-          orderBy: {
-            createdAt: "asc",
-          },
-          include: {
-            children: {
-              where: {
-                isArchived: inCludeIsArchived ? undefined : false,
-              },
-              include: {
-                user: selectUserDateObject,
-              },
-              orderBy: {
-                createdAt: "asc",
-              },
-            },
-            user: selectUserDateObject,
-          },
-        },
-      },
-    });
+    const threadWithPosts = await this.threadRepository.findByIdWithPosts(
+      id, 
+      inCludeIsArchived
+    );
 
     return { threadWithPosts };
   }

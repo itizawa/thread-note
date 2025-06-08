@@ -1,7 +1,11 @@
-import { prisma } from "@/prisma";
 import type { Post, Thread, User } from "@prisma/client";
+import type { 
+  IThreadNoteRepository 
+} from "@/trpc/applications/interfaces/repositories/ThreadNoteRepository";
 
 export class CreateThreadWithFIrstPostUseCase {
+  constructor(private threadRepository: IThreadNoteRepository) {}
+
   async execute({
     postBody,
     title,
@@ -11,19 +15,10 @@ export class CreateThreadWithFIrstPostUseCase {
     title?: Thread["title"];
     currentUser: User;
   }): Promise<{ thread: Thread }> {
-    const thread = await prisma.thread.create({
-      data: {
-        title,
-        posts: {
-          create: postBody
-            ? {
-                body: postBody,
-                userId: currentUser.id,
-              }
-            : [],
-        },
-        userId: currentUser.id,
-      },
+    const thread = await this.threadRepository.createWithFirstPost({
+      userId: currentUser.id,
+      title,
+      firstPost: postBody ? { body: postBody } : undefined,
     });
 
     return { thread };

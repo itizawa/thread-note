@@ -1,4 +1,3 @@
-import { prisma } from "@/prisma";
 import { PostSchema, ThreadSchema } from "@/types/src/domains";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../init";
@@ -6,22 +5,31 @@ import { ListThreadsUseCase } from "../usecases/dashboard/ListThreadsUseCase";
 import { CreateThreadWithFIrstPostUseCase } from "../usecases/newThread/CreateThreadWithFIrstPostUseCase";
 import { CreatePostInDetailUseCase } from "../usecases/threadDetail/CreatePostInDetailUseCase";
 import { GetThreadWithPostsUseCase } from "../usecases/threadDetail/GetThreadWithPostsUseCase";
+import { GetThreadInfoUseCase } from "../usecases/threadDetail/GetThreadInfoUseCase";
+import { ThreadRepository } from "../adapter/repositories/ThreadRepository";
 
-const createThreadWithFIrstPostUseCase = new CreateThreadWithFIrstPostUseCase();
-const getThreadWithPostsUseCase = new GetThreadWithPostsUseCase();
-const listThreadsUseCase = new ListThreadsUseCase();
+// Repository のインスタンスを作成
+const threadRepository = new ThreadRepository();
+
+// UseCase に Repository を注入
+const createThreadWithFIrstPostUseCase = new CreateThreadWithFIrstPostUseCase(threadRepository);
+const getThreadWithPostsUseCase = new GetThreadWithPostsUseCase(threadRepository);
+const getThreadInfoUseCase = new GetThreadInfoUseCase(threadRepository);
+const listThreadsUseCase = new ListThreadsUseCase(threadRepository);
 const createPostInDetailUseCase = new CreatePostInDetailUseCase();
 
 export const threadRouter = router({
   deleteThread: protectedProcedure
     .input(ThreadSchema.pick({ id: true }))
     .mutation(async ({ ctx, input }) => {
-      return await prisma.thread.delete({
-        where: {
-          id: input.id,
-          userId: ctx.currentUser.id,
-        },
-      });
+      // 権限チェック
+      const isOwned = await threadRepository.isOwnedByUser(input.id, ctx.currentUser.id);
+      if (!isOwned) {
+        throw new Error("権限がありません");
+      }
+      
+      await threadRepository.delete(input.id);
+      return { success: true };
     }),
   listThreadsByCurrentUser: protectedProcedure
     .input(
@@ -73,63 +81,34 @@ export const threadRouter = router({
   getThreadInfo: protectedProcedure
     .input(ThreadSchema.pick({ id: true }))
     .query(async ({ input }) => {
-      // GetThreadInfoUseCaseを使用する代わりに、直接Prismaを使用して必要なフィールドを取得
-      const thread = await prisma.thread.findUnique({
-        where: {
-          id: input.id,
-        },
-        select: {
-          id: true,
-          title: true,
-          isPublic: true,
-          isClosed: true,
-          createdAt: true,
-          updatedAt: true,
-          userId: true,
-          ogpTitle: true,
-          ogpDescription: true,
-          ogpImagePath: true,
-        },
-      });
-
-      return thread;
+      return await getThreadInfoUseCase.execute({ id: input.id });
     }),
 
   getPublicThreadInfo: publicProcedure
     .input(ThreadSchema.pick({ id: true }))
     .query(async ({ input }) => {
-      const thread = await prisma.thread.findFirst({
-        where: {
-          id: input.id,
-          isPublic: true,
-        },
-        select: {
-          id: true,
-          title: true,
-          isPublic: true,
-          isClosed: true,
-          createdAt: true,
-          updatedAt: true,
-          userId: true,
-          ogpTitle: true,
-          ogpDescription: true,
-        },
-      });
-
+      const thread = await threadRepository.findById(input.id);
+      
+      // 公開されていない場合はnullを返す
+      if (!thread || !thread.isPublic) {
+        return null;
+      }
+      
       return thread;
     }),
 
   updateThreadInfo: protectedProcedure
     .input(ThreadSchema.pick({ id: true, title: true }))
     .mutation(async ({ ctx, input }) => {
-      return await prisma.thread.update({
-        where: {
-          id: input.id,
-          userId: ctx.currentUser?.id,
-        },
-        data: {
-          title: input.title,
-        },
+      // 権限チェック
+      const isOwned = await threadRepository.isOwnedByUser(input.id, ctx.currentUser.id);
+      if (!isOwned) {
+        throw new Error("権限がありません");
+      }
+      
+      return await threadRepository.update({
+        id: input.id,
+        title: input.title,
       });
     }),
 
@@ -141,14 +120,15 @@ export const threadRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return await prisma.thread.update({
-        where: {
-          id: input.id,
-          userId: ctx.currentUser?.id,
-        },
-        data: {
-          isPublic: input.isPublic,
-        },
+      // 権限チェック
+      const isOwned = await threadRepository.isOwnedByUser(input.id, ctx.currentUser.id);
+      if (!isOwned) {
+        throw new Error("権限がありません");
+      }
+      
+      return await threadRepository.update({
+        id: input.id,
+        isPublic: input.isPublic,
       });
     }),
 
@@ -160,14 +140,15 @@ export const threadRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return await prisma.thread.update({
-        where: {
-          id: input.id,
-          userId: ctx.currentUser?.id,
-        },
-        data: {
-          isClosed: input.isClosed,
-        },
+      // 権限チェック
+      const isOwned = await threadRepository.isOwnedByUser(input.id, ctx.currentUser.id);
+      if (!isOwned) {
+        throw new Error("権限がありません");
+      }
+      
+      return await threadRepository.update({
+        id: input.id,
+        isClosed: input.isClosed,
       });
     }),
 
@@ -181,16 +162,17 @@ export const threadRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return await prisma.thread.update({
-        where: {
-          id: input.id,
-          userId: ctx.currentUser.id,
-        },
-        data: {
-          ogpTitle: input.ogpTitle,
-          ogpDescription: input.ogpDescription,
-          ogpImagePath: input.ogpImagePath,
-        },
+      // 権限チェック
+      const isOwned = await threadRepository.isOwnedByUser(input.id, ctx.currentUser.id);
+      if (!isOwned) {
+        throw new Error("権限がありません");
+      }
+      
+      return await threadRepository.update({
+        id: input.id,
+        ogpTitle: input.ogpTitle,
+        ogpDescription: input.ogpDescription,
+        ogpImagePath: input.ogpImagePath,
       });
     }),
 
@@ -215,30 +197,15 @@ export const threadRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const threadWithPost = await prisma.thread.findFirst({
-        where: {
-          id: input.id,
-          isPublic: true,
-        },
-        select: {
-          id: true,
-          title: true,
-          ogpTitle: true,
-          ogpDescription: true,
-          ogpImagePath: true,
-          posts: {
-            where: {
-              isArchived: false,
-              parentId: null,
-            },
-            take: 1,
-            orderBy: {
-              createdAt: "asc",
-            },
-          },
-        },
-      });
+      const thread = await threadRepository.findById(input.id);
+      
+      // 公開されていない場合はnullを返す
+      if (!thread || !thread.isPublic) {
+        return { threadWithPost: null };
+      }
 
+      const threadWithPost = await threadRepository.findByIdWithPosts(input.id, false);
+      
       return { threadWithPost };
     }),
 
@@ -249,50 +216,15 @@ export const threadRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const threadWithPosts = await prisma.thread.findFirst({
-        where: {
-          id: input.id,
-          isPublic: true,
-        },
-        include: {
-          posts: {
-            where: {
-              isArchived: false,
-              parentId: null,
-            },
-            orderBy: {
-              createdAt: "asc",
-            },
-            include: {
-              children: {
-                where: {
-                  isArchived: false,
-                },
-                include: {
-                  user: {
-                    select: {
-                      id: true,
-                      name: true,
-                      image: true,
-                    },
-                  },
-                },
-                orderBy: {
-                  createdAt: "asc",
-                },
-              },
-              user: {
-                select: {
-                  id: true,
-                  name: true,
-                  image: true,
-                },
-              },
-            },
-          },
-        },
-      });
-
+      const thread = await threadRepository.findById(input.id);
+      
+      // 公開されていない場合はnullを返す
+      if (!thread || !thread.isPublic) {
+        return { threadWithPosts: null };
+      }
+      
+      const threadWithPosts = await threadRepository.findByIdWithPosts(input.id, false);
+      
       return { threadWithPosts };
     }),
 
