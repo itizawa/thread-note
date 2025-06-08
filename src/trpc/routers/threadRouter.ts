@@ -27,6 +27,7 @@ export const threadRouter = router({
     .input(
       z.object({
         searchQuery: z.string().trim().optional(),
+        tagIds: z.array(z.string()).optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
         sort: z.object({
@@ -39,6 +40,7 @@ export const threadRouter = router({
       return await listThreadsUseCase.execute({
         userId: ctx.currentUser.id,
         searchQuery: input.searchQuery,
+        tagIds: input.tagIds,
         cursor: input.cursor,
         limit: input.limit || 10,
         sort: input.sort,
@@ -51,6 +53,7 @@ export const threadRouter = router({
       z.object({
         userId: z.string(),
         searchQuery: z.string().trim().optional(),
+        tagIds: z.array(z.string()).optional(),
         cursor: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
         sort: z.object({
@@ -63,6 +66,7 @@ export const threadRouter = router({
       return await listThreadsUseCase.execute({
         userId: input?.userId,
         searchQuery: input.searchQuery,
+        tagIds: input.tagIds,
         cursor: input.cursor,
         limit: input.limit || 10,
         sort: input.sort,
@@ -301,12 +305,14 @@ export const threadRouter = router({
       z.object({
         body: PostSchema.shape.body.optional(),
         title: ThreadSchema.shape.title,
+        tagIds: z.array(z.string()).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       return await createThreadWithFIrstPostUseCase.execute({
         postBody: input.body,
         title: input.title,
+        tagIds: input.tagIds,
         currentUser: ctx.currentUser,
       });
     }),

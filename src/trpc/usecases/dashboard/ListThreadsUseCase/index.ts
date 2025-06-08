@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 type Args = {
   userId: User["id"];
   searchQuery?: string;
+  tagIds?: string[];
   cursor?: string;
   limit?: number;
   inCludePrivate?: boolean;
@@ -55,6 +56,17 @@ export class ListThreadsUseCase {
       userId: args.userId,
       ...(args.inCludePrivate ? {} : { isPublic: true }),
     };
+
+    // タグフィルタを追加
+    if (args.tagIds && args.tagIds.length > 0) {
+      baseWhere.tags = {
+        some: {
+          tagId: {
+            in: args.tagIds,
+          },
+        },
+      };
+    }
 
     if (!args.searchQuery) {
       return baseWhere;
@@ -111,6 +123,16 @@ export class ListThreadsUseCase {
           id: true,
           name: true,
           image: true,
+        },
+      },
+      tags: {
+        select: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     };

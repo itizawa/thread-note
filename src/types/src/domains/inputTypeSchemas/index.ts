@@ -11,6 +11,8 @@ export { ThreadScalarFieldEnumSchema } from './ThreadScalarFieldEnumSchema';
 export { PostScalarFieldEnumSchema } from './PostScalarFieldEnumSchema';
 export { PlanScalarFieldEnumSchema } from './PlanScalarFieldEnumSchema';
 export { PlanSubscriptionScalarFieldEnumSchema } from './PlanSubscriptionScalarFieldEnumSchema';
+export { TagScalarFieldEnumSchema } from './TagScalarFieldEnumSchema';
+export { ThreadTagScalarFieldEnumSchema } from './ThreadTagScalarFieldEnumSchema';
 export { SortOrderSchema } from './SortOrderSchema';
 export { QueryModeSchema } from './QueryModeSchema';
 export { NullsOrderSchema } from './NullsOrderSchema';

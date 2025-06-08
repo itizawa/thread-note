@@ -9,3 +9,5 @@ export * from './ThreadSchema';
 export * from './PostSchema';
 export * from './PlanSchema';
 export * from './PlanSubscriptionSchema';
+export * from './TagSchema';
+export * from './ThreadTagSchema';

@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Input } from "@/shared/ui/input";
+import { TagInput } from "@/shared/ui/tag-input";
 import { TEMPLATES } from "./consts";
 
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
@@ -26,6 +27,7 @@ export function CreateNewThreadForm() {
 
   const [title, setTitle] = useState("");
   const [body, setBody] = React.useState("");
+  const [tags, setTags] = useState<{ id: string; name: string }[]>([]);
 
   const { isPending, enqueueServerAction } = useServerAction();
   const bothEmpty = title.trim().length === 0 && body.trim().length === 0;
@@ -43,6 +45,7 @@ export function CreateNewThreadForm() {
         createThreadWithFirstPost({
           title,
           body,
+          tagIds: tags.map((tag) => tag.id),
         }),
       error: {
         text: "スレッドの作成に失敗しました",
@@ -108,6 +111,12 @@ export function CreateNewThreadForm() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <TagInput
+        value={tags}
+        onChange={setTags}
+        placeholder="タグを追加"
+        className="bg-white"
+      />
       <div className="rounded-lg border p-4 bg-white">
         <PostForm
           textarea={{

@@ -5,10 +5,12 @@ export class CreateThreadWithFIrstPostUseCase {
   async execute({
     postBody,
     title,
+    tagIds,
     currentUser,
   }: {
     postBody?: Post["body"];
     title?: Thread["title"];
+    tagIds?: string[];
     currentUser: User;
   }): Promise<{ thread: Thread }> {
     const thread = await prisma.thread.create({
@@ -23,6 +25,13 @@ export class CreateThreadWithFIrstPostUseCase {
             : [],
         },
         userId: currentUser.id,
+        tags: tagIds?.length
+          ? {
+              create: tagIds.map((tagId) => ({
+                tagId,
+              })),
+            }
+          : undefined,
       },
     });
 
