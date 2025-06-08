@@ -34,9 +34,10 @@ type Post = NonNullable<
 interface Props {
   post: Post | Post["children"][number];
   isPublicThread: boolean;
+  threadStatus?: string;
 }
 
-export function PostPaper({ post, isPublicThread }: Props) {
+export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
   const isParentPost = "children" in post;
   const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);
@@ -229,12 +230,12 @@ export function PostPaper({ post, isPublicThread }: Props) {
                   <div className="w-[2px] h-full bg-gray-200" />
                 </div>
                 <div className="w-full pl-6">
-                  <PostPaper post={v} isPublicThread={isPublicThread} />
+                  <PostPaper post={v} isPublicThread={isPublicThread} threadStatus={threadStatus} />
                 </div>
               </div>
             );
           })}
-          {!post.isArchived && (
+          {!post.isArchived && threadStatus !== "CLOSED" && (
             <ReplyForm threadId={post.threadId} parentPostId={post.id} />
           )}
         </div>
