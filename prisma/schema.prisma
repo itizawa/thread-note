@@ -156,6 +156,7 @@ model Thread {
   lastPostedAt DateTime @default(now()) @map("last_post_at") @db.Timestamptz()
 
   posts Post[]
+  tags ThreadTag[]
 
   @@map("threads")
   @@index([userId])
@@ -207,4 +208,34 @@ model PlanSubscription {
   plan Plan @relation(fields: [planId], references: [id], onDelete: Cascade)
 
   @@map("plan_subscriptions")
+}
+
+model Tag {
+  id         String  @id @default(uuid())
+
+  name String @unique
+
+  threads ThreadTag[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("tags")
+}
+
+model ThreadTag {
+  id         String  @id @default(uuid())
+
+  threadId String @map("thread_id")
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  tagId String @map("tag_id")
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@unique([threadId, tagId])
+  @@map("thread_tags")
+  @@index([threadId])
+  @@index([tagId])
 }
