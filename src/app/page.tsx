@@ -8,12 +8,14 @@ import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getThreadCount } from "./actions/threadActions";
 import { getCurrentUser } from "./actions/userActions";
 
 export const metadata: Metadata = generateMetadataObject();
 
 export default async function Home() {
   const currentUser = await getCurrentUser();
+  const threadCount = await getThreadCount();
 
   return (
     <HydrateClient>
@@ -87,6 +89,9 @@ export default async function Home() {
             </h2>
             <p className="text-xl text-gray-600 mb-8">
               基本機能は全て無料で使用できます
+            </p>
+            <p className="text-xl text-gray-600 mb-8 font-bold">
+              累計 {threadCount} 個のスレッドが作成されました！
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="p-6 bg-white rounded-2xl shadow-md">
