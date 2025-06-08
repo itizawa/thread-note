@@ -335,12 +335,8 @@ export const threadRouter = router({
       });
     }),
 
-  countPublicThreads: publicProcedure.query(async () => {
-    const count = await prisma.thread.count({
-      where: {
-        isPublic: true,
-      },
-    });
+  countThreads: publicProcedure.query(async () => {
+    const count = await prisma.thread.count();
 
     return count;
   }),
