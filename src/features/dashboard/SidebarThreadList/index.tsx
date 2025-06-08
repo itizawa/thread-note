@@ -14,9 +14,10 @@ import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
-import { MoreHorizontal, PlaneTakeoff, Trash2 } from "lucide-react";
+import { ListCheck, MoreHorizontal, PlaneTakeoff, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type Thread =
   inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]["threads"][number];
@@ -69,10 +70,32 @@ function PostListItemSkeleton() {
 function PostListItem({ thread }: { thread: Thread }) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
+  const utils = trpc.useUtils();
+  const updateThreadStatusMutation = trpc.thread.updateThreadStatus.useMutation(
+    {
+      onSuccess: () => {
+        toast.success("スレッドのステータスを更新しました");
+        utils.thread.listThreadsByCurrentUser.invalidate();
+      },
+      onError: (error) => {
+        toast.error("ステータス更新に失敗しました: " + error.message);
+      },
+    }
+  );
+
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDeleteDialogOpen(true);
+  };
+
+  const handleCloseThread = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    updateThreadStatusMutation.mutate({
+      id: thread.id,
+      status: "CLOSED",
+    });
   };
 
   return (
@@ -95,6 +118,16 @@ function PostListItem({ thread }: { thread: Thread }) {
                   スレッドの出力
                 </Link>
               </DropdownMenuItem>
+              {thread.status === "WIP" && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItemWithIcon
+                    icon={ListCheck}
+                    text="Closedにする"
+                    onClick={handleCloseThread}
+                  />
+                </>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItemWithIcon
                 icon={Trash2}
