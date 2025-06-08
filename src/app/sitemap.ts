@@ -10,6 +10,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/terms`,
     },
+    {
+      url: `${baseUrl}/privacy`,
+    },
   ];
 
   // const postPaths: MetadataRoute.Sitemap = pages.map((page) => ({

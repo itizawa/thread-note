@@ -10,6 +10,9 @@ export const Footer = () => (
           <Link href={urls.terms} className="text-gray-300 hover:text-white">
             利用規約
           </Link>
+          <Link href={urls.privacy} className="text-gray-300 hover:text-white">
+            プライバシーポリシー
+          </Link>
           <a
             href="https://site.wai-ware.com/"
             className="text-gray-300 hover:text-white"
