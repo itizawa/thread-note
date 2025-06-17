@@ -80,7 +80,7 @@
     "@eslint/eslintrc": "^3",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@tailwindcss/postcss": "^4.0.0",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
