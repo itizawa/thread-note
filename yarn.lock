@@ -20,17 +20,6 @@
   resolved "https://registry.yarnpkg.com/@antfu/ni/-/ni-0.21.4.tgz#a6c1e3d6fbd86e4cb36ec5ff97302ae8878f3eee"
   integrity sha512-O0Uv9LbLDSoEg26fnMDdDRiPwFJnQSoD4WnrflDwKCJm8Cx/0mV4cGxwBLXan5mGIrpK4Dd7vizf4rQm0QCEAA==
 
-"@auth/core@0.39.1":
-  version "0.39.1"
-  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.39.1.tgz#2b42697154f29b9f8c4c76f6978ed94ea6e19219"
-  integrity sha512-McD8slui0oOA1pjR5sPjLPl5Zm//nLP/8T3kr8hxIsvNLvsiudYvPHhDFPjh1KcZ2nFxCkZmP6bRxaaPd/AnLA==
-  dependencies:
-    "@panva/hkdf" "^1.2.1"
-    jose "^6.0.6"
-    oauth4webapi "^3.3.0"
-    preact "10.24.3"
-    preact-render-to-string "6.5.11"
-
 "@auth/core@0.40.0":
   version "0.40.0"
   resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.40.0.tgz#973262fbbb935d4fd9c3b2a0b32003c2719530c7"
@@ -43,11 +32,11 @@
     preact-render-to-string "6.5.11"
 
 "@auth/prisma-adapter@^2.7.4":
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.9.1.tgz#71b0254b58f4f7f7dd38b9275d8635db475361c8"
-  integrity sha512-0ZfjOPt3Ci8yx8SMCydAuBAjR/exI/8SAr6JDVYtqDFhm0JaV1XuHYgEzgzXZZfW2+WKC29LowCWxdCjoAz9kQ==
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.10.0.tgz#1d0998e062975e31a6cd2ffa4b07142f5f786a5e"
+  integrity sha512-EliOQoTjGK87jWWqnJvlQjbR4PjQZQqtwRwPAe108WwT9ubuuJJIrL68aNnQr4hFESz6P7SEX2bZy+y2yL37Gw==
   dependencies:
-    "@auth/core" "0.39.1"
+    "@auth/core" "0.40.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.27.1":
   version "7.27.1"
