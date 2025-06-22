@@ -31,6 +31,17 @@
     preact "10.24.3"
     preact-render-to-string "6.5.11"
 
+"@auth/core@0.40.0":
+  version "0.40.0"
+  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.40.0.tgz#973262fbbb935d4fd9c3b2a0b32003c2719530c7"
+  integrity sha512-n53uJE0RH5SqZ7N1xZoMKekbHfQgjd0sAEyUbE+IYJnmuQkbvuZnXItCU7d+i7Fj8VGOgqvNO7Mw4YfBTlZeQw==
+  dependencies:
+    "@panva/hkdf" "^1.2.1"
+    jose "^6.0.6"
+    oauth4webapi "^3.3.0"
+    preact "10.24.3"
+    preact-render-to-string "6.5.11"
+
 "@auth/prisma-adapter@^2.7.4":
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.9.1.tgz#71b0254b58f4f7f7dd38b9275d8635db475361c8"
@@ -6231,11 +6242,11 @@ new-github-issue-url@0.2.1:
   integrity sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==
 
 next-auth@^5.0.0-beta.25:
-  version "5.0.0-beta.28"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.28.tgz#6a7673f858980aaa92668d5c41e5ec3d800866bc"
-  integrity sha512-2RDR1h3DJb4nizcd5UBBwC2gtyP7j/jTvVLvEtDaFSKUWNfou3Gek2uTNHSga/Q4I/GF+OJobA4mFbRaWJgIDQ==
+  version "5.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.29.tgz#f685ae8c8bf8feb3f45107d3e6dbd7cdc8c01985"
+  integrity sha512-Ukpnuk3NMc/LiOl32njZPySk7pABEzbjhMUFd5/n10I0ZNC7NCuVv8IY2JgbDek2t/PUOifQEoUiOOTLy4os5A==
   dependencies:
-    "@auth/core" "0.39.1"
+    "@auth/core" "0.40.0"
 
 next-nprogress-bar@^2.4.7:
   version "2.4.7"
@@ -6354,9 +6365,9 @@ nth-check@^2.0.1:
     boolbase "^1.0.0"
 
 oauth4webapi@^3.3.0:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.5.1.tgz#93154323df5c2e09bf8884c26693596eaaafc17a"
-  integrity sha512-txg/jZQwcbaF7PMJgY7aoxc9QuCxHVFMiEkDIJ60DwDz3PbtXPQnrzo+3X4IRYGChIwWLabRBRpf1k9hO9+xrQ==
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.5.3.tgz#91fbb6da50fae4f33073b4dc1900396a41a18d57"
+  integrity sha512-2bnHosmBLAQpXNBLOvaJMyMkr4Yya5ohE5Q9jqyxiN+aa7GFCzvDN1RRRMrp0NkfqRR2MTaQNkcSUCCjILD9oQ==
 
 object-assign@^4.1.1:
   version "4.1.1"
