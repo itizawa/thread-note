@@ -1806,9 +1806,9 @@
   integrity sha512-ZJOgCy/z2qpZXWaj/oxvodDx07XcQa9BF92c0oINjHkoqUPsmm3uG08HpTaviviZ/N9eP1f9CM7mKSEkIo7O1Q==
 
 "@tanstack/react-form@^1.3.1":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.14.0.tgz#83005e76db1d8ed737dbbf26ea18123ead4105b5"
-  integrity sha512-jdxf1n03xUHDvGa/NqBzd9HTdw4QnNZYf4oYmpJJxmHLgtxQtx/O20xEx9ODUP5DfbtU+mAlrbmiOx/7b4JO7Q==
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.14.1.tgz#188687f7928b049f184ccfd88bcc9e23f18924dd"
+  integrity sha512-Ioja3zcLZj082OdCH6pFNv15fD4UTfnJgKIXxY7Iumio8EcYLXSuxzanqNWewFvftshUFHknSEa7QtyOAkFs0Q==
   dependencies:
     "@tanstack/form-core" "1.14.0"
     "@tanstack/react-store" "^0.7.3"
