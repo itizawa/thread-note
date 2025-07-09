@@ -43,7 +43,7 @@
     "@trpc/react-query": "^11.0.0-rc.755",
     "@trpc/server": "^11.0.0-rc.755",
     "@vercel/blob": "^1.0.0",
-    "@vercel/og": "^0.6.5",
+    "@vercel/og": "^0.7.0",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
     "clsx": "^2.1.1",
