@@ -2294,9 +2294,9 @@
     undici "^5.28.4"
 
 "@vercel/og@^0.8.0":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@vercel/og/-/og-0.8.2.tgz#e3be87819025945a0182d785a878d8bb9c8c76dc"
-  integrity sha512-7B/futewgJj7TLDj6fMp+USBRIt3TqtwomEtX/jVS+g+dZySjXUYBsWD2Sz3Y6hFR34xAXWDQaMvIic313h0Nw==
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@vercel/og/-/og-0.8.4.tgz#54fda2960230fd09c9a10205201b37a603b569f5"
+  integrity sha512-661yVXg8uMtTkYS8OC8xn4bIPXEZkHvvIFFIZ5pbrdyeIMo2n1y6w6km1CpFGaoG+vUli9611k3SC/nWlFv6cw==
   dependencies:
     "@resvg/resvg-wasm" "2.4.0"
     satori "0.16.0"
