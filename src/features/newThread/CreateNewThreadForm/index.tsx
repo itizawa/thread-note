@@ -25,6 +25,7 @@ export function CreateNewThreadForm() {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
+  const [emoji, setEmoji] = useState("");
   const [body, setBody] = React.useState("");
 
   const { isPending, enqueueServerAction } = useServerAction();
@@ -42,6 +43,7 @@ export function CreateNewThreadForm() {
       action: () =>
         createThreadWithFirstPost({
           title,
+          emoji,
           body,
         }),
       error: {
@@ -79,14 +81,25 @@ export function CreateNewThreadForm() {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <Input
-          placeholder="タイトルを入力してください"
-          className="bg-white shadow-none flex-1"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          onKeyDown={handleKeyPress}
-          forceFocus
-        />
+        <div className="flex items-center gap-2 flex-1">
+          <Input
+            placeholder="😀"
+            className="bg-white shadow-none"
+            style={{ width: "70px" }}
+            value={emoji}
+            onChange={(e) => setEmoji(e.target.value)}
+            onKeyDown={handleKeyPress}
+            maxLength={4}
+          />
+          <Input
+            placeholder="タイトルを入力してください"
+            className="bg-white shadow-none flex-1"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={handleKeyPress}
+            forceFocus
+          />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="bg-white">
