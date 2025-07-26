@@ -87,7 +87,7 @@
     "@types/react-virtualized": "^9.22.2",
     "@types/url-join": "^5.0.0",
     "@types/ws": "^8.5.14",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
     "jest": "^30.0.0",
