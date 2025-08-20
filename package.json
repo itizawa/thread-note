@@ -89,7 +89,7 @@
     "@types/ws": "^8.5.14",
     "cross-env": "^10.0.0",
     "eslint": "^9",
-    "eslint-config-next": "15.4.7",
+    "eslint-config-next": "15.5.0",
     "jest": "^30.0.0",
     "jest-environment-node": "^30.0.0-beta.3",
     "postcss": "^8",
