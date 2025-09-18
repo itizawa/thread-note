@@ -1784,10 +1784,10 @@
     postcss "^8.4.41"
     tailwindcss "4.1.13"
 
-"@tanstack/devtools-event-client@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@tanstack/devtools-event-client/-/devtools-event-client-0.2.4.tgz#ce9a5ef948add8ec5da1626c4e0f24b11ca1b966"
-  integrity sha512-oqRF1KNYtVUcJV/xXDf3OdJ+wynIcrVxML5a+JBaNFgnyclu14gV1sxi8QfuNMznreyvNxajJbZMS8HHtO+MTA==
+"@tanstack/devtools-event-client@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/devtools-event-client/-/devtools-event-client-0.2.5.tgz#0b793bfb94fe2ed3ede1d87768056768b5a893db"
+  integrity sha512-iVdqw879KETXyyPHc3gQR5Ld0GjlPLk7bKenBUhzr3+z1FiQZvsbfgYfRRokTSPcgwANAV7aA2Uv05nx5xWT8A==
 
 "@tanstack/form-core@0.42.1":
   version "0.42.1"
@@ -1796,13 +1796,14 @@
   dependencies:
     "@tanstack/store" "^0.7.0"
 
-"@tanstack/form-core@1.21.1":
-  version "1.21.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.21.1.tgz#4d1e3f2ef152d5db989d33a0445e1923199682c7"
-  integrity sha512-JoMIRa/VpMRtlFp9LGun8otLHycYI2jE7Pg5e9ziNxoSkAIlG9FENeZ3E62et3bEU64hU2yG4DlUqyDjj1wwoA==
+"@tanstack/form-core@1.21.2":
+  version "1.21.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.21.2.tgz#63ce98f67588e5be2e1ebc3e82662d8bf3de5e44"
+  integrity sha512-Yp9ZFLSXDZzWapR+nD++YwC9zN8dxdBzWzleHkN184VzIfOhtVMrR+95QSUuxzS0nFFttd2Egc7XLte7/Osyag==
   dependencies:
-    "@tanstack/devtools-event-client" "^0.2.4"
+    "@tanstack/devtools-event-client" "^0.2.5"
     "@tanstack/store" "^0.7.5"
+    uuid "^13.0.0"
 
 "@tanstack/query-core@5.89.0":
   version "5.89.0"
@@ -1810,11 +1811,11 @@
   integrity sha512-joFV1MuPhSLsKfTzwjmPDrp8ENfZ9N23ymFu07nLfn3JCkSHy0CFgsyhHTJOmWaumC/WiNIKM0EJyduCF/Ih/Q==
 
 "@tanstack/react-form@^1.3.1":
-  version "1.21.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.21.1.tgz#e2ea2a9b25689dc523bebc152be295779cec7209"
-  integrity sha512-gtDJGs7Yp1Y23dZ9kWT+MxA8BAwKt91SXSbPFTtpVwsDld6OjXwPHs5sjAeFjzbokgt9/8pdf+N205UMLYZA6w==
+  version "1.21.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.21.2.tgz#5bacf8683df72e222d1ef69f7162256b5a0e637f"
+  integrity sha512-MeKD9ahwG287NlBVGHz6k+6C56BK1OsbcOiay8iVbABzc31aPKQjttw8psX9VgatJaI6rzVEOlGm+Peboih/FA==
   dependencies:
-    "@tanstack/form-core" "1.21.1"
+    "@tanstack/form-core" "1.21.2"
     "@tanstack/react-store" "^0.7.5"
     decode-formdata "^0.9.0"
     devalue "^5.3.2"
@@ -8400,6 +8401,11 @@ uuid@9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
   integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
+
+uuid@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-13.0.0.tgz#263dc341b19b4d755eb8fe36b78d95a6b65707e8"
+  integrity sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==
 
 uuid@^3.3.2:
   version "3.4.0"
