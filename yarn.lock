@@ -1858,24 +1858,24 @@
     "@tanstack/form-core" "0.42.1"
 
 "@trpc/client@^11.0.0-rc.755":
-  version "11.5.1"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.5.1.tgz#f11c10f48baf977d605ce71e65205cb219301eeb"
-  integrity sha512-7I6JJ1I1lxv3S87ht3FAIZi0XxQa7hnQ9K+Oo5BH7cGO8ZtWe9Ftq6ItdkuDfpsnsRPcR2h158AMWbNs/iptqg==
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.6.0.tgz#e3015a905870c94045a391e6c02ce956ed8e8030"
+  integrity sha512-DyWbYk2hd50BaVrXWVkaUnaSwgAF5g/lfBkXtkF1Aqlk6BtSzGUo3owPkgqQO2I5LwWy1+ra9TsSfBBvIZpTwg==
 
 "@trpc/react-query@^11.0.0-rc.755":
-  version "11.5.1"
-  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.5.1.tgz#52bfbc307aa809b3db02a28ca74e2619677ac468"
-  integrity sha512-Y+e0Lp7na1LAjoYqtHVjxpfayOuvvnuchS723b4dsI/V0h3irBuI+bx38S3m7RgaIh/L1av1SldFrKIauk+r/A==
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-11.6.0.tgz#9300a7dbdaf5d87a4ce714928aea5de0687384b7"
+  integrity sha512-xljUCzROa23cC89SEd5fwbKiWrGus2NDwtg8zszPlsFvaByWW50Jx6y5sLPXhp/g1FBsEtCInNNhEEL0UCHwGw==
 
 "@trpc/server@^11.0.0-rc.755":
-  version "11.5.1"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.5.1.tgz#c797e621b7ff5906866e875acdf4da5870f19d90"
-  integrity sha512-KIDzHRS5m8U1ncPwjgtOtPWK9lNO0kYL7b+lnvKXRqowSAQIEC/z6y7g/dkt4Aqv3DKI/STLydt2/afrP1QrxQ==
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.6.0.tgz#beafa9d366031cfcb2e338120c8276141df5135a"
+  integrity sha512-skTso0AWbOZck40jwNeYv++AMZXNWLUWdyk+pB5iVaYmEKTuEeMoPrEudR12VafbEU6tZa8HK3QhBfTYYHDCdg==
 
 "@tybys/wasm-util@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@tybys/wasm-util/-/wasm-util-0.10.0.tgz#2fd3cd754b94b378734ce17058d0507c45c88369"
-  integrity sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@tybys/wasm-util/-/wasm-util-0.10.1.tgz#ecddd3205cf1e2d5274649ff0eedd2991ed7f414"
+  integrity sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==
   dependencies:
     tslib "^2.4.0"
 
