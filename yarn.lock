@@ -6570,9 +6570,9 @@ open@7.4.2:
     is-wsl "^2.1.1"
 
 openai@^5.0.0:
-  version "5.23.1"
-  resolved "https://registry.yarnpkg.com/openai/-/openai-5.23.1.tgz#5e12847cca116a36c03a97d818f182ab3eaa39dc"
-  integrity sha512-APxMtm5mln4jhKhAr0d5zP9lNsClx4QwJtg8RUvYSSyxYCTHLNJnLEcSHbJ6t0ori8Pbr9HZGfcPJ7LEy73rvQ==
+  version "5.23.2"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-5.23.2.tgz#f13e2dc2ef6b88aab6a9b97cdc68d41a1d083c68"
+  integrity sha512-MQBzmTulj+MM5O8SKEk/gL8a7s5mktS9zUtAkU257WjvobGc9nKcBuVwjyEEcb9SI8a8Y2G/mzn3vm9n1Jlleg==
 
 optionator@^0.9.3:
   version "0.9.4"
