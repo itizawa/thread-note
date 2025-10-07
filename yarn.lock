@@ -1812,10 +1812,10 @@
   dependencies:
     "@tanstack/store" "^0.7.0"
 
-"@tanstack/form-core@1.24.1":
-  version "1.24.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.24.1.tgz#4b6b64d6df568a75834882b1aa8ad0bf30d5598a"
-  integrity sha512-nI9Ad5JFHQjADkUQQtl7ajb7Lsd4sQlR0b5BmKDpJfZSPH/BF7+uUC3m91dM1bucOqIDzTTXr0QROZODnY+www==
+"@tanstack/form-core@1.24.2":
+  version "1.24.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.24.2.tgz#091e5aab457780f854d66e1edde2d000c53aa654"
+  integrity sha512-qc2YFhM0PsxjLbZ7Fn5ErX9kz/Wr6gmd4m47Nf3OFfsFbI1O2B5AQLwt9OApMs19CDeNiqe/zTSK+ayeHaDJNQ==
   dependencies:
     "@tanstack/devtools-event-client" "^0.3.2"
     "@tanstack/store" "^0.7.7"
@@ -1826,11 +1826,11 @@
   integrity sha512-k/TcR3YalnzibscALLwxeiLUub6jN5EDLwKDiO7q5f4ICEoptJ+n9+7vcEFy5/x/i6Q+Lb/tXrsKCggf5uQJXQ==
 
 "@tanstack/react-form@^1.3.1":
-  version "1.23.5"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.23.5.tgz#0286972fa21c8b399c8b234d409dc56ca0389fe5"
-  integrity sha512-WygrvTK7Fn3RmSBG5V3FIzH2Z+3FDbau7kaqa/opLiGsX2sx98ZAPvF5umXCe3fmppfJe+nBFYuqY+gaUrSf7w==
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.23.6.tgz#c2c3e7642377bc57c6f936d5d94e664607ae7c08"
+  integrity sha512-cz8Nskpe2zo24lJd0ky0hO7NOqV/U7drQ2XiK3bxt94v5hnMQtUOno6mtJ6Tvwy0p8xKwSN76SvnpU+tp8YMQA==
   dependencies:
-    "@tanstack/form-core" "1.24.1"
+    "@tanstack/form-core" "1.24.2"
     "@tanstack/react-store" "^0.7.7"
     decode-formdata "^0.9.0"
     devalue "^5.3.2"
@@ -8383,9 +8383,9 @@ use-sidecar@^1.1.3:
     tslib "^2.0.0"
 
 use-sync-external-store@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.5.0.tgz#55122e2a3edd2a6c106174c27485e0fd59bcfca0"
-  integrity sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
+  integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
