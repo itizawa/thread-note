@@ -23,12 +23,23 @@
     preact "10.24.3"
     preact-render-to-string "6.5.11"
 
-"@auth/prisma-adapter@^2.7.4":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.10.0.tgz#1d0998e062975e31a6cd2ffa4b07142f5f786a5e"
-  integrity sha512-EliOQoTjGK87jWWqnJvlQjbR4PjQZQqtwRwPAe108WwT9ubuuJJIrL68aNnQr4hFESz6P7SEX2bZy+y2yL37Gw==
+"@auth/core@0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.41.0.tgz#6a57e18ab0dd0fc2606f9f0f7460a67190966161"
+  integrity sha512-Wd7mHPQ/8zy6Qj7f4T46vg3aoor8fskJm6g2Zyj064oQ3+p0xNZXAV60ww0hY+MbTesfu29kK14Zk5d5JTazXQ==
   dependencies:
-    "@auth/core" "0.40.0"
+    "@panva/hkdf" "^1.2.1"
+    jose "^6.0.6"
+    oauth4webapi "^3.3.0"
+    preact "10.24.3"
+    preact-render-to-string "6.5.11"
+
+"@auth/prisma-adapter@^2.7.4":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@auth/prisma-adapter/-/prisma-adapter-2.11.0.tgz#5142a72212344a5b1b9a1a8bfb86ebfbe4e88921"
+  integrity sha512-gp1vpO7R7HxqQIDVFG4FXpjd9WsXg+vZsaqXOYyNCWugcx0scU2XNfhEiw3FnGyIaqRD4fexBf40LMJH8HmZ8A==
+  dependencies:
+    "@auth/core" "0.41.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.27.1":
   version "7.27.1"
@@ -5417,9 +5428,9 @@ jiti@^2.4.2, jiti@^2.6.0:
   integrity sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==
 
 jose@^6.0.6:
-  version "6.0.11"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-6.0.11.tgz#0b7ea8b3b21a1bda5e00255a044c3a0e43270882"
-  integrity sha512-QxG7EaliDARm1O1S8BGakqncGT9s25bKL1WSf6/oa17Tkqwi8D2ZNglqCF+DsYF88/rV66Q/Q2mFAy697E1DUg==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-6.1.0.tgz#96285365689d16f2845a353964d2284bf19f464c"
+  integrity sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -6469,9 +6480,9 @@ nypm@^0.6.0:
     tinyexec "^1.0.1"
 
 oauth4webapi@^3.3.0:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.5.3.tgz#91fbb6da50fae4f33073b4dc1900396a41a18d57"
-  integrity sha512-2bnHosmBLAQpXNBLOvaJMyMkr4Yya5ohE5Q9jqyxiN+aa7GFCzvDN1RRRMrp0NkfqRR2MTaQNkcSUCCjILD9oQ==
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.8.2.tgz#500d1979038c14656f3f24ff1eb501ff3993115b"
+  integrity sha512-FzZZ+bht5X0FKe7Mwz3DAVAmlH1BV5blSak/lHMBKz0/EBMhX6B10GlQYI51+oRp8ObJaX0g6pXrAxZh5s8rjw==
 
 object-assign@^4.1.1:
   version "4.1.1"
