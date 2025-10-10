@@ -149,6 +149,7 @@ model Thread {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   title String?
+  emoji String?
   isPublic Boolean @default(false) @map("is_public")
   status ThreadStatus @default(WIP) @map("status")
 
