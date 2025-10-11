@@ -1812,9 +1812,9 @@
     tailwindcss "4.1.14"
 
 "@tanstack/devtools-event-client@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/devtools-event-client/-/devtools-event-client-0.3.2.tgz#3e187097f03d55cd0728c048a61e69ad6d4453db"
-  integrity sha512-gkvph/YMCFUfAca75EsJBJnhbKitDGix7vdEcT/3lAV+eyGSv+uECYG43apVQN4yLJKnV6mzcNvGzOhDhb72gg==
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/devtools-event-client/-/devtools-event-client-0.3.3.tgz#429ca3d84752d7a0db602513cf9a02cd56c0ee11"
+  integrity sha512-RfV+OPV/M3CGryYqTue684u10jUt55PEqeBOnOtCe6tAmHI9Iqyc8nHeDhWPEV9715gShuauFVaMc9RiUVNdwg==
 
 "@tanstack/form-core@0.42.1":
   version "0.42.1"
@@ -1823,10 +1823,10 @@
   dependencies:
     "@tanstack/store" "^0.7.0"
 
-"@tanstack/form-core@1.24.2":
-  version "1.24.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.24.2.tgz#091e5aab457780f854d66e1edde2d000c53aa654"
-  integrity sha512-qc2YFhM0PsxjLbZ7Fn5ErX9kz/Wr6gmd4m47Nf3OFfsFbI1O2B5AQLwt9OApMs19CDeNiqe/zTSK+ayeHaDJNQ==
+"@tanstack/form-core@1.24.3":
+  version "1.24.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/form-core/-/form-core-1.24.3.tgz#2bd0cf4600312037d4af2f0acab93fe2d93eb948"
+  integrity sha512-e+HzSD49NWr4aIqJWtPPzmi+/phBJAP3nSPN8dvxwmJWqAxuB/cH138EcmCFf3+oA7j3BXvwvTY0I+8UweGPjQ==
   dependencies:
     "@tanstack/devtools-event-client" "^0.3.2"
     "@tanstack/store" "^0.7.7"
@@ -1837,11 +1837,11 @@
   integrity sha512-k/TcR3YalnzibscALLwxeiLUub6jN5EDLwKDiO7q5f4ICEoptJ+n9+7vcEFy5/x/i6Q+Lb/tXrsKCggf5uQJXQ==
 
 "@tanstack/react-form@^1.3.1":
-  version "1.23.6"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.23.6.tgz#c2c3e7642377bc57c6f936d5d94e664607ae7c08"
-  integrity sha512-cz8Nskpe2zo24lJd0ky0hO7NOqV/U7drQ2XiK3bxt94v5hnMQtUOno6mtJ6Tvwy0p8xKwSN76SvnpU+tp8YMQA==
+  version "1.23.7"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-form/-/react-form-1.23.7.tgz#d2ae6bc9356a5f41925a540f4d7ff66890c6e5e8"
+  integrity sha512-p/j9Gi2+s135sOjj48RjM+6xZQr1FVpliQlETLYBEGmmmxWHgYYs2b62mTDSnuv7AqtuZhpQ+t0CRFVfbQLsFA==
   dependencies:
-    "@tanstack/form-core" "1.24.2"
+    "@tanstack/form-core" "1.24.3"
     "@tanstack/react-store" "^0.7.7"
     decode-formdata "^0.9.0"
     devalue "^5.3.2"
