@@ -74,7 +74,6 @@ export function CreateNewPostForm({ threadId }: Props) {
             value: body,
             onChange: handleContentChange,
             onKeyPress: handleKeyPress,
-            forceFocus: !isThreadClosed,
           }}
           formState={{
             isDisabled: Boolean(isDisabled),
