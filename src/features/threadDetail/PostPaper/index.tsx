@@ -12,9 +12,9 @@ import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import { Button } from "@/shared/ui/button";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
 import { Tooltip } from "@/shared/ui/Tooltip";
+import { Button } from "@/shared/ui/button";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
@@ -196,7 +196,7 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
               value: body,
               onChange: handleContentChange,
               onKeyPress: handleKeyPress,
-              forceFocus: true,
+              forceFocus: false,
             }}
             formState={{
               isDisabled,
