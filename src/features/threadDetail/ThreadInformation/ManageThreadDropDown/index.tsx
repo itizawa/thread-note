@@ -1,6 +1,7 @@
 import { DeleteThreadDialog } from "@/entities/thread/DeleteThreadDialog";
+import { IconButton } from "@/shared/components/IconButton";
 import { urls } from "@/shared/consts/urls";
-import { Button } from "@/shared/ui/button";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,17 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-icon";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
+import { MoreHorizOutlined } from "@mui/icons-material";
 import { ThreadStatus } from "@prisma/client";
-import {
-  Archive,
-  ListCheck,
-  MoreHorizontal,
-  Pencil,
-  PlaneTakeoff,
-  Trash2,
-} from "lucide-react";
+import { Archive, ListCheck, Pencil, PlaneTakeoff, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -71,10 +65,9 @@ export function ManageThreadDropDown({
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Tooltip content="スレッドを操作">
-            <Button variant="ghost" size="icon" className="hover:bg-gray-200">
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">メニューを開く</span>
-            </Button>
+            <IconButton size="small">
+              <MoreHorizOutlined />
+            </IconButton>
           </Tooltip>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
