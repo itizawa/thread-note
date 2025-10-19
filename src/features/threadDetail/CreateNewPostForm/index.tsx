@@ -2,10 +2,11 @@
 
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
+import { Box } from "@/shared/components/Box";
+import { sizeNumbers } from "@/shared/consts/size";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
-import { Archive } from "lucide-react";
 import React from "react";
 
 type Props = {
@@ -15,12 +16,8 @@ export function CreateNewPostForm({ threadId }: Props) {
   const utils = trpc.useUtils();
   const { isPending, enqueueServerAction } = useServerAction();
   const [body, setBody] = React.useState("");
-  const { data: threadInfo } = trpc.thread.getThreadInfo.useQuery({
-    id: threadId,
-  });
 
-  const isThreadClosed = threadInfo?.status === "CLOSED";
-  const isDisabled = isPending || body.trim().length === 0 || isThreadClosed;
+  const isDisabled = isPending || body.trim().length === 0;
 
   const handleSubmit = () => {
     enqueueServerAction({
@@ -60,20 +57,44 @@ export function CreateNewPostForm({ threadId }: Props) {
   };
 
   return (
-    <div className="rounded-lg border p-4 bg-white">
-      {isThreadClosed ? (
-        <div className="flex items-center justify-center p-4 text-gray-500">
-          <div className="flex items-center space-x-2">
-            <Archive className="h-5 w-5" />
-            <span>このスレッドは終了しています。新しい投稿はできません。</span>
-          </div>
-        </div>
-      ) : (
+    <Box
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        left: {
+          xs: 0,
+          md: sizeNumbers.sidebarWidth,
+        },
+        right: 0,
+        zIndex: 1000,
+        p: {
+          xs: "0px",
+          md: "0px 20px 24px",
+        },
+        boxShadow: {
+          xs: "0px 0px 10px 0px rgba(0, 0, 0, 0.1)",
+          md: "none",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          borderRadius: {
+            xs: 0,
+            md: "8px",
+          },
+          border: (theme) => `1px solid ${theme.palette.divider}`,
+          p: "16px",
+          bgcolor: "background.paper",
+        }}
+      >
         <PostForm
           textarea={{
             value: body,
             onChange: handleContentChange,
             onKeyPress: handleKeyPress,
+            minHeight: 16,
+            forceFocus: true,
           }}
           formState={{
             isDisabled: Boolean(isDisabled),
@@ -84,7 +105,7 @@ export function CreateNewPostForm({ threadId }: Props) {
             onSubmit: handleSubmit,
           }}
         />
-      )}
-    </div>
+      </Box>
+    </Box>
   );
 }

@@ -128,6 +128,7 @@ export const PostController = ({
             variant="outlined"
             className="flex-1"
             onClick={bottomButtons.onCancel}
+            sx={{ minWidth: "fit-content" }}
           >
             キャンセル
           </Button>
