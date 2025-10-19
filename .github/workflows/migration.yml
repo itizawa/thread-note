@@ -30,6 +30,8 @@ jobs:
       - name: Install Dependencies
         if: ${{ steps.cache-files.outputs.cache-hit != 'true' }}
         run: yarn install --mode=skip-build
+      - name: Generate Prisma Client
+        run: yarn prisma generate
 
   migrate-for-production:
     environment: production
@@ -55,6 +57,8 @@ jobs:
           printf "DATABASE_URL=\"%s\"\nDIRECT_URL=\"%s\"\n" \
             "${{ secrets.DATABASE_URL_FOR_MIGRATION }}" \
             "${{ secrets.DIRECT_URL }}" > .env
+      - name: Generate Prisma Client
+        run: yarn prisma generate
       - name: Generate Schema
         run: yarn schema:gen
       - name: Migrate
