@@ -1,9 +1,16 @@
 "use client";
 
+import { Button } from "@/shared/components/Button";
+import {
+  ArchiveOutlined,
+  CopyAllOutlined,
+  SaveAlt,
+  SaveAltOutlined,
+  ShareOutlined,
+} from "@mui/icons-material/";
 import {
   Alert,
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -12,7 +19,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Archive, Copy, Share2 } from "lucide-react";
 import { useState } from "react";
 
 export default function MuiDemoPage() {
@@ -30,26 +36,83 @@ export default function MuiDemoPage() {
         <Card>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
-              ボタンの例
+              Buttonコンポーネント
             </Typography>
-            <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-              <Button variant="contained">Contained</Button>
-              <Button variant="outlined">Outlined</Button>
-              <Button variant="text">Text</Button>
-            </Stack>
-            <Stack direction="row" spacing={2}>
-              <Button variant="contained" color="primary">
-                Primary
-              </Button>
-              <Button variant="contained" color="secondary">
-                Secondary
-              </Button>
-              <Button variant="contained" color="error">
-                Error
-              </Button>
-              <Button variant="contained" color="success">
-                Success
-              </Button>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              loading プロパティを追加した拡張版
+            </Typography>
+            <Stack spacing={2}>
+              <Stack direction="row" spacing={2}>
+                <Button variant="contained" color="primary">
+                  通常
+                </Button>
+                <Button variant="outlined" color="secondary">
+                  アウトライン
+                </Button>
+                <Button variant="text" color="error">
+                  テキスト
+                </Button>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                <Button variant="contained" startIcon={<SaveAlt />}>
+                  保存
+                </Button>
+                <Button variant="outlined" startIcon={<CopyAllOutlined />}>
+                  コピー
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<ShareOutlined />}
+                  color="success"
+                >
+                  共有
+                </Button>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                <Button variant="contained" loading>
+                  読み込み中...
+                </Button>
+                <Button variant="outlined" loading color="secondary">
+                  処理中
+                </Button>
+                <Button variant="contained" disabled>
+                  無効
+                </Button>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Button variant="contained" size="small">
+                  Small
+                </Button>
+                <Button variant="contained" size="medium">
+                  Medium
+                </Button>
+                <Button variant="contained" size="large">
+                  Large
+                </Button>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Button
+                  variant="contained"
+                  size="small"
+                  startIcon={<SaveAltOutlined />}
+                >
+                  Small
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  startIcon={<SaveAltOutlined />}
+                >
+                  Medium
+                </Button>
+                <Button
+                  variant="contained"
+                  size="large"
+                  startIcon={<SaveAltOutlined />}
+                >
+                  Large
+                </Button>
+              </Stack>
             </Stack>
           </CardContent>
         </Card>
@@ -57,16 +120,20 @@ export default function MuiDemoPage() {
         <Card>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
-              アイコンボタンの例
+              アイコンボタンの例（MUI標準）
             </Typography>
             <Stack direction="row" spacing={2}>
-              <Button variant="outlined" startIcon={<Copy />}>
+              <Button variant="outlined" startIcon={<CopyAllOutlined />}>
                 コピー
               </Button>
-              <Button variant="outlined" startIcon={<Share2 />}>
+              <Button variant="outlined" startIcon={<CopyAllOutlined />}>
                 共有
               </Button>
-              <Button variant="outlined" startIcon={<Archive />} color="error">
+              <Button
+                variant="outlined"
+                startIcon={<ArchiveOutlined />}
+                color="error"
+              >
                 アーカイブ
               </Button>
             </Stack>
