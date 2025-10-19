@@ -1,7 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/components/Button";
 import { urls } from "@/shared/consts/urls";
-import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { useCallback, useRef, useTransition } from "react";
 import { toast } from "sonner";
@@ -61,9 +61,10 @@ export const useUploadImage = ({ onSuccess }: UseUploadImageProps) => {
               action: (
                 <Link href={urls.dashboardSettings("files")} passHref>
                   <Button
-                    size="sm"
-                    className="ml-auto shadow-none font-bold"
-                    variant="destructive"
+                    color="error"
+                    size="small"
+                    sx={{ ml: "auto" }}
+                    variant="text"
                   >
                     ファイル管理へ
                   </Button>

@@ -5,17 +5,7 @@ import {
 } from "@mui/material";
 import { ref } from "process";
 
-// NOTE: 必要に応じてPickを追加する
-export type ButtonProps = Pick<
-  MuiButtonProps,
-  | "color"
-  | "variant"
-  | "size"
-  | "disabled"
-  | "startIcon"
-  | "children"
-  | "loading"
->;
+export type ButtonProps = MuiButtonProps;
 
 /**
  * MUIのButtonコンポーネントをラップしたカスタムButtonコンポーネント
@@ -43,6 +33,7 @@ export const Button = ({
   size = "medium",
   children,
   startIcon,
+  sx,
   ...props
 }: ButtonProps) => {
   return (
@@ -55,6 +46,12 @@ export const Button = ({
       startIcon={loading ? undefined : startIcon}
       loading={loading}
       loadingPosition="start"
+      sx={{
+        fontWeight: "bold",
+        boxShadow: "none",
+        "&:hover": { boxShadow: "none" },
+        ...sx,
+      }}
       {...props}
     >
       {children}

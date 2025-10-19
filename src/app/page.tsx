@@ -1,9 +1,9 @@
 import { signIn } from "@/auth";
 import { Footer } from "@/features/layout/Footer";
 import { Navigation } from "@/features/layout/Navigation";
+import { Button } from "@/shared/components/Button";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
-import { Button } from "@/shared/ui/button";
 import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -31,7 +31,7 @@ export default async function Home() {
             {currentUser ? (
               <div className="mx-auto container text-center space-y-2">
                 <Link href={urls.dashboard}>
-                  <Button size="lg" variant="default" className="font-bold">
+                  <Button size="large" variant="contained">
                     ダッシュボードへ
                   </Button>
                 </Link>
