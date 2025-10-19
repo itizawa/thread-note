@@ -22,7 +22,7 @@ jobs:
         run: corepack enable
 
       - name: Install Node.js dependencies
-        run: yarn
+        run: yarn install --mode=skip-build
 
       - name: yarn lint
         run: |
@@ -95,7 +95,7 @@ jobs:
         run: corepack enable
 
       - name: Install Node.js dependencies
-        run: yarn
+        run: yarn install --mode=skip-build
 
       - name: Create .env
         shell: bash

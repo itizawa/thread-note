@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-cache-${{ hashFiles('**/yarn.lock') }}
       - name: Install Dependencies
         if: ${{ steps.cache-files.outputs.cache-hit != 'true' }}
-        run: yarn
+        run: yarn install --mode=skip-build
 
   migrate-for-production:
     environment: production
