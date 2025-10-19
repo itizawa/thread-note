@@ -8,11 +8,15 @@ export type IconButtonProps = MuiIconButtonProps & {
   isCircle?: boolean;
 };
 
-export const IconButton = ({ sx, ...props }: IconButtonProps) => {
+export const IconButton = ({
+  sx,
+  isCircle = false,
+  ...props
+}: IconButtonProps) => {
   return (
     <MuiIconButton
       sx={{
-        ...(props.isCircle
+        ...(isCircle
           ? {
               borderRadius: "50%",
               ".MuiTouchRipple-root": { borderRadius: "50%" },
@@ -22,7 +26,8 @@ export const IconButton = ({ sx, ...props }: IconButtonProps) => {
               ".MuiTouchRipple-root": { borderRadius: "4px" },
             }),
         ...(props.size === "small" && {
-          padding: "6px",
+          padding: "8px",
+          ".MuiSvgIcon-root": { fontSize: "20px" },
         }),
         ...sx,
       }}
