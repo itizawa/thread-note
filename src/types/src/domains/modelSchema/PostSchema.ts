@@ -5,8 +5,8 @@ import { z } from 'zod';
 /////////////////////////////////////////
 
 export const PostSchema = z.object({
-  id: z.string().uuid(),
-  body: z.string({ required_error: '入力してください' }),
+  id: z.uuid(),
+  body: z.string(),
   userId: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),

@@ -1341,10 +1341,10 @@
   resolved "https://registry.yarnpkg.com/@prisma/debug/-/debug-6.17.1.tgz#b1c0b2787e1e04f08cfc7b39cee02a81c4897ea8"
   integrity sha512-Vf7Tt5Wh9XcndpbmeotuqOMLWPTjEKCsgojxXP2oxE1/xYe7PtnP76hsouG9vis6fctX+TxgmwxTuYi/+xc7dQ==
 
-"@prisma/debug@6.3.1":
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/@prisma/debug/-/debug-6.3.1.tgz#08730461dab4fe147efa70637952b942dc1961b5"
-  integrity sha512-RrEBkd+HLZx+ydfmYT0jUj7wjLiS95wfTOSQ+8FQbvb6vHh5AeKfEPt/XUQ5+Buljj8hltEfOslEW57/wQIVeA==
+"@prisma/dmmf@6.17.1", "@prisma/dmmf@^6.16.3":
+  version "6.17.1"
+  resolved "https://registry.yarnpkg.com/@prisma/dmmf/-/dmmf-6.17.1.tgz#3b3f1d165410241f6cf07c11e4612bb0e0601943"
+  integrity sha512-ILf+sYTvoZRJIn1KjW8ZBn9N3fK+4ZxreJT0EXuLxbZWbXuz7Eums0/PEscS8+fzktg1zbxZvjHVFMppqfFz3g==
 
 "@prisma/driver-adapter-utils@6.17.1":
   version "6.17.1"
@@ -1415,12 +1415,19 @@
     cross-spawn "7.0.3"
     kleur "4.1.5"
 
-"@prisma/generator-helper@^6.3.0":
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/@prisma/generator-helper/-/generator-helper-6.3.1.tgz#6773bbdd97867d168e44906ce5ecf44271c0de6d"
-  integrity sha512-hX2fxjMksyAWAS0OcDi7GVmRUqsZ35ZY3Zla1EfO+uDYW6BY+om8kuKHyKkIvvRcUlTmL+xccl+nJwNToqP/aA==
+"@prisma/generator-helper@^6.16.3":
+  version "6.17.1"
+  resolved "https://registry.yarnpkg.com/@prisma/generator-helper/-/generator-helper-6.17.1.tgz#9d482de4ff67dfd5c2dca0ee878da3587f52e882"
+  integrity sha512-ONuUTGXCTUK9K//ronFg4xOEARv+tZKOo5uVSJg6tj2y90gpXQunPYyvR17gEoAQrZT17kC0ie60ecv8nulWyQ==
   dependencies:
-    "@prisma/debug" "6.3.1"
+    "@prisma/debug" "6.17.1"
+    "@prisma/dmmf" "6.17.1"
+    "@prisma/generator" "6.17.1"
+
+"@prisma/generator@6.17.1":
+  version "6.17.1"
+  resolved "https://registry.yarnpkg.com/@prisma/generator/-/generator-6.17.1.tgz#f66641f3d6b5f3410bdcd454db86cb3536b73c8e"
+  integrity sha512-R4SIlAtMHlxwXYYHiyWtN+MLRGFF3Jy+LvqcfInbCiaZkoqyhU5kj8/aOu2OV2ydNkkN+Q8ft9Tnv5a/b4pqPg==
 
 "@prisma/get-platform@4.16.2":
   version "4.16.2"
@@ -3287,10 +3294,10 @@ co@^4.6.0:
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==
 
-code-block-writer@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/code-block-writer/-/code-block-writer-12.0.0.tgz#4dd58946eb4234105aff7f0035977b2afdc2a770"
-  integrity sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==
+code-block-writer@^13.0.3:
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/code-block-writer/-/code-block-writer-13.0.3.tgz#90f8a84763a5012da7af61319dd638655ae90b5b"
+  integrity sha512-Oofo0pq3IKnsFtuHqSF7TqBfr71aeyZDVJ0HpmqB7FBM2qEigL0iPONSCZSO9pE9dZTAxANe5XHG9Uy0YMv8cg==
 
 collect-v8-coverage@^1.0.2:
   version "1.0.2"
@@ -8931,20 +8938,21 @@ zip-stream@^4.1.0:
     compress-commons "^4.1.2"
     readable-stream "^3.6.0"
 
-zod-prisma-types@^3.1.8:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/zod-prisma-types/-/zod-prisma-types-3.2.4.tgz#30dcf4b8f5c58864dd56023e08423af6d701007e"
-  integrity sha512-S4spVBMJAmecLv+aLyRhXK26qW9nWwcsOf1H1fRcEmiI8DPbftZ99u0fhqHlymuTpmMcUpuKxcNNOIqNY0ScSQ==
+zod-prisma-types@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/zod-prisma-types/-/zod-prisma-types-3.3.5.tgz#e3c0e7e43c3630eec6d0add127b0e167872172dd"
+  integrity sha512-PDuRRCdX1d6ch6UclNvrqM1SLb2qvuaQPvZT/OHRrcxOQqQUnCz009aBc1uxuwMho1+d42TTDCQr+HPXhTSJtQ==
   dependencies:
-    "@prisma/generator-helper" "^6.3.0"
-    code-block-writer "^12.0.0"
+    "@prisma/dmmf" "^6.16.3"
+    "@prisma/generator-helper" "^6.16.3"
+    code-block-writer "^13.0.3"
     lodash "^4.17.21"
-    zod "^3.24.1"
+    zod "^4.1.11"
 
-zod@^3.24.1:
-  version "3.25.76"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.76.tgz#26841c3f6fd22a6a2760e7ccb719179768471e34"
-  integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
+zod@^4.0.0, zod@^4.1.11:
+  version "4.1.12"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.12.tgz#64f1ea53d00eab91853195653b5af9eee68970f0"
+  integrity sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==
 
 zwitch@^2.0.0:
   version "2.0.4"

@@ -1,11 +1,11 @@
 "use client";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
-import { Button } from "./button";
+import { CloseOutlined } from "@mui/icons-material";
+import { IconButton } from "../components/IconButton";
 
 function Dialog({
   ...props
@@ -65,9 +65,9 @@ function DialogContent({
       >
         {children}
         <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <X className="h-4 w-4" />
-          </Button>
+          <IconButton size="small">
+            <CloseOutlined />
+          </IconButton>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>

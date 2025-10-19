@@ -1,11 +1,11 @@
 "use client";
 
 import * as SheetPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
-import { Button } from "./button";
+import { CloseOutlined } from "@mui/icons-material";
+import { IconButton } from "../components/IconButton";
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
@@ -74,9 +74,9 @@ function SheetContent({
       >
         {children}
         <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-3 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <X className="h-4 w-4" />
-          </Button>
+          <IconButton size="small">
+            <CloseOutlined />
+          </IconButton>
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>
