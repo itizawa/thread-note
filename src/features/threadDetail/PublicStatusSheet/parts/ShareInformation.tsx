@@ -1,11 +1,16 @@
 "use client";
 
+import { Box } from "@/shared/components/Box";
+import { IconButton } from "@/shared/components/IconButton";
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
 import { Tooltip } from "@/shared/ui/Tooltip";
-import { Share, SquareArrowOutUpRight } from "lucide-react";
+import { Input } from "@/shared/ui/input";
+import { OpenInNewOutlined } from "@mui/icons-material";
+
+import { Share } from "lucide-react";
 import Image from "next/image";
 import urlJoin from "url-join";
 
@@ -58,38 +63,41 @@ export const ShareInformation = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h4 className="font-medium">公開URL</h4>
-        <div className="flex items-end justify-between">
-          <div className="flex-1">
-            <div className="flex items-center">
-              <Input
-                type="text"
-                value={threadDetailUrl}
-                readOnly
-                className="cursor-pointer"
-                onClick={() => copy(threadDetailUrl)}
-              />
-            </div>
-          </div>
+    <Stack rowGap="24px">
+      <Stack rowGap="8px">
+        <Typography variant="body1" bold>
+          公開URL
+        </Typography>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          gap="8px"
+        >
+          <Input
+            type="text"
+            value={threadDetailUrl}
+            readOnly
+            className="cursor-pointer"
+            onClick={() => copy(threadDetailUrl)}
+          />
           <Tooltip content="別タブでページを開く">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="ml-2"
-              onClick={handleClickOpenPageIcon}
-            >
-              <SquareArrowOutUpRight className="h-4 w-4" />
-            </Button>
+            <IconButton size="small" onClick={handleClickOpenPageIcon}>
+              <OpenInNewOutlined />
+            </IconButton>
           </Tooltip>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          URLをクリックするとコピーできます
-        </p>
-      </div>
+        </Box>
+        <Typography variant="caption" color="textSecondary">
+          公開URLをクリックするとコピーできます
+        </Typography>
+      </Stack>
 
-      <div className="flex items-center justify-center space-x-6">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        gap="24px"
+      >
         <Tooltip content="Xでシェア">
           <Image
             src={"/sns/x.png"}
@@ -128,7 +136,7 @@ export const ShareInformation = ({
             <Share className="h-5 w-5 cursor-pointer" />
           </button>
         </Tooltip>
-      </div>
-    </div>
+      </Box>
+    </Stack>
   );
 };
