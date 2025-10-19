@@ -125,7 +125,6 @@ export const PostController = ({
       <Box display="flex" alignItems="center" gap={"8px"}>
         {bottomButtons.onCancel && (
           <Button
-            size="small"
             variant="outlined"
             className="flex-1"
             onClick={bottomButtons.onCancel}
@@ -134,7 +133,6 @@ export const PostController = ({
           </Button>
         )}
         <Button
-          size="small"
           onClick={bottomButtons.onSubmit}
           disabled={formState.isDisabled}
           loading={formState.isPending}
