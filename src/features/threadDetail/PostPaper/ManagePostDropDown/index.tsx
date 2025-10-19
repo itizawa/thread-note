@@ -1,5 +1,5 @@
 import { IconButton } from "@/shared/components/IconButton";
-import { Tooltip } from "@/shared/ui/Tooltip";
+import { Tooltip } from "@/shared/components/Tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,

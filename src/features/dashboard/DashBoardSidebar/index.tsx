@@ -1,9 +1,9 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { UserIcon } from "@/entities/user/UserIcon";
 import { IconButton } from "@/shared/components/IconButton";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
 import { cn } from "@/shared/lib/utils";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { LaunchOutlined } from "@mui/icons-material";
 import { Home, Pen, Settings } from "lucide-react";
 import Link from "next/link";
