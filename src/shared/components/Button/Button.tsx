@@ -50,6 +50,9 @@ export const Button = ({
         fontWeight: "bold",
         boxShadow: "none",
         "&:hover": { boxShadow: "none" },
+        ...(size === "small" && { ".MuiSvgIcon-root": { fontSize: "16px" } }),
+        ...(size === "medium" && { ".MuiSvgIcon-root": { fontSize: "20px" } }),
+        ...(size === "large" && { ".MuiSvgIcon-root": { fontSize: "24px" } }),
         ...sx,
       }}
       {...props}

@@ -1,0 +1,16 @@
+export const TypographyTheme = {
+  fontFamily: "var(--font-roboto)",
+  fontWeightLight: 300,
+  fontWeightRegular: 400,
+  fontWeightMedium: 500,
+  fontWeightBold: 700,
+  h1: { fontSize: "48px", letterSpacing: 0, lineHeight: "58px" },
+  h2: { fontSize: "32px", letterSpacing: 0, lineHeight: "38px" },
+  h3: { fontSize: "24px", letterSpacing: 0, lineHeight: "31px" },
+  h4: { fontSize: "20px", letterSpacing: 0, lineHeight: "26px" },
+  body1: { fontSize: "16px", letterSpacing: 0, lineHeight: "27px" },
+  body2: { fontSize: "14px", letterSpacing: 0, lineHeight: "24px" },
+  button: { fontSize: "14px", letterSpacing: 0, lineHeight: "16px" },
+  caption: { fontSize: "12px", letterSpacing: 0, lineHeight: "16px" },
+  overline: { fontSize: "10px", letterSpacing: 0, lineHeight: "13px" },
+};

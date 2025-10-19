@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import type { ReactNode } from "react";
+import { TypographyTheme } from "./themes/TypographyTheme";
 
 const theme = createTheme({
   palette: {
@@ -20,13 +21,7 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
-  typography: {
-    fontFamily: "var(--font-roboto)",
-    fontWeightLight: 300,
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-    fontWeightBold: 700,
-  },
+  typography: TypographyTheme,
   components: {
     MuiCssBaseline: {
       styleOverrides: {
