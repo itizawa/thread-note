@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable no-restricted-imports */
 import { Tooltip as MuiTooltip, type TooltipProps } from "@mui/material";
 import * as React from "react";
 
