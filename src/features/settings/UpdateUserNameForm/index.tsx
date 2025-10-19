@@ -2,12 +2,16 @@
 
 import { updateUserSettings } from "@/app/actions/userActions";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { Box } from "@/shared/components/Box";
+import { Button } from "@/shared/components/Button";
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
+import { WithLabel } from "@/shared/components/WithLabel";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { Textarea } from "@/shared/ui/textarea";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { UploadImageWrapper } from "@/shared/ui/UploadImageWrapper";
+import { Input } from "@/shared/ui/input";
+import { Textarea } from "@/shared/ui/textarea";
 import { trpc } from "@/trpc/client";
 import { User } from "@prisma/client";
 import { useState } from "react";
@@ -23,9 +27,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
   const [description, setDescription] = useState(currentUser.description || "");
   const { isPending, enqueueServerAction } = useServerAction();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (!name.trim()) {
       toast.error("名前を入力してください");
       return;
@@ -49,11 +51,22 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
-      <h2 className="text-xl font-semibold mb-4">基本設定</h2>
-      <form
-        onSubmit={handleSubmit}
-        className="flex md:flex-row flex-col gap-6 items-center md:items-start content-center"
+    <Stack
+      rowGap="24px"
+      p={{ xs: 2, md: 6 }}
+      className="bg-white rounded-lg shadow-sm"
+    >
+      <Typography variant="h3" bold>
+        基本設定
+      </Typography>
+      <Box
+        display="flex"
+        justifyContent="center"
+        sx={{
+          gap: "24px",
+          alignItems: { xs: "center", md: "flex-start" },
+          flexDirection: { xs: "column", md: "row" },
+        }}
       >
         <UploadImageWrapper
           onSuccess={(data) => {
@@ -91,30 +104,16 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             </Tooltip>
           )}
         </UploadImageWrapper>
-        <div className="space-y-4 flex-1">
-          <div className="flex items-center space-x-4">
-            <div className="flex-1">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                名前
-              </label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="名前を入力してください"
-              />
-            </div>
-          </div>
-          <div className="flex-1">
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              自己紹介
-            </label>
+        <Stack rowGap="24px" flex={1} width="100%">
+          <WithLabel label="名前">
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="名前を入力してください"
+            />
+          </WithLabel>
+          <WithLabel label="自己紹介">
             <Textarea
               rows={5}
               id="description"
@@ -122,11 +121,10 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="自己紹介を入力してください"
             />
-          </div>
-          <div className="flex justify-center">
+          </WithLabel>
+          <Box display="flex" justifyContent="center">
             <Button
-              type="submit"
-              className="w-full md:w-auto"
+              onClick={handleSubmit}
               loading={isPending}
               disabled={
                 name === currentUser.name &&
@@ -135,9 +133,9 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             >
               更新
             </Button>
-          </div>
-        </div>
-      </form>
-    </div>
+          </Box>
+        </Stack>
+      </Box>
+    </Stack>
   );
 }
