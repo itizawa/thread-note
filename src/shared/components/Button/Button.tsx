@@ -56,6 +56,7 @@ export const Button = ({
           fontSize: "14px",
           height: "36px",
         }),
+        ...(variant === "outlined" && { backgroundColor: "white" }),
         ...(size === "large" && {
           ".MuiSvgIcon-root": { fontSize: "24px" },
           fontSize: "16px",
