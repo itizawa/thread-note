@@ -1,4 +1,4 @@
-import { Button } from "@/shared/ui/button";
+import { Button } from "@/shared/components/Button";
 import {
   Dialog,
   DialogContent,
@@ -61,12 +61,18 @@ export function DeleteThreadDialog({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            size="large"
+            onClick={() => onOpenChange(false)}
+          >
             キャンセル
           </Button>
           <Button
-            variant="destructive"
-            className="font-bold"
+            variant="contained"
+            color="error"
+            size="large"
             onClick={handleDeleteThread}
             loading={deleteThreadMutation.isPending}
           >
