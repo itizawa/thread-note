@@ -2,8 +2,8 @@
 
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
+import { Button } from "@/shared/components/Button/Button";
 import { urls } from "@/shared/consts/urls";
-import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import { TEMPLATES } from "./consts";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
-import { NotebookText } from "lucide-react";
+import { DescriptionOutlined } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -89,8 +89,12 @@ export function CreateNewThreadForm() {
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="bg-white">
-              <NotebookText />
+            <Button
+              variant="outlined"
+              color="inherit"
+              sx={{ minWidth: "fit-content" }}
+              startIcon={<DescriptionOutlined />}
+            >
               テンプレート
             </Button>
           </DropdownMenuTrigger>
