@@ -9,6 +9,10 @@ import { TypographyTheme } from "./themes/TypographyTheme";
 const theme = createTheme({
   palette: {
     mode: "light",
+    text: {
+      primary: "#404040",
+      secondary: "#757575",
+    },
     primary: {
       main: "#512da8",
       light: "#7357b9",
