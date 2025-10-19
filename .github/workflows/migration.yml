@@ -14,6 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Enable Corepack
+        run: corepack enable
       - name: Cache
         uses: actions/cache@v4
         id: cache-files
@@ -23,7 +29,9 @@ jobs:
           key: ${{ runner.os }}-cache-${{ hashFiles('**/yarn.lock') }}
       - name: Install Dependencies
         if: ${{ steps.cache-files.outputs.cache-hit != 'true' }}
-        run: yarn
+        run: yarn install --mode=skip-build
+      - name: Generate Prisma Client
+        run: yarn prisma generate
 
   migrate-for-production:
     environment: production
@@ -35,6 +43,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "22"
+      - name: Enable Corepack
+        run: corepack enable
       - name: Restore cache
         uses: actions/cache/restore@v4
         with:
@@ -47,6 +57,8 @@ jobs:
           printf "DATABASE_URL=\"%s\"\nDIRECT_URL=\"%s\"\n" \
             "${{ secrets.DATABASE_URL_FOR_MIGRATION }}" \
             "${{ secrets.DIRECT_URL }}" > .env
+      - name: Generate Prisma Client
+        run: yarn prisma generate
       - name: Generate Schema
         run: yarn schema:gen
       - name: Migrate
