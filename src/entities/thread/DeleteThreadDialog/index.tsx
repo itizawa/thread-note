@@ -62,14 +62,6 @@ export function DeleteThreadDialog({
         </DialogHeader>
         <DialogFooter>
           <Button
-            variant="outlined"
-            color="inherit"
-            size="large"
-            onClick={() => onOpenChange(false)}
-          >
-            キャンセル
-          </Button>
-          <Button
             variant="contained"
             color="error"
             size="large"
@@ -77,6 +69,14 @@ export function DeleteThreadDialog({
             loading={deleteThreadMutation.isPending}
           >
             削除する
+          </Button>
+          <Button
+            variant="outlined"
+            color="inherit"
+            size="large"
+            onClick={() => onOpenChange(false)}
+          >
+            キャンセル
           </Button>
         </DialogFooter>
       </DialogContent>
