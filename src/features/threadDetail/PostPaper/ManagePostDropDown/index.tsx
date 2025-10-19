@@ -1,4 +1,5 @@
-import { Button } from "@/shared/ui/button";
+import { IconButton } from "@/shared/components/IconButton";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,9 +7,9 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-icon";
-import { Tooltip } from "@/shared/ui/Tooltip";
+import { MoreHorizOutlined } from "@mui/icons-material";
 
-import { Archive, Link, MoreHorizontal, Pencil } from "lucide-react";
+import { Archive, Link, Pencil } from "lucide-react";
 
 type Props = {
   isPending: boolean;
@@ -27,10 +28,9 @@ export function ManagePostDropDown({
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Tooltip content="ポストを操作">
-          <Button variant="ghost" size="icon" disabled={isPending}>
-            <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">メニューを開く</span>
-          </Button>
+          <IconButton size="small" disabled={isPending}>
+            <MoreHorizOutlined />
+          </IconButton>
         </Tooltip>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
