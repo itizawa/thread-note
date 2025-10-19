@@ -25,6 +25,8 @@ yarn dev                    # Start development server with Turbopack
 yarn build                  # Build for production
 yarn start                  # Start production server
 yarn lint                   # Run ESLint
+yarn test                   # Run tests with Jest
+yarn test:watch             # Run tests in watch mode
 ```
 
 ### Database Management
@@ -51,7 +53,8 @@ docker-compose down        # Stop database
 - **tRPC v11** for type-safe API layer
 - **NextAuth v5** (beta) for authentication
 - **TanStack Query** for data fetching
-- **TailwindCSS v4** for styling
+- **Material-UI (MUI) v7** for UI components and styling (primary framework)
+- **TailwindCSS v4** (legacy - migrating to MUI)
 
 ### Project Structure
 - `/src/app/` - Next.js pages and API routes
@@ -115,6 +118,11 @@ When working with tRPC:
 - Client-side usage via hooks from `@/trpc/client`
 
 UI Components:
+- **Primary Framework**: Use Material-UI (MUI) for all new components and features
 - Shared components in `/src/shared/ui/`
-- Use Radix UI primitives when available
-- Follow existing patterns for consistency
+- Theme configuration in `/src/contexts/MuiThemeProvider.tsx`
+- Legacy components may use Radix UI or TailwindCSS, but migrate to MUI when updating
+- Follow MUI design patterns and component composition
+- Use MUI's `sx` prop for styling instead of TailwindCSS classes
+- Import components from `@mui/material` (e.g., `Button`, `TextField`, `Box`, `Stack`)
+- Use MUI icons from `@mui/icons-material` when needed

@@ -1,4 +1,8 @@
-import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+/* eslint-disable no-restricted-imports */
+import {
+  Button as MuiButton,
+  ButtonProps as MuiButtonProps,
+} from "@mui/material";
 import { ref } from "process";
 
 // NOTE: 必要に応じてPickを追加する
