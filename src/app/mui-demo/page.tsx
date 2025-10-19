@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import {
   ArchiveOutlined,
@@ -10,7 +11,6 @@ import {
 } from "@mui/icons-material/";
 import {
   Alert,
-  Box,
   Card,
   CardActions,
   CardContent,

@@ -3,6 +3,7 @@
 import { updateThreadInfo } from "@/app/actions/threadActions";
 import { PublicStatusSheet } from "@/features/threadDetail/PublicStatusSheet";
 import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
+import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
 import { urls } from "@/shared/consts/urls";
@@ -13,7 +14,6 @@ import { Tooltip } from "@/shared/ui/Tooltip";
 import { Input } from "@/shared/ui/input";
 import { trpc } from "@/trpc/client";
 import { EditOutlined } from "@mui/icons-material";
-import { Box } from "@mui/material";
 import { useState } from "react";
 import { ManageThreadDropDown } from "./ManageThreadDropDown";
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
 import { Tooltip } from "@/shared/ui/Tooltip";
@@ -12,7 +13,6 @@ import {
   Image as ImageIcon,
   Tag,
 } from "@mui/icons-material";
-import { Box } from "@mui/material";
 
 type Props = {
   onClickIcon: (options: {
