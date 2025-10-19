@@ -8,7 +8,7 @@ import {
   SaveAlt,
   SaveAltOutlined,
   ShareOutlined,
-} from "@mui/icons-material/";
+} from "@mui/icons-material";
 import {
   Alert,
   Card,
