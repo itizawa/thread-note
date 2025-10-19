@@ -169,7 +169,6 @@ model Thread {
 
 model Post {
   id        String @id @default(uuid())
-  /// @zod.string({ required_error: '入力してください' })
   body      String
 
   userId               String @map("user_id")

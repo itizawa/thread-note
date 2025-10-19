@@ -7,7 +7,7 @@ import { ThreadStatusSchema } from '../inputTypeSchemas/ThreadStatusSchema'
 
 export const ThreadSchema = z.object({
   status: ThreadStatusSchema,
-  id: z.string().uuid(),
+  id: z.uuid(),
   userId: z.string(),
   title: z.string().nullable(),
   isPublic: z.boolean(),
