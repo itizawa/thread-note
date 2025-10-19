@@ -3,7 +3,6 @@ import {
   Button as MuiButton,
   ButtonProps as MuiButtonProps,
 } from "@mui/material";
-import { ref } from "process";
 
 export type ButtonProps = MuiButtonProps;
 
@@ -38,7 +37,6 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <MuiButton
-      ref={ref}
       variant={variant}
       color={color}
       size={size}
