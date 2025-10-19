@@ -10,12 +10,12 @@ import { generateBodyRecursive } from "@/entities/post/PostForm/hooks/generateBo
 import { UserIcon } from "@/entities/user/UserIcon";
 import { Button } from "@/shared/components/Button/Button";
 import { IconButton } from "@/shared/components/IconButton";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { ContentPasteOutlined } from "@mui/icons-material";

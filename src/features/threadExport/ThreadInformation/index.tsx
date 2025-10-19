@@ -2,10 +2,10 @@
 
 import { Box } from "@/shared/components/Box";
 import { IconButton } from "@/shared/components/IconButton";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { LinkToBack } from "@/shared/ui/LinkToBack";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
 import { CachedOutlined, ContentPasteOutlined } from "@mui/icons-material";
 import { useTransition } from "react";

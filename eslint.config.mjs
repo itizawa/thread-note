@@ -19,9 +19,8 @@ const eslintConfig = [
           paths: [
             {
               name: "@mui/material",
-              importNames: ["Button", "IconButton", "Box"],
-              message:
-                "Please import Button from '@/shared/components/Button' instead of '@mui/material'.",
+              importNames: ["Button", "IconButton", "Box", "Tooltip"],
+              message: "共通コンポーネントを使用してください。",
             },
           ],
         },

@@ -4,11 +4,11 @@ import { updateThreadPublicStatus } from "@/app/actions/threadActions";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { Stack } from "@/shared/components/Stack";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { Typography } from "@/shared/components/Typography";
 import { WithLabel } from "@/shared/components/WithLabel";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { cn } from "@/shared/lib/utils";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { Input } from "@/shared/ui/input";
 import {
   Sheet,

@@ -2,10 +2,10 @@
 
 import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { convertBytesToDisplay } from "@/shared/lib/convertBytesToDisplay";
 import { ExpandedImage } from "@/shared/ui/ExpandedImage";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import {
   Dialog,
   DialogContent,

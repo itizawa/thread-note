@@ -3,10 +3,10 @@
 import { Box } from "@/shared/components/Box";
 import { IconButton } from "@/shared/components/IconButton";
 import { Stack } from "@/shared/components/Stack";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { Input } from "@/shared/ui/input";
 import { OpenInNewOutlined } from "@mui/icons-material";
 

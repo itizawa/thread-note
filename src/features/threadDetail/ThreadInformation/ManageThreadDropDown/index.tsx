@@ -1,7 +1,7 @@
 import { DeleteThreadDialog } from "@/entities/thread/DeleteThreadDialog";
 import { IconButton } from "@/shared/components/IconButton";
+import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
