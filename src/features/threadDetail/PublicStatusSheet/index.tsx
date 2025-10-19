@@ -1,9 +1,14 @@
 "use client";
 
 import { updateThreadPublicStatus } from "@/app/actions/threadActions";
+import { Box } from "@/shared/components/Box";
+import { Button } from "@/shared/components/Button";
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
+import { WithLabel } from "@/shared/components/WithLabel";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/ui/button";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import { Input } from "@/shared/ui/input";
 import {
   Sheet,
@@ -15,11 +20,15 @@ import {
 } from "@/shared/ui/sheet";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Textarea } from "@/shared/ui/textarea";
-import { Tooltip } from "@/shared/ui/Tooltip";
-import { WithLabel } from "@/shared/ui/WithLabel";
 import { trpc } from "@/trpc/client";
+import {
+  LanguageOutlined,
+  LockOutlined,
+  SaveOutlined,
+  VisibilityOffOutlined,
+  VisibilityOutlined,
+} from "@mui/icons-material";
 import { useForm } from "@tanstack/react-form";
-import { Eye, EyeOff, Globe, Lock, Save } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 import { ShareInformation } from "./parts/ShareInformation";
@@ -117,17 +126,12 @@ export function PublicStatusSheet({
               : "あなただけが閲覧可能"
           }
         >
-          <Button variant="outline" size="sm">
-            <div className="flex items-center space-x-2">
-              {isPublic ? (
-                <Globe className="h-5 w-5 text-green-500" />
-              ) : (
-                <Lock className="h-5 w-5 text-yellow-500" />
-              )}
-              <span className="font-bold">
-                {isPublic ? "公開中" : "非公開"}
-              </span>
-            </div>
+          <Button
+            variant="outlined"
+            color={isPublic ? "success" : "warning"}
+            startIcon={isPublic ? <LanguageOutlined /> : <LockOutlined />}
+          >
+            {isPublic ? "公開中" : "非公開"}
           </Button>
         </Tooltip>
       </SheetTrigger>
@@ -135,41 +139,39 @@ export function PublicStatusSheet({
         <SheetHeader className="border-b">
           <SheetTitle>公開設定</SheetTitle>
         </SheetHeader>
-        <div className="space-y-6 p-4 overflow-y-auto">
-          <div className="flex items-center justify-between">
-            <div>
-              {isPublic ? (
-                <div className="flex items-center space-x-2">
-                  <Globe className="h-5 w-5 text-green-500" />
-                  <span className="font-bold">公開中</span>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <Lock className="h-5 w-5 text-yellow-500" />
-                  <span className="font-bold">非公開</span>
-                </div>
-              )}
-            </div>
+        <Stack rowGap="24px" p="16px" overflow="auto">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            {isPublic ? (
+              <Box display="flex" alignItems="center" gap="8px">
+                <LanguageOutlined color="success" />
+                <Typography variant="body1" bold color="success">
+                  公開中
+                </Typography>
+              </Box>
+            ) : (
+              <Box display="flex" alignItems="center" gap="8px">
+                <LockOutlined color="warning" />
+                <Typography variant="body1" bold color="warning">
+                  非公開
+                </Typography>
+              </Box>
+            )}
             <Button
-              variant="outline"
-              size="sm"
+              variant="outlined"
               onClick={handleTogglePublicStatus}
               disabled={isPending}
               loading={isPending}
+              startIcon={
+                isPublic ? <VisibilityOffOutlined /> : <VisibilityOutlined />
+              }
             >
-              {isPublic ? (
-                <>
-                  <EyeOff className="h-4 w-4" />
-                  非公開にする
-                </>
-              ) : (
-                <>
-                  <Eye className="h-4 w-4" />
-                  公開する
-                </>
-              )}
+              {isPublic ? "非公開にする" : "公開する"}
             </Button>
-          </div>
+          </Box>
 
           {isPublic && (
             <div className="relative">
@@ -194,11 +196,10 @@ export function PublicStatusSheet({
           )}
 
           {isPublic && (
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col space-y-4 mt-6 pt-6 border-t"
-            >
-              <h4 className="font-medium">OGP設定</h4>
+            <Stack rowGap="24px" className="mt-6 pt-6 border-t">
+              <Typography variant="body1" bold>
+                OGP設定
+              </Typography>
               <Field name="ogpTitle">
                 {({ state, handleBlur, handleChange }) => (
                   <WithLabel label="OGPタイトル">
@@ -271,7 +272,7 @@ export function PublicStatusSheet({
               </Field>
               {hasNextPage && !isLoading && !isFetching && (
                 <Button
-                  variant="outline"
+                  variant="outlined"
                   onClick={(e) => {
                     e.preventDefault();
                     if (isLoading || isFetching) return;
@@ -281,20 +282,20 @@ export function PublicStatusSheet({
                   もっと見る
                 </Button>
               )}
-            </form>
+            </Stack>
           )}
-        </div>
+        </Stack>
         <SheetFooter className="sticky bottom-0 bg-white pt-4 border-t">
           <Subscribe>
             {({ isDirty, isValid }) => (
               <Button
                 type="submit"
-                className="w-full"
+                fullWidth
                 disabled={isOgpUpdatePending || !isDirty || !isValid}
                 loading={isOgpUpdatePending}
                 onClick={handleSubmit}
+                startIcon={<SaveOutlined />}
               >
-                <Save className="h-4 w-4" />
                 OGP設定を保存
               </Button>
             )}

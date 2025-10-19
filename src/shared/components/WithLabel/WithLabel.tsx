@@ -1,5 +1,7 @@
 "use client";
 
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { ReactNode } from "react";
 
 type LinkToBackProps = {
@@ -9,9 +11,9 @@ type LinkToBackProps = {
 
 export function WithLabel({ children, label }: LinkToBackProps) {
   return (
-    <div className="flex flex-col space-y-2">
-      <label className="text-xs">{label}</label>
+    <Stack rowGap="8px">
+      <Typography variant="body2">{label}</Typography>
       {children}
-    </div>
+    </Stack>
   );
 }
