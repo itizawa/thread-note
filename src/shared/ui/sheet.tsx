@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
 import { CloseOutlined } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton } from "../components/IconButton";
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
