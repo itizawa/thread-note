@@ -1,9 +1,17 @@
+import { MuiThemeProvider } from "@/contexts/MuiThemeProvider";
 import { ProgressBarProvider } from "@/contexts/ProgressBarProvider";
 import { TRPCProvider } from "@/trpc/client";
 import type { Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,16 +33,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={roboto.className}>
       <link rel="manifest" href="/manifest.json" />
       <link rel="icon" href={process.env.FAVICON_PATH} sizes="any" />
       <TRPCProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-        >
-          <ProgressBarProvider>{children}</ProgressBarProvider>
-          <Toaster richColors />
-        </body>
+        <MuiThemeProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+          >
+            <ProgressBarProvider>{children}</ProgressBarProvider>
+            <Toaster richColors />
+          </body>
+        </MuiThemeProvider>
       </TRPCProvider>
     </html>
   );
