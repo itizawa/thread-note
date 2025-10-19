@@ -1,9 +1,12 @@
 "use client";
 
+import { Box } from "@/shared/components/Box";
 import { urls } from "@/shared/consts/urls";
 import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
+import { ArchiveOutlined } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 import { Suspense, useState } from "react";
 import { CreateNewPostForm } from "../CreateNewPostForm";
 import { PostPaper } from "../PostPaper";
@@ -55,6 +58,10 @@ const PostTimeLineCore = ({
       includeIsArchived,
     }
   );
+  const [threadInfo] = trpc.thread.getThreadInfo.useSuspenseQuery({
+    id: threadId,
+  });
+  const isThreadClosed = threadInfo?.status === "CLOSED";
 
   if (!threadWithPosts) {
     // TODO: ポストのデータを取得できなかった時のエラー処理画面を作成する https://github.com/itizawa/thread-note/issues/15
@@ -62,7 +69,11 @@ const PostTimeLineCore = ({
   }
 
   return (
-    <div className="w-full flex-col space-y-4 overflow-y-auto pb-10">
+    <div
+      className={`w-full flex-col space-y-4 overflow-y-auto ${
+        threadInfo?.status === "CLOSED" ? "pb-0" : "pb-50"
+      }`}
+    >
       {threadWithPosts.posts.map((v) => {
         return (
           <PostPaper
@@ -74,7 +85,30 @@ const PostTimeLineCore = ({
         );
       })}
 
-      <CreateNewPostForm threadId={threadId} />
+      {isThreadClosed ? (
+        <Box
+          sx={{
+            borderRadius: "8px",
+            border: (theme) => `1px solid ${theme.palette.divider}`,
+            p: { xs: "0px", md: "16px" },
+            bgcolor: "background.paper",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            justifyContent: "center",
+          }}
+        >
+          <ArchiveOutlined
+            fontSize="small"
+            sx={{ color: (theme) => theme.palette.text.secondary }}
+          />
+          <Typography variant="body2" color="text.secondary">
+            このスレッドは終了しています。新しい投稿はできません。
+          </Typography>
+        </Box>
+      ) : (
+        <CreateNewPostForm threadId={threadId} />
+      )}
     </div>
   );
 };
