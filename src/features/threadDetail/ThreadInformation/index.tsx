@@ -3,15 +3,17 @@
 import { updateThreadInfo } from "@/app/actions/threadActions";
 import { PublicStatusSheet } from "@/features/threadDetail/PublicStatusSheet";
 import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
+import { Box } from "@/shared/components/Box";
+import { Button } from "@/shared/components/Button";
+import { IconButton } from "@/shared/components/IconButton";
 import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
 import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Tooltip } from "@/shared/ui/Tooltip";
+import { Input } from "@/shared/ui/input";
 import { trpc } from "@/trpc/client";
-import { Pencil } from "lucide-react";
+import { EditOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { ManageThreadDropDown } from "./ManageThreadDropDown";
 
@@ -85,7 +87,7 @@ export function ThreadInformation({
       <LinkToBack href={urls.dashboard} text="一覧に戻る" />
 
       {isEditing ? (
-        <div className="flex space-x-2">
+        <Box display="flex" alignItems="center" gap={"8px"}>
           <Input
             defaultValue={threadInfo.title || ""}
             placeholder="タイトルを入力してください"
@@ -95,36 +97,28 @@ export function ThreadInformation({
             forceFocus
           />
           <Button
-            size="sm"
-            className="h-9"
-            variant="outline"
+            variant="outlined"
             onClick={() => setIsEditing(false)}
             disabled={isPending}
+            sx={{ minWidth: "fit-content" }}
           >
             キャンセル
           </Button>
           <Button
-            size="sm"
-            className="h-9"
             onClick={handleUpdate}
             disabled={disabled}
             loading={isPending}
           >
             更新
           </Button>
-        </div>
+        </Box>
       ) : (
         <div className="flex items-center justify-between">
           <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
           <Tooltip content="編集">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="transition-opacity hover:bg-gray-200"
-              onClick={() => setIsEditing(true)}
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
+            <IconButton size="small" onClick={() => setIsEditing(true)}>
+              <EditOutlined />
+            </IconButton>
           </Tooltip>
         </div>
       )}

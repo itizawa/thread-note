@@ -1,12 +1,13 @@
 "use client";
 
+import { Box } from "@/shared/components/Box";
+import { IconButton } from "@/shared/components/IconButton";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
-import { Button } from "@/shared/ui/button";
 import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Tooltip } from "@/shared/ui/Tooltip";
 import { trpc } from "@/trpc/client";
-import { Clipboard, RefreshCw } from "lucide-react";
+import { CachedOutlined, ContentPasteOutlined } from "@mui/icons-material";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
@@ -60,30 +61,23 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
       <div className="flex items-center justify-between">
         <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
-        <div className="flex items-center">
+        <Box display="flex" alignItems="center">
           <Tooltip content="マークダウンをコピー">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="transition-opacity hover:bg-gray-200"
-              onClick={() => handleClickCopy(body)}
-            >
-              <Clipboard className="h-4 w-4" />
-            </Button>
+            <IconButton size="small" onClick={() => handleClickCopy(body)}>
+              <ContentPasteOutlined />
+            </IconButton>
           </Tooltip>
           <Tooltip content="更新">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="transition-opacity hover:bg-gray-200"
+            <IconButton
+              size="small"
               onClick={handleClickRefetch}
               loading={isPending}
               disabled={isPending}
             >
-              {isPending ? null : <RefreshCw className="h-4 w-4" />}
-            </Button>
+              <CachedOutlined />
+            </IconButton>
           </Tooltip>
-        </div>
+        </Box>
       </div>
     </div>
   );

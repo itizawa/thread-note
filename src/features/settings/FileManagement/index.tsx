@@ -1,8 +1,11 @@
 "use client";
 
+import { Button } from "@/shared/components/Button";
+import { IconButton } from "@/shared/components/IconButton";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { convertBytesToDisplay } from "@/shared/lib/convertBytesToDisplay";
-import { Button } from "@/shared/ui/button";
+import { ExpandedImage } from "@/shared/ui/ExpandedImage";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { ExpandedImage } from "@/shared/ui/ExpandedImage";
 import { Progress } from "@/shared/ui/progress";
 import {
   Select,
@@ -20,11 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
-import { Tooltip } from "@/shared/ui/Tooltip";
 import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller";
 import { trpc } from "@/trpc/client";
+import { DeleteOutlined } from "@mui/icons-material";
 import { format } from "date-fns";
-import { ClockArrowDown, File, Trash } from "lucide-react";
+import { ClockArrowDown, File } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -182,8 +184,9 @@ function FileListItem({
           </DialogHeader>
           <DialogFooter className="flex flex-row">
             <Button
-              variant="destructive"
-              className="flex-1 font-bold"
+              variant="contained"
+              color="error"
+              size="large"
               onClick={() => handleDelete(file.id)}
               disabled={isPending}
               loading={isPending}
@@ -191,8 +194,9 @@ function FileListItem({
               削除する
             </Button>
             <Button
-              variant="outline"
-              className="flex-1"
+              variant="outlined"
+              color="inherit"
+              size="large"
               onClick={() => setIsDeleteDialogOpen(false)}
             >
               キャンセル
@@ -221,10 +225,9 @@ function FileListItem({
           </div>
         </div>
         <Tooltip content="削除する">
-          <Button
-            variant="link"
-            size="icon"
-            className="font-bold text-red-500"
+          <IconButton
+            size="small"
+            color="error"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -233,8 +236,8 @@ function FileListItem({
             disabled={isPending}
             loading={isPending}
           >
-            <Trash className="h-4 w-4" />
-          </Button>
+            <DeleteOutlined />
+          </IconButton>
         </Tooltip>
       </div>
       <ExpandedImage

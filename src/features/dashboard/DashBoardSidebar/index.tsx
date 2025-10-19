@@ -1,10 +1,11 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { IconButton } from "@/shared/components/IconButton";
 import { urls } from "@/shared/consts/urls";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/ui/button";
 import { Tooltip } from "@/shared/ui/Tooltip";
-import { Home, Pen, Settings, SquareArrowOutUpRight } from "lucide-react";
+import { LaunchOutlined } from "@mui/icons-material";
+import { Home, Pen, Settings } from "lucide-react";
 import Link from "next/link";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
 
@@ -41,9 +42,9 @@ export const DashBoardSidebar = async () => {
               className="ml-auto"
             >
               <Tooltip content="ユーザーページを開く">
-                <Button variant="ghost" size="icon">
-                  <SquareArrowOutUpRight className="h-4 w-4" />
-                </Button>
+                <IconButton size="small">
+                  <LaunchOutlined />
+                </IconButton>
               </Tooltip>
             </Link>
           )}

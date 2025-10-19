@@ -1,5 +1,5 @@
-import { DashboardNavigation } from "@/features/dashboard/DashboardNavigation";
 import { DashBoardSidebar } from "@/features/dashboard/DashBoardSidebar";
+import { DashboardNavigation } from "@/features/dashboard/DashboardNavigation";
 import type React from "react";
 
 export default async function DashboardLayout({

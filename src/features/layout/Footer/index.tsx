@@ -14,11 +14,11 @@ export const Footer = () => (
             プライバシーポリシー
           </Link>
           <a
-            href="https://site.wai-ware.com/"
+            href="https://wiscro.app"
             className="text-gray-300 hover:text-white"
             target="blank"
           >
-            運営団体
+            運営
           </a>
         </nav>
       </div>

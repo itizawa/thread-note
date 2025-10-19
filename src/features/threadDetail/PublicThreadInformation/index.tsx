@@ -1,10 +1,12 @@
 "use client";
 
+import { Box } from "@/shared/components/Box";
+import { Button } from "@/shared/components/Button";
+import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
-import { Button } from "@/shared/ui/button";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
-import { FilePenLine } from "lucide-react";
+import { EditOutlined } from "@mui/icons-material";
 import Link from "next/link";
 
 export function PublicThreadInformation({ threadId }: { threadId: string }) {
@@ -29,16 +31,17 @@ export function PublicThreadInformation({ threadId }: { threadId: string }) {
   }
 
   return (
-    <div className="flex items-center justify-between">
-      <h3 className="font-bold">{threadInfo.title || "タイトルなし"}</h3>
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Typography variant="h3" bold>
+        {threadInfo.title || "タイトルなし"}
+      </Typography>
       {currentUser?.id === threadInfo.userId && (
         <Link href={urls.dashboardThreadDetails(threadId)}>
-          <Button variant="outline" size="sm">
-            <FilePenLine className="h-4 w-4" />
+          <Button variant="outlined" startIcon={<EditOutlined />}>
             編集
           </Button>
         </Link>
       )}
-    </div>
+    </Box>
   );
 }

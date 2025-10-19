@@ -8,18 +8,20 @@ import {
 import { PostForm } from "@/entities/post/PostForm";
 import { generateBodyRecursive } from "@/entities/post/PostForm/hooks/generateBodyRecursive";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { Button } from "@/shared/components/Button/Button";
+import { IconButton } from "@/shared/components/IconButton";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
 import { Tooltip } from "@/shared/ui/Tooltip";
-import { Button } from "@/shared/ui/button";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
+import { ContentPasteOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { Archive, Copy } from "lucide-react";
+import { Archive } from "lucide-react";
 import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
@@ -92,9 +94,10 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
       toast.success("アーカイブしました", {
         action: (
           <Button
-            size="sm"
-            className="ml-auto shadow-none "
-            variant="ghost"
+            size="small"
+            sx={{ ml: "auto" }}
+            variant="outlined"
+            color="error"
             onClick={handleClickUnArchiveButton}
           >
             取り消す
@@ -167,14 +170,13 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
         <div className="flex items-center">
           {!isEditing && (
             <Tooltip content="投稿内容をコピー">
-              <Button
-                variant="ghost"
-                size="icon"
+              <IconButton
+                size="small"
                 onClick={handleCopyPostContent}
                 disabled={isPending}
               >
-                <Copy className="h-4 w-4" />
-              </Button>
+                <ContentPasteOutlined />
+              </IconButton>
             </Tooltip>
           )}
           {!isEditing && !post.isArchived && (

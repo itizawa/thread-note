@@ -2,17 +2,18 @@
 
 import { UserIcon } from "@/entities/user/UserIcon";
 import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
+import { Button } from "@/shared/components/Button";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { urls } from "@/shared/consts/urls";
-import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
+import { CreateOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ja } from "date-fns/locale";
-import { MessageCircle, Pen, Search } from "lucide-react";
+import { MessageCircle, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -64,10 +65,7 @@ export function ThreadList() {
           />
         </div>
         <Link href={urls.dashboardThreadNew}>
-          <Button>
-            <Pen />
-            新規作成
-          </Button>
+          <Button startIcon={<CreateOutlined />}>新規作成</Button>
         </Link>
       </div>
       <div className="rounded-lg border bg-white">
