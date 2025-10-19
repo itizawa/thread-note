@@ -136,6 +136,7 @@ export const PostController = ({
           onClick={bottomButtons.onSubmit}
           disabled={formState.isDisabled}
           loading={formState.isPending}
+          fullWidth
         >
           {bottomButtons.submitText}
         </Button>
