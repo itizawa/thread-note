@@ -19,7 +19,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
   };
 
   return (
-    <Stack rowGap="16px" height="100%" sx={{ overflowY: "auto" }}>
+    <Stack height="100%" sx={{ overflowY: "auto" }}>
       <Suspense
         fallback={
           <Stack rowGap="16px" px="16px" pt="24px">
@@ -27,7 +27,11 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
           </Stack>
         }
       >
-        <Box px="16px" pt="8px">
+        <Box
+          px="16px"
+          py="8px"
+          sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+        >
           <ThreadInformation
             threadId={threadId}
             includeIsArchived={includeIsArchived}
@@ -79,9 +83,8 @@ const PostTimeLineCore = ({
   return (
     <Stack height="100%" minHeight={0}>
       <Stack
-        pb="16px"
+        sx={{ p: { xs: "8px", md: "16px" } }}
         rowGap="16px"
-        px="16px"
         className="overflow-y-auto"
         flex={1}
       >
@@ -120,7 +123,9 @@ const PostTimeLineCore = ({
       </Stack>
 
       {!isThreadClosed && (
-        <Box px="16px" pb="16px">
+        <Box
+          sx={{ px: { xs: "8px", md: "16px" }, pb: { xs: "8px", md: "16px" } }}
+        >
           <CreateNewPostForm threadId={threadId} />
         </Box>
       )}

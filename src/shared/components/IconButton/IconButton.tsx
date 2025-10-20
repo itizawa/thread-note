@@ -26,7 +26,7 @@ export const IconButton = ({
               ".MuiTouchRipple-root": { borderRadius: "4px" },
             }),
         ...(props.size === "small" && {
-          padding: "8px",
+          padding: "4px",
           ".MuiSvgIcon-root": { fontSize: "20px" },
         }),
         ...sx,

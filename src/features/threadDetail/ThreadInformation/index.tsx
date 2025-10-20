@@ -81,7 +81,7 @@ export function ThreadInformation({
   }
 
   return (
-    <Stack rowGap="16px">
+    <Stack rowGap="8px">
       {isEditing ? (
         <Box display="flex" alignItems="center" gap={"8px"}>
           <Input
@@ -119,8 +119,13 @@ export function ThreadInformation({
         </div>
       )}
 
-      <div className="flex items-center justify-between space-x-2">
-        <div className="flex items-center space-x-2">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="8px"
+      >
+        <Box display="flex" alignItems="center" gap="8px">
           <PublicStatusSheet
             threadTitle={threadInfo.title}
             threadId={threadId}
@@ -130,7 +135,7 @@ export function ThreadInformation({
             ogpImagePath={threadInfo.ogpImagePath}
           />
           <ThreadStatusBadge status={threadInfo.status || "WIP"} />
-        </div>
+        </Box>
         <ManageThreadDropDown
           threadId={threadId}
           threadTitle={threadInfo.title}
@@ -138,7 +143,7 @@ export function ThreadInformation({
           onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
           status={threadInfo.status || "WIP"}
         />
-      </div>
+      </Box>
     </Stack>
   );
 }

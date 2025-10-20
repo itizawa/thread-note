@@ -25,15 +25,17 @@ const theme = createTheme({
       contrastText: "#fff",
     },
     background: {
-      default: "#f5f5f5",
+      default: "#f7f7f7",
       paper: "#ffffff",
     },
     divider: "#e0e0e0",
     sidebar: {
       main: "#fefcff",
+      gradient: "linear-gradient(135deg, #fefcff 0%, #f3e5f5 100%)",
     },
     navbar: {
       main: "#512da8",
+      gradient: "linear-gradient(135deg, #512da8 0%, #381f75 100%)",
     },
   },
   typography: TypographyTheme,
