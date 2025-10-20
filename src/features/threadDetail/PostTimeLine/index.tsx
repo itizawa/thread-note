@@ -1,6 +1,7 @@
 "use client";
 
 import { Box } from "@/shared/components/Box";
+import { Stack } from "@/shared/components/Stack";
 import { urls } from "@/shared/consts/urls";
 import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -20,28 +21,32 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
   };
 
   return (
-    <div className="space-y-4">
+    <Stack rowGap="16px" height="100%" sx={{ overflowY: "auto" }}>
       <Suspense
         fallback={
-          <div className="space-y-4">
+          <Stack rowGap="16px">
             <LinkToBack href={urls.dashboard} text="Home" />
             <Skeleton className="w-full h-9" />
-          </div>
+          </Stack>
         }
       >
-        <ThreadInformation
-          threadId={threadId}
-          includeIsArchived={includeIsArchived}
-          toggleIncludeIsArchived={toggleIncludeIsArchived}
-        />
+        <Box px="16px" pt="24px">
+          <ThreadInformation
+            threadId={threadId}
+            includeIsArchived={includeIsArchived}
+            toggleIncludeIsArchived={toggleIncludeIsArchived}
+          />
+        </Box>
       </Suspense>
       <Suspense fallback={<Skeleton className="w-full h-20" />}>
-        <PostTimeLineCore
-          threadId={threadId}
-          includeIsArchived={includeIsArchived}
-        />
+        <Box flex={1} height="100%" minHeight={0}>
+          <PostTimeLineCore
+            threadId={threadId}
+            includeIsArchived={includeIsArchived}
+          />
+        </Box>
       </Suspense>
-    </div>
+    </Stack>
   );
 }
 
@@ -69,46 +74,53 @@ const PostTimeLineCore = ({
   }
 
   return (
-    <div
-      className={`w-full flex-col space-y-4 overflow-y-auto ${
-        threadInfo?.status === "CLOSED" ? "pb-0" : "pb-50"
-      }`}
-    >
-      {threadWithPosts.posts.map((v) => {
-        return (
-          <PostPaper
-            key={v.id}
-            post={v}
-            isPublicThread={threadWithPosts.isPublic}
-            threadStatus={threadWithPosts.status}
-          />
-        );
-      })}
+    <Stack height="100%" minHeight={0}>
+      <Stack
+        pb="16px"
+        rowGap="16px"
+        px="16px"
+        className="overflow-y-auto"
+        flex={1}
+      >
+        {threadWithPosts.posts.map((v) => {
+          return (
+            <PostPaper
+              key={v.id}
+              post={v}
+              isPublicThread={threadWithPosts.isPublic}
+              threadStatus={threadWithPosts.status}
+            />
+          );
+        })}
+        {isThreadClosed && (
+          <Box
+            sx={{
+              borderRadius: "8px",
+              border: (theme) => `1px solid ${theme.palette.divider}`,
+              p: { xs: "0px", md: "16px" },
+              bgcolor: "background.paper",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              justifyContent: "center",
+            }}
+          >
+            <ArchiveOutlined
+              fontSize="small"
+              sx={{ color: (theme) => theme.palette.text.secondary }}
+            />
+            <Typography variant="body2" color="text.secondary">
+              このスレッドは終了しています。新しい投稿はできません。
+            </Typography>
+          </Box>
+        )}
+      </Stack>
 
-      {isThreadClosed ? (
-        <Box
-          sx={{
-            borderRadius: "8px",
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            p: { xs: "0px", md: "16px" },
-            bgcolor: "background.paper",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            justifyContent: "center",
-          }}
-        >
-          <ArchiveOutlined
-            fontSize="small"
-            sx={{ color: (theme) => theme.palette.text.secondary }}
-          />
-          <Typography variant="body2" color="text.secondary">
-            このスレッドは終了しています。新しい投稿はできません。
-          </Typography>
+      {!isThreadClosed && (
+        <Box px="16px" pb="16px">
+          <CreateNewPostForm threadId={threadId} />
         </Box>
-      ) : (
-        <CreateNewPostForm threadId={threadId} />
       )}
-    </div>
+    </Stack>
   );
 };
