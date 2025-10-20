@@ -3,7 +3,6 @@
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { Box } from "@/shared/components/Box";
-import { sizeNumbers } from "@/shared/consts/size";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
@@ -59,53 +58,29 @@ export function CreateNewPostForm({ threadId }: Props) {
   return (
     <Box
       sx={{
-        position: "fixed",
-        bottom: 0,
-        left: {
-          xs: 0,
-          md: sizeNumbers.sidebarWidth,
-        },
-        right: 0,
-        zIndex: 1000,
-        p: {
-          xs: "0px",
-          md: "0px 20px 24px",
-        },
-        boxShadow: {
-          xs: "0px 0px 10px 0px rgba(0, 0, 0, 0.1)",
-          md: "none",
-        },
+        borderRadius: "8px",
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        p: "16px",
+        bgcolor: "background.paper",
       }}
     >
-      <Box
-        sx={{
-          borderRadius: {
-            xs: 0,
-            md: "8px",
-          },
-          border: (theme) => `1px solid ${theme.palette.divider}`,
-          p: "16px",
-          bgcolor: "background.paper",
+      <PostForm
+        textarea={{
+          value: body,
+          onChange: handleContentChange,
+          onKeyPress: handleKeyPress,
+          minHeight: 16,
+          forceFocus: true,
         }}
-      >
-        <PostForm
-          textarea={{
-            value: body,
-            onChange: handleContentChange,
-            onKeyPress: handleKeyPress,
-            minHeight: 16,
-            forceFocus: true,
-          }}
-          formState={{
-            isDisabled: Boolean(isDisabled),
-            isPending,
-          }}
-          bottomButtons={{
-            submitText: "投稿",
-            onSubmit: handleSubmit,
-          }}
-        />
-      </Box>
+        formState={{
+          isDisabled: Boolean(isDisabled),
+          isPending,
+        }}
+        bottomButtons={{
+          submitText: "投稿",
+          onSubmit: handleSubmit,
+        }}
+      />
     </Box>
   );
 }

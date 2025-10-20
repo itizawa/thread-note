@@ -6,11 +6,10 @@ import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
+import { Stack } from "@/shared/components/Stack";
 import { Tooltip } from "@/shared/components/Tooltip";
-import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Input } from "@/shared/ui/input";
 import { trpc } from "@/trpc/client";
 import { EditOutlined } from "@mui/icons-material";
@@ -75,17 +74,14 @@ export function ThreadInformation({
 
   if (!threadInfo) {
     return (
-      <div className="space-y-4">
-        <LinkToBack href={urls.dashboard} text="一覧に戻る" />
+      <Stack rowGap="16px">
         <p>ポストが存在しません</p>
-      </div>
+      </Stack>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <LinkToBack href={urls.dashboard} text="一覧に戻る" />
-
+    <Stack rowGap="8px">
       {isEditing ? (
         <Box display="flex" alignItems="center" gap={"8px"}>
           <Input
@@ -123,8 +119,13 @@ export function ThreadInformation({
         </div>
       )}
 
-      <div className="flex items-center justify-between space-x-2">
-        <div className="flex items-center space-x-2">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="8px"
+      >
+        <Box display="flex" alignItems="center" gap="8px">
           <PublicStatusSheet
             threadTitle={threadInfo.title}
             threadId={threadId}
@@ -134,7 +135,7 @@ export function ThreadInformation({
             ogpImagePath={threadInfo.ogpImagePath}
           />
           <ThreadStatusBadge status={threadInfo.status || "WIP"} />
-        </div>
+        </Box>
         <ManageThreadDropDown
           threadId={threadId}
           threadTitle={threadInfo.title}
@@ -142,7 +143,7 @@ export function ThreadInformation({
           onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
           status={threadInfo.status || "WIP"}
         />
-      </div>
-    </div>
+      </Box>
+    </Stack>
   );
 }

@@ -1,3 +1,5 @@
+import { Box } from "@/shared/components/Box";
+import { Typography } from "@/shared/components/Typography";
 import { Skeleton } from "@/shared/ui/skeleton";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -5,23 +7,40 @@ import { NavigationUserIcon } from "./parts/NavigationUserIcon";
 
 export const Navigation = () => {
   return (
-    <header className="sticky z-50 top-0 bg-white shadow-md">
-      <div className="container mx-auto flex h-14 items-center justify-between px-4">
-        <div className="flex items-center space-x-3">
+    <Box
+      component="header"
+      position="sticky"
+      top={0}
+      zIndex={50}
+      bgcolor="navbar.main"
+      sx={{
+        boxShadow: 1,
+      }}
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        maxWidth="1200px"
+        margin="0 auto"
+        height="56px"
+        px={2}
+      >
+        <Box display="flex" alignItems="center" gap={1.5}>
           <Link href={"/"}>
-            <h1 className="text-lg font-medium">Thread Note (β)</h1>
+            <Typography
+              variant="h4"
+              component="h1"
+              color="primary.contrastText"
+            >
+              Thread Note (β)
+            </Typography>
           </Link>
-        </div>
-        {/* <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="icon">
-            <Search className="h-5 w-5" />
-            <span className="sr-only">検索</span>
-            </Button>
-            </div> */}
+        </Box>
         <Suspense fallback={<Skeleton className="w-8 h-8 rounded-full" />}>
           <NavigationUserIcon />
         </Suspense>
-      </div>
-    </header>
+      </Box>
+    </Box>
   );
 };

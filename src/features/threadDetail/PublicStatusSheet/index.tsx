@@ -127,6 +127,7 @@ export function PublicStatusSheet({
           }
         >
           <Button
+            size="small"
             variant="outlined"
             color={isPublic ? "success" : "warning"}
             startIcon={isPublic ? <LanguageOutlined /> : <LockOutlined />}

@@ -1,6 +1,8 @@
 "use client";
 
 import { DeleteThreadDialog } from "@/entities/thread/DeleteThreadDialog";
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import {
   DropdownMenu,
@@ -35,11 +37,13 @@ export function SidebarThreadList() {
   const threads = data?.pages.flatMap((v) => v.threads) || [];
 
   return (
-    <div className="overflow-y-auto flex flex-col flex-1">
-      <div className="p-2 ">
-        <h2 className="text-sm font-bold">スレッド一覧</h2>
-      </div>
-      <div className="flex-1">
+    <Stack flex={1} sx={{ overflowY: "auto" }}>
+      <Stack p="8px">
+        <Typography variant="body2" bold>
+          スレッド一覧
+        </Typography>
+      </Stack>
+      <Stack flex={1} sx={{ overflowY: "auto" }}>
         <VirtualizedList
           data={threads}
           rowRenderer={(item) => <PostListItem key={item.id} thread={item} />}
@@ -54,8 +58,8 @@ export function SidebarThreadList() {
             </div>
           )}
         />
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 }
 

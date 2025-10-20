@@ -1,3 +1,5 @@
+import { Box } from "@/shared/components/Box";
+import { Typography } from "@/shared/components/Typography";
 import { Skeleton } from "@/shared/ui/skeleton";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -7,22 +9,28 @@ import { SidebarSheet } from "./parts/SidebarSheet";
 
 export const DashboardNavigation = () => {
   return (
-    <header className="sticky z-50 top-0 bg-white shadow-md">
-      <div className="container mx-auto flex h-14 items-center justify-between px-4">
-        <div className="md:hidden h-6">
-          <SidebarSheet>
-            <DashBoardSidebar />
-          </SidebarSheet>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Link href={"/"}>
-            <h1 className="text-lg font-medium">Thread Note (β)</h1>
-          </Link>
-        </div>
-        <Suspense fallback={<Skeleton className="w-8 h-8 rounded-full" />}>
-          <NavigationUserIcon />
-        </Suspense>
-      </div>
-    </header>
+    <Box
+      bgcolor="navbar.main"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      p="8px 16px"
+      borderBottom="1px solid"
+      borderColor="divider"
+    >
+      <Box display={{ xs: "block", md: "none" }} height="24px">
+        <SidebarSheet>
+          <DashBoardSidebar />
+        </SidebarSheet>
+      </Box>
+      <Link href={"/"}>
+        <Typography variant="body1" bold color="primary.contrastText">
+          Thread Note (β)
+        </Typography>
+      </Link>
+      <Suspense fallback={<Skeleton className="w-8 h-8 rounded-full" />}>
+        <NavigationUserIcon />
+      </Suspense>
+    </Box>
   );
 };
