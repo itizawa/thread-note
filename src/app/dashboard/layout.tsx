@@ -9,9 +9,7 @@ export default async function DashboardLayout({
 }) {
   return (
     <>
-      <div className="block md:hidden">
-        <DashboardNavigation />
-      </div>
+      <DashboardNavigation />
       <div className="flex h-[calc(100vh-56px)] md:h-screen bg-gray-100">
         <div className="md:block hidden w-60 border-r">
           <DashBoardSidebar />

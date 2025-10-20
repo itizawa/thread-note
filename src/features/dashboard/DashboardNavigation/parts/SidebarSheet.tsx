@@ -23,7 +23,7 @@ export const SidebarSheet = ({ children }: { children: React.ReactNode }) => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger>
-        <AlignJustify className="h-6 w-6" />
+        <AlignJustify />
       </SheetTrigger>
       <SheetContent side="left" className="gap-0" forceMount>
         <SheetHeader>
