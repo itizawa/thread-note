@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { signIn, signOut } from "@/auth";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { Button } from "@/shared/components/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +23,9 @@ export async function NavigationUserIcon() {
           await signIn("google");
         }}
       >
-        <button type="submit">ログイン</button>
+        <Button type="submit" variant="outlined" size="small">
+          ログイン
+        </Button>
       </form>
     );
   }
