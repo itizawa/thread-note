@@ -58,41 +58,29 @@ export function CreateNewPostForm({ threadId }: Props) {
   return (
     <Box
       sx={{
-        boxShadow: {
-          xs: "0px 0px 10px 0px rgba(0, 0, 0, 0.1)",
-          md: "none",
-        },
+        borderRadius: "8px",
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        p: "16px",
+        bgcolor: "background.paper",
       }}
     >
-      <Box
-        sx={{
-          borderRadius: {
-            xs: 0,
-            md: "8px",
-          },
-          border: (theme) => `1px solid ${theme.palette.divider}`,
-          p: "16px",
-          bgcolor: "background.paper",
+      <PostForm
+        textarea={{
+          value: body,
+          onChange: handleContentChange,
+          onKeyPress: handleKeyPress,
+          minHeight: 16,
+          forceFocus: true,
         }}
-      >
-        <PostForm
-          textarea={{
-            value: body,
-            onChange: handleContentChange,
-            onKeyPress: handleKeyPress,
-            minHeight: 16,
-            forceFocus: true,
-          }}
-          formState={{
-            isDisabled: Boolean(isDisabled),
-            isPending,
-          }}
-          bottomButtons={{
-            submitText: "投稿",
-            onSubmit: handleSubmit,
-          }}
-        />
-      </Box>
+        formState={{
+          isDisabled: Boolean(isDisabled),
+          isPending,
+        }}
+        bottomButtons={{
+          submitText: "投稿",
+          onSubmit: handleSubmit,
+        }}
+      />
     </Box>
   );
 }
