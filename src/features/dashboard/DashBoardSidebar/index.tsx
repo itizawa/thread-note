@@ -1,6 +1,8 @@
 import { getCurrentUser } from "@/app/actions/userActions";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { Box } from "@/shared/components/Box";
 import { IconButton } from "@/shared/components/IconButton";
+import { Stack } from "@/shared/components/Stack";
 import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
 import { cn } from "@/shared/lib/utils";
@@ -30,28 +32,40 @@ export const DashBoardSidebar = async () => {
   ];
 
   return (
-    <div className="flex h-full flex-col bg-white overflow-y-auto">
-      <div className="p-4">
-        <div className="flex items-center space-x-2">
-          <UserIcon userImage={currentUser?.image} />
-          <span>{currentUser?.name}</span>
-          {currentUser && (
-            <Link
-              href={urls.userDetails(currentUser.id)}
-              target="_blank"
-              className="ml-auto"
-            >
-              <Tooltip content="ユーザーページを開く">
-                <IconButton size="small">
-                  <LaunchOutlined />
-                </IconButton>
-              </Tooltip>
-            </Link>
-          )}
-        </div>
-      </div>
-      <nav className="space-y-4 p-2 overflow-y-auto flex flex-col flex-1">
-        <div className="space-y-1">
+    <Stack
+      display="flex"
+      height="100%"
+      flex={1}
+      sx={{
+        overflowY: "auto",
+        backgroundColor: "#fefcff",
+      }}
+    >
+      <Box display="flex" alignItems="center" gap="8px" p="16px">
+        <UserIcon userImage={currentUser?.image} />
+        <span>{currentUser?.name}</span>
+        {currentUser && (
+          <Link
+            href={urls.userDetails(currentUser.id)}
+            target="_blank"
+            className="ml-auto"
+          >
+            <Tooltip content="ユーザーページを開く">
+              <IconButton size="small">
+                <LaunchOutlined />
+              </IconButton>
+            </Tooltip>
+          </Link>
+        )}
+      </Box>
+      <Stack
+        display="flex"
+        p="8px"
+        rowGap="16px"
+        flex={1}
+        sx={{ overflowY: "auto" }}
+      >
+        <Stack rowGap="8px">
           {routes.map((route) => (
             <Link
               key={route.href}
@@ -64,10 +78,10 @@ export const DashBoardSidebar = async () => {
               <span>{route.label}</span>
             </Link>
           ))}
-        </div>
+        </Stack>
         <hr />
         <SidebarThreadList />
-      </nav>
-    </div>
+      </Stack>
+    </Stack>
   );
 };

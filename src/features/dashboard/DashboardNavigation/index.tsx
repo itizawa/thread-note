@@ -10,7 +10,7 @@ import { SidebarSheet } from "./parts/SidebarSheet";
 export const DashboardNavigation = () => {
   return (
     <Box
-      bgcolor="background.paper"
+      bgcolor="primary.main"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
@@ -24,7 +24,7 @@ export const DashboardNavigation = () => {
         </SidebarSheet>
       </Box>
       <Link href={"/"}>
-        <Typography variant="body1" bold color="text.primary">
+        <Typography variant="body1" bold color="primary.contrastText">
           Thread Note (β)
         </Typography>
       </Link>

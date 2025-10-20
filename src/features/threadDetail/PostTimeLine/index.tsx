@@ -2,8 +2,6 @@
 
 import { Box } from "@/shared/components/Box";
 import { Stack } from "@/shared/components/Stack";
-import { urls } from "@/shared/consts/urls";
-import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
 import { ArchiveOutlined } from "@mui/icons-material";
@@ -25,12 +23,11 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
       <Suspense
         fallback={
           <Stack rowGap="16px" px="16px" pt="24px">
-            <LinkToBack href={urls.dashboard} text="一覧に戻る" />
             <Skeleton className="w-full h-9" />
           </Stack>
         }
       >
-        <Box px="16px" pt="24px">
+        <Box px="16px" pt="8px">
           <ThreadInformation
             threadId={threadId}
             includeIsArchived={includeIsArchived}

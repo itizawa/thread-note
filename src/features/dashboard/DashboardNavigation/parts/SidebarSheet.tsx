@@ -3,12 +3,11 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/shared/ui/sheet";
-import { AlignJustify } from "lucide-react";
+import { MenuOutlined } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -23,14 +22,13 @@ export const SidebarSheet = ({ children }: { children: React.ReactNode }) => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger>
-        <AlignJustify />
+        <MenuOutlined sx={{ color: "primary.contrastText" }} />
       </SheetTrigger>
       <SheetContent side="left" className="gap-0" forceMount>
         <SheetHeader>
           <SheetTitle className="text-lg font-medium">
             Thread Note (β)
           </SheetTitle>
-          <SheetDescription />
         </SheetHeader>
         {children}
       </SheetContent>

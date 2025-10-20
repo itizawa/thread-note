@@ -8,10 +8,8 @@ import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
 import { Stack } from "@/shared/components/Stack";
 import { Tooltip } from "@/shared/components/Tooltip";
-import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
-import { LinkToBack } from "@/shared/ui/LinkToBack";
 import { Input } from "@/shared/ui/input";
 import { trpc } from "@/trpc/client";
 import { EditOutlined } from "@mui/icons-material";
@@ -77,7 +75,6 @@ export function ThreadInformation({
   if (!threadInfo) {
     return (
       <Stack rowGap="16px">
-        <LinkToBack href={urls.dashboard} text="一覧に戻る" />
         <p>ポストが存在しません</p>
       </Stack>
     );
@@ -85,8 +82,6 @@ export function ThreadInformation({
 
   return (
     <Stack rowGap="16px">
-      <LinkToBack href={urls.dashboard} text="一覧に戻る" />
-
       {isEditing ? (
         <Box display="flex" alignItems="center" gap={"8px"}>
           <Input
