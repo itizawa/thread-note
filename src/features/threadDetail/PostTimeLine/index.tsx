@@ -24,8 +24,8 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
     <Stack rowGap="16px" height="100%" sx={{ overflowY: "auto" }}>
       <Suspense
         fallback={
-          <Stack rowGap="16px">
-            <LinkToBack href={urls.dashboard} text="Home" />
+          <Stack rowGap="16px" px="16px" pt="24px">
+            <LinkToBack href={urls.dashboard} text="一覧に戻る" />
             <Skeleton className="w-full h-9" />
           </Stack>
         }
@@ -38,7 +38,13 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
           />
         </Box>
       </Suspense>
-      <Suspense fallback={<Skeleton className="w-full h-20" />}>
+      <Suspense
+        fallback={
+          <Box px="16px">
+            <Skeleton className="w-full h-20" />
+          </Box>
+        }
+      >
         <Box flex={1} height="100%" minHeight={0}>
           <PostTimeLineCore
             threadId={threadId}

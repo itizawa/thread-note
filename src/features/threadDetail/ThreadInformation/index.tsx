@@ -6,6 +6,7 @@ import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
+import { Stack } from "@/shared/components/Stack";
 import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
@@ -75,15 +76,15 @@ export function ThreadInformation({
 
   if (!threadInfo) {
     return (
-      <div className="space-y-4">
+      <Stack rowGap="16px">
         <LinkToBack href={urls.dashboard} text="一覧に戻る" />
         <p>ポストが存在しません</p>
-      </div>
+      </Stack>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <Stack rowGap="16px">
       <LinkToBack href={urls.dashboard} text="一覧に戻る" />
 
       {isEditing ? (
@@ -143,6 +144,6 @@ export function ThreadInformation({
           status={threadInfo.status || "WIP"}
         />
       </div>
-    </div>
+    </Stack>
   );
 }

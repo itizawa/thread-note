@@ -1,5 +1,7 @@
 import { DashBoardSidebar } from "@/features/dashboard/DashBoardSidebar";
 import { DashboardNavigation } from "@/features/dashboard/DashboardNavigation";
+import { Box } from "@/shared/components/Box";
+import { Stack } from "@/shared/components/Stack";
 import type React from "react";
 
 export default async function DashboardLayout({
@@ -8,14 +10,21 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <Stack height="100vh">
       <DashboardNavigation />
-      <div className="flex h-[calc(100vh-56px)] md:h-screen bg-gray-100">
-        <div className="md:block hidden w-60 border-r">
+      <Box display="flex" flex={1} minHeight="0">
+        <Box
+          display={{ xs: "none", md: "block" }}
+          width="240px"
+          borderRight="1px solid"
+          borderColor="divider"
+        >
           <DashBoardSidebar />
-        </div>
-        <div className="flex-1 h-full overflow-y-auto">{children}</div>
-      </div>
-    </>
+        </Box>
+        <Box flex={1} minHeight="0" sx={{ overflowY: "auto" }}>
+          {children}
+        </Box>
+      </Box>
+    </Stack>
   );
 }

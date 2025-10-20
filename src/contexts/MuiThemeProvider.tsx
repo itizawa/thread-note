@@ -24,6 +24,10 @@ const theme = createTheme({
       dark: "#b27d00",
       contrastText: "#fff",
     },
+    background: {
+      default: "#f5f5f5",
+    },
+    divider: "#e0e0e0",
   },
   typography: TypographyTheme,
   components: {
