@@ -26,8 +26,15 @@ const theme = createTheme({
     },
     background: {
       default: "#f5f5f5",
+      paper: "#ffffff",
     },
     divider: "#e0e0e0",
+    sidebar: {
+      main: "#fefcff",
+    },
+    navbar: {
+      main: "#512da8",
+    },
   },
   typography: TypographyTheme,
   components: {

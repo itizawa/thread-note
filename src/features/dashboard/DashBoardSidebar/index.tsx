@@ -38,7 +38,7 @@ export const DashBoardSidebar = async () => {
       flex={1}
       sx={{
         overflowY: "auto",
-        backgroundColor: "#fefcff",
+        background: "sidebar.main",
       }}
     >
       <Box display="flex" alignItems="center" gap="8px" p="16px">

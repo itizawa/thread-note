@@ -10,7 +10,7 @@ import { SidebarSheet } from "./parts/SidebarSheet";
 export const DashboardNavigation = () => {
   return (
     <Box
-      bgcolor="primary.main"
+      bgcolor="navbar.main"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
