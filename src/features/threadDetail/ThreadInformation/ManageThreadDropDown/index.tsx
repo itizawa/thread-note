@@ -5,7 +5,6 @@ import { urls } from "@/shared/consts/urls";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
@@ -13,8 +12,7 @@ import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-ic
 import { trpc } from "@/trpc/client";
 import { MoreHorizOutlined } from "@mui/icons-material";
 import { ThreadStatus } from "@prisma/client";
-import { Archive, ListCheck, Pencil, PlaneTakeoff, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Archive, ListCheck, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -71,12 +69,6 @@ export function ManageThreadDropDown({
           </Tooltip>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem asChild>
-            <Link href={urls.dashboardThreadDetailsExports(threadId)}>
-              <PlaneTakeoff className="h-4 w-4" />
-              スレッドの出力
-            </Link>
-          </DropdownMenuItem>
           <DropdownMenuItemWithIcon
             icon={Archive}
             text={includeIsArchived ? "アーカイブの非表示" : "アーカイブの表示"}
