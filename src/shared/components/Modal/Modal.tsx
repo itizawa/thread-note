@@ -15,6 +15,12 @@ import {
   WithSubButtonsProps,
 } from "./modalActions/WithSubButtons";
 
+const sizeNumbers = {
+  sm: 420,
+  md: 600,
+  lg: 800,
+};
+
 type Props = {
   onClose: () => void;
   title: string;
@@ -23,6 +29,7 @@ type Props = {
   sx?: SxProps<Theme>;
   disableCloseButton?: boolean;
   fullHeight?: boolean;
+  size?: "sm" | "md" | "lg";
 } & ComponentProps<typeof Dialog>;
 
 export const Modal = ({
@@ -34,6 +41,7 @@ export const Modal = ({
   sx,
   disableCloseButton,
   fullHeight,
+  size = "md",
   ...props
 }: Props) => {
   return (
@@ -48,6 +56,7 @@ export const Modal = ({
           flexDirection: "column",
           gap: "32px",
           height: fullHeight ? "100%" : "auto",
+          width: sizeNumbers[size],
         },
         "& .MuiBackdrop-root": {
           backdropFilter: "blur(10px)",

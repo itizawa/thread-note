@@ -18,13 +18,13 @@ export type DefaultButtonsProps = {
     disabled?: boolean;
     loading?: boolean;
   };
-  align: "left" | "center" | "right";
+  align?: "left" | "center" | "right";
 };
 
 export const DefaultButtons = ({
   cancel,
   submit,
-  align = "right",
+  align = "center",
 }: DefaultButtonsProps) => {
   return (
     <Stack
