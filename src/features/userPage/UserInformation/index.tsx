@@ -16,7 +16,7 @@ type Props = {
 export const UserInformation = ({ user }: Props) => {
   return (
     <div className="flex items-start space-x-4">
-      <UserIcon size={12} userImage={user.image} />
+      <UserIcon size={12} className="max-w-[48px]" userImage={user.image} />
       <div className="flex flex-col space-y-2">
         <span className="text-gray-700 font-bold">{user.name}</span>
         <div className="flex flex-col space-y-1">
