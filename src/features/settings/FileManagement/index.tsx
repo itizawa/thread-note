@@ -1,19 +1,14 @@
 "use client";
 
-import { Button } from "@/shared/components/Button";
 import { IconButton } from "@/shared/components/IconButton";
+import { Modal } from "@/shared/components/Modal";
+import { Stack } from "@/shared/components/Stack";
 import { Tooltip } from "@/shared/components/Tooltip";
+import { Typography } from "@/shared/components/Typography";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { convertBytesToDisplay } from "@/shared/lib/convertBytesToDisplay";
 import { ExpandedImage } from "@/shared/ui/ExpandedImage";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/dialog";
+
 import { Progress } from "@/shared/ui/progress";
 import {
   Select,
@@ -27,6 +22,7 @@ import { trpc } from "@/trpc/client";
 import { DeleteOutlined } from "@mui/icons-material";
 import { format } from "date-fns";
 import { ClockArrowDown, File } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -171,39 +167,45 @@ function FileListItem({
 
   return (
     <>
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>ファイル削除の確認</DialogTitle>
-            <DialogDescription className="flex flex-col items-center gap-2">
-              {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-              <img src={file.path} className="w-12 h-12 rounded mx-auto" />「
-              {file.name || "タイトルなし"}」を削除してもよろしいですか？
-              この操作は取り消せません。
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="flex flex-row">
-            <Button
-              variant="contained"
-              color="error"
-              size="large"
-              onClick={() => handleDelete(file.id)}
-              disabled={isPending}
-              loading={isPending}
-            >
-              削除する
-            </Button>
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="large"
-              onClick={() => setIsDeleteDialogOpen(false)}
-            >
-              キャンセル
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <Modal
+        open={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        title="ファイル削除の確認"
+        titleHelpText="ファイルを削除すると、ファイルは完全に削除されます。"
+        actions={{
+          type: "default",
+          cancel: {
+            text: "キャンセル",
+            color: "gray",
+            onClick: () => setIsDeleteDialogOpen(false),
+            disabled: isPending,
+          },
+          submit: {
+            text: "削除する",
+            color: "error",
+            onClick: () => handleDelete(file.id),
+            disabled: isPending,
+            loading: isPending,
+          },
+          align: "right",
+        }}
+      >
+        <Stack gap="8px">
+          <Typography variant="body2" bold whiteSpace="pre-wrap">
+            {file.name || "タイトルなし"}
+          </Typography>
+          <Image
+            src={file.path}
+            alt={file.name}
+            width={80}
+            height={80}
+            className="rounded mx-auto"
+          />
+          <Typography variant="body2" color="textSecondary">
+            ファイルを削除してもよろしいですか？この操作は取り消せません。
+          </Typography>
+        </Stack>
+      </Modal>
 
       <div
         className="flex items-center justify-between gap-4 p-2 hover:bg-gray-100 cursor-pointer overflow-x-hidden"
