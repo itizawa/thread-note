@@ -10,7 +10,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Stack height="100dvh">
+    <Stack height="100dvh" sx={{ overflowY: "auto" }}>
       <DashboardNavigation />
       <Box display="flex" flex={1} minHeight="0">
         <Box
