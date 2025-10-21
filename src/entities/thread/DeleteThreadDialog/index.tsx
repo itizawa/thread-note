@@ -1,12 +1,6 @@
-import { Button } from "@/shared/components/Button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/dialog";
+import { Modal } from "@/shared/components/Modal";
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
 
@@ -47,39 +41,37 @@ export function DeleteThreadDialog({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>スレッドの削除</DialogTitle>
-          <DialogDescription className="min-h-[100px] flex flex-col gap-y-4 items-center justify-center">
-            <span className="font-bold text-lg">
-              スレッド「{threadTitle || "タイトルなし"}」を削除しますか？
-            </span>
-            <span className="text-sm text-red-500">
-              スレッドを削除すると、スレッド内のすべての投稿が削除されます。
-            </span>
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button
-            variant="contained"
-            color="error"
-            size="large"
-            onClick={handleDeleteThread}
-            loading={deleteThreadMutation.isPending}
-          >
-            削除する
-          </Button>
-          <Button
-            variant="outlined"
-            color="inherit"
-            size="large"
-            onClick={() => onOpenChange(false)}
-          >
-            キャンセル
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <Modal
+      open={isOpen}
+      onClose={() => onOpenChange(false)}
+      title="スレッドの削除"
+      titleHelpText="スレッドを削除すると、スレッド内のすべての投稿が削除されます。"
+      actions={{
+        type: "default",
+        cancel: {
+          text: "キャンセル",
+          color: "gray",
+          onClick: () => onOpenChange(false),
+          disabled: deleteThreadMutation.isPending,
+        },
+        submit: {
+          text: "削除する",
+          color: "error",
+          onClick: handleDeleteThread,
+          disabled: deleteThreadMutation.isPending,
+          loading: deleteThreadMutation.isPending,
+        },
+        align: "right",
+      }}
+    >
+      <Stack gap="8px">
+        <Typography variant="body1" bold>
+          「{threadTitle || "タイトルなし"}」を削除しますか？
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          ※スレッドを削除すると、スレッド内のすべての投稿が削除されます。
+        </Typography>
+      </Stack>
+    </Modal>
   );
 }

@@ -8,39 +8,29 @@ import { NavigationUserIcon } from "./parts/NavigationUserIcon";
 export const Navigation = () => {
   return (
     <Box
-      component="header"
-      position="sticky"
-      top={0}
-      zIndex={50}
       bgcolor="navbar.main"
-      sx={{
-        boxShadow: 1,
-      }}
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      p="8px 16px"
+      borderBottom="1px solid"
+      borderColor="divider"
     >
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        maxWidth="1200px"
-        margin="0 auto"
-        height="56px"
-        px={2}
-      >
-        <Box display="flex" alignItems="center" gap={1.5}>
-          <Link href={"/"}>
-            <Typography
-              variant="h4"
-              component="h1"
-              color="primary.contrastText"
-            >
-              Thread Note (β)
-            </Typography>
-          </Link>
-        </Box>
-        <Suspense fallback={<Skeleton className="w-8 h-8 rounded-full" />}>
-          <NavigationUserIcon />
-        </Suspense>
+      <Box display="flex" alignItems="center" gap={1.5}>
+        <Link href={"/"}>
+          <Typography
+            variant="body1"
+            component="h1"
+            color="primary.contrastText"
+            bold
+          >
+            Thread Note (β)
+          </Typography>
+        </Link>
       </Box>
+      <Suspense fallback={<Skeleton className="w-8 h-8 rounded-full" />}>
+        <NavigationUserIcon />
+      </Suspense>
     </Box>
   );
 };
