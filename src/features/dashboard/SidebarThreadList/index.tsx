@@ -7,7 +7,6 @@ import { urls } from "@/shared/consts/urls";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
@@ -16,7 +15,7 @@ import { VirtualizedList } from "@/shared/ui/virtualizedList";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
 import { inferRouterOutputs } from "@trpc/server";
-import { ListCheck, MoreHorizontal, PlaneTakeoff, Trash2 } from "lucide-react";
+import { ListCheck, MoreHorizontal, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -116,23 +115,16 @@ function PostListItem({ thread }: { thread: Thread }) {
               <MoreHorizontal className="h-5 w-5 cursor-pointer hidden group-hover:block transition-opacity" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" alignOffset={-8} sideOffset={24}>
-              <DropdownMenuItem asChild>
-                <Link href={urls.dashboardThreadDetailsExports(thread.id)}>
-                  <PlaneTakeoff className="h-4 w-4" />
-                  スレッドの出力
-                </Link>
-              </DropdownMenuItem>
               {thread.status === "WIP" && (
                 <>
-                  <DropdownMenuSeparator />
                   <DropdownMenuItemWithIcon
                     icon={ListCheck}
                     text="Closedにする"
                     onClick={handleCloseThread}
                   />
+                  <DropdownMenuSeparator />
                 </>
               )}
-              <DropdownMenuSeparator />
               <DropdownMenuItemWithIcon
                 icon={Trash2}
                 text="スレッドの削除"
