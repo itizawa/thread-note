@@ -60,6 +60,8 @@ export const Button = ({
           fontSize: "16px",
           height: "40px",
         }),
+        minWidth: "fit-content",
+        whiteSpace: "nowrap",
         ...sx,
       }}
       {...props}
