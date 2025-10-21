@@ -52,11 +52,14 @@ export function DeleteThreadDialog({
           text: "キャンセル",
           color: "gray",
           onClick: () => onOpenChange(false),
+          disabled: deleteThreadMutation.isPending,
         },
         submit: {
           text: "削除する",
           color: "error",
           onClick: handleDeleteThread,
+          disabled: deleteThreadMutation.isPending,
+          loading: deleteThreadMutation.isPending,
         },
         align: "right",
       }}
