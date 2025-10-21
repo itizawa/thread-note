@@ -1,8 +1,9 @@
 "use client";
 
 import { Modal } from "@/shared/components/Modal/Modal";
+import { TextField } from "@/shared/components/TextField";
+import { WithLabel } from "@/shared/components/WithLabel";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
-import { Input } from "@/shared/ui/input";
 import { trpc } from "@/trpc/client";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -78,13 +79,16 @@ export function ThreadTitleEditModal({
         },
       }}
     >
-      <Input
-        value={title}
-        placeholder="タイトルを入力してください"
-        onChange={(e) => setTitle(e.target.value)}
-        onKeyDown={handleKeyPress}
-        autoFocus
-      />
+      <WithLabel label="タイトル">
+        <TextField
+          value={title}
+          placeholder="タイトルを入力してください"
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={handleKeyPress}
+          autoFocus
+          fullWidth
+        />
+      </WithLabel>
     </Modal>
   );
 }
