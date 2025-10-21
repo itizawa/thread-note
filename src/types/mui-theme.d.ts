@@ -18,6 +18,7 @@ declare module "@mui/material/styles" {
       main: string;
       gradient?: string;
     };
+    gray: Palette["primary"];
   }
 
   interface PaletteOptions {
@@ -29,5 +30,12 @@ declare module "@mui/material/styles" {
       main?: string;
       gradient?: string;
     };
+    gray: PaletteOptions["primary"];
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    gray: true;
   }
 }
