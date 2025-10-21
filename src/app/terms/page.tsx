@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <>
       <Navigation />
-      <main className="w-full h-[calc(100vh-56px)] bg-gray-100 overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4 h-full">
+      <main className="w-full bg-gray-100 overflow-y-auto border-r md:px-6 px-2 md:pt-6 pt-4 pb-4 h-full">
         <div className="w-full max-w-[700px] mx-auto rounded-lg border p-4 bg-white space-y-4">
           <div className="w-[100%] md:p-[24px] p-[16px] flex flex-col">
             <p className="text-2xl">利用規約</p>
