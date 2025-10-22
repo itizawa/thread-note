@@ -10,6 +10,7 @@ import * as React from "react";
 type InputProps = TextFieldProps & {
   forceFocus?: boolean;
   startIcon?: React.ReactNode;
+  readOnly?: boolean;
 };
 
 /**
@@ -43,6 +44,7 @@ export const TextField = ({
   size = "small",
   sx,
   startIcon,
+  readOnly,
   ...props
 }: InputProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -54,6 +56,7 @@ export const TextField = ({
       inputRef={ref || inputRef}
       slotProps={{
         input: {
+          readOnly,
           startAdornment: startIcon ? (
             <InputAdornment position="start" sx={{ fontSize: "20px" }}>
               {startIcon}
@@ -64,6 +67,7 @@ export const TextField = ({
       sx={{
         "& .MuiInputBase-root": {
           fontSize: size === "small" ? "14px" : "16px",
+          ...(readOnly && { color: "gray.light" }),
         },
         ".MuiInputBase-input": {
           paddingY: "8px",
