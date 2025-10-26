@@ -4,12 +4,12 @@ import { updateThreadPublicStatus } from "@/app/actions/threadActions";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { Stack } from "@/shared/components/Stack";
+import { TextField } from "@/shared/components/TextField";
 import { Tooltip } from "@/shared/components/Tooltip";
 import { Typography } from "@/shared/components/Typography";
 import { WithLabel } from "@/shared/components/WithLabel";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { cn } from "@/shared/lib/utils";
-import { Input } from "@/shared/ui/input";
 import {
   Sheet,
   SheetContent,
@@ -75,7 +75,7 @@ export function PublicStatusSheet({
 
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: {
-      ogpTitle: ogpTitle || "",
+      ogpTitle: ogpTitle || threadTitle,
       ogpDescription: ogpDescription || "",
       ogpImagePath: ogpImagePath,
     },
@@ -204,13 +204,13 @@ export function PublicStatusSheet({
               <Field name="ogpTitle">
                 {({ state, handleBlur, handleChange }) => (
                   <WithLabel label="OGPタイトル">
-                    <Input
+                    <TextField
                       id="ogpTitle"
                       placeholder={threadTitle || "タイトルなし"}
                       value={state.value}
                       onBlur={handleBlur}
                       error={!!state.meta.errors[0]?.message}
-                      errorMessage={state.meta.errors[0]?.message}
+                      helperText={state.meta.errors[0]?.message}
                       onChange={(e) => handleChange(e.target.value)}
                     />
                   </WithLabel>
