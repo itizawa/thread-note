@@ -10,13 +10,7 @@ const selectUserDateObject = {
 };
 
 export class GetThreadWithPostsUseCase {
-  async execute({
-    id,
-    inCludeIsArchived,
-  }: {
-    id: Thread["id"];
-    inCludeIsArchived: boolean;
-  }) {
+  async execute({ id }: { id: Thread["id"] }) {
     const threadWithPosts = await prisma.thread.findFirst({
       where: {
         id,
@@ -24,7 +18,7 @@ export class GetThreadWithPostsUseCase {
       include: {
         posts: {
           where: {
-            isArchived: inCludeIsArchived ? undefined : false,
+            isArchived: false,
             parentId: null,
           },
           orderBy: {
@@ -33,7 +27,7 @@ export class GetThreadWithPostsUseCase {
           include: {
             children: {
               where: {
-                isArchived: inCludeIsArchived ? undefined : false,
+                isArchived: false,
               },
               include: {
                 user: selectUserDateObject,

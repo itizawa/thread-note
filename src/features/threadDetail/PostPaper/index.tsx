@@ -84,7 +84,7 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
     startTransition(async () => {
       await changeToUnArchive({ id: post.id });
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
-      toast.success("アーカイブを取り消しました");
+      toast.success("削除を取り消しました");
     });
   };
 
@@ -92,7 +92,7 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
     startTransition(async () => {
       await changeToArchive({ id: post.id });
       utils.thread.getThreadWithPosts.invalidate({ id: post.threadId });
-      toast.success("アーカイブしました", {
+      toast.success("削除しました", {
         action: (
           <Button
             size="small"

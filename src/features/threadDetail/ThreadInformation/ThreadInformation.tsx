@@ -11,15 +11,7 @@ import { trpc } from "@/trpc/client";
 import { useState } from "react";
 import { ManageThreadDropDown } from "./ManageThreadDropDown";
 
-export function ThreadInformation({
-  threadId,
-  includeIsArchived,
-  toggleIncludeIsArchived,
-}: {
-  threadId: string;
-  includeIsArchived: boolean;
-  toggleIncludeIsArchived: () => void;
-}) {
+export function ThreadInformation({ threadId }: { threadId: string }) {
   const [threadInfo] = trpc.thread.getThreadInfo.useSuspenseQuery({
     id: threadId,
   });
@@ -73,8 +65,6 @@ export function ThreadInformation({
             <ManageThreadDropDown
               threadId={threadId}
               threadTitle={threadInfo.title}
-              includeIsArchived={includeIsArchived}
-              onClickToggleDisplayArchiveButton={toggleIncludeIsArchived}
               status={threadInfo.status || "WIP"}
             />
           </Box>

@@ -6,18 +6,12 @@ import { Typography } from "@/shared/components/Typography";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
 import { ArchiveOutlined } from "@mui/icons-material";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { CreateNewPostForm } from "../CreateNewPostForm";
 import { PostPaper } from "../PostPaper";
 import { ThreadInformation } from "../ThreadInformation";
 
 export function PostTimeLine({ threadId }: { threadId: string }) {
-  const [includeIsArchived, setIncludeIsArchived] = useState(false);
-
-  const toggleIncludeIsArchived = () => {
-    setIncludeIsArchived((prev) => !prev);
-  };
-
   return (
     <Stack height="100%" sx={{ overflowY: "auto" }}>
       <Suspense
@@ -32,11 +26,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
           py="8px"
           sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
         >
-          <ThreadInformation
-            threadId={threadId}
-            includeIsArchived={includeIsArchived}
-            toggleIncludeIsArchived={toggleIncludeIsArchived}
-          />
+          <ThreadInformation threadId={threadId} />
         </Box>
       </Suspense>
       <Suspense
@@ -47,28 +37,16 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
         }
       >
         <Box flex={1} height="100%" minHeight={0}>
-          <PostTimeLineCore
-            threadId={threadId}
-            includeIsArchived={includeIsArchived}
-          />
+          <PostTimeLineCore threadId={threadId} />
         </Box>
       </Suspense>
     </Stack>
   );
 }
 
-const PostTimeLineCore = ({
-  threadId,
-  includeIsArchived,
-}: {
-  threadId: string;
-  includeIsArchived: boolean;
-}) => {
+const PostTimeLineCore = ({ threadId }: { threadId: string }) => {
   const [{ threadWithPosts }] = trpc.thread.getThreadWithPosts.useSuspenseQuery(
-    {
-      id: threadId,
-      includeIsArchived,
-    }
+    { id: threadId }
   );
   const [threadInfo] = trpc.thread.getThreadInfo.useSuspenseQuery({
     id: threadId,

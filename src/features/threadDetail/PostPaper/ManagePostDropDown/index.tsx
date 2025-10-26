@@ -49,7 +49,7 @@ export function ManagePostDropDown({
         <DropdownMenuSeparator />
         <DropdownMenuItemWithIcon
           icon={Archive}
-          text="アーカイブ"
+          text="削除"
           variant="destructive"
           onClick={onClickArchiveButton}
         />
