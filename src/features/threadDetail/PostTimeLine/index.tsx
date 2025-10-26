@@ -2,22 +2,16 @@
 
 import { Box } from "@/shared/components/Box";
 import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
 import { ArchiveOutlined } from "@mui/icons-material";
-import { Typography } from "@mui/material";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { CreateNewPostForm } from "../CreateNewPostForm";
 import { PostPaper } from "../PostPaper";
 import { ThreadInformation } from "../ThreadInformation";
 
 export function PostTimeLine({ threadId }: { threadId: string }) {
-  const [includeIsArchived, setIncludeIsArchived] = useState(false);
-
-  const toggleIncludeIsArchived = () => {
-    setIncludeIsArchived((prev) => !prev);
-  };
-
   return (
     <Stack height="100%" sx={{ overflowY: "auto" }}>
       <Suspense
@@ -32,11 +26,7 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
           py="8px"
           sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
         >
-          <ThreadInformation
-            threadId={threadId}
-            includeIsArchived={includeIsArchived}
-            toggleIncludeIsArchived={toggleIncludeIsArchived}
-          />
+          <ThreadInformation threadId={threadId} />
         </Box>
       </Suspense>
       <Suspense
@@ -47,28 +37,16 @@ export function PostTimeLine({ threadId }: { threadId: string }) {
         }
       >
         <Box flex={1} height="100%" minHeight={0}>
-          <PostTimeLineCore
-            threadId={threadId}
-            includeIsArchived={includeIsArchived}
-          />
+          <PostTimeLineCore threadId={threadId} />
         </Box>
       </Suspense>
     </Stack>
   );
 }
 
-const PostTimeLineCore = ({
-  threadId,
-  includeIsArchived,
-}: {
-  threadId: string;
-  includeIsArchived: boolean;
-}) => {
+const PostTimeLineCore = ({ threadId }: { threadId: string }) => {
   const [{ threadWithPosts }] = trpc.thread.getThreadWithPosts.useSuspenseQuery(
-    {
-      id: threadId,
-      includeIsArchived,
-    }
+    { id: threadId }
   );
   const [threadInfo] = trpc.thread.getThreadInfo.useSuspenseQuery({
     id: threadId,
@@ -82,12 +60,7 @@ const PostTimeLineCore = ({
 
   return (
     <Stack height="100%" minHeight={0}>
-      <Stack
-        sx={{ p: { xs: "8px", md: "16px" } }}
-        rowGap="16px"
-        className="overflow-y-auto"
-        flex={1}
-      >
+      <Stack className="overflow-y-auto" flex={1} py="8px">
         {threadWithPosts.posts.map((v) => {
           return (
             <PostPaper
@@ -98,26 +71,34 @@ const PostTimeLineCore = ({
             />
           );
         })}
+
         {isThreadClosed && (
           <Box
             sx={{
-              borderRadius: "8px",
-              border: (theme) => `1px solid ${theme.palette.divider}`,
-              p: { xs: "0px", md: "16px" },
-              bgcolor: "background.paper",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              justifyContent: "center",
+              px: { xs: "8px", md: "16px" },
+              py: { xs: "8px", md: "16px" },
             }}
           >
-            <ArchiveOutlined
-              fontSize="small"
-              sx={{ color: (theme) => theme.palette.text.secondary }}
-            />
-            <Typography variant="body2" color="text.secondary">
-              このスレッドは終了しています。新しい投稿はできません。
-            </Typography>
+            <Box
+              sx={{
+                borderRadius: "8px",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                p: { xs: "8px", md: "16px" },
+                bgcolor: "background.paper",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                justifyContent: "center",
+              }}
+            >
+              <ArchiveOutlined
+                fontSize="small"
+                sx={{ color: (theme) => theme.palette.text.secondary }}
+              />
+              <Typography variant="body2" color="textSecondary">
+                このスレッドは終了しています。
+              </Typography>
+            </Box>
           </Box>
         )}
       </Stack>

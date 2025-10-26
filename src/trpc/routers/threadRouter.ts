@@ -205,14 +205,10 @@ export const threadRouter = router({
     .input(
       z.object({
         id: ThreadSchema.shape.id,
-        includeIsArchived: z.boolean(),
       })
     )
     .query(async ({ input }) => {
-      return await getThreadWithPostsUseCase.execute({
-        id: input.id,
-        inCludeIsArchived: input.includeIsArchived,
-      });
+      return await getThreadWithPostsUseCase.execute({ id: input.id });
     }),
 
   getPublicThreadForOgp: publicProcedure

@@ -12,7 +12,7 @@ import { DropdownMenuItemWithIcon } from "@/shared/ui/dropdown-menu-item-with-ic
 import { trpc } from "@/trpc/client";
 import { MoreHorizOutlined } from "@mui/icons-material";
 import { ThreadStatus } from "@prisma/client";
-import { Archive, ListCheck, Pencil, Trash2 } from "lucide-react";
+import { ListCheck, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -20,18 +20,10 @@ import { toast } from "sonner";
 type Props = {
   threadId: string;
   threadTitle: string | null;
-  includeIsArchived: boolean;
-  onClickToggleDisplayArchiveButton: () => void;
   status: ThreadStatus;
 };
 
-export function ManageThreadDropDown({
-  threadId,
-  threadTitle,
-  includeIsArchived,
-  onClickToggleDisplayArchiveButton,
-  status,
-}: Props) {
+export function ManageThreadDropDown({ threadId, threadTitle, status }: Props) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const router = useRouter();
   const utils = trpc.useUtils();
@@ -69,12 +61,6 @@ export function ManageThreadDropDown({
           </Tooltip>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItemWithIcon
-            icon={Archive}
-            text={includeIsArchived ? "アーカイブの非表示" : "アーカイブの表示"}
-            onClick={onClickToggleDisplayArchiveButton}
-          />
-          <DropdownMenuSeparator />
           {status !== "WIP" && (
             <DropdownMenuItemWithIcon
               icon={Pencil}
