@@ -2,10 +2,10 @@
 
 import { Box } from "@/shared/components/Box";
 import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
 import { ArchiveOutlined } from "@mui/icons-material";
-import { Typography } from "@mui/material";
 import { Suspense, useState } from "react";
 import { CreateNewPostForm } from "../CreateNewPostForm";
 import { PostPaper } from "../PostPaper";
@@ -110,7 +110,7 @@ const PostTimeLineCore = ({
               fontSize="small"
               sx={{ color: (theme) => theme.palette.text.secondary }}
             />
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="textSecondary">
               このスレッドは終了しています。新しい投稿はできません。
             </Typography>
           </Box>
