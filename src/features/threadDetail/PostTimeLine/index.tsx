@@ -7,7 +7,11 @@ import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/client";
-import { ArchiveOutlined, CloseOutlined } from "@mui/icons-material";
+import {
+  ArchiveOutlined,
+  ArrowBackOutlined,
+  CloseOutlined,
+} from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import { CreateNewPostForm } from "../CreateNewPostForm";
@@ -28,7 +32,10 @@ export function PostTimeLine({
         flex={2}
         minWidth={0}
         height="100%"
-        sx={{ overflowY: "auto", display: { xs: "none", md: "block" } }}
+        sx={{
+          overflowY: "auto",
+          display: { xs: postId ? "none" : "block", md: "flex" },
+        }}
       >
         <Suspense
           fallback={
@@ -144,16 +151,16 @@ const PostDetailPaper = ({
   threadId: string;
   postId: string;
 }) => {
-  const [{ postWithChildren }] = trpc.post.getPostWithChildren.useSuspenseQuery(
-    { id: postId }
-  );
+  const [result] = trpc.post.getPostWithChildren.useSuspenseQuery({
+    id: postId,
+  });
   const router = useRouter();
 
   const handleClose = () => {
     router.push(urls.dashboardThreadDetails(threadId));
   };
 
-  if (!postWithChildren) {
+  if (!result) {
     return <p>No posts available.</p>;
   }
 
@@ -167,23 +174,34 @@ const PostDetailPaper = ({
       <Box
         p="8px 16px"
         display="flex"
-        justifyContent="space-between"
+        justifyContent={{ xs: "flex-start", md: "space-between" }}
         alignItems="center"
       >
+        <IconButton
+          onClick={handleClose}
+          sx={{ display: { xs: "block", md: "none" } }}
+        >
+          <ArrowBackOutlined />
+        </IconButton>
         <Typography variant="body2" bold>
           スレッド
         </Typography>
-        <IconButton onClick={handleClose}>
+        <IconButton
+          onClick={handleClose}
+          sx={{ display: { xs: "none", md: "block" } }}
+        >
           <CloseOutlined />
         </IconButton>
       </Box>
-      <Stack pb="8px" flex={1} minHeight={0}>
-        <PostPaper
-          key={postWithChildren?.id}
-          post={postWithChildren}
-          isPublicThread
-        />
-        {postWithChildren?.children.map((v) => {
+      <Stack pb="8px" flex={1} minHeight={0} sx={{ overflowY: "auto" }}>
+        <PostPaper key={result?.post.id} post={result?.post} isPublicThread />
+        <Box sx={{ px: { xs: "8px", md: "16px" } }}>
+          <Typography variant="body2" bold color="textSecondary">
+            {result?.children.length}件の返信
+          </Typography>
+        </Box>
+
+        {result?.children.map((v) => {
           return <PostPaper key={v.id} post={v} isPublicThread />;
         })}
       </Stack>

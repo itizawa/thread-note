@@ -11,7 +11,7 @@ const selectUserDateObject = {
 
 export class GetPostWithChildrenUseCase {
   async execute({ id }: { id: Thread["id"] }) {
-    const postWithChildren = await prisma.post.findUnique({
+    const postWithChildren = await prisma.post.findFirst({
       where: { id, isArchived: false },
       include: {
         children: {
@@ -27,6 +27,12 @@ export class GetPostWithChildrenUseCase {
       },
     });
 
-    return { postWithChildren };
+    if (!postWithChildren) return null;
+    const { children, ...post } = postWithChildren;
+
+    return {
+      post,
+      children,
+    };
   }
 }
