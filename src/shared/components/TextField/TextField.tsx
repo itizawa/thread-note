@@ -66,6 +66,7 @@ export const TextField = ({
       }}
       sx={{
         "& .MuiInputBase-root": {
+          backgroundColor: "white",
           fontSize: size === "small" ? "14px" : "16px",
           ...(readOnly && { color: "gray.light" }),
         },

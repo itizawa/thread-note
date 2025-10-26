@@ -3,6 +3,7 @@
 import { createThreadWithFirstPost } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { Button } from "@/shared/components/Button/Button";
+import { TextField } from "@/shared/components/TextField";
 import { urls } from "@/shared/consts/urls";
 import {
   DropdownMenu,
@@ -10,9 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { Input } from "@/shared/ui/input";
 import { TEMPLATES } from "./consts";
 
+import { Box } from "@/shared/components/Box";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
@@ -60,7 +61,7 @@ export function CreateNewThreadForm() {
   const handleContentChange = (value: string) => setBody(value);
 
   const handleKeyPress = (
-    e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>
+    e: React.KeyboardEvent<HTMLTextAreaElement | HTMLDivElement>
   ) => {
     if (isDisabled) return;
 
@@ -78,11 +79,12 @@ export function CreateNewThreadForm() {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2">
-        <Input
+      <Box display="flex" gap="8px" alignItems="center">
+        <TextField
           placeholder="タイトルを入力してください"
-          className="bg-white shadow-none flex-1"
           value={title}
+          size="small"
+          fullWidth
           onChange={(e) => setTitle(e.target.value)}
           onKeyDown={handleKeyPress}
           forceFocus
@@ -92,6 +94,7 @@ export function CreateNewThreadForm() {
             <Button
               variant="outlined"
               color="inherit"
+              size="medium"
               sx={{ minWidth: "fit-content" }}
               startIcon={<DescriptionOutlined />}
             >
@@ -111,7 +114,7 @@ export function CreateNewThreadForm() {
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </Box>
       <div className="rounded-lg border p-4 bg-white">
         <PostForm
           textarea={{
