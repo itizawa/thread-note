@@ -93,26 +93,34 @@ const PostTimeLineCore = ({
             />
           );
         })}
+
         {isThreadClosed && (
           <Box
             sx={{
-              borderRadius: "8px",
-              border: (theme) => `1px solid ${theme.palette.divider}`,
-              p: { xs: "0px", md: "16px" },
-              bgcolor: "background.paper",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              justifyContent: "center",
+              px: { xs: "8px", md: "16px" },
+              py: { xs: "8px", md: "16px" },
             }}
           >
-            <ArchiveOutlined
-              fontSize="small"
-              sx={{ color: (theme) => theme.palette.text.secondary }}
-            />
-            <Typography variant="body2" color="textSecondary">
-              このスレッドは終了しています。新しい投稿はできません。
-            </Typography>
+            <Box
+              sx={{
+                borderRadius: "8px",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                p: { xs: "8px", md: "16px" },
+                bgcolor: "background.paper",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                justifyContent: "center",
+              }}
+            >
+              <ArchiveOutlined
+                fontSize="small"
+                sx={{ color: (theme) => theme.palette.text.secondary }}
+              />
+              <Typography variant="body2" color="textSecondary">
+                このスレッドは終了しています。
+              </Typography>
+            </Box>
           </Box>
         )}
       </Stack>
