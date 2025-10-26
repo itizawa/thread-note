@@ -232,7 +232,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
                   variant="text"
                   size="small"
                   color="primary"
-                  sx={{ width: "fit-content" }}
+                  sx={{ width: "fit-content", mt: "8px" }}
                   onClick={() =>
                     router.push(
                       urls.dashboardThreadDetails(post.threadId, post.id)
