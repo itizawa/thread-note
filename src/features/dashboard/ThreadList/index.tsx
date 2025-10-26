@@ -3,17 +3,17 @@
 import { UserIcon } from "@/entities/user/UserIcon";
 import { ThreadStatusBadge } from "@/features/threadDetail/ThreadStatusBadge";
 import { Button } from "@/shared/components/Button";
+import { TextField } from "@/shared/components/TextField";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { urls } from "@/shared/consts/urls";
-import { Input } from "@/shared/ui/input";
 import { VirtualizedWindowScroller } from "@/shared/ui/virtualizedWindowScroller";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
-import { CreateOutlined } from "@mui/icons-material";
+import { CreateOutlined, SearchOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ja } from "date-fns/locale";
-import { MessageCircle, Search } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -54,16 +54,14 @@ export function ThreadList() {
   return (
     <div className="flex flex-col space-y-4 h-full">
       <div className="flex justify-between items-center gap-4">
-        <div className="relative bg-white flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-          <Input
-            type="search"
-            placeholder="検索..."
-            className="pl-10"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+        <TextField
+          type="search"
+          placeholder="検索..."
+          value={searchQuery}
+          fullWidth
+          startIcon={<SearchOutlined />}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
         <Link href={urls.dashboardThreadNew}>
           <Button startIcon={<CreateOutlined />}>新規作成</Button>
         </Link>

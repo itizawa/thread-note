@@ -3,11 +3,11 @@
 import { Box } from "@/shared/components/Box";
 import { IconButton } from "@/shared/components/IconButton";
 import { Stack } from "@/shared/components/Stack";
+import { TextField } from "@/shared/components/TextField";
 import { Tooltip } from "@/shared/components/Tooltip";
 import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
-import { Input } from "@/shared/ui/input";
 import { OpenInNewOutlined } from "@mui/icons-material";
 
 import { Share } from "lucide-react";
@@ -74,7 +74,8 @@ export const ShareInformation = ({
           justifyContent="space-between"
           gap="8px"
         >
-          <Input
+          <TextField
+            fullWidth
             type="text"
             value={threadDetailUrl}
             readOnly

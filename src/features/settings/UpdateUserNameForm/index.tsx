@@ -5,12 +5,12 @@ import { UserIcon } from "@/entities/user/UserIcon";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button";
 import { Stack } from "@/shared/components/Stack";
+import { TextField } from "@/shared/components/TextField";
 import { Tooltip } from "@/shared/components/Tooltip";
 import { Typography } from "@/shared/components/Typography";
 import { WithLabel } from "@/shared/components/WithLabel";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { UploadImageWrapper } from "@/shared/ui/UploadImageWrapper";
-import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { trpc } from "@/trpc/client";
 import { User } from "@prisma/client";
@@ -106,11 +106,13 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
         </UploadImageWrapper>
         <Stack rowGap="24px" flex={1} width="100%">
           <WithLabel label="名前">
-            <Input
+            <TextField
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="名前を入力してください"
+              helperText={name.length === 0 ? "名前を入力してください" : ""}
+              error={name.length === 0}
             />
           </WithLabel>
           <WithLabel label="自己紹介">
@@ -126,10 +128,7 @@ export function UpdateUserNameForm({ currentUser }: UpdateUserNameFormProps) {
             <Button
               onClick={handleSubmit}
               loading={isPending}
-              disabled={
-                name === currentUser.name &&
-                description === currentUser.description
-              }
+              disabled={name.length === 0}
             >
               更新
             </Button>
