@@ -122,7 +122,17 @@ export function PostPaper({ post, isPublicThread }: Props) {
   };
 
   return (
-    <Box sx={{ p: "8px 16px", ":hover": { backgroundColor: "grey.200" } }}>
+    <Box
+      sx={{
+        p: "8px 16px",
+        ":hover": {
+          backgroundColor: "grey.200",
+          "& .icon-button-group": { opacity: 1 },
+        },
+        "& .icon-button-group": { opacity: { xs: 1, md: 0 } },
+        transition: "all 0.2s ease-in-out",
+      }}
+    >
       <Box display="flex" alignItems="start" gap="8px">
         <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
           <UserIcon userImage={user?.image} size={9} />
@@ -182,7 +192,11 @@ export function PostPaper({ post, isPublicThread }: Props) {
                     </Typography>
                   </Box>
                 </Box>
-                <Box display="flex" alignItems="center">
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  className="icon-button-group"
+                >
                   {!isEditing && isParentPost && (
                     <Tooltip content="返信">
                       <IconButton

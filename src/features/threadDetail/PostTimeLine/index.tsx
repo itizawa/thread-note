@@ -34,7 +34,7 @@ export function PostTimeLine({
         height="100%"
         sx={{
           overflowY: "auto",
-          display: { xs: postId ? "none" : "block", md: "flex" },
+          display: { xs: postId ? "none" : "flex", md: "flex" },
         }}
       >
         <Suspense
@@ -67,7 +67,7 @@ export function PostTimeLine({
         </Suspense>
       </Stack>
       {postId && (
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: 1 }} key={postId}>
           <PostDetailPaper threadId={threadId} postId={postId} />
         </Box>
       )}
