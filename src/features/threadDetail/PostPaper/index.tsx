@@ -128,53 +128,7 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
         <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
           <UserIcon userImage={user?.image} size={9} />
         </Link>
-        <Stack flex={1} minWidth={0} rowGap="8px">
-          <Box
-            display="flex"
-            alignItems="center"
-            gap="8px"
-            justifyContent="space-between"
-          >
-            <Box display="flex" alignItems="center" gap="8px">
-              <Box display="flex" alignItems="center" gap="8px">
-                <Link
-                  href={urls.userDetails(user.id)}
-                  className="hover:opacity-60"
-                >
-                  <Typography variant="body2" bold>
-                    {user.name}
-                  </Typography>
-                </Link>
-                <Typography variant="caption" color="textSecondary">
-                  {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
-                </Typography>
-              </Box>
-            </Box>
-            <Box display="flex" alignItems="center">
-              {!isEditing && (
-                <Tooltip content="投稿内容をコピー">
-                  <IconButton
-                    size="small"
-                    onClick={handleCopyPostContent}
-                    disabled={isPending}
-                  >
-                    <ContentPasteOutlined />
-                  </IconButton>
-                </Tooltip>
-              )}
-              {!isEditing && !post.isArchived && (
-                <ManagePostDropDown
-                  isPending={isPending}
-                  onClickEditButton={() => setIsEditing(true)}
-                  onClickShareButton={
-                    isPublicThread ? handleClickPostCreatedAt : undefined
-                  }
-                  onClickArchiveButton={handleClickArchiveButton}
-                />
-              )}
-            </Box>
-          </Box>
-
+        <Stack flex={1} minWidth={0}>
           {isEditing ? (
             <Box
               sx={{
@@ -207,17 +161,67 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
               />
             </Box>
           ) : (
-            <MarkdownViewer body={post.body} />
-          )}
-          {isParentPost && !isEditing && post.children.length > 0 && (
-            <Button
-              variant="text"
-              size="small"
-              color="primary"
-              sx={{ width: "fit-content" }}
-            >
-              {post.children.length}件の返信があります
-            </Button>
+            <>
+              <Box
+                display="flex"
+                alignItems="center"
+                gap="8px"
+                justifyContent="space-between"
+              >
+                <Box display="flex" alignItems="center" gap="8px">
+                  <Box display="flex" alignItems="center" gap="8px">
+                    <Link
+                      href={urls.userDetails(user.id)}
+                      className="hover:opacity-60"
+                    >
+                      <Typography variant="body2" bold>
+                        {user.name}
+                      </Typography>
+                    </Link>
+                    <Typography variant="caption" color="textSecondary">
+                      {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box display="flex" alignItems="center">
+                  {!isEditing && (
+                    <Tooltip content="投稿内容をコピー">
+                      <IconButton
+                        size="small"
+                        onClick={handleCopyPostContent}
+                        disabled={isPending}
+                      >
+                        <ContentPasteOutlined />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  {!isEditing && !post.isArchived && (
+                    <ManagePostDropDown
+                      isPending={isPending}
+                      onClickEditButton={() => setIsEditing(true)}
+                      onClickShareButton={
+                        isPublicThread ? handleClickPostCreatedAt : undefined
+                      }
+                      onClickArchiveButton={handleClickArchiveButton}
+                    />
+                  )}
+                </Box>
+              </Box>
+
+              <Stack rowGap="8px" sx={{ wordBreak: "break-word" }}>
+                <MarkdownViewer body={post.body} />
+              </Stack>
+              {isParentPost && !isEditing && post.children.length > 0 && (
+                <Button
+                  variant="text"
+                  size="small"
+                  color="primary"
+                  sx={{ width: "fit-content" }}
+                >
+                  {post.children.length}件の返信があります
+                </Button>
+              )}
+            </>
           )}
         </Stack>
       </Box>

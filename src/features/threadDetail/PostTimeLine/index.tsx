@@ -82,7 +82,7 @@ const PostTimeLineCore = ({
 
   return (
     <Stack height="100%" minHeight={0}>
-      <Stack rowGap="8px" className="overflow-y-auto" flex={1}>
+      <Stack rowGap="8px" className="overflow-y-auto" flex={1} py="8px">
         {threadWithPosts.posts.map((v) => {
           return (
             <PostPaper
