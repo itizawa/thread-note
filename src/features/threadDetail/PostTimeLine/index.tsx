@@ -176,9 +176,13 @@ const PostDetailPaper = ({
         display="flex"
         justifyContent={{ xs: "flex-start", md: "space-between" }}
         alignItems="center"
+        sx={{
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
       >
         <IconButton
           onClick={handleClose}
+          size="small"
           sx={{ display: { xs: "block", md: "none" } }}
         >
           <ArrowBackOutlined />
@@ -187,6 +191,7 @@ const PostDetailPaper = ({
           スレッド
         </Typography>
         <IconButton
+          size="small"
           onClick={handleClose}
           sx={{ display: { xs: "none", md: "block" } }}
         >
@@ -195,11 +200,13 @@ const PostDetailPaper = ({
       </Box>
       <Stack pb="8px" flex={1} minHeight={0} sx={{ overflowY: "auto" }}>
         <PostPaper key={result?.post.id} post={result?.post} isPublicThread />
-        <Box sx={{ px: { xs: "8px", md: "16px" } }}>
-          <Typography variant="body2" bold color="textSecondary">
-            {result?.children.length}件の返信
-          </Typography>
-        </Box>
+        {result?.children.length > 0 && (
+          <Box sx={{ px: { xs: "8px", md: "16px" } }}>
+            <Typography variant="body2" bold color="textSecondary">
+              {result?.children.length}件の返信
+            </Typography>
+          </Box>
+        )}
 
         {result?.children.map((v) => {
           return <PostPaper key={v.id} post={v} isPublicThread />;

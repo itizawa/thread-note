@@ -6,7 +6,6 @@ import {
   updatePostBody,
 } from "@/app/actions/postActions";
 import { PostForm } from "@/entities/post/PostForm";
-import { generateBodyRecursive } from "@/entities/post/PostForm/hooks/generateBodyRecursive";
 import { UserIcon } from "@/entities/user/UserIcon";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button/Button";
@@ -21,7 +20,7 @@ import { useServerAction } from "@/shared/lib/useServerAction";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
-import { ContentPasteOutlined } from "@mui/icons-material";
+import { ReplyOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -118,8 +117,8 @@ export function PostPaper({ post, isPublicThread }: Props) {
     );
   };
 
-  const handleCopyPostContent = () => {
-    copy(generateBodyRecursive(post), "内容をコピーしました");
+  const handleClickReplyButton = () => {
+    router.push(urls.dashboardThreadDetails(post.threadId, post.id));
   };
 
   return (
@@ -184,14 +183,14 @@ export function PostPaper({ post, isPublicThread }: Props) {
                   </Box>
                 </Box>
                 <Box display="flex" alignItems="center">
-                  {!isEditing && (
-                    <Tooltip content="投稿内容をコピー">
+                  {!isEditing && isParentPost && (
+                    <Tooltip content="返信">
                       <IconButton
                         size="small"
-                        onClick={handleCopyPostContent}
+                        onClick={handleClickReplyButton}
                         disabled={isPending}
                       >
-                        <ContentPasteOutlined />
+                        <ReplyOutlined />
                       </IconButton>
                     </Tooltip>
                   )}
