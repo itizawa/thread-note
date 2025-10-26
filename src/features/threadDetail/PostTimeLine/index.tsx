@@ -67,7 +67,7 @@ export function PostTimeLine({
         </Suspense>
       </Stack>
       {postId && (
-        <Box sx={{ flex: 1 }} key={postId}>
+        <Box sx={{ flex: 1 }} key={postId} minWidth={0}>
           <PostDetailPaper threadId={threadId} postId={postId} />
         </Box>
       )}

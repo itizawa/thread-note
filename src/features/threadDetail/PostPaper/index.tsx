@@ -221,7 +221,10 @@ export function PostPaper({ post, isPublicThread }: Props) {
                 </Box>
               </Box>
 
-              <Stack rowGap="8px" sx={{ wordBreak: "break-word" }}>
+              <Stack
+                rowGap="8px"
+                sx={{ wordBreak: "break-word", width: "100%" }}
+              >
                 <MarkdownViewer body={post.body} />
               </Stack>
               {isParentPost && !isEditing && post.children.length > 0 && (
