@@ -42,7 +42,7 @@ export const OgpCard = ({ url }: Props) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block border rounded-lg overflow-hidden hover:opacity-70 transition"
+      className="block border rounded-lg overflow-hidden hover:opacity-70 transition bg-white max-w-[600px]"
     >
       <div className="flex">
         <div className="p-4 flex-1 overflow-hidden space-y-1 flex flex-col">

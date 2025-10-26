@@ -8,9 +8,12 @@ import {
 import { PostForm } from "@/entities/post/PostForm";
 import { generateBodyRecursive } from "@/entities/post/PostForm/hooks/generateBodyRecursive";
 import { UserIcon } from "@/entities/user/UserIcon";
+import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button/Button";
 import { IconButton } from "@/shared/components/IconButton";
+import { Stack } from "@/shared/components/Stack";
 import { Tooltip } from "@/shared/components/Tooltip";
+import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
@@ -21,13 +24,11 @@ import { AppRouter } from "@/trpc/routers/_app";
 import { ContentPasteOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
-import { Archive } from "lucide-react";
 import Link from "next/link";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
 import { ManagePostDropDown } from "./ManagePostDropDown";
-import { ReplyForm } from "./ReplyForm";
 
 type Post = NonNullable<
   inferRouterOutputs<AppRouter>["thread"]["getThreadWithPosts"]["threadWithPosts"]
@@ -122,130 +123,104 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
   };
 
   return (
-    <div
-      className={`
-        ${
-          isParentPost
-            ? "rounded-lg border p-4 space-y-4"
-            : "rounded-lg p-2 pr-0 space-y-4"
-        }
-        ${post.isArchived ? "bg-red-50" : "bg-white"}
-        relative
-      `}
-    >
-      <div className="flex items-center justify-between">
-        {post.isArchived && (
-          <Tooltip content="クリックしてアーカイブを解除">
-            <div className="absolute right-3 top-3 z-10">
-              <button
-                onClick={handleClickUnArchiveButton}
-                className="bg-red-200 hover:opacity-80 text-gray-600 text-xs px-2 py-0.5 rounded-full flex items-center transition-colors cursor-pointer"
-                title="クリックしてアーカイブを解除"
-              >
-                <Archive className="h-3 w-3 mr-1" />
-                アーカイブ済み
-              </button>
-            </div>
-          </Tooltip>
-        )}
+    <Box sx={{ p: "8px 16px", ":hover": { backgroundColor: "grey.200" } }}>
+      <Box display="flex" alignItems="start" gap="8px">
+        <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
+          <UserIcon userImage={user?.image} size={9} />
+        </Link>
+        <Stack flex={1} minWidth={0} rowGap="8px">
+          <Box
+            display="flex"
+            alignItems="center"
+            gap="8px"
+            justifyContent="space-between"
+          >
+            <Box display="flex" alignItems="center" gap="8px">
+              <Box display="flex" alignItems="center" gap="8px">
+                <Link
+                  href={urls.userDetails(user.id)}
+                  className="hover:opacity-60"
+                >
+                  <Typography variant="body2" bold>
+                    {user.name}
+                  </Typography>
+                </Link>
+                <Typography variant="caption" color="textSecondary">
+                  {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
+                </Typography>
+              </Box>
+            </Box>
+            <Box display="flex" alignItems="center">
+              {!isEditing && (
+                <Tooltip content="投稿内容をコピー">
+                  <IconButton
+                    size="small"
+                    onClick={handleCopyPostContent}
+                    disabled={isPending}
+                  >
+                    <ContentPasteOutlined />
+                  </IconButton>
+                </Tooltip>
+              )}
+              {!isEditing && !post.isArchived && (
+                <ManagePostDropDown
+                  isPending={isPending}
+                  onClickEditButton={() => setIsEditing(true)}
+                  onClickShareButton={
+                    isPublicThread ? handleClickPostCreatedAt : undefined
+                  }
+                  onClickArchiveButton={handleClickArchiveButton}
+                />
+              )}
+            </Box>
+          </Box>
 
-        <div className="flex items-center space-x-2">
-          <Link
-            href={urls.userDetails(user.id)}
-            className="h-10 w-10 hover:opacity-60"
-          >
-            <UserIcon userImage={user?.image} size={10} />
-          </Link>
-          <div>
-            <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
-              <div className="text-sm">{user.name}</div>
-            </Link>
-            <div className={`text-xs text-muted-foreground`}>
-              <time>
-                {format(new Date(post.createdAt), "yyyy/MM/dd HH:mm")}
-              </time>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center">
-          {!isEditing && (
-            <Tooltip content="投稿内容をコピー">
-              <IconButton
-                size="small"
-                onClick={handleCopyPostContent}
-                disabled={isPending}
-              >
-                <ContentPasteOutlined />
-              </IconButton>
-            </Tooltip>
-          )}
-          {!isEditing && !post.isArchived && (
-            <ManagePostDropDown
-              isPending={isPending}
-              onClickEditButton={() => setIsEditing(true)}
-              onClickShareButton={
-                isPublicThread ? handleClickPostCreatedAt : undefined
-              }
-              onClickArchiveButton={handleClickArchiveButton}
-            />
-          )}
-        </div>
-      </div>
-      <div className={isEditing ? "pb-4 border-1 p-4 rounded-lg" : "p-2"}>
-        {isEditing ? (
-          <PostForm
-            textarea={{
-              value: body,
-              onChange: handleContentChange,
-              onKeyPress: handleKeyPress,
-              forceFocus: false,
-            }}
-            formState={{
-              isDisabled,
-              isPending,
-            }}
-            bottomButtons={{
-              submitText: "更新",
-              onCancel: () => {
-                setBody(post.body); // 初期化
-                setIsEditing(false);
-              },
-              onSubmit: handleSubmit,
-            }}
-          />
-        ) : (
-          <div
-            className={`prose space-y-4 break-words ${
-              post.isArchived ? "opacity-75" : ""
-            }`}
-          >
+          {isEditing ? (
+            <Box
+              sx={{
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: "8px",
+                p: "16px",
+                bgcolor: "background.paper",
+              }}
+            >
+              <PostForm
+                textarea={{
+                  value: body,
+                  onChange: handleContentChange,
+                  onKeyPress: handleKeyPress,
+                  forceFocus: false,
+                }}
+                formState={{
+                  isDisabled,
+                  isPending,
+                }}
+                bottomButtons={{
+                  submitText: "更新",
+                  onCancel: () => {
+                    setBody(post.body); // 初期化
+                    setIsEditing(false);
+                  },
+                  onSubmit: handleSubmit,
+                }}
+              />
+            </Box>
+          ) : (
             <MarkdownViewer body={post.body} />
-          </div>
-        )}
-      </div>
-      {isParentPost && (
-        <div className="space-y-0">
-          {post.children.map((v) => {
-            return (
-              <div key={v.id} className="flex relative pb-4">
-                <div className="pl-2 left-0 h-full absolute">
-                  <div className="w-[2px] h-full bg-gray-200" />
-                </div>
-                <div className="w-full pl-6">
-                  <PostPaper
-                    post={v}
-                    isPublicThread={isPublicThread}
-                    threadStatus={threadStatus}
-                  />
-                </div>
-              </div>
-            );
-          })}
-          {!post.isArchived && threadStatus !== "CLOSED" && (
-            <ReplyForm threadId={post.threadId} parentPostId={post.id} />
           )}
-        </div>
-      )}
-    </div>
+          {isParentPost && !isEditing && post.children.length > 0 && (
+            <Button
+              variant="text"
+              size="small"
+              color="primary"
+              sx={{ width: "fit-content" }}
+            >
+              {post.children.length}件の返信があります
+            </Button>
+          )}
+        </Stack>
+      </Box>
+    </Box>
   );
 }
