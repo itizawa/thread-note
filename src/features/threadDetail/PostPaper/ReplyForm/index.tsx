@@ -28,6 +28,7 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
           parentId: parentPostId,
         });
         utils.thread.listThreadsByCurrentUser.invalidate();
+        utils.post.getPostWithChildren.invalidate({ id: parentPostId });
       },
       error: {
         text: "更新に失敗しました",

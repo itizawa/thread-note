@@ -6,7 +6,6 @@ import {
   updatePostBody,
 } from "@/app/actions/postActions";
 import { PostForm } from "@/entities/post/PostForm";
-import { generateBodyRecursive } from "@/entities/post/PostForm/hooks/generateBodyRecursive";
 import { UserIcon } from "@/entities/user/UserIcon";
 import { Box } from "@/shared/components/Box";
 import { Button } from "@/shared/components/Button/Button";
@@ -21,10 +20,11 @@ import { useServerAction } from "@/shared/lib/useServerAction";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
 import { trpc } from "@/trpc/client";
 import { AppRouter } from "@/trpc/routers/_app";
-import { ContentPasteOutlined } from "@mui/icons-material";
+import { ReplyOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
@@ -37,10 +37,9 @@ type Post = NonNullable<
 interface Props {
   post: Post | Post["children"][number];
   isPublicThread: boolean;
-  threadStatus: string;
 }
 
-export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
+export function PostPaper({ post, isPublicThread }: Props) {
   const isParentPost = "children" in post;
   const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);
@@ -49,7 +48,7 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
   const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
   const { copy } = useClipBoardCopy();
-
+  const router = useRouter();
   const handleSubmit = () => {
     enqueueServerAction({
       action: () => updatePostBody({ id: post.id, body }),
@@ -118,12 +117,22 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
     );
   };
 
-  const handleCopyPostContent = () => {
-    copy(generateBodyRecursive(post), "内容をコピーしました");
+  const handleClickReplyButton = () => {
+    router.push(urls.dashboardThreadDetails(post.threadId, post.id));
   };
 
   return (
-    <Box sx={{ p: "8px 16px", ":hover": { backgroundColor: "grey.200" } }}>
+    <Box
+      sx={{
+        p: "8px 16px",
+        ":hover": {
+          backgroundColor: "grey.200",
+          "& .icon-button-group": { opacity: 1 },
+        },
+        "& .icon-button-group": { opacity: { xs: 1, md: 0 } },
+        transition: "all 0.2s ease-in-out",
+      }}
+    >
       <Box display="flex" alignItems="start" gap="8px">
         <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
           <UserIcon userImage={user?.image} size={9} />
@@ -183,15 +192,19 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
                     </Typography>
                   </Box>
                 </Box>
-                <Box display="flex" alignItems="center">
-                  {!isEditing && (
-                    <Tooltip content="投稿内容をコピー">
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  className="icon-button-group"
+                >
+                  {!isEditing && isParentPost && (
+                    <Tooltip content="返信">
                       <IconButton
                         size="small"
-                        onClick={handleCopyPostContent}
+                        onClick={handleClickReplyButton}
                         disabled={isPending}
                       >
-                        <ContentPasteOutlined />
+                        <ReplyOutlined />
                       </IconButton>
                     </Tooltip>
                   )}
@@ -217,6 +230,11 @@ export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
                   size="small"
                   color="primary"
                   sx={{ width: "fit-content" }}
+                  onClick={() =>
+                    router.push(
+                      urls.dashboardThreadDetails(post.threadId, post.id)
+                    )
+                  }
                 >
                   {post.children.length}件の返信があります
                 </Button>

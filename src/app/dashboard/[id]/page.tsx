@@ -7,7 +7,10 @@ import { Stack } from "@mui/material";
 import { Metadata, NextSegmentPage } from "next";
 import { redirect } from "next/navigation";
 
-type Props = { params: Promise<{ id: string }> };
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 export const generateMetadata = async ({
   params,
@@ -32,15 +35,19 @@ export const generateMetadata = async ({
   });
 };
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { id: threadId } = await params;
+  const { postId } = await searchParams;
 
   const currentUser = await getCurrentUser();
   if (!currentUser) redirect(urls.top);
 
   return (
     <Stack height="100%" sx={{ overflowY: "scroll" }}>
-      <PostTimeLine threadId={threadId} />
+      <PostTimeLine
+        threadId={threadId}
+        postId={typeof postId === "string" ? postId : undefined}
+      />
     </Stack>
   );
 }
