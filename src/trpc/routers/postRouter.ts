@@ -3,6 +3,9 @@ import { PostSchema } from "@/types/src/domains";
 import { z } from "zod";
 import { premiumPlanProcedure, protectedProcedure, router } from "../init";
 import { GenerateReplyPostsUseCase } from "../usecases/threadDetail/GenerateReplyPostsUseCase";
+import { GetPostWithChildrenUseCase } from "../usecases/threadDetail/GetPostWithChildrenUseCase";
+
+const getPostWithChildrenUseCase = new GetPostWithChildrenUseCase();
 
 export const postRouter = router({
   updatePostBody: protectedProcedure
@@ -61,5 +64,15 @@ export const postRouter = router({
         userId: ctx.currentUser.id,
         type: input.type,
       });
+    }),
+
+  getPostWithChildren: protectedProcedure
+    .input(
+      z.object({
+        id: PostSchema.shape.id,
+      })
+    )
+    .query(async ({ input }) => {
+      return await getPostWithChildrenUseCase.execute({ id: input.id });
     }),
 });

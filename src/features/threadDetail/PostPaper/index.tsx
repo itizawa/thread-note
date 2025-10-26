@@ -25,6 +25,7 @@ import { ContentPasteOutlined } from "@mui/icons-material";
 import { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { startTransition, useState } from "react";
 import { toast } from "sonner";
 import urlJoin from "url-join";
@@ -48,7 +49,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
   const isDisabled = isPending || body.length === 0;
   const utils = trpc.useUtils();
   const { copy } = useClipBoardCopy();
-
+  const router = useRouter();
   const handleSubmit = () => {
     enqueueServerAction({
       action: () => updatePostBody({ id: post.id, body }),
@@ -216,6 +217,11 @@ export function PostPaper({ post, isPublicThread }: Props) {
                   size="small"
                   color="primary"
                   sx={{ width: "fit-content" }}
+                  onClick={() =>
+                    router.push(
+                      urls.dashboardThreadDetails(post.threadId, post.id)
+                    )
+                  }
                 >
                   {post.children.length}件の返信があります
                 </Button>
