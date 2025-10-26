@@ -37,10 +37,9 @@ type Post = NonNullable<
 interface Props {
   post: Post | Post["children"][number];
   isPublicThread: boolean;
-  threadStatus: string;
 }
 
-export function PostPaper({ post, isPublicThread, threadStatus }: Props) {
+export function PostPaper({ post, isPublicThread }: Props) {
   const isParentPost = "children" in post;
   const { isPending, enqueueServerAction } = useServerAction();
   const [isEditing, setIsEditing] = useState(false);

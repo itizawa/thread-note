@@ -67,7 +67,6 @@ const PostTimeLineCore = ({ threadId }: { threadId: string }) => {
               key={v.id}
               post={v}
               isPublicThread={threadWithPosts.isPublic}
-              threadStatus={threadWithPosts.status}
             />
           );
         })}
