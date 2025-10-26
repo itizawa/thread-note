@@ -49,6 +49,9 @@ export const Modal = ({
       ref={ref}
       onClose={onClose}
       sx={{
+        "&.MuiDialog-root": {
+          height: "100dvh",
+        },
         "& .MuiDialog-paper": {
           borderRadius: "16px",
           padding: { xs: "24px", sm: "40px" },
