@@ -10,7 +10,14 @@ export const urls = {
   dashboardThreadDetailsExports: (id: string) => `/dashboard/${id}/exports`,
   dashboardSettings: (tab: "profile" | "files") =>
     `/dashboard/settings?tab=${tab}`,
-  threadDetails: (id: string, postId?: string) =>
-    `/${id}${postId ? `#${postId}` : ""}`,
+  threadDetails: ({
+    userId,
+    threadId,
+    postId,
+  }: {
+    userId: string;
+    threadId: string;
+    postId?: string;
+  }) => `/users/${userId}/${threadId}${postId ? `#${postId}` : ""}`,
   userDetails: (id: string) => `/users/${id}`,
 };

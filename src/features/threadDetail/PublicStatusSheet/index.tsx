@@ -34,6 +34,7 @@ import { z } from "zod";
 import { ShareInformation } from "./parts/ShareInformation";
 
 interface PublicStatusSheetProps {
+  userId: string;
   threadTitle: string | null;
   threadId: string;
   isPublic: boolean;
@@ -43,6 +44,7 @@ interface PublicStatusSheetProps {
 }
 
 export function PublicStatusSheet({
+  userId,
   threadTitle,
   threadId,
   isPublic,
@@ -193,7 +195,11 @@ export function PublicStatusSheet({
           )}
 
           {isPublic && (
-            <ShareInformation threadTitle={threadTitle} threadId={threadId} />
+            <ShareInformation
+              userId={userId}
+              threadTitle={threadTitle}
+              threadId={threadId}
+            />
           )}
 
           {isPublic && (

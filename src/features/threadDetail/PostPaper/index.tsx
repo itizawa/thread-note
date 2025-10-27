@@ -111,7 +111,11 @@ export function PostPaper({ post, isPublicThread }: Props) {
     copy(
       urlJoin(
         window.location.origin,
-        urls.threadDetails(post.threadId, post.id)
+        urls.threadDetails({
+          userId: post.userId,
+          threadId: post.threadId,
+          postId: post.id,
+        })
       ),
       "共有URLをコピーしました"
     );

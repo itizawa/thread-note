@@ -15,15 +15,20 @@ import Image from "next/image";
 import urlJoin from "url-join";
 
 export const ShareInformation = ({
+  userId,
   threadTitle,
   threadId,
 }: {
+  userId: string;
   threadTitle: string | null;
   threadId: string;
 }) => {
   const threadDetailUrl = urlJoin(
     window.location.origin,
-    urls.threadDetails(threadId)
+    urls.threadDetails({
+      userId,
+      threadId,
+    })
   );
   const { copy } = useClipBoardCopy();
 

@@ -29,7 +29,11 @@ export function PublicPostPaper({ post, onClickScrollTarget }: Props) {
     copy(
       urlJoin(
         window.location.origin,
-        urls.threadDetails(post.threadId, post.id)
+        urls.threadDetails({
+          userId: post.userId,
+          threadId: post.threadId,
+          postId: post.id,
+        })
       ),
       "URLをコピーしました"
     );
