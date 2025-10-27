@@ -7,6 +7,7 @@ export { AccountScalarFieldEnumSchema } from './AccountScalarFieldEnumSchema';
 export { SessionScalarFieldEnumSchema } from './SessionScalarFieldEnumSchema';
 export { VerificationTokenScalarFieldEnumSchema } from './VerificationTokenScalarFieldEnumSchema';
 export { AuthenticatorScalarFieldEnumSchema } from './AuthenticatorScalarFieldEnumSchema';
+export { WorkSpaceScalarFieldEnumSchema } from './WorkSpaceScalarFieldEnumSchema';
 export { ThreadScalarFieldEnumSchema } from './ThreadScalarFieldEnumSchema';
 export { PostScalarFieldEnumSchema } from './PostScalarFieldEnumSchema';
 export { PlanScalarFieldEnumSchema } from './PlanScalarFieldEnumSchema';
