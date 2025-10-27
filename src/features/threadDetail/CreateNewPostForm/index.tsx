@@ -4,6 +4,7 @@ import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { Box } from "@/shared/components/Box";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
+import { getIsMobile } from "@/shared/lib/useIsMobile";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import React from "react";
@@ -70,7 +71,7 @@ export function CreateNewPostForm({ threadId }: Props) {
           onChange: handleContentChange,
           onKeyPress: handleKeyPress,
           minHeight: 16,
-          forceFocus: true,
+          forceFocus: !getIsMobile(),
         }}
         formState={{
           isDisabled: Boolean(isDisabled),
