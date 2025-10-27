@@ -4,7 +4,7 @@ import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "../actions/userActions";
+import { getCurrentUser } from "../../actions/userActions";
 
 export const metadata: Metadata = generateMetadataObject({
   title: "Thread Note - ダッシュボード",
