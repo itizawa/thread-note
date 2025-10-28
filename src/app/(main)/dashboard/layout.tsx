@@ -1,6 +1,8 @@
 import { DashBoardSidebar } from "@/features/dashboard/DashBoardSidebar";
+import { DashboardSidebarSkeleton } from "@/features/dashboard/DashBoardSidebar/DashboardSidebarSkeleton";
 import { Box } from "@/shared/components/Box";
 import type React from "react";
+import { Suspense } from "react";
 
 export default async function DashboardLayout({
   children,
@@ -15,7 +17,9 @@ export default async function DashboardLayout({
         borderRight="1px solid"
         borderColor="divider"
       >
-        <DashBoardSidebar />
+        <Suspense fallback={<DashboardSidebarSkeleton />}>
+          <DashBoardSidebar />
+        </Suspense>
       </Box>
       <Box flex={1} minHeight="0" sx={{ overflowY: "auto" }}>
         {children}
