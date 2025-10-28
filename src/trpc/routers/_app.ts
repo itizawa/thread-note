@@ -5,6 +5,7 @@ import { postRouter } from "./postRouter";
 import { threadRouter } from "./threadRouter";
 import { tokenRouter } from "./tokenRouter";
 import { userRouter } from "./userRouter";
+import { workSpaceRouter } from "./workSpaceRouter";
 
 export const appRouter = router({
   thread: threadRouter,
@@ -13,6 +14,7 @@ export const appRouter = router({
   ogp: ogpRouter,
   file: fileRouter,
   token: tokenRouter,
+  workSpace: workSpaceRouter,
 });
 
 export type AppRouter = typeof appRouter;

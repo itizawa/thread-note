@@ -2,17 +2,16 @@ import { ThreadList } from "@/features/dashboard/ThreadList";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
+import { trpc } from "@/trpc/server";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "../../actions/userActions";
+import { Suspense, use } from "react";
 
 export const metadata: Metadata = generateMetadataObject({
   title: "Thread Note - ダッシュボード",
 });
-export default async function Page() {
-  const currentUser = await getCurrentUser();
-  if (!currentUser) redirect(urls.top);
 
+export default function Page() {
   return (
     <div className="relative h-full">
       {/* メインコンテンツ */}
@@ -21,52 +20,50 @@ export default async function Page() {
         id={SCROLL_CONTAINER_ID}
       >
         <div className="w-full max-w-[700px] mx-auto h-full">
-          <ThreadList />
+          <Suspense fallback={<ThreadListSkeleton />}>
+            <AuthenticatedContent />
+          </Suspense>
         </div>
       </main>
+    </div>
+  );
+}
 
-      {/* 右サイドバー */}
-      {/* <aside className="hidden w-80 shrink-0 overflow-auto p-4 lg:block bg-white">
-        <div className="space-y-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-            <Input type="search" placeholder="メモを検索" className="pl-10" />
-          </div>
+// 認証チェックを行うコンポーネント
+function AuthenticatedContent() {
+  const currentUser = use(trpc.user.getCurrentUser());
 
-          <div className="space-y-2">
-            <h3 className="font-medium">統計</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="rounded-lg border p-2">
-                <div className="text-sm text-gray-500">リンク</div>
-                <div className="text-lg font-medium">0</div>
-              </div>
-              <div className="rounded-lg border p-2">
-                <div className="text-sm text-gray-500">Todo</div>
-                <div className="text-lg font-medium">0/1</div>
-              </div>
-              <div className="rounded-lg border p-2">
-                <div className="text-sm text-gray-500">コード</div>
-                <div className="text-lg font-medium">0</div>
-              </div>
-            </div>
-          </div>
+  if (!currentUser) {
+    redirect(urls.top);
+  }
 
-          <div className="space-y-2">
-            <h3 className="font-medium">タグ</h3>
-            <div className="flex flex-wrap gap-2">
-              <Button variant="secondary" size="sm">
-                #features
-              </Button>
-              <Button variant="secondary" size="sm">
-                #hello
-              </Button>
-              <Button variant="secondary" size="sm">
-                #todo
-              </Button>
-            </div>
-          </div>
+  return <ThreadList />;
+}
+
+// ローディング表示用のスケルトン
+function ThreadListSkeleton() {
+  return (
+    <div className="flex flex-col space-y-4 h-full">
+      <div className="flex justify-between items-center gap-4">
+        <div className="w-full h-10 bg-gray-200 rounded animate-pulse" />
+        <div className="w-24 h-10 bg-gray-200 rounded animate-pulse" />
+      </div>
+      <div className="rounded-lg border bg-white">
+        <div className="border-b px-4 py-3">
+          <div className="w-32 h-6 bg-gray-200 rounded animate-pulse" />
         </div>
-      </aside> */}
+        <div className="space-y-0">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="flex items-center gap-4 p-4 border-b">
+              <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse" />
+              <div className="flex flex-1 flex-col gap-2">
+                <div className="w-40 h-5 bg-gray-200 rounded animate-pulse" />
+                <div className="w-20 h-3 bg-gray-200 rounded animate-pulse" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

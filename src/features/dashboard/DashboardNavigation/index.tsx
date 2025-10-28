@@ -15,7 +15,6 @@ export const DashboardNavigation = () => {
       alignItems="center"
       justifyContent="space-between"
       p="8px 16px"
-      borderBottom="1px solid"
       borderColor="divider"
     >
       <Box display={{ xs: "block", md: "none" }} height="24px">
