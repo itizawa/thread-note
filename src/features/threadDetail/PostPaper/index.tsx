@@ -112,7 +112,6 @@ export function PostPaper({ post, isPublicThread }: Props) {
       urlJoin(
         window.location.origin,
         urls.threadDetails({
-          userId: post.userId,
           threadId: post.threadId,
           postId: post.id,
         })

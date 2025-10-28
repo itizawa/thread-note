@@ -11,13 +11,11 @@ export const urls = {
   dashboardSettings: (tab: "profile" | "files") =>
     `/dashboard/settings?tab=${tab}`,
   threadDetails: ({
-    userId,
     threadId,
     postId,
   }: {
-    userId: string;
     threadId: string;
     postId?: string;
-  }) => `/users/${userId}/${threadId}${postId ? `#${postId}` : ""}`,
+  }) => `/users/threads/${threadId}${postId ? `#${postId}` : ""}`,
   userDetails: (id: string) => `/users/${id}`,
 };

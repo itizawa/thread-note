@@ -54,7 +54,6 @@ export function ThreadInformation({ threadId }: { threadId: string }) {
 
           <Box display="flex" alignItems="center" gap="8px">
             <PublicStatusSheet
-              userId={threadInfo.userId}
               threadTitle={threadInfo.title}
               threadId={threadId}
               isPublic={threadInfo.isPublic}
