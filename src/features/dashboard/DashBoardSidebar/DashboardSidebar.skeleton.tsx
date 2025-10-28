@@ -1,4 +1,5 @@
 import { Skeleton } from "@/shared/components/Skeleton";
+import { SidebarThreadListSkeleton } from "../../dashboard/SidebarThreadList";
 import { DashboardSidebarLayout } from "./DashboardSidebar.layout";
 
 export const DashboardSidebarSkeleton = () => {
@@ -11,7 +12,7 @@ export const DashboardSidebarSkeleton = () => {
           <Skeleton variant="rounded" width={28} height={28} />
         </>
       }
-      threadListSection={<Skeleton width="100%" height={160} />}
+      threadListSection={<SidebarThreadListSkeleton />}
     />
   );
 };
