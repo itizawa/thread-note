@@ -13,7 +13,6 @@ import { use } from "react";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
 
 export const DashBoardSidebar = () => {
-  use(new Promise((resolve) => setTimeout(resolve, 5000)));
   const currentUser = use(trpc.user.getCurrentUser());
   const routes = [
     {
