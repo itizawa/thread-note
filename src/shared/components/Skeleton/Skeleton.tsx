@@ -4,6 +4,6 @@ import {
   SkeletonProps as MuiSkeletonProps,
 } from "@mui/material";
 
-export const Skeleton = (props: MuiSkeletonProps) => {
-  return <MuiSkeleton {...props} />;
+export const Skeleton = ({ sx, ...props }: MuiSkeletonProps) => {
+  return <MuiSkeleton {...props} sx={{ ...sx }} />;
 };

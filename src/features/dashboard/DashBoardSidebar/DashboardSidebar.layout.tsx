@@ -1,30 +1,38 @@
 import { Box } from "@/shared/components/Box";
-import { Skeleton } from "@/shared/components/Skeleton";
 import { Stack } from "@/shared/components/Stack";
 import { urls } from "@/shared/consts/urls";
 import { cn } from "@/shared/lib/utils";
 import { Home, Pen, Settings } from "lucide-react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-export const DashboardSidebarSkeleton = () => {
-  const routes = [
-    {
-      href: urls.dashboard,
-      label: "ホーム",
-      icon: Home,
-    },
-    {
-      href: urls.dashboardThreadNew,
-      label: "新規作成",
-      icon: Pen,
-    },
-    {
-      href: urls.dashboardSettings("profile"),
-      label: "設定",
-      icon: Settings,
-    },
-  ];
+export const routes = [
+  {
+    href: urls.dashboard,
+    label: "ホーム",
+    icon: Home,
+  },
+  {
+    href: urls.dashboardThreadNew,
+    label: "新規作成",
+    icon: Pen,
+  },
+  {
+    href: urls.dashboardSettings("profile"),
+    label: "設定",
+    icon: Settings,
+  },
+];
 
+type DashboardSidebarLayoutProps = {
+  userSection: ReactNode;
+  threadListSection: ReactNode;
+};
+
+export const DashboardSidebarLayout = ({
+  userSection,
+  threadListSection,
+}: DashboardSidebarLayoutProps) => {
   return (
     <Stack
       display="flex"
@@ -36,9 +44,7 @@ export const DashboardSidebarSkeleton = () => {
       }}
     >
       <Box display="flex" alignItems="center" gap="8px" p="16px">
-        <Skeleton sx={{ width: 32, height: 32 }} />
-        <Skeleton sx={{ flex: 1, minWidth: 0 }} height={24} />
-        <Skeleton width={28} height={28} />
+        {userSection}
       </Box>
       <Stack
         display="flex"
@@ -62,7 +68,7 @@ export const DashboardSidebarSkeleton = () => {
           ))}
         </Stack>
         <hr />
-        <Skeleton width="100%" height={160} />
+        {threadListSection}
       </Stack>
     </Stack>
   );

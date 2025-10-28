@@ -1,5 +1,7 @@
-import { DashBoardSidebar } from "@/features/dashboard/DashBoardSidebar";
-import { DashboardSidebarSkeleton } from "@/features/dashboard/DashBoardSidebar/DashboardSidebarSkeleton";
+import {
+  DashBoardSidebar,
+  DashboardSidebarSkeleton,
+} from "@/features/dashboard/DashBoardSidebar";
 import { Box } from "@/shared/components/Box";
 import type React from "react";
 import { Suspense } from "react";
