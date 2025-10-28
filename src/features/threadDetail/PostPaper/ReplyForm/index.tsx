@@ -3,6 +3,7 @@
 import { createPostInThread } from "@/app/actions/threadActions";
 import { PostForm } from "@/entities/post/PostForm";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
+import { getIsMobile } from "@/shared/lib/useIsMobile";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { trpc } from "@/trpc/client";
 import React from "react";
@@ -70,7 +71,7 @@ export function ReplyForm({ threadId, parentPostId }: Props) {
           onChange: handleContentChange,
           onKeyPress: handleKeyPress,
           placeholder: "返信を入力...",
-          forceFocus: true,
+          forceFocus: getIsMobile(),
         }}
         formState={{
           isDisabled,
