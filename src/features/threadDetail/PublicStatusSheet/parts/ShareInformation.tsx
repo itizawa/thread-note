@@ -23,7 +23,7 @@ export const ShareInformation = ({
 }) => {
   const threadDetailUrl = urlJoin(
     window.location.origin,
-    urls.threadDetails(threadId)
+    urls.threadDetails({ threadId })
   );
   const { copy } = useClipBoardCopy();
 

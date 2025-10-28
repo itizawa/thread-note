@@ -71,7 +71,7 @@ function PostListItemSkeleton() {
 
 function PostListItem({ thread }: { thread: Thread }) {
   return (
-    <Link href={urls.threadDetails(thread.id)}>
+    <Link href={urls.threadDetails({ threadId: thread.id })}>
       <div className="flex items-center gap-4 p-4 hover:bg-gray-100 cursor-pointer">
         <UserIcon userImage={thread.user.image} size={10} />
         <div className="flex flex-1 flex-col gap-1 overflow-x-hidden">

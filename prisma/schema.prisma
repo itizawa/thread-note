@@ -49,6 +49,7 @@ model User {
   files File[]
   planSubscription PlanSubscription?
   llmTokenUsages LLMTokenUsage[]
+  ownWorkSpaces WorkSpace[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -139,6 +140,23 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model WorkSpace {
+  id         String  @id @default(uuid())
+
+  ownerId               String @map("owner_id")
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  name String
+  slug String @unique
+
+  image         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("work_space")
 }
 
 
