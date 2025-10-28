@@ -2,15 +2,25 @@ import { UserIcon } from "@/entities/user/UserIcon";
 import { IconButton } from "@/shared/components/IconButton";
 import { Tooltip } from "@/shared/components/Tooltip";
 import { urls } from "@/shared/consts/urls";
-import { trpc } from "@/trpc/server";
+import { AppRouter } from "@/trpc/routers/_app";
 import { LaunchOutlined } from "@mui/icons-material";
+import { inferRouterOutputs } from "@trpc/server";
 import Link from "next/link";
 import { use } from "react";
 import { SidebarThreadList } from "../../dashboard/SidebarThreadList";
 import { DashboardSidebarLayout } from "./DashboardSidebar.layout";
 
-export const DashBoardSidebar = () => {
-  const currentUser = use(trpc.user.getCurrentUser());
+type DashBoardSidebarProps = {
+  currentUserPromise: Promise<inferRouterOutputs<AppRouter>["user"]["getCurrentUser"]>;
+  threadsPromise: Promise<inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"]>;
+};
+
+export const DashBoardSidebar = ({
+  currentUserPromise,
+  threadsPromise,
+}: DashBoardSidebarProps) => {
+  const currentUser = use(currentUserPromise);
+  const threadsData = use(threadsPromise);
 
   return (
     <DashboardSidebarLayout
@@ -33,7 +43,7 @@ export const DashBoardSidebar = () => {
           )}
         </>
       }
-      threadListSection={<SidebarThreadList />}
+      threadListSection={<SidebarThreadList initialData={threadsData} />}
     />
   );
 };
