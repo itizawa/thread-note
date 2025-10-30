@@ -25,6 +25,8 @@ const eslintConfig = [
                 "Box",
                 "Tooltip",
                 "TextField",
+                "Avatar",
+                "Skeleton",
               ],
               message: "共通コンポーネントを使用してください。",
             },

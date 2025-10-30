@@ -1,70 +1,25 @@
-import { signIn } from "@/auth";
 import { Footer } from "@/features/layout/Footer";
 import { Navigation } from "@/features/layout/Navigation";
-import { Button } from "@/shared/components/Button";
-import { urls } from "@/shared/consts/urls";
+import { Box } from "@/shared/components/Box";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
-import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { getThreadCount } from "./actions/threadActions";
-import { getCurrentUser } from "./actions/userActions";
+import { Suspense } from "react";
+import { HeroSection, HeroSectionSkeleton } from "./_components/HeroSection";
+import { ThreadCountSection } from "./_components/ThreadCountSection";
+import { ThreadCountSectionSkeleton } from "./_components/ThreadCountSection/ThreadCountSection.skeleton";
 
 export const metadata: Metadata = generateMetadataObject();
 
-export default async function Home() {
-  const currentUser = await getCurrentUser();
-  const threadCount = await getThreadCount();
-
+export default function Home() {
   return (
-    <HydrateClient>
+    <>
       <Navigation />
       <main>
         <section className="px-4 py-16 text-gray-600 space-y-4">
-          <div className="mx-auto container text-center space-y-4">
-            <h1 className="mx-auto max-w-2xl text-2xl font-bold">
-              手軽に情報を残す
-              <br />
-              スレッド形式のメモサービス
-            </h1>
-            {currentUser ? (
-              <div className="mx-auto container text-center space-y-2">
-                <Link href={urls.dashboard}>
-                  <Button size="large" variant="contained">
-                    ダッシュボードへ
-                  </Button>
-                </Link>
-              </div>
-            ) : (
-              <div className="mx-auto container text-center space-y-2">
-                <p className="text-lg">
-                  <Link href={urls.terms} className="text-sky-700">
-                    利用規約
-                  </Link>
-                  に同意して始める
-                </p>{" "}
-                <div className="space-y-4">
-                  <form
-                    action={async () => {
-                      "use server";
-                      await signIn("google");
-                    }}
-                  >
-                    <button className="mx-auto">
-                      <Image
-                        src="/google-login.png"
-                        alt="Google"
-                        width={180}
-                        height={200}
-                        className="mr-2"
-                      />
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
+          <Suspense fallback={<HeroSectionSkeleton />}>
+            <HeroSection />
+          </Suspense>
           <div className="mx-auto justify-center flex">
             <Image
               src="/lp/pc.png"
@@ -72,6 +27,7 @@ export default async function Home() {
               width={1000}
               height={300}
               className="shadow-lg md:block hidden"
+              priority
             />
             <Image
               src="/lp/sp.png"
@@ -79,6 +35,7 @@ export default async function Home() {
               width={700}
               height={300}
               className="md:hidden block"
+              priority
             />
           </div>
         </section>
@@ -90,9 +47,11 @@ export default async function Home() {
             <p className="text-xl text-gray-600 mb-8">
               基本機能は全て無料で使用できます
             </p>
-            <p className="text-xl text-gray-600 mb-8 font-bold">
-              累計 {threadCount} 個のスレッドが作成されました！
-            </p>
+            <Box mb="16px">
+              <Suspense fallback={<ThreadCountSectionSkeleton />}>
+                <ThreadCountSection />
+              </Suspense>
+            </Box>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="p-6 bg-white rounded-2xl shadow-md">
                 <h3 className="text-xl font-semibold text-gray-700">
@@ -129,6 +88,6 @@ export default async function Home() {
         </section>
         <Footer />
       </main>
-    </HydrateClient>
+    </>
   );
 }
