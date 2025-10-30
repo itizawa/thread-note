@@ -1,13 +1,15 @@
-import { AppRouter } from "@/trpc/routers/_app";
-import { inferRouterOutputs } from "@trpc/server";
+import { trpc } from "@/trpc/server";
+import { use } from "react";
 import { SidebarThreadListClient } from "./SidebarThreadList.client";
 
-type SidebarThreadListProps = {
-  initialData: inferRouterOutputs<AppRouter>["thread"]["listThreadsByCurrentUser"];
-};
+export const SidebarThreadList = () => {
+  const initialData = use(
+    trpc.thread.listThreadsByCurrentUser({
+      limit: 20,
+      sort: { type: "lastPostedAt", direction: "desc" },
+      excludeClosed: true,
+    })
+  );
 
-export const SidebarThreadList = ({
-  initialData,
-}: SidebarThreadListProps) => {
   return <SidebarThreadListClient initialData={initialData} />;
 };
