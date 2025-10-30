@@ -1,10 +1,10 @@
-import { Skeleton as MuiSkeleton } from "@mui/material";
+import { Skeleton } from "@/shared/components/Skeleton";
 import { HeroSectionLayout } from "./HeroSection.layout";
 
 export const HeroSectionSkeleton = () => {
   return (
     <HeroSectionLayout>
-      <MuiSkeleton
+      <Skeleton
         variant="rectangular"
         width={180}
         height={40}

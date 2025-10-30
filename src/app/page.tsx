@@ -1,8 +1,8 @@
 import { Footer } from "@/features/layout/Footer";
 import { Navigation } from "@/features/layout/Navigation";
+import { Box } from "@/shared/components/Box";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { HydrateClient } from "@/trpc/server";
-import { Box } from "@mui/material";
 import { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
