@@ -2,7 +2,6 @@ import { Footer } from "@/features/layout/Footer";
 import { Navigation } from "@/features/layout/Navigation";
 import { Box } from "@/shared/components/Box";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
-import { HydrateClient } from "@/trpc/server";
 import { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -14,7 +13,7 @@ export const metadata: Metadata = generateMetadataObject();
 
 export default function Home() {
   return (
-    <HydrateClient>
+    <>
       <Navigation />
       <main>
         <section className="px-4 py-16 text-gray-600 space-y-4">
@@ -28,6 +27,7 @@ export default function Home() {
               width={1000}
               height={300}
               className="shadow-lg md:block hidden"
+              priority
             />
             <Image
               src="/lp/sp.png"
@@ -35,6 +35,7 @@ export default function Home() {
               width={700}
               height={300}
               className="md:hidden block"
+              priority
             />
           </div>
         </section>
@@ -87,6 +88,6 @@ export default function Home() {
         </section>
         <Footer />
       </main>
-    </HydrateClient>
+    </>
   );
 }
