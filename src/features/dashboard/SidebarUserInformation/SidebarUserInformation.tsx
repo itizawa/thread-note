@@ -12,22 +12,24 @@ export const SidebarUserInformation = () => {
   const currentUser = use(trpc.user.getCurrentUser());
 
   return (
-    <Box display="flex" alignItems="center">
-      <UserIcon userImage={currentUser?.image} />
-      <span>{currentUser?.name}</span>
-      {currentUser && (
-        <Link
-          href={urls.userDetails(currentUser.id)}
-          target="_blank"
-          className="ml-auto"
-        >
-          <Tooltip content="ユーザーページを開く">
-            <IconButton size="small">
-              <LaunchOutlined />
-            </IconButton>
-          </Tooltip>
-        </Link>
-      )}
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box display="flex" alignItems="center" columnGap="8px">
+        <UserIcon userImage={currentUser?.image} />
+        <span>{currentUser?.name}</span>
+        {currentUser && (
+          <Link
+            href={urls.userDetails(currentUser.id)}
+            target="_blank"
+            className="ml-auto"
+          >
+            <Tooltip content="ユーザーページを開く">
+              <IconButton size="small">
+                <LaunchOutlined />
+              </IconButton>
+            </Tooltip>
+          </Link>
+        )}
+      </Box>
     </Box>
   );
 };
