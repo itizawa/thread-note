@@ -21,20 +21,20 @@ export const SidebarUserInformation = () => {
       <Box display="flex" alignItems="center" columnGap="8px">
         <UserIcon userImage={currentUser?.image} />
         <span>{currentUser?.name}</span>
-        {currentUser && (
-          <Link
-            href={urls.userDetails(currentUser.id)}
-            target="_blank"
-            className="ml-auto"
-          >
-            <Tooltip content="ユーザーページを開く">
-              <IconButton size="small">
-                <LaunchOutlined />
-              </IconButton>
-            </Tooltip>
-          </Link>
-        )}
       </Box>
+      {currentUser && (
+        <Link
+          href={urls.userDetails(currentUser.id)}
+          target="_blank"
+          className="ml-auto"
+        >
+          <Tooltip content="ユーザーページを開く">
+            <IconButton size="small">
+              <LaunchOutlined />
+            </IconButton>
+          </Tooltip>
+        </Link>
+      )}
     </Box>
   );
 };
