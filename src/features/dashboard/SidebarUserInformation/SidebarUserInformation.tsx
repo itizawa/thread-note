@@ -12,7 +12,12 @@ export const SidebarUserInformation = () => {
   const currentUser = use(trpc.user.getCurrentUser());
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="space-between">
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      columnGap="8px"
+    >
       <Box display="flex" alignItems="center" columnGap="8px">
         <UserIcon userImage={currentUser?.image} />
         <span>{currentUser?.name}</span>
