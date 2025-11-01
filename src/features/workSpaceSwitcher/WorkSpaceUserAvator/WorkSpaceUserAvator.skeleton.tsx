@@ -1,4 +1,4 @@
-import { Skeleton } from "@mui/material";
+import { Skeleton } from "@/shared/components/Skeleton";
 
 export const WorkSpaceUserAvatorSkeleton = () => {
   return (
