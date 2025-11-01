@@ -4,7 +4,6 @@ import { Box } from "@/shared/components/Box";
 import { Stack } from "@/shared/components/Stack";
 import { trpc } from "@/trpc/server";
 import type React from "react";
-import { Suspense } from "react";
 
 export default async function DashboardLayout({
   children,
@@ -19,9 +18,7 @@ export default async function DashboardLayout({
       <DashboardNavigation />
       <Box display="flex" flex={1} minHeight="0">
         <Box display={{ xs: "none", md: "block" }} height="100%">
-          <Suspense fallback={<p>...loading</p>}>
-            <WorkSpaceSidebar />
-          </Suspense>
+          <WorkSpaceSidebar />
         </Box>
         {children}
       </Box>

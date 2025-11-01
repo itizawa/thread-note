@@ -36,16 +36,16 @@ export default function RootLayout({
     <html lang="ja" className={roboto.className}>
       <link rel="manifest" href="/manifest.json" />
       <link rel="icon" href={process.env.FAVICON_PATH} sizes="any" />
-      <TRPCProvider>
-        <MuiThemeProvider>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-          >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+      >
+        <TRPCProvider>
+          <MuiThemeProvider>
             <ProgressBarProvider>{children}</ProgressBarProvider>
             <Toaster richColors />
-          </body>
-        </MuiThemeProvider>
-      </TRPCProvider>
+          </MuiThemeProvider>
+        </TRPCProvider>
+      </body>
     </html>
   );
 }
