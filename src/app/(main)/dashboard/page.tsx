@@ -1,5 +1,5 @@
-import { ThreadList } from "@/features/dashboard/ThreadList";
-import { ThreadListSkeleton } from "@/features/dashboard/ThreadList/ThreadList.skeleton";
+import { ThreadList } from "@/app/(main)/dashboard/_components/ThreadList";
+import { ThreadListSkeleton } from "@/app/(main)/dashboard/_components/ThreadList/ThreadList.skeleton";
 import { SCROLL_CONTAINER_ID } from "@/shared/consts/domId";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Metadata } from "next";
