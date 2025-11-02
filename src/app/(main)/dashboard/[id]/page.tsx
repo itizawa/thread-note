@@ -1,11 +1,15 @@
 import { getCurrentUser } from "@/app/actions/userActions";
-import { PostTimeLine } from "@/features/threadDetail/PostTimeLine";
+import {
+  PostTimeLine,
+  PostTimeLineSkeleton,
+} from "@/features/threadDetail/PostTimeLine";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { trpc } from "@/trpc/server";
 import { Stack } from "@mui/material";
 import { Metadata, NextSegmentPage } from "next";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -44,10 +48,12 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <Stack height="100%" sx={{ overflowY: "scroll" }}>
-      <PostTimeLine
-        threadId={threadId}
-        postId={typeof postId === "string" ? postId : undefined}
-      />
+      <Suspense fallback={<PostTimeLineSkeleton />}>
+        <PostTimeLine
+          threadId={threadId}
+          postId={typeof postId === "string" ? postId : undefined}
+        />
+      </Suspense>
     </Stack>
   );
 }
