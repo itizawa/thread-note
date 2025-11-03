@@ -1,11 +1,8 @@
-import { getCurrentUser } from "@/app/actions/userActions";
-import { PostTimeLine } from "@/features/threadDetail/PostTimeLine";
-import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { trpc } from "@/trpc/server";
 import { Stack } from "@mui/material";
 import { Metadata, NextSegmentPage } from "next";
-import { redirect } from "next/navigation";
+import { PostTimeLine } from "./_components/PostTimeLine";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -38,9 +35,6 @@ export const generateMetadata = async ({
 export default async function Page({ params, searchParams }: Props) {
   const { id: threadId } = await params;
   const { postId } = await searchParams;
-
-  const currentUser = await getCurrentUser();
-  if (!currentUser) redirect(urls.top);
 
   return (
     <Stack height="100%" sx={{ overflowY: "scroll" }}>
