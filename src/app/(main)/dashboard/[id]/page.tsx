@@ -1,8 +1,21 @@
+import { Box } from "@/shared/components/Box";
+import { Skeleton } from "@/shared/components/Skeleton";
+import { Stack } from "@/shared/components/Stack";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { trpc } from "@/trpc/server";
-import { Stack } from "@mui/material";
 import { Metadata, NextSegmentPage } from "next";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import {
+  PostDetailPaper,
+  PostDetailPaperError,
+  PostDetailPaperSkeleton,
+} from "./_components/PostDetailPaper";
 import { PostTimeLine } from "./_components/PostTimeLine";
+import {
+  ThreadInformation,
+  ThreadInformationSkeleton,
+} from "./_components/ThreadInformation";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -35,13 +48,49 @@ export const generateMetadata = async ({
 export default async function Page({ params, searchParams }: Props) {
   const { id: threadId } = await params;
   const { postId } = await searchParams;
+  const postIdString = typeof postId === "string" ? postId : undefined;
 
   return (
     <Stack height="100%" sx={{ overflowY: "scroll" }}>
-      <PostTimeLine
-        threadId={threadId}
-        postId={typeof postId === "string" ? postId : undefined}
-      />
+      <Box display="flex" height="100%">
+        <Stack
+          flex={2}
+          minWidth={0}
+          height="100%"
+          sx={{
+            overflowY: "auto",
+            display: { xs: postId ? "none" : "flex", md: "flex" },
+          }}
+        >
+          <Suspense fallback={<ThreadInformationSkeleton />}>
+            <ThreadInformation threadId={threadId} />
+          </Suspense>
+          <Suspense
+            fallback={
+              <Box px="16px" py="8px">
+                <Skeleton className="w-full h-20" />
+              </Box>
+            }
+          >
+            <Box flex={1} height="100%" minHeight={0}>
+              <PostTimeLine threadId={threadId} />
+            </Box>
+          </Suspense>
+        </Stack>
+        {postIdString && (
+          <Box sx={{ flex: 1 }} key={postIdString} minWidth={0}>
+            <ErrorBoundary
+              fallback={<PostDetailPaperError threadId={threadId} />}
+            >
+              <Suspense
+                fallback={<PostDetailPaperSkeleton threadId={threadId} />}
+              >
+                <PostDetailPaper threadId={threadId} postId={postIdString} />
+              </Suspense>
+            </ErrorBoundary>
+          </Box>
+        )}
+      </Box>
     </Stack>
   );
 }

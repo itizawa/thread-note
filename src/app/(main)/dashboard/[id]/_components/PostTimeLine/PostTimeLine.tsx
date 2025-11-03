@@ -3,70 +3,11 @@ import { PostPaper } from "@/features/threadDetail/PostPaper";
 import { Box } from "@/shared/components/Box";
 import { Stack } from "@/shared/components/Stack";
 import { Typography } from "@/shared/components/Typography";
-import { Skeleton } from "@/shared/ui/skeleton";
 import { trpc } from "@/trpc/server";
 import { ArchiveOutlined } from "@mui/icons-material";
-import { Suspense, use } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { PostDetailPaper } from "../PostDetailPaper";
-import { PostDetailPaperError } from "../PostDetailPaper/PostDetailPaper.error";
-import { PostDetailPaperSkeleton } from "../PostDetailPaper/PostDetailPaper.skeleton";
-import {
-  ThreadInformation,
-  ThreadInformationSkeleton,
-} from "../ThreadInformation";
+import { use } from "react";
 
-export function PostTimeLine({
-  threadId,
-  postId,
-}: {
-  threadId: string;
-  postId?: string;
-}) {
-  return (
-    <Box display="flex" height="100%">
-      <Stack
-        flex={2}
-        minWidth={0}
-        height="100%"
-        sx={{
-          overflowY: "auto",
-          display: { xs: postId ? "none" : "flex", md: "flex" },
-        }}
-      >
-        <Suspense fallback={<ThreadInformationSkeleton />}>
-          <ThreadInformation threadId={threadId} />
-        </Suspense>
-        <Suspense
-          fallback={
-            <Box px="16px" py="8px">
-              <Skeleton className="w-full h-20" />
-            </Box>
-          }
-        >
-          <Box flex={1} height="100%" minHeight={0}>
-            <PostTimeLineCore threadId={threadId} />
-          </Box>
-        </Suspense>
-      </Stack>
-      {postId && (
-        <Box sx={{ flex: 1 }} key={postId} minWidth={0}>
-          <ErrorBoundary
-            fallback={<PostDetailPaperError threadId={threadId} />}
-          >
-            <Suspense
-              fallback={<PostDetailPaperSkeleton threadId={threadId} />}
-            >
-              <PostDetailPaper threadId={threadId} postId={postId} />
-            </Suspense>
-          </ErrorBoundary>
-        </Box>
-      )}
-    </Box>
-  );
-}
-
-const PostTimeLineCore = ({ threadId }: { threadId: string }) => {
+export const PostTimeLine = ({ threadId }: { threadId: string }) => {
   const { threadWithPosts } = use(
     trpc.thread.getThreadWithPosts({
       id: threadId,
