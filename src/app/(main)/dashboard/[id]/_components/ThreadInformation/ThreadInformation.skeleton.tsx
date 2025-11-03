@@ -1,5 +1,5 @@
 import { Box } from "@/shared/components/Box";
-import { Skeleton } from "@mui/material";
+import { Skeleton } from "@/shared/components/Skeleton";
 
 export function ThreadInformationSkeleton() {
   return (
