@@ -12,7 +12,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Box display="flex" flex={1} minHeight="0">
+    <Box display="flex" flex={1} minWidth="0" minHeight="0">
       <Box
         display={{ xs: "none", md: "block" }}
         width="240px"
@@ -21,7 +21,7 @@ export default async function DashboardLayout({
       >
         <DashBoardSidebar />
       </Box>
-      <Box flex={1} minHeight="0" sx={{ overflowY: "auto" }}>
+      <Box flex={1} minWidth={0} minHeight={0} sx={{ overflowY: "auto" }}>
         <LoginRequired
           errorFallback={
             <Box width="100%" height="100%">
@@ -33,6 +33,7 @@ export default async function DashboardLayout({
           renderLoading={() => (
             <Stack
               height="100%"
+              width="100%"
               display="flex"
               justifyContent="center"
               alignItems="center"

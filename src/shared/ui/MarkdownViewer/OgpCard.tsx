@@ -18,7 +18,7 @@ export const OgpCard = ({ url }: Props) => {
         className="block border rounded-lg overflow-hidden hover:opacity-70 transition max-w-[600px]"
       >
         <div className="flex">
-          <div className="p-4 flex-1 overflow-hidden space-y-1">
+          <div className="p-4 flex-1 overflow-hidden space-y-1 min-w-0">
             <div className="w-full h-6 py-1">
               <div className="w-full h-4 bg-slate-300 animate-pulse rounded-sm" />
             </div>
@@ -45,7 +45,7 @@ export const OgpCard = ({ url }: Props) => {
       className="block border rounded-lg overflow-hidden hover:opacity-70 transition bg-white max-w-[600px]"
     >
       <div className="flex">
-        <div className="p-4 flex-1 overflow-hidden space-y-1 flex flex-col">
+        <div className="p-4 flex-1 min-w-0 overflow-hidden space-y-1 flex flex-col">
           <p className="font-bold text-base text-gray-900 line-clamp-2">
             {data?.title}
           </p>

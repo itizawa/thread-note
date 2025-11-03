@@ -51,47 +51,45 @@ export default async function Page({ params, searchParams }: Props) {
   const postIdString = typeof postId === "string" ? postId : undefined;
 
   return (
-    <Stack height="100%" sx={{ overflowY: "scroll" }}>
-      <Box display="flex" height="100%">
-        <Stack
-          flex={2}
-          minWidth={0}
-          height="100%"
-          sx={{
-            overflowY: "auto",
-            display: { xs: postId ? "none" : "flex", md: "flex" },
-          }}
+    <Box display="flex" height="100%" sx={{ overflowY: "scroll" }}>
+      <Stack
+        flex={2}
+        minWidth={0}
+        height="100%"
+        sx={{
+          overflowY: "auto",
+          display: { xs: postId ? "none" : "flex", md: "flex" },
+        }}
+      >
+        <Suspense fallback={<ThreadInformationSkeleton />}>
+          <ThreadInformation threadId={threadId} />
+        </Suspense>
+        <Suspense
+          fallback={
+            <Stack px="16px" py="8px">
+              <Skeleton width="100%" height="80px" />
+              <Skeleton width="100%" height="80px" />
+            </Stack>
+          }
         >
-          <Suspense fallback={<ThreadInformationSkeleton />}>
-            <ThreadInformation threadId={threadId} />
-          </Suspense>
-          <Suspense
-            fallback={
-              <Stack px="16px" py="8px">
-                <Skeleton width="100%" height="80px" />
-                <Skeleton width="100%" height="80px" />
-              </Stack>
-            }
-          >
-            <Box flex={1} height="100%" minHeight={0}>
-              <PostTimeLine threadId={threadId} />
-            </Box>
-          </Suspense>
-        </Stack>
-        {postIdString && (
-          <Box sx={{ flex: 1 }} key={postIdString} minWidth={0}>
-            <ErrorBoundary
-              fallback={<PostDetailPaperError threadId={threadId} />}
-            >
-              <Suspense
-                fallback={<PostDetailPaperSkeleton threadId={threadId} />}
-              >
-                <PostDetailPaper threadId={threadId} postId={postIdString} />
-              </Suspense>
-            </ErrorBoundary>
+          <Box flex={1} height="100%" minHeight={0}>
+            <PostTimeLine threadId={threadId} />
           </Box>
-        )}
-      </Box>
-    </Stack>
+        </Suspense>
+      </Stack>
+      {postIdString && (
+        <Box flex={1} key={postIdString} minWidth={0}>
+          <ErrorBoundary
+            fallback={<PostDetailPaperError threadId={threadId} />}
+          >
+            <Suspense
+              fallback={<PostDetailPaperSkeleton threadId={threadId} />}
+            >
+              <PostDetailPaper threadId={threadId} postId={postIdString} />
+            </Suspense>
+          </ErrorBoundary>
+        </Box>
+      )}
+    </Box>
   );
 }
