@@ -105,7 +105,7 @@ function PostListItem({ thread }: { thread: Thread }) {
   return (
     <>
       <Link href={urls.dashboardThreadDetails(thread.id)} className="">
-        <div className="flex items-center justify-between rounded-lg p-2 hover:bg-gray-100 group">
+        <div className="flex items-center justify-between rounded-lg p-2 hover:bg-gray-300 group">
           <div className="flex items-center cursor-pointer flex-1 min-w-0">
             <span className="text-sm truncate max-w-xs">
               {thread.title || "タイトルなし"}

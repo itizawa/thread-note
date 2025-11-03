@@ -36,7 +36,7 @@ const theme = createTheme({
     },
     divider: "#e0e0e0",
     sidebar: {
-      main: "#E9EFF4",
+      main: "#f1e9f4",
       gradient: "linear-gradient(135deg, #fefcff 0%, #f3e5f5 100%)",
     },
     navbar: {

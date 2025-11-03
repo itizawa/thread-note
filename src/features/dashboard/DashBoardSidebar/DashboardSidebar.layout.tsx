@@ -59,7 +59,7 @@ export const DashboardSidebarLayout = ({
               key={route.href}
               href={route.href}
               className={cn(
-                "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100"
+                "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-300"
               )}
             >
               <route.icon className="h-5 w-5" />
