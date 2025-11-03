@@ -40,7 +40,7 @@ export const DashboardSidebarLayout = ({
       flex={1}
       sx={{
         overflowY: "auto",
-        background: "sidebar.main",
+        bgcolor: "sidebar.main",
       }}
     >
       <Box display="flex" alignItems="center" gap="8px" p="16px">
