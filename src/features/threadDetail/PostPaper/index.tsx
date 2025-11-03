@@ -16,6 +16,7 @@ import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { useClipBoardCopy } from "@/shared/hooks/useClipBoardCopy";
 import { isMacOs, isWindowsOs } from "@/shared/lib/getOs";
+import { getIsMobile } from "@/shared/lib/useIsMobile";
 import { useServerAction } from "@/shared/lib/useServerAction";
 import { MarkdownViewer } from "@/shared/ui/MarkdownViewer/index";
 import { trpc } from "@/trpc/client";
@@ -135,6 +136,9 @@ export function PostPaper({ post, isPublicThread }: Props) {
         "& .icon-button-group": { opacity: { xs: 1, md: 0 } },
         transition: "all 0.2s ease-in-out",
       }}
+      onClick={
+        getIsMobile() && isParentPost ? handleClickReplyButton : undefined
+      }
     >
       <Box display="flex" alignItems="start" gap="8px">
         <Link href={urls.userDetails(user.id)} className="hover:opacity-60">
@@ -200,7 +204,7 @@ export function PostPaper({ post, isPublicThread }: Props) {
                   alignItems="center"
                   className="icon-button-group"
                 >
-                  {!isEditing && isParentPost && (
+                  {!isEditing && isParentPost && !getIsMobile() && (
                     <Tooltip content="返信">
                       <IconButton
                         size="small"

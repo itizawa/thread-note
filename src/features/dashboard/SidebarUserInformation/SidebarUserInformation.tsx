@@ -17,6 +17,7 @@ export const SidebarUserInformation = () => {
       alignItems="center"
       justifyContent="space-between"
       columnGap="8px"
+      width="100%"
     >
       <Box display="flex" alignItems="center" columnGap="8px">
         <UserIcon userImage={currentUser?.image} />
