@@ -67,9 +67,10 @@ export default async function Page({ params, searchParams }: Props) {
           </Suspense>
           <Suspense
             fallback={
-              <Box px="16px" py="8px">
-                <Skeleton className="w-full h-20" />
-              </Box>
+              <Stack px="16px" py="8px">
+                <Skeleton width="100%" height="80px" />
+                <Skeleton width="100%" height="80px" />
+              </Stack>
             }
           >
             <Box flex={1} height="100%" minHeight={0}>
