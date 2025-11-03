@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import {
   SidebarThreadList,
   SidebarThreadListSkeleton,
@@ -13,14 +14,18 @@ export const DashBoardSidebar = () => {
   return (
     <DashboardSidebarLayout
       userSection={
-        <Suspense fallback={<SidebarUserInformationSkeleton />}>
-          <SidebarUserInformation />
-        </Suspense>
+        <ErrorBoundary fallback={<SidebarUserInformationSkeleton />}>
+          <Suspense fallback={<SidebarUserInformationSkeleton />}>
+            <SidebarUserInformation />
+          </Suspense>
+        </ErrorBoundary>
       }
       threadListSection={
-        <Suspense fallback={<SidebarThreadListSkeleton />}>
-          <SidebarThreadList />
-        </Suspense>
+        <ErrorBoundary fallback={<SidebarThreadListSkeleton />}>
+          <Suspense fallback={<SidebarThreadListSkeleton />}>
+            <SidebarThreadList />
+          </Suspense>
+        </ErrorBoundary>
       }
     />
   );

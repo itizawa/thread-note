@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@/shared/components/Button";
+import { Stack } from "@/shared/components/Stack";
+import { Typography } from "@/shared/components/Typography";
 import { urls } from "@/shared/consts/urls";
 import { generateMetadataObject } from "@/shared/lib/generateMetadataObject";
 import { Metadata } from "next";
@@ -11,11 +14,21 @@ export const metadata: Metadata = generateMetadataObject({
 
 export default function Page() {
   return (
-    <div className="min-h-screen p-5">
-      <h3 className="mx-auto">Error</h3>
-      <Link href={urls.top} className="mx-auto">
-        ホームに戻る
+    <Stack
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      rowGap="24px"
+      height="100dvh"
+    >
+      <Typography variant="h4" bold>
+        エラーが発生しました
+      </Typography>
+      <Link href={urls.top}>
+        <Button variant="contained" color="primary">
+          トップへ戻る
+        </Button>
       </Link>
-    </div>
+    </Stack>
   );
 }
