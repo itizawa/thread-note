@@ -1,6 +1,8 @@
 import { DashBoardSidebar } from "@/features/dashboard/DashBoardSidebar";
 import { Box } from "@/shared/components/Box";
-import { CircularProgress, Skeleton, Stack } from "@mui/material";
+import { Skeleton } from "@/shared/components/Skeleton";
+import { Stack } from "@/shared/components/Stack";
+import { CircularProgress } from "@mui/material";
 import type React from "react";
 import { LoginRequired } from "../_components/LoginRequired";
 
