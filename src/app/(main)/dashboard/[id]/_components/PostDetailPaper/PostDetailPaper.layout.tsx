@@ -45,9 +45,8 @@ export const PostDetailPaperHeader = ({
       display="flex"
       justifyContent={{ xs: "flex-start", md: "space-between" }}
       alignItems="center"
-      sx={{
-        borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-      }}
+      columnGap="8px"
+      sx={{ borderBottom: "1px solid", borderColor: "divider" }}
     >
       <IconButton
         onClick={onClose}
