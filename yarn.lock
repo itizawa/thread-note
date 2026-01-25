@@ -764,13 +764,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/busboy@npm:^2.0.0":
-  version: 2.1.1
-  resolution: "@fastify/busboy@npm:2.1.1"
-  checksum: 10c0/6f8027a8cba7f8f7b736718b013f5a38c0476eea67034c94a0d3c375e2b114366ad4419e6a6fa7ffc2ef9c6d3e0435d76dd584a7a1cbac23962fda7650b579e3
-  languageName: node
-  linkType: hard
-
 "@floating-ui/core@npm:^1.7.3":
   version: 1.7.3
   resolution: "@floating-ui/core@npm:1.7.3"
@@ -3783,15 +3776,15 @@ __metadata:
   linkType: hard
 
 "@vercel/blob@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@vercel/blob@npm:2.0.0"
+  version: 2.0.1
+  resolution: "@vercel/blob@npm:2.0.1"
   dependencies:
     async-retry: "npm:^1.3.3"
     is-buffer: "npm:^2.0.5"
     is-node-process: "npm:^1.2.0"
     throttleit: "npm:^2.1.0"
-    undici: "npm:^5.28.4"
-  checksum: 10c0/2ad6c28f66aef2ec366742086029e42a46f220aaab5342bf8750b35077a713e575c66e1731d4bf9ed67e3bd78a7dcd0cf97f854143298a8bde4ec6f535bea793
+    undici: "npm:^6.23.0"
+  checksum: 10c0/c544520215ee6b4f692f8c9936eed3d7ebca05958e3cf9a41507751f383b520d6fcc0f6fd885892b3fb28241a3b1dc770b338203aa4dc3c2bdbf7959899a76d6
   languageName: node
   linkType: hard
 
@@ -12017,19 +12010,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^5.28.4":
-  version: 5.29.0
-  resolution: "undici@npm:5.29.0"
-  dependencies:
-    "@fastify/busboy": "npm:^2.0.0"
-  checksum: 10c0/e4e4d631ca54ee0ad82d2e90e7798fa00a106e27e6c880687e445cc2f13b4bc87c5eba2a88c266c3eecffb18f26e227b778412da74a23acc374fca7caccec49b
-  languageName: node
-  linkType: hard
-
 "undici@npm:^6.21.2":
   version: 6.22.0
   resolution: "undici@npm:6.22.0"
   checksum: 10c0/47903c489d73e26bd47960cf2f04d63282ed050818b672cb05f8dfb6403381b850cf1b1751832654fd3af22aacd9d780e5e61aff563cd97943f5c4f10d5b3e23
+  languageName: node
+  linkType: hard
+
+"undici@npm:^6.23.0":
+  version: 6.23.0
+  resolution: "undici@npm:6.23.0"
+  checksum: 10c0/d846b3fdfd05aa6081ba1eab5db6bbc21b283042c7a43722b86d1ee2bf749d7c990ceac0c809f9a07ffd88b1b0f4c0f548a8362c035088cb1997d63abdda499c
   languageName: node
   linkType: hard
 
